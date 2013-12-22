@@ -45,9 +45,6 @@
         "graham-campbell/testbench": "0.2.*"
     },
     "autoload": {
-        "classmap": [
-            "src/migrations"
-        ],
         "psr-0": {
             "GrahamCampbell\\Credentials": "src/",
             "GrahamCampbell\\Tests\\Credentials": "tests/"
