@@ -5,7 +5,7 @@ Laravel Credentials
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/GrahamCampbell/Laravel-Credentials/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 [![Build Status](https://travis-ci.org/GrahamCampbell/Laravel-Credentials.png?branch=develop)](https://travis-ci.org/GrahamCampbell/Laravel-Credentials)
 [![Coverage Status](https://coveralls.io/repos/GrahamCampbell/Laravel-Credentials/badge.png?branch=develop)](https://coveralls.io/r/GrahamCampbell/Laravel-Credentials)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials/badges/quality-score.png?s=8aa8514610dfe89cd32922515c7ed35d0901bdd9)](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials/badges/quality-score.png?s=b384661adefa74fb4c695e50c7832c7f1ceea470)](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials)
 [![Latest Version](https://poser.pugx.org/graham-campbell/credentials/v/stable.png)](https://packagist.org/packages/graham-campbell/credentials)
 [![Still Maintained](http://stillmaintained.com/GrahamCampbell/Laravel-Credentials.png)](http://stillmaintained.com/GrahamCampbell/Laravel-Credentials)
 
@@ -42,11 +42,11 @@ You'll then need to run `composer install` or `composer update` to download it a
 
 You will need to register the [Laravel Core](https://github.com/GrahamCampbell/Laravel-Core) service provider before you attempt to load the Laravel Credentials service provider. Open up `app/config/app.php` and add the following to the `providers` key.  
 
+`'Cartalyst\Sentry\SentryServiceProvider'`  
 `'GrahamCampbell\Queuing\QueuingServiceProvider'`  
 `'GrahamCampbell\Security\SecurityMinServiceProvider'`  
 `'GrahamCampbell\Binput\BinputServiceProvider'`  
 `'GrahamCampbell\Passwd\PasswdServiceProvider'`  
-`'Cartalyst\Sentry\SentryServiceProvider'`  
 
 Once Laravel Credentials is installed, you need to register the service provider. Open up `app/config/app.php` and add the following to the `providers` key.  
 
