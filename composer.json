@@ -1,0 +1,63 @@
+{
+    "name": "graham-campbell/credentials",
+    "description": "Credentials Is A Cool Way To Authenticate In Laravel 4.1",
+    "keywords": ["laravel", "framework", "credentials", "login", "users", "permissions", "sentry", "Credentials", "Laravel Credentials", "Laravel-Credentials", "Graham Campbell", "GrahamCampbell"],
+    "license": "Apache License 2.0",
+    "authors": [
+        {
+            "name": "Graham Campbell",
+            "email": "graham@mineuk.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "sebastianbergmann/phpcov",
+                "version": "1.1.0",
+                "dist": {
+                    "url": "https://github.com/sebastianbergmann/phpcov/archive/1.1.0.zip",
+                    "type": "zip"
+                },
+                "source": {
+                    "url": "https://github.com/sebastianbergmann/phpcov.git",
+                    "type": "git",
+                    "reference": "1.1.0"
+                },
+                "bin": [
+                    "phpcov.php"
+                ]
+            }
+        }
+    ],
+    "require": {
+        "php": ">=5.4.7",
+        "laravel/framework": "4.1.*",
+        "symfony/config": "2.4.*",
+        "symfony/filesystem": "2.4.*",
+        "cartalyst/sentry": "2.1.*",
+        "graham-campbell/core": "0.2.*",
+        "graham-campbell/queuing": "0.2.*",
+        "graham-campbell/binput": "0.4.*",
+        "graham-campbell/passwd": "0.4.*"
+    },
+    "require-dev": {
+        "graham-campbell/testbench": "0.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "GrahamCampbell\\Credentials": "src/",
+            "GrahamCampbell\\Tests\\Credentials": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-develop": "0.1-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
