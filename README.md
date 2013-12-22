@@ -10,6 +10,11 @@ Laravel Credentials
 [![Still Maintained](http://stillmaintained.com/GrahamCampbell/Laravel-Credentials.png)](http://stillmaintained.com/GrahamCampbell/Laravel-Credentials)
 
 
+## WARNING
+
+#### This branch currently holds the very unstable pre-alpha. Expect things to be broken and tests to fail, and documentation to be inaccurate in places.
+
+
 ## What Is Laravel Credentials?
 
 Laravel Credentials is a cool way to authenticate in [Laravel 4.1](http://laravel.com).  
