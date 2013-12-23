@@ -44,6 +44,9 @@
     "require-dev": {
         "graham-campbell/testbench": "0.2.*"
     },
+    "suggest": {
+        "graham-campbell/navigation": "Easily add a navigation bar to the system."
+    },
     "autoload": {
         "psr-0": {
             "GrahamCampbell\\Credentials": "src/",
