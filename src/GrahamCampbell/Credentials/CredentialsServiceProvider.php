@@ -70,7 +70,7 @@ class CredentialsServiceProvider extends ServiceProvider
         });
 
         $this->app['view'] = $this->app->share(function ($app) {
-            return new Classes['view']($app['view.engine.resolver'], $app['view.finder'], $app['events'], $app['sentry']);
+            return new Classes\View($app['view.engine.resolver'], $app['view.finder'], $app['events'], $app['sentry']);
         });
     }
 
