@@ -69,9 +69,9 @@ class CredentialsServiceProvider extends ServiceProvider
             return new Classes\Credentials($app['sentry'], $app['userprovider'], $app['groupprovider']);
         });
 
-        // $this->app['view'] = $this->app->share(function ($app) {
-        //     return new Classes\View($app['view.engine.resolver'], $app['view.finder'], $app['events'], $app['sentry']);
-        // });
+        $this->app['view'] = $this->app->share(function ($app) {
+            return new Classes\View($app['view.engine.resolver'], $app['view.finder'], $app['events'], $app['sentry']);
+        });
     }
 
     /**
