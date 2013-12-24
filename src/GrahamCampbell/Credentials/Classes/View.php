@@ -17,7 +17,10 @@
 namespace GrahamCampbell\Credentials\Classes;
 
 use Cartalyst\Sentry\Sentry;
+use Illuminate\Events\Dispatcher;
 use Illuminate\View\Environment;
+use Illuminate\View\ViewFinderInterface;
+use Illuminate\View\Engines\EngineResolver;
 
 /**
  * This is the view class.
@@ -28,15 +31,8 @@ use Illuminate\View\Environment;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/develop/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class Viewer
+class View extends Environment
 {
-    /**
-     * The view instance.
-     *
-     * @var \Illuminate\View\Environment
-     */
-    protected $view;
-
     /**
      * The sentry instance.
      *
@@ -47,32 +43,36 @@ class Viewer
     /**
      * Constructor (setup protection and permissions).
      *
-     * @param  \Illuminate\View\Environment  $view
+     * @param  \Illuminate\View\Engines\EngineResolver  $engines
+     * @param  \Illuminate\View\ViewFinderInterface  $finder
+     * @param  \Illuminate\Events\Dispatcher  $events
      * @param  \Cartalyst\Sentry\Sentry  $sentry
      * @return void
      */
-    public function __construct(Environment $view, Sentry $sentry)
+    public function __construct(EngineResolver $engines, ViewFinderInterface $finder, Dispatcher $events, Sentry $sentry)
     {
-        $this->view = $view;
+        parent::__construct($engines, $finder, $events);
+
         $this->sentry = $sentry;
     }
 
     /**
-     * Get a evaluated view contents for the given view.
+     * Get a evaluated view contents for the given page.
      *
      * @param  string  $view
      * @param  array   $data
+     * @param  array   $mergeData
      * @param  bool    $admin
      * @return \Illuminate\View\View
      */
-    public function make($view, $data = array(), $admin = false)
+    public function page($view, $data = array(), $mergeData = array(), $admin = false)
     {
         if ($this->sentry->check()) {
-            $this->events->fire('viewer.make', array(array('View' => $view, 'User' => true, 'Admin' => $admin)));
+            $this->events->fire('view.page', array(array('View' => $view, 'User' => true, 'Admin' => $admin)));
         } else {
-            $this->events->fire('viewer.make', array(array('View' => $view, 'User' => false, 'Admin' => $admin)));
+            $this->events->fire('view.page', array(array('View' => $view, 'User' => false, 'Admin' => $admin)));
         }
 
-        return $this->view->make($view, $data);
+        return $this->make($view, $data, $mergeData);
     }
 }

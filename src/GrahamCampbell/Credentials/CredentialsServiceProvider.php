@@ -69,9 +69,9 @@ class CredentialsServiceProvider extends ServiceProvider
             return new Classes\Credentials($app['sentry'], $app['userprovider'], $app['groupprovider']);
         });
 
-        $this->app['viewer'] = $this->app->share(function ($app) {
-            return new Classes\Viewer($app['view'], $app['sentry']);
-        });
+        // $this->app['view'] = $this->app->share(function ($app) {
+        //     return new Classes\View($app['view.engine.resolver'], $app['view.finder'], $app['events'], $app['sentry']);
+        // });
     }
 
     /**
@@ -81,6 +81,6 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array('userprovider', 'groupprovider', 'credentials', 'viewer');
+        return array('userprovider', 'groupprovider', 'credentials', 'view');
     }
 }
