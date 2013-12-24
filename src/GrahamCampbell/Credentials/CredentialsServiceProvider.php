@@ -45,6 +45,10 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $this->package('graham-campbell/credentials');
 
+        $this->app['view'] = $this->app->share(function ($app) {
+            return new Classes\View($app['view.engine.resolver'], $app['view.finder'], $app['events'], $app['sentry']);
+        });
+
         include __DIR__.'/../../routes.php';
     }
 
@@ -67,10 +71,6 @@ class CredentialsServiceProvider extends ServiceProvider
 
         $this->app['credentials'] = $this->app->share(function ($app) {
             return new Classes\Credentials($app['sentry'], $app['userprovider'], $app['groupprovider']);
-        });
-
-        $this->app['view'] = $this->app->share(function ($app) {
-            return new Classes\View($app['view.engine.resolver'], $app['view.finder'], $app['events'], $app['sentry']);
         });
     }
 
