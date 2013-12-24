@@ -68,7 +68,8 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function registerUserProvider()
     {
         $this->app->bindShared('userprovider', function ($app) {
-            $user = $app['config']['cartalyst/sentry::users.model'];
+            $model = $app['config']['cartalyst/sentry::users.model'];
+            $user = new $model();
 
             return new Providers\UserProvider($user);
         });
@@ -82,7 +83,8 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function registerGroupProvider()
     {
         $this->app->bindShared('groupprovider', function ($app) {
-            $group = $app['config']['cartalyst/sentry::groups.model'];
+            $model = $app['config']['cartalyst/sentry::groups.model'];
+            $group = new $model();
 
             return new Providers\GroupProvider($group);
         });
