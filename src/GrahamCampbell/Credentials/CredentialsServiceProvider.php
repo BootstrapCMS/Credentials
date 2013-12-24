@@ -55,18 +55,52 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['userprovider'] = $this->app->share(function ($app) {
-            $model = $app['config']['cartalyst/sentry::users.model'];
-            return new Providers\UserProvider($model);
-        });
+        $this->registerUserProvider();
+        $this->registerGroupProvider();
+        $this->registerCredentials();
+    }
 
-        $this->app['groupprovider'] = $this->app->share(function ($app) {
-            $model = $app['config']['cartalyst/sentry::groups.model'];
-            return new Providers\GroupProvider($model);
-        });
+    /**
+     * Register the user provider class.
+     *
+     * @return void
+     */
+    protected function registerUserProvider()
+    {
+        $this->app->bindShared('userprovider', function ($app) {
+            $user = $app['config']['cartalyst/sentry::users.model'];
 
-        $this->app['credentials'] = $this->app->share(function ($app) {
-            return new Classes\Credentials($app['sentry'], $app['userprovider'], $app['groupprovider']);
+            return new Providers\UserProvider($user);
+        });
+    }
+
+    /**
+     * Register the group provider class.
+     *
+     * @return void
+     */
+    protected function registerGroupProvider()
+    {
+        $this->app->bindShared('groupprovider', function ($app) {
+            $group = $app['config']['cartalyst/sentry::groups.model'];
+
+            return new Providers\GroupProvider($group);
+        });
+    }
+
+    /**
+     * Register the credentials class.
+     *
+     * @return void
+     */
+    protected function registerCredentials()
+    {
+        $this->app->bindShared('credentials', function ($app) {
+            $sentry = $app['sentry'];
+            $userprovider = $app['userprovider'];
+            $groupprovider = $app['groupprovider'];
+
+            return new Classes\Credentials($sentry, $userprovider, $groupprovider);
         });
     }
 
