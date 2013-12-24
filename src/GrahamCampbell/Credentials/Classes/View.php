@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Classes;
+namespace GrahamCampbell\CMSCore\Classes;
 
 use Cartalyst\Sentry\Sentry;
 use Illuminate\Events\Dispatcher;
