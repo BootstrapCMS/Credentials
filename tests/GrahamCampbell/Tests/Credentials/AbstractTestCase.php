@@ -47,6 +47,12 @@ abstract class AbstractTestCase extends TestCase
     protected function getPackageProviders()
     {
         return array(
+            'Cartalyst\Sentry\SentryServiceProvider',
+            'GrahamCampbell\Queuing\QueuingServiceProvider',
+            'GrahamCampbell\Security\SecurityServiceProvider',
+            'GrahamCampbell\Binput\BinputServiceProvider',
+            'GrahamCampbell\Passwd\PasswdServiceProvider',
+            'GrahamCampbell\Throttle\ThrottleServiceProvider',
             'GrahamCampbell\Credentials\CredentialsServiceProvider'
         );
     }
