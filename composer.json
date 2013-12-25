@@ -39,7 +39,8 @@
         "graham-campbell/core": "0.2.*",
         "graham-campbell/queuing": "0.2.*",
         "graham-campbell/binput": "0.4.*",
-        "graham-campbell/passwd": "0.4.*"
+        "graham-campbell/passwd": "0.4.*",
+        "graham-campbell/throttle": "0.1.*"
     },
     "require-dev": {
         "graham-campbell/testbench": "0.2.*"
