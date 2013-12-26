@@ -45,7 +45,26 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $this->package('graham-campbell/credentials');
 
+        $this->setupView();
+
         include __DIR__.'/../../routes.php';
+    }
+
+    /**
+     * Setup the view class.
+     *
+     * @return void
+     */
+    protected function setupView()
+    {
+        $this->app->bindShared('view', function ($app) {
+            $engines = $app['view.engine.resolver'];
+            $finder = $app['view.finder'];
+            $events = $app['events'];
+            $sentry = $app['sentry'];
+
+            return new Classes\View($engines, $finder, $events, $sentry);
+        });
     }
 
     /**
