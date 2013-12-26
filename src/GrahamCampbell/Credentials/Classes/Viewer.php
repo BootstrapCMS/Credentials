@@ -16,11 +16,8 @@
 
 namespace GrahamCampbell\Credentials\Classes;
 
-use Cartalyst\Sentry\Sentry;
-use Illuminate\Events\Dispatcher;
 use Illuminate\View\Environment;
-use Illuminate\View\ViewFinderInterface;
-use Illuminate\View\Engines\EngineResolver;
+use GrahamCampbell\Viewer\Classes\Viewer as BaseViewer;
 
 /**
  * This is the view class.
@@ -31,29 +28,17 @@ use Illuminate\View\Engines\EngineResolver;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/develop/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class View extends Environment
+class Viewer extends BaseViewer
 {
     /**
-     * The sentry instance.
+     * Create a new instance.
      *
-     * @var \Cartalyst\Sentry\Sentry
-     */
-    protected $sentry;
-
-    /**
-     * Constructor (setup protection and permissions).
-     *
-     * @param  \Illuminate\View\Engines\EngineResolver  $engines
-     * @param  \Illuminate\View\ViewFinderInterface  $finder
-     * @param  \Illuminate\Events\Dispatcher  $events
-     * @param  \Cartalyst\Sentry\Sentry  $sentry
+     * @param  \Illuminate\View\Environment  $view
      * @return void
      */
-    public function __construct(EngineResolver $engines, ViewFinderInterface $finder, Dispatcher $events, Sentry $sentry)
+    public function __construct(Environment $view)
     {
-        parent::__construct($engines, $finder, $events);
-
-        $this->sentry = $sentry;
+        parent::__construct($view);
     }
 
     /**
@@ -66,8 +51,6 @@ class View extends Environment
      */
     public function page($view, $data = array(), $type = 'default')
     {
-        // $type is passed so this class can be extended and altered
-
-        return $this->make($view, $data);
+        return parent::make($view, $data);
     }
 }
