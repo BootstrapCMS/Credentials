@@ -42,14 +42,14 @@ class Viewer extends BaseViewer
     }
 
     /**
-     * Get a evaluated view contents for the given page.
+     * Get a evaluated view contents for the given view.
      *
      * @param  string  $view
      * @param  array   $data
      * @param  string  $type
      * @return \Illuminate\View\View
      */
-    public function page($view, $data = array(), $type = 'default')
+    public function make($view, array $data = array(), $type = 'default')
     {
         return parent::make($view, $data);
     }
