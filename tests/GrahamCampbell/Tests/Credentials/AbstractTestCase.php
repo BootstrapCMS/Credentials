@@ -40,20 +40,30 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * Get the package service providers.
+     * Get the required service providers.
      *
      * @return array
      */
-    protected function getPackageProviders()
+    protected function getRequiredServiceProviders()
     {
         return array(
             'Cartalyst\Sentry\SentryServiceProvider',
+            'GrahamCampbell\Viewer\ViewerServiceProvider',
             'GrahamCampbell\Queuing\QueuingServiceProvider',
             'GrahamCampbell\Security\SecurityServiceProvider',
             'GrahamCampbell\Binput\BinputServiceProvider',
             'GrahamCampbell\Passwd\PasswdServiceProvider',
-            'GrahamCampbell\Throttle\ThrottleServiceProvider',
-            'GrahamCampbell\Credentials\CredentialsServiceProvider'
+            'GrahamCampbell\Throttle\ThrottleServiceProvider'
         );
+    }
+
+    /**
+     * Get the service provider class.
+     *
+     * @return string
+     */
+    protected function getServiceProviderClass()
+    {
+        return 'GrahamCampbell\Credentials\CredentialsServiceProvider';
     }
 }
