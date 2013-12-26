@@ -132,7 +132,8 @@ class CredentialsServiceProvider extends ServiceProvider
         return array(
             'userprovider',
             'groupprovider',
-            'credentials'
+            'credentials',
+            'viewer'
         );
     }
 }
