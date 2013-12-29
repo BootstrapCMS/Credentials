@@ -96,9 +96,9 @@
 @stop
 
 @section('messages')
-@include('users.suspend')
+@include('credentials::users.suspend')
 @if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
-    @include('users.reset')
-    @include('users.delete')
+    @include('credentials::users.reset')
+    @include('credentials::users.delete')
 @endif
 @stop

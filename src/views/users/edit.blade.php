@@ -44,15 +44,15 @@ Edit {{ $user->first_name.' '.$user->last_name }}
         $form['defaults']['group_'.$group->id] = ($user->inGroup($group));
     }
     ?>
-    @include('users.form')
+    @include('credentials::users.form')
 </div>
 @stop
 
 @section('messages')
-@include('users.suspend')
+@include('credentials::users.suspend')
 @if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
-    @include('users.reset')
-    @include('users.delete')
+    @include('credentials::users.reset')
+    @include('credentials::users.delete')
 @endif
 @stop
 

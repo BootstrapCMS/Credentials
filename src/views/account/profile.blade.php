@@ -33,7 +33,7 @@ Profile
             'email' => Sentry::getUser()->email,
     ));
     ?>
-    @include('account.details')
+    @include('credentials::account.details')
 </div>
 <hr>
 <h3>Change Password</h3>
@@ -44,12 +44,12 @@ Profile
         'button' => 'Save Password',
     );
     ?>
-    @include('account.password')
+    @include('credentials::account.password')
 </div>
 @stop
 
 @section('messages')
-@include('account.delete')
+@include('credentials::account.delete')
 @stop
 
 @section('css')

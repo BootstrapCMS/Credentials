@@ -23,7 +23,7 @@ Create User
         }
     }
     ?>
-    @include('users.form')
+    @include('credentials::users.form')
 </div>
 @stop
 
