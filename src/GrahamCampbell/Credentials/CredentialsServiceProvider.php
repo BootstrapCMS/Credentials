@@ -48,6 +48,7 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->setupViewer();
 
         include __DIR__.'/../../routes.php';
+        include __DIR__.'/../../filters.php';
     }
 
     /**

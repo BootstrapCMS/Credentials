@@ -62,9 +62,9 @@ abstract class AbstractController extends Controller
 
         Sentry::getThrottleProvider()->enable();
 
-        $this->beforeFilter('auth:user', array('only' => $this->users));
-        $this->beforeFilter('auth:mod', array('only' => $this->mods));
-        $this->beforeFilter('auth:admin', array('only' => $this->admins));
+        $this->beforeFilter('credentials:user', array('only' => $this->users));
+        $this->beforeFilter('credentials:mod', array('only' => $this->mods));
+        $this->beforeFilter('credentials:admin', array('only' => $this->admins));
     }
 
     /**
