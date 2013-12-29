@@ -57,7 +57,7 @@ class ResetController extends AbstractController
      */
     public function getReset()
     {
-        return Viewer::make('account.reset');
+        return Viewer::make('credentials::account.reset');
     }
 
     /**

@@ -74,7 +74,7 @@ class UserController extends AbstractController
         $users = UserProvider::paginate();
         $links = UserProvider::links();
 
-        return Viewer::make('users.index', array('users' => $users, 'links' => $links), 'admin');
+        return Viewer::make('credentials::users.index', array('users' => $users, 'links' => $links), 'admin');
     }
 
     /**
@@ -86,7 +86,7 @@ class UserController extends AbstractController
     {
         $groups = GroupProvider::index();
 
-        return Viewer::make('users.create', array('groups' => $groups), 'admin');
+        return Viewer::make('credentials::users.create', array('groups' => $groups), 'admin');
     }
 
     /**
@@ -168,7 +168,7 @@ class UserController extends AbstractController
         $user = UserProvider::find($id);
         $this->checkUser($user);
 
-        return Viewer::make('users.show', array('user' => $user), 'admin');
+        return Viewer::make('credentials::users.show', array('user' => $user), 'admin');
     }
 
     /**
@@ -184,7 +184,7 @@ class UserController extends AbstractController
 
         $groups = GroupProvider::index();
 
-        return Viewer::make('users.edit', array('user' => $user, 'groups' => $groups), 'admin');
+        return Viewer::make('credentials::users.edit', array('user' => $user, 'groups' => $groups), 'admin');
     }
 
     /**
