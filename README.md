@@ -65,8 +65,6 @@ You can register the three facades in the `aliases` key of your `app/config/app.
 `'GroupProvider' => 'GrahamCampbell\Credentials\Facades\GroupProvider'`  
 `'Credentials' => 'GrahamCampbell\Credentials\Facades\Credentials'`  
 
-You will additionally need to replace `app/config/queue.php` with the `queue.php` provided in the root folder of this repo. This config allows us to specify different queues for special jobs.  
-
 
 ## Usage
 
