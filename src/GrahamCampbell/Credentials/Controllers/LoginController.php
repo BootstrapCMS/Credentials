@@ -121,7 +121,7 @@ class LoginController extends AbstractController
         }
 
         Event::fire('user.loginsuccessful', array(array('Email' => $input['email'])));
-        return Redirect::intended();
+        return Redirect::intended(Config::get('home', '/'));
     }
 
     /**
