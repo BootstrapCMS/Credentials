@@ -18,6 +18,19 @@ return array(
 
     /*
     |--------------------------------------------------------------------------
+    | Home Page URL
+    |--------------------------------------------------------------------------
+    |
+    | This defines the url to use for the home page.
+    |
+    | Default to '/'.
+    |
+    */
+
+    'home' => '/',
+
+    /*
+    |--------------------------------------------------------------------------
     | Enable Public Registration
     |--------------------------------------------------------------------------
     |
@@ -62,6 +75,17 @@ return array(
     |
     */
 
-    'registration' => 'credentials::account.register'
+    'registration' => 'credentials::account.register',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Forgot Password Page
+    |--------------------------------------------------------------------------
+    |
+    | This specifies the view that is used for the forgot password page.
+    |
+    */
+
+    'reset' => 'credentials::account.reset'
 
 );

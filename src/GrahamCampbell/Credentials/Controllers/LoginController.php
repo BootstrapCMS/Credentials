@@ -133,6 +133,6 @@ class LoginController extends AbstractController
     {
         Event::fire('user.logout', array(array('Email' => Sentry::getUser()->email)));
         Sentry::logout();
-        return Redirect::to('/');
+        return Redirect::to(Config::get('home', '/'));
     }
 }

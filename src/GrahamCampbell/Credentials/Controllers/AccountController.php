@@ -18,6 +18,7 @@ namespace GrahamCampbell\Credentials\Controllers;
 
 use Cartalyst\Sentry\Facades\Laravel\Sentry;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -80,7 +81,7 @@ class AccountController extends AbstractController
         $user->delete();
 
         Session::flash('success', 'Your account has been deleted successfully.');
-        return Redirect::to('/');
+        return Redirect::to(Config::get('home', '/'));
     }
 
     /**
