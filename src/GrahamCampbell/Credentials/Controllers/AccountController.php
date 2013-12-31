@@ -81,7 +81,7 @@ class AccountController extends AbstractController
         $user->delete();
 
         Session::flash('success', 'Your account has been deleted successfully.');
-        return Redirect::to(Config::get('home', '/'));
+        return Redirect::to(Config::get('credentials::home', '/'));
     }
 
     /**

@@ -121,7 +121,7 @@ class LoginController extends AbstractController
         }
 
         Event::fire('user.loginsuccessful', array(array('Email' => $input['email'])));
-        return Redirect::intended(Config::get('home', '/'));
+        return Redirect::intended(Config::get('credentials::home', '/'));
     }
 
     /**
@@ -133,6 +133,6 @@ class LoginController extends AbstractController
     {
         Event::fire('user.logout', array(array('Email' => Sentry::getUser()->email)));
         Sentry::logout();
-        return Redirect::to(Config::get('home', '/'));
+        return Redirect::to(Config::get('credentials::home', '/'));
     }
 }
