@@ -104,13 +104,13 @@ class RegistrationController extends AbstractController
 
                 Event::fire('user.registrationsuccessful', array(array('Email' => $input['email'], 'Activated' => true)));
                 Session::flash('success', 'Your account has been created successfully.');
-                return Redirect::route('pages.show', array('pages' => 'home'));
+                return Redirect::to('/');
             }
 
             try {
                 $data = array(
                     'view'    => 'emails.welcome',
-                    'url'     => URL::route('pages.show', array('pages' => 'home')),
+                    'url'     => URL::to('/'),
                     'link'    => URL::route('account.activate', array('id' => $user->getId(), 'code' => $user->GetActivationCode())),
                     'email'   => $user->getLogin(),
                     'subject' => Config::get('platform.name').' - Welcome',
@@ -127,7 +127,7 @@ class RegistrationController extends AbstractController
 
             Event::fire('user.registrationsuccessful', array(array('Email' => $input['email'], 'Activated' => false)));
             Session::flash('success', 'Your account has been created. Check your email for the confirmation link.');
-            return Redirect::route('pages.show', array('pages' => 'home'));
+            return Redirect::to('/');
         } catch (\Cartalyst\Sentry\Users\UserExistsException $e) {
             Log::notice($e);
             Event::fire('user.registrationfailed', array(array('Email' => $input['email'])));
@@ -154,24 +154,24 @@ class RegistrationController extends AbstractController
 
             if (!$user->attemptActivation($code)) {
                 Session::flash('error', 'There was a problem activating this account. Please contact support.');
-                return Redirect::route('pages.show', array('pages' => 'home'));
+                return Redirect::to('/');
             }
 
             $user->addGroup(Sentry::getGroupProvider()->findByName('Users'));
 
             Event::fire('user.activationsuccessful', array(array('Email' => $user->email)));
             Session::flash('success', 'Your account has been activated successfully. You may now login.');
-            return Redirect::route('account.login', array('pages' => 'home'));
+            return Redirect::route('account.login');
         } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
             Log::error($e);
             Event::fire('user.activationfailed');
             Session::flash('error', 'There was a problem activating this account. Please contact support.');
-            return Redirect::route('pages.show', array('pages' => 'home'));
+            return Redirect::to('/');
         } catch (\Cartalyst\SEntry\Users\UserAlreadyActivatedException $e) {
             Log::notice($e);
             Event::fire('user.activationfailed', array(array('Email' => $user->email)));
             Session::flash('warning', 'You have already activated this account. You may want to login.');
-            return Redirect::route('account.login', array('pages' => 'home'));
+            return Redirect::route('account.login');
         }
     }
 }
