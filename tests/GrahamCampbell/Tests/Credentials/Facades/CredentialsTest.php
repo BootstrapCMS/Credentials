@@ -21,7 +21,7 @@ namespace GrahamCampbell\Tests\Credentials\Facades;
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
- * @copyright  Copyright 2013 Graham Campbell
+ * @copyright  Copyright 2013-2014 Graham Campbell
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/develop/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
