@@ -4,7 +4,13 @@
 Profile
 @stop
 
-@section('controls')
+@section('top')
+<div class="page-header">
+<h1>Profile</h1>
+</div>
+@stop
+
+@section('content')
 <div class="row">
     <div class="col-xs-8">
         <p class="lead">
@@ -18,9 +24,6 @@ Profile
     </div>
 </div>
 <hr>
-@stop
-
-@section('content')
 <h3>Change Details</h3>
 <div class="well">
     <?php
@@ -48,7 +51,7 @@ Profile
 </div>
 @stop
 
-@section('messages')
+@section('bottom')
 @include('credentials::account.delete')
 @stop
 

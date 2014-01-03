@@ -4,11 +4,14 @@
 Login
 @stop
 
-@section('controls')
-<p class="lead">Please enter your details:</p>
+@section('top')
+<div class="page-header">
+<h1>Login</h1>
+</div>
 @stop
 
 @section('content')
+<p class="lead">Please enter your details:</p>
 <div class="well">
     {{ Form::open(array('url' => URL::route('account.login.post'), 'method' => 'POST', 'class' => 'form-horizontal')) }}
 

@@ -1,10 +1,16 @@
 @extends(Config::get('views.default', 'layouts.default'))
 
 @section('title')
-Edit {{ $user->first_name.' '.$user->last_name }}
+Edit {{{ $user->getName() }}}
 @stop
 
-@section('controls')
+@section('top')
+<div class="page-header">
+<h1>Edit {{{ $user->getName() }}}</h1>
+</div>
+@stop
+
+@section('content')
 <div class="row">
     <div class="col-xs-6">
         <p class="lead">
@@ -27,9 +33,6 @@ Edit {{ $user->first_name.' '.$user->last_name }}
     </div>
 </div>
 <hr>
-@stop
-
-@section('content')
 <div class="well">
     <?php
     $form = array('url' => URL::route('users.update', array('users' => $user->getId())),
@@ -48,7 +51,7 @@ Edit {{ $user->first_name.' '.$user->last_name }}
 </div>
 @stop
 
-@section('messages')
+@section('bottom')
 @include('credentials::users.suspend')
 @if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
     @include('credentials::users.reset')

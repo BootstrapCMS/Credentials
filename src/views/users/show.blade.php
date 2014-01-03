@@ -1,10 +1,16 @@
 @extends(Config::get('views.default', 'layouts.default'))
 
 @section('title')
-{{ $user->getName() }}
+{{{ $user->getName() }}}
 @stop
 
-@section('controls')
+@section('top')
+<div class="page-header">
+<h1>{{{ $user->getName() }}}</h1>
+</div>
+@stop
+
+@section('content')
 <div class="row">
     <div class="col-xs-6">
         <p class="lead">
@@ -29,9 +35,6 @@
     </div>
 </div>
 <hr>
-@stop
-
-@section('content')
 <h3>User Profile</h3>
 <div class="well clearfix">
     <div class="hidden-xs">
@@ -95,7 +98,7 @@
 </div>
 @stop
 
-@section('messages')
+@section('bottom')
 @include('credentials::users.suspend')
 @if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
     @include('credentials::users.reset')

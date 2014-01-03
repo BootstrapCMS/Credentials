@@ -4,7 +4,13 @@
 Users
 @stop
 
-@section('controls')
+@section('top')
+<div class="page-header">
+<h1>Users</h1>
+</div>
+@stop
+
+@section('content')
 <div class="row">
     <div class="col-xs-8">
         <p class="lead">Here is a list of all the current users:</p>
@@ -18,9 +24,6 @@ Users
     @endif
 </div>
 <hr>
-@stop
-
-@section('content')
 <div class="well">
     <table class="table">
         <thead>
@@ -52,7 +55,7 @@ Users
 {{ $links }}
 @stop
 
-@section('messages')
+@section('bottom')
 @include('credentials::users.suspends')
 @if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
     @include('credentials::users.resets')

@@ -4,11 +4,14 @@
 Reset Password
 @stop
 
-@section('controls')
-<p class="lead">Please enter your details:</p>
+@section('top')
+<div class="page-header">
+<h1>Reset Password</h1>
+</div>
 @stop
 
 @section('content')
+<p class="lead">Please enter your details:</p>
 <div class="well">
     {{ Form::open(array('url' => URL::route('account.reset.post'), 'method' => 'POST', 'class' => 'form-horizontal')) }}
 
