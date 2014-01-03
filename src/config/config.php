@@ -86,6 +86,17 @@ return array(
     |
     */
 
-    'reset' => 'credentials::account.reset'
+    'reset' => 'credentials::account.reset',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Profile Password Page
+    |--------------------------------------------------------------------------
+    |
+    | This specifies the view that is used for the profile page.
+    |
+    */
+
+    'profile' => 'credentials::account.profile'
 
 );

@@ -62,7 +62,7 @@ class AccountController extends AbstractController
      */
     public function getProfile()
     {
-        return Viewer::make('credentials::account.profile');
+        return Viewer::make(Config::get('credentials::profile', 'credentials::account.profile'));
     }
 
     /**
