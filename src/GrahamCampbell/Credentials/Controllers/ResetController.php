@@ -84,7 +84,7 @@ class ResetController extends AbstractController
             $user = Sentry::getUserProvider()->findByLogin($input['email']);
 
             $data = array(
-                'view' => 'emails.reset',
+                'view' => 'credentials::emails.reset',
                 'link' => URL::route('account.password', array('id' => $user->getId(), 'code' => $user->getResetPasswordCode())),
                 'email' => $user->getLogin(),
                 'subject' => Config::get('platform.name').' - Password Reset Confirmation',
@@ -134,7 +134,7 @@ class ResetController extends AbstractController
 
             try {
                 $data = array(
-                    'view' => 'emails.password',
+                    'view' => 'credentials::emails.password',
                     'password' => $password,
                     'email' => $user->getLogin(),
                     'subject' => Config::get('platform.name').' - New Password Information',

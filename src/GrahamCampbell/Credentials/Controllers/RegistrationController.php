@@ -109,7 +109,7 @@ class RegistrationController extends AbstractController
 
             try {
                 $data = array(
-                    'view'    => 'emails.welcome',
+                    'view'    => 'credentials::emails.welcome',
                     'url'     => URL::to(Config::get('credentials::home', '/')),
                     'link'    => URL::route('account.activate', array('id' => $user->getId(), 'code' => $user->GetActivationCode())),
                     'email'   => $user->getLogin(),

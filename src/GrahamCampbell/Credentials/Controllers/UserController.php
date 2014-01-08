@@ -133,7 +133,7 @@ class UserController extends AbstractController
 
             try {
                 $data = array(
-                    'view'     => 'emails.newuser',
+                    'view'     => 'credentials::emails.newuser',
                     'url'      => URL::to(Config::get('credentials::home', '/')),
                     'password' => $password,
                     'email'    => $user->getLogin(),
@@ -293,7 +293,7 @@ class UserController extends AbstractController
 
         try {
             $data = array(
-                'view' => 'emails.password',
+                'view' => 'credentials::emails.password',
                 'password' => $password,
                 'email' => $user->getLogin(),
                 'subject' => Config::get('platform.name').' - New Password Information',
