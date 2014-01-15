@@ -39,7 +39,7 @@
         "graham-campbell/core": "0.2.*",
         "graham-campbell/viewer": "0.1.*",
         "graham-campbell/queuing": "0.2.*",
-        "graham-campbell/binput": "0.4.*",
+        "graham-campbell/binput": "1.0.*",
         "graham-campbell/passwd": "0.4.*",
         "graham-campbell/throttle": "0.1.*"
     },
