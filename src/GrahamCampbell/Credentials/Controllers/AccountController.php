@@ -25,7 +25,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
-use GrahamCampbell\CMSCore\Models\Page;
 
 /**
  * This is the account controller class.
