@@ -6,8 +6,8 @@ Laravel Credentials
 [![Build Status](https://travis-ci.org/GrahamCampbell/Laravel-Credentials.png)](https://travis-ci.org/GrahamCampbell/Laravel-Credentials)
 [![Coverage Status](https://coveralls.io/repos/GrahamCampbell/Laravel-Credentials/badge.png)](https://coveralls.io/r/GrahamCampbell/Laravel-Credentials)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials/badges/quality-score.png?s=b384661adefa74fb4c695e50c7832c7f1ceea470)](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446/mini.png)](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446)
 [![Latest Version](https://poser.pugx.org/graham-campbell/credentials/v/stable.png)](https://packagist.org/packages/graham-campbell/credentials)
-[![Still Maintained](http://stillmaintained.com/GrahamCampbell/Laravel-Credentials.png)](http://stillmaintained.com/GrahamCampbell/Laravel-Credentials)
 
 
 ## WARNING
@@ -24,7 +24,7 @@ Laravel Credentials is a cool way to authenticate in [Laravel 4.1](http://larave
 * Laravel Credentials uses [Travis CI](https://travis-ci.org/GrahamCampbell/Laravel-Credentials) to run tests to check if it's working as it should.  
 * Laravel Credentials uses [Scrutinizer CI](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials) and [Coveralls](https://coveralls.io/r/GrahamCampbell/Laravel-Credentials) to run additional tests and checks.  
 * Laravel Credentials uses [Composer](https://getcomposer.org) to load and manage dependencies.  
-* Laravel Credentials provides a [change log](https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/CHANGELOG.md), [releases](https://github.com/GrahamCampbell/Laravel-Credentials/releases), and a [wiki](https://github.com/GrahamCampbell/Laravel-Credentials/wiki).  
+* Laravel Credentials provides a [change log](https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/CHANGELOG.md), [releases](https://github.com/GrahamCampbell/Laravel-Credentials/releases), and [api docs](http://grahamcampbell.github.io/Laravel-Credentials).  
 * Laravel Credentials is licensed under the Apache License, available [here](https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md).  
 
 
@@ -97,7 +97,7 @@ Once it is set up, run `git mergetool`. Once all conflicts are fixed, run `git r
 
 Please review these guidelines before submitting any pull requests.  
 
-* Bug fixes shouldn't be sent to the master branch unless they fix features that exist only in the upcoming release.  
+* When submitting bug fixes, check if a maintenance branch exists for an older series, then pull against that older branch if the bug is present in it.  
 * Before sending a pull request for a new feature, you should first create an issue with [Proposal] in the title.  
 * Please follow the [PSR-2 Coding Style](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) and [PHP-FIG Naming Conventions](https://github.com/php-fig/fig-standards/blob/master/bylaws/002-psr-naming-conventions.md).  
 
