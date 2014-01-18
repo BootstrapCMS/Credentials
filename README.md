@@ -21,8 +21,8 @@ Laravel Credentials is a cool way to authenticate in [Laravel 4.1](http://larave
 
 * Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell).  
 * Laravel Credentials relies on my [Laravel Core](https://github.com/GrahamCampbell/Laravel-Core) package.  
-* Laravel Credentials uses [Travis CI](https://travis-ci.org/GrahamCampbell/Laravel-Credentials) to run tests to check if it's working as it should.  
-* Laravel Credentials uses [Scrutinizer CI](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials) and [Coveralls](https://coveralls.io/r/GrahamCampbell/Laravel-Credentials) to run additional tests and checks.  
+* Laravel Credentials uses [Travis CI](https://travis-ci.org/GrahamCampbell/Laravel-Credentials) with [Coveralls](https://coveralls.io/r/GrahamCampbell/Laravel-Credentials) to check everything is working.  
+* Laravel Credentials uses [Scrutinizer CI](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials) and [SensioLabsInsight](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446) to run additional checks.  
 * Laravel Credentials uses [Composer](https://getcomposer.org) to load and manage dependencies.  
 * Laravel Credentials provides a [change log](https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/CHANGELOG.md), [releases](https://github.com/GrahamCampbell/Laravel-Credentials/releases), and [api docs](http://grahamcampbell.github.io/Laravel-Credentials).  
 * Laravel Credentials is licensed under the Apache License, available [here](https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md).  

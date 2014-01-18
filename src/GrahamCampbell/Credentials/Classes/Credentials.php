@@ -64,6 +64,6 @@ class Credentials
         $this->userprovider = $userprovider;
         $this->groupprovider = $groupprovider;
     }
-	
-	// TODO: add stuff...
+
+    // TODO: add stuff...
 }
