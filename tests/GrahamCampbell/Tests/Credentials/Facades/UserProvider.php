@@ -16,6 +16,9 @@
 
 namespace GrahamCampbell\Tests\Credentials\Facades;
 
+use GrahamCampbell\Tests\Credentials\AbstractTestCase;
+use GrahamCampbell\TestBench\Traits\FacadeTestCaseTrait;
+
 /**
  * This is the user provider facade test case class.
  *
@@ -25,8 +28,10 @@ namespace GrahamCampbell\Tests\Credentials\Facades;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class UserProviderTest extends AbstractFacadeTestCase
+class UserProviderTest extends AbstractTestCase
 {
+    use FacadeTestCaseTrait;
+
     /**
      * Get the facade accessor.
      *
