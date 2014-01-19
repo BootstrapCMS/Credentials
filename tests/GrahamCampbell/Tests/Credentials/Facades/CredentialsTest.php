@@ -20,7 +20,7 @@ use GrahamCampbell\Tests\Credentials\AbstractTestCase;
 use GrahamCampbell\TestBench\Traits\FacadeTestCaseTrait;
 
 /**
- * This is the credentials facade test case class.
+ * This is the credentials facade test class.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell

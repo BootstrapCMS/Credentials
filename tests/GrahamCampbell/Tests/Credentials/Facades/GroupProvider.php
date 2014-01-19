@@ -20,7 +20,7 @@ use GrahamCampbell\Tests\Credentials\AbstractTestCase;
 use GrahamCampbell\TestBench\Traits\FacadeTestCaseTrait;
 
 /**
- * This is the group provider facade test case class.
+ * This is the group provider facade test class.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
