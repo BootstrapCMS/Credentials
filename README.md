@@ -7,6 +7,7 @@ Laravel Credentials
 [![Coverage Status](https://coveralls.io/repos/GrahamCampbell/Laravel-Credentials/badge.png)](https://coveralls.io/r/GrahamCampbell/Laravel-Credentials)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials/badges/quality-score.png?s=b384661adefa74fb4c695e50c7832c7f1ceea470)](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446/mini.png)](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446)
+[![Software License](https://poser.pugx.org/graham-campbell/credentials/license.png)](https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md)
 [![Latest Version](https://poser.pugx.org/graham-campbell/credentials/v/stable.png)](https://packagist.org/packages/graham-campbell/credentials)
 
 
