@@ -24,7 +24,7 @@
     <div class="col-xs-6">
         <div class="pull-right">
             @if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
-                &nbsp;<a class="btn btn-info" href="{{ URL::route('users.edit', array('users' => $user->getId())) }}"><i class="fa fa-pencil-square-o"></i> Edit User</a>
+                &nbsp;<a class="btn btn-info" href="{{ URL::route('users.edit', array('users' => $user->id)) }}"><i class="fa fa-pencil-square-o"></i> Edit User</a>
             @endif
             &nbsp;<a class="btn btn-warning" href="#suspend_user" data-toggle="modal" data-target="#suspend_user"><i class="fa fa-ban"></i> Suspend User</a>
             @if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
@@ -40,19 +40,19 @@
     <div class="hidden-xs">
         <div class="col-xs-6">
             @if ($user->first_name)
-                <p><strong>First Name:</strong> {{ $user->getFirstName() }} </p>
+                <p><strong>First Name:</strong> {{ $user->first_name }} </p>
             @endif
             @if ($user->last_name)
-                <p><strong>Last Name:</strong> {{ $user->getLastName() }} </p>
+                <p><strong>Last Name:</strong> {{ $user->last_name }} </p>
             @endif
-            <p><strong>Email:</strong> {{ $user->getEmail() }}</p>
+            <p><strong>Email:</strong> {{ $user->email }}</p>
         </div>
         <div class="col-xs-6">
             <div class="pull-right">
-                <p><em>Account Created: {{ $user->getCreatedAt()->diffForHumans() }}</em></p>
-                <p><em>Account Updated: {{ $user->getUpdatedAt()->diffForHumans() }}</em></p>
-                @if ($user->getActivatedAt())
-                    <p><em>Account Activated: {{ $user->getActivatedAt()->diffForHumans() }}</em></p>
+                <p><em>Account Created: {{ $user->created_at->diffForHumans() }}</em></p>
+                <p><em>Account Updated: {{ $user->updated_at->diffForHumans() }}</em></p>
+                @if ($user->activated_at)
+                    <p><em>Account Activated: {{ $user->activated_at->diffForHumans() }}</em></p>
                 @else
                     <p><em>Account Activated: Not Activated</em></p>
                 @endif
@@ -62,16 +62,16 @@
     <div class="visible-xs">
         <div class="col-xs-12">
             @if ($user->first_name)
-                <p><strong>First Name:</strong> {{ $user->getFirstName() }} </p>
+                <p><strong>First Name:</strong> {{ $user->first_name }} </p>
             @endif
             @if ($user->last_name)
-                <p><strong>Last Name:</strong> {{ $user->getLastName() }} </p>
+                <p><strong>Last Name:</strong> {{ $user->last_name }} </p>
             @endif
-            <p><strong>Email:</strong> {{ $user->getEmail() }}</p>
-            <p><strong>Account Created:</strong> {{ $user->getCreatedAt()->diffForHumans() }}</p>
-            <p><strong>Account Updated:</strong> {{ $user->getUpdatedAt()->diffForHumans() }}</p>
-            @if ($user->getActivatedAt())
-                <p><strong>Account Activated:</strong> {{ $user->getActivatedAt()->diffForHumans() }}</p>
+            <p><strong>Email:</strong> {{ $user->email }}</p>
+            <p><strong>Account Created:</strong> {{ $user->created_at->diffForHumans() }}</p>
+            <p><strong>Account Updated:</strong> {{ $user->updated_at->diffForHumans() }}</p>
+            @if ($user->activated_at)
+                <p><strong>Account Activated:</strong> {{ $user->activated_at->diffForHumans() }}</p>
             @else
                 <p><strong>Account Activated:</strong> Not Activated</p>
             @endif

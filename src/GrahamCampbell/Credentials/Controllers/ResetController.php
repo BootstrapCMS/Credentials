@@ -85,7 +85,7 @@ class ResetController extends AbstractController
 
             $data = array(
                 'view' => 'credentials::emails.reset',
-                'link' => URL::route('account.password', array('id' => $user->getId(), 'code' => $user->getResetPasswordCode())),
+                'link' => URL::route('account.password', array('id' => $user->id, 'code' => $user->getResetPasswordCode())),
                 'email' => $user->getLogin(),
                 'subject' => Config::get('platform.name').' - Password Reset Confirmation',
             );

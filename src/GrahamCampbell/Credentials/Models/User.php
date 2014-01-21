@@ -79,46 +79,21 @@ class User extends SentryUser implements BaseModelInterface, NameModelInterface
     public static $sort = 'asc';
 
     /**
-     * Get email.
+     * Activated at accessor.
      *
-     * @param  array  $input
-     * @return void
-     */
-    public function getEmail()
-    {
-        // TODO: Use the TraitEmailModel from the Core package
-        return $this->email;
-    }
-
-    /**
-     * Get activated.
-     *
-     * @return bool
-     */
-    public function getActivated()
-    {
-        // TODO: Use the TraitActivatedModel from the Core package
-        return $this->activated;
-    }
-
-    /**
-     * Get activated_at.
-     *
+     * @param  mixed  $value
      * @return \Carbon\Carbon
      */
-    public function getActivatedAt()
+    public function getActivatedAtAccessor($value)
     {
-        // TODO: Use the TraitActivatedModel from the Core package
-        $activated_at = $this->activated_at;
-
-        if ($activated_at) {
-            return new Carbon($activated_at);
+        if ($value) {
+            return new Carbon($value);
         }
 
-        if ($this->activated) {
-            return $this->created_at;
+        if ($this->getAttribute('activated')) {
+            return $this->getAttribute('created_at');
         }
 
-        return null;
+        return false;
     }
 }

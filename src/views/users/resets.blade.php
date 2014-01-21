@@ -1,5 +1,5 @@
 @foreach ($users as $user)
-    <div id="reset_user_{{ $user->getId() }}" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="reset_user_{{ $user->id }}" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -11,7 +11,7 @@
                     <p>Are you sure you wish to continue?</p>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-success" href="{{ URL::route('users.reset', array('users' => $user->getId())) }}" data-token="{{ Session::getToken() }}" data-method="POST">Yes</a>
+                    <a class="btn btn-success" href="{{ URL::route('users.reset', array('users' => $user->id)) }}" data-token="{{ Session::getToken() }}" data-method="POST">Yes</a>
                     <button class="btn btn-danger" data-dismiss="modal">No</button>
                 </div>
             </div>

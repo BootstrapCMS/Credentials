@@ -100,7 +100,7 @@ abstract class AbstractController extends Controller
     protected function getUserId()
     {
         if (Sentry::getUser()) {
-            return Sentry::getUser()->getId();
+            return Sentry::getUser()->id;
         } else {
             return 1;
         }

@@ -149,7 +149,7 @@ class UserController extends AbstractController
             }
 
             Session::flash('success', 'The user has been created successfully. Their password has been emailed to them.');
-            return Redirect::route('users.show', array('users' => $user->getId()));
+            return Redirect::route('users.show', array('users' => $user->id));
         } catch (\Cartalyst\Sentry\Users\UserExistsException $e) {
             Log::notice($e);
             Session::flash('error', 'That email address is taken.');
@@ -232,7 +232,7 @@ class UserController extends AbstractController
         }
 
         Session::flash('success', 'The user has been updated successfully.');
-        return Redirect::route('users.show', array('users' => $user->getId()));
+        return Redirect::route('users.show', array('users' => $user->id));
     }
 
     /**
@@ -253,11 +253,11 @@ class UserController extends AbstractController
             Log::notice($e);
             $time = $throttle->getSuspensionTime();
             Session::flash('error', "This user is already suspended for $time minutes.");
-            return Redirect::route('users.suspend', array('users' => $user->getId()))->withErrors($val)->withInput();
+            return Redirect::route('users.suspend', array('users' => $user->id))->withErrors($val)->withInput();
         } catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
             Log::notice($e);
             Session::flash('error', 'This user has already been banned.');
-            return Redirect::route('users.suspend', array('users' => $user->getId()))->withErrors($val)->withInput();
+            return Redirect::route('users.suspend', array('users' => $user->id))->withErrors($val)->withInput();
         }
 
         Session::flash('success', 'The user has been suspended successfully.');

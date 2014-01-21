@@ -23,7 +23,7 @@ Edit {{{ $user->getName() }}}
     </div>
     <div class="col-xs-6">
         <div class="pull-right">
-            &nbsp;<a class="btn btn-success" href="{{ URL::route('users.show', array('users' => $user->getId())) }}"><i class="fa fa-file-text"></i> Show User</a>
+            &nbsp;<a class="btn btn-success" href="{{ URL::route('users.show', array('users' => $user->id)) }}"><i class="fa fa-file-text"></i> Show User</a>
             &nbsp;<a class="btn btn-warning" href="#suspend_user" data-toggle="modal" data-target="#suspend_user"><i class="fa fa-ban"></i> Suspend User</a>
             @if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
                 &nbsp;<a class="btn btn-inverse" href="#reset_user" data-toggle="modal" data-target="#reset_user"><i class="fa fa-lock"></i> Reset Password</a>
@@ -35,13 +35,13 @@ Edit {{{ $user->getName() }}}
 <hr>
 <div class="well">
     <?php
-    $form = array('url' => URL::route('users.update', array('users' => $user->getId())),
+    $form = array('url' => URL::route('users.update', array('users' => $user->id)),
         'method' => 'PATCH',
         'button' => 'Save User',
         'defaults' => array(
-            'first_name' => $user->getFirstName(),
-            'last_name' => $user->getLastName(),
-            'email' => $user->getEmail(),
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
     ));
     foreach($groups as $group) {
         $form['defaults']['group_'.$group->id] = ($user->inGroup($group));
