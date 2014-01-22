@@ -44,7 +44,7 @@ Route::filter('throttle.reset', function ($route, $request, $value) {
         Session::flash('error', 'Your computer has been suspended from resetting passwords. Please contact support.');
         return Redirect::route('account.login')->withErrors($val)->withInput();
     }
-}
+});
 
 Route::filter('throttle.register', function ($route, $request, $value) {
     if (!Throttle::hit($request, 10, 30)->check()) {
