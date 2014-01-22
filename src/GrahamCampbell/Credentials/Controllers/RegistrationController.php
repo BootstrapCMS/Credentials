@@ -48,6 +48,8 @@ class RegistrationController extends AbstractController
     public function __construct()
     {
         parent::__construct();
+
+        $this->beforeFilter('throttle.register', array('only' => array('postRegister')));
     }
 
     /**

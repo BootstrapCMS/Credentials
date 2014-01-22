@@ -48,6 +48,8 @@ class ResetController extends AbstractController
     public function __construct()
     {
         parent::__construct();
+
+        $this->beforeFilter('throttle.reset', array('only' => array('postReset')));
     }
 
     /**

@@ -48,6 +48,8 @@ class LoginController extends AbstractController
             'getLogout' => 'user',
         ));
 
+        $this->beforeFilter('throttle.login', array('only' => array('postLogin')));
+
         parent::__construct();
     }
 
