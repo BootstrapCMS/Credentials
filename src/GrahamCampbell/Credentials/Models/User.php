@@ -79,6 +79,13 @@ class User extends SentryUser implements BaseModelInterface, NameModelInterface
     public static $sort = 'asc';
 
     /**
+     * Access caches.
+     *
+     * @var array
+     */
+    protected $access = array();
+
+    /**
      * Activated at accessor.
      *
      * @param  mixed  $value
@@ -95,5 +102,23 @@ class User extends SentryUser implements BaseModelInterface, NameModelInterface
         }
 
         return false;
+    }
+
+    /**
+     * Check a user's access.
+     *
+     * @param  string|array  $permissions
+     * @param  bool  $all
+     * @return bool
+     */
+    public function hasAccess($permissions, $all = true, $cache = true)
+    {
+        $key = md5(json_encode($permissions).json_encode($all));
+
+        if (!array_key_exists($key, $this->access) || $cache === false) {
+            $this->access[$key] = $this->hasAccess($permissions, $all);
+        }
+
+        return $this->access[$key];
     }
 }

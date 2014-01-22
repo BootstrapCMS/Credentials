@@ -16,7 +16,6 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use Cartalyst\Sentry\Facades\Laravel\Sentry;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
@@ -28,6 +27,7 @@ use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Passwd\Facades\Passwd;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
+use GrahamCampbell\Credentials\Facades\Credentials;
 
 /**
  * This is the reset controller class.
@@ -81,7 +81,7 @@ class ResetController extends AbstractController
         }
 
         try {
-            $user = Sentry::getUserProvider()->findByLogin($input['email']);
+            $user = Credentials::getUserProvider()->findByLogin($input['email']);
 
             $data = array(
                 'view' => 'credentials::emails.reset',
@@ -122,7 +122,7 @@ class ResetController extends AbstractController
         }
 
         try {
-            $user = Sentry::getUserProvider()->findById($id);
+            $user = Credentials::getUserProvider()->findById($id);
 
             $password = Passwd::generate();
 

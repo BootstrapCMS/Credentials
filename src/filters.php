@@ -17,7 +17,7 @@
 
 // check if the user is logged in and their access level
 Route::filter('credentials', function ($route, $request, $value) {
-    if (!Sentry::check()) {
+    if (!Credentials::check()) {
         Log::info('User tried to access a page without being logged in', array('path' => $request->path()));
         if (Request::ajax()) {
             return App::abort(401, 'Action Requires Login');
@@ -26,7 +26,7 @@ Route::filter('credentials', function ($route, $request, $value) {
         return Redirect::guest(URL::route('account.login'));
     }
 
-    if (!Sentry::getUser()->hasAccess($value)) {
+    if (!Credentials::hasAccess($value)) {
         Log::warning('User tried to access a page without permission', array('path' => $request->path(), 'permission' => $value));
         return App::abort(403, ucwords($value).' Permissions Are Required');
     }

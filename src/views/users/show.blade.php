@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-xs-6">
         <p class="lead">
-            @if($user->id == Sentry::getUser()->id)
+            @if($user->id == Credentials::getUser()->id)
                 Currently showing your profile:
             @else
                 Currently showing {{ $user->getName() }}'s profile:
@@ -23,11 +23,11 @@
     </div>
     <div class="col-xs-6">
         <div class="pull-right">
-            @if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
+            @if (Credentials::check() && Credentials::hasAccess('admin'))
                 &nbsp;<a class="btn btn-info" href="{{ URL::route('users.edit', array('users' => $user->id)) }}"><i class="fa fa-pencil-square-o"></i> Edit User</a>
             @endif
             &nbsp;<a class="btn btn-warning" href="#suspend_user" data-toggle="modal" data-target="#suspend_user"><i class="fa fa-ban"></i> Suspend User</a>
-            @if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
+            @if (Credentials::check() && Credentials::hasAccess('admin'))
                 &nbsp;<a class="btn btn-inverse" href="#reset_user" data-toggle="modal" data-target="#reset_user"><i class="fa fa-lock"></i> Reset Password</a>
                 &nbsp;<a class="btn btn-danger" href="#delete_user" data-toggle="modal" data-target="#delete_user"><i class="fa fa-times"></i> Delete</a>
             @endif
@@ -100,7 +100,7 @@
 
 @section('bottom')
 @include('credentials::users.suspend')
-@if (Sentry::check() && Sentry::getUser()->hasAccess('admin'))
+@if (Credentials::check() && Credentials::hasAccess('admin'))
     @include('credentials::users.reset')
     @include('credentials::users.delete')
 @endif

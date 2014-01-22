@@ -32,6 +32,13 @@ use GrahamCampbell\Credentials\Providers\GroupProvider;
 class Credentials
 {
     /**
+     * The cache of the check method.
+     *
+     * @var mixed
+     */
+    protected $check;
+
+    /**
      * The sentry instance.
      *
      * @var \Cartalyst\Sentry\Sentry
@@ -65,5 +72,29 @@ class Credentials
         $this->groupprovider = $groupprovider;
     }
 
-    // TODO: add stuff...
+    /**
+     * Call Sentry's check method or load of cached value.
+     *
+     * @return bool
+     */
+    public function check($cache = true)
+    {
+        if (is_null($this->check) || $cache === false) {
+            $this->check = $this->sentry->check();
+        }
+
+        return $this->check();
+    }
+
+    /**
+     * Dynamically pass all other methods to sentry.
+     *
+     * @param  string  $method
+     * @param  array   $parameters
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        return call_user_func_array(array($this->sentry, $method), $parameters);
+    }
 }

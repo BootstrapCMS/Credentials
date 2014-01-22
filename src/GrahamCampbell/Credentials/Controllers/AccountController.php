@@ -16,7 +16,6 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use Cartalyst\Sentry\Facades\Laravel\Sentry;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
@@ -25,6 +24,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
+use GrahamCampbell\Credentials\Facades\Credentials;
 
 /**
  * This is the account controller class.
@@ -71,11 +71,11 @@ class AccountController extends AbstractController
      */
     public function deleteProfile()
     {
-        $user = Sentry::getUser();
+        $user = Credentials::getUser();
         $this->checkUser($user);
 
         Event::fire('user.logout', array(array('Email' => $user->email)));
-        Sentry::logout();
+        Credentials::logout();
 
         $user->delete();
 
@@ -109,7 +109,7 @@ class AccountController extends AbstractController
             return Redirect::route('account.profile')->withInput()->withErrors($val->errors());
         }
 
-        $user = Sentry::getUser();
+        $user = Credentials::getUser();
         $this->checkUser($user);
 
         $user->update($input);
@@ -142,7 +142,7 @@ class AccountController extends AbstractController
 
         unset($input['password_confirmation']);
 
-        $user = Sentry::getUser();
+        $user = Credentials::getUser();
         $this->checkUser($user);
 
         $user->update($input);

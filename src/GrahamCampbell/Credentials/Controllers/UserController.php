@@ -17,7 +17,6 @@
 namespace GrahamCampbell\Credentials\Controllers;
 
 use DateTime;
-use Cartalyst\Sentry\Facades\Laravel\Sentry;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
@@ -29,6 +28,7 @@ use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Passwd\Facades\Passwd;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
+use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Facades\UserProvider;
 use GrahamCampbell\Credentials\Facades\GroupProvider;
 
@@ -244,7 +244,7 @@ class UserController extends AbstractController
     public function suspend($id)
     {
         try {
-            $throttle = Sentry::getThrottleProvider()->findByUserId($id);
+            $throttle = Credentials::getThrottleProvider()->findByUserId($id);
             $throttle->suspend();
         } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
             Log::notice($e);

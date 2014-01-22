@@ -31,9 +31,9 @@ Profile
         'method' => 'PATCH',
         'button' => 'Save Details',
         'defaults' => array(
-            'first_name' => Sentry::getUser()->first_name,
-            'last_name' => Sentry::getUser()->last_name,
-            'email' => Sentry::getUser()->email,
+            'first_name' => Credentials::getUser()->first_name,
+            'last_name' => Credentials::getUser()->last_name,
+            'email' => Credentials::getUser()->email,
     ));
     ?>
     @include('credentials::account.details')

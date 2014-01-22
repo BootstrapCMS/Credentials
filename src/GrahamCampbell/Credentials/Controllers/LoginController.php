@@ -16,7 +16,6 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use Cartalyst\Sentry\Facades\Laravel\Sentry;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
@@ -25,6 +24,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
+use GrahamCampbell\Credentials\Facades\Credentials;
 
 /**
  * This is the login controller class.
@@ -87,10 +87,10 @@ class LoginController extends AbstractController
         }
 
         try {
-            $throttle = Sentry::getThrottleProvider()->findByUserLogin($input['email']);
+            $throttle = Credentials::getThrottleProvider()->findByUserLogin($input['email']);
             $throttle->check();
 
-            Sentry::authenticate($input, $remember);
+            Credentials::authenticate($input, $remember);
         } catch (\Cartalyst\Sentry\Users\WrongPasswordException $e) {
             Log::notice($e);
             Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
@@ -130,8 +130,8 @@ class LoginController extends AbstractController
      */
     public function getLogout()
     {
-        Event::fire('user.logout', array(array('Email' => Sentry::getUser()->email)));
-        Sentry::logout();
+        Event::fire('user.logout', array(array('Email' => Credentials::getUser()->email)));
+        Credentials::logout();
         return Redirect::to(Config::get('credentials::home', '/'));
     }
 }

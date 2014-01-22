@@ -16,7 +16,7 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use Cartalyst\Sentry\Facades\Laravel\Sentry;
+use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Core\Controllers\AbstractController as Controller;
 
 /**
@@ -60,7 +60,7 @@ abstract class AbstractController extends Controller
     {
         $this->beforeFilter('csrf', array('on' => 'post'));
 
-        Sentry::getThrottleProvider()->enable();
+        Credentials::getThrottleProvider()->enable();
 
         $this->beforeFilter('credentials:user', array('only' => $this->users));
         $this->beforeFilter('credentials:mod', array('only' => $this->mods));
@@ -99,8 +99,8 @@ abstract class AbstractController extends Controller
      */
     protected function getUserId()
     {
-        if (Sentry::getUser()) {
-            return Sentry::getUser()->id;
+        if (Credentials::getUser()) {
+            return Credentials::getUser()->id;
         } else {
             return 1;
         }

@@ -16,7 +16,6 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use Cartalyst\Sentry\Facades\Laravel\Sentry;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
@@ -28,6 +27,7 @@ use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
+use GrahamCampbell\Credentials\Facades\Credentials;
 
 /**
  * This is the registration controller class.
@@ -96,11 +96,11 @@ class RegistrationController extends AbstractController
         try {
             unset($input['password_confirmation']);
 
-            $user = Sentry::register($input);
+            $user = Credentials::register($input);
 
             if (!Config::get('credentials::regemail')) {
                 $user->attemptActivation($user->GetActivationCode());
-                $user->addGroup(Sentry::getGroupProvider()->findByName('Users'));
+                $user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
 
                 Event::fire('user.registrationsuccessful', array(array('Email' => $input['email'], 'Activated' => true)));
                 Session::flash('success', 'Your account has been created successfully.');
@@ -150,14 +150,14 @@ class RegistrationController extends AbstractController
         }
 
         try {
-            $user = Sentry::getUserProvider()->findById($id);
+            $user = Credentials::getUserProvider()->findById($id);
 
             if (!$user->attemptActivation($code)) {
                 Session::flash('error', 'There was a problem activating this account. Please contact support.');
                 return Redirect::to(Config::get('credentials::home', '/'));
             }
 
-            $user->addGroup(Sentry::getGroupProvider()->findByName('Users'));
+            $user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
 
             Event::fire('user.activationsuccessful', array(array('Email' => $user->email)));
             Session::flash('success', 'Your account has been activated successfully. You may now login.');
