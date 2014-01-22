@@ -37,7 +37,7 @@ Route::filter('throttle.login', function ($route, $request, $value) {
         Session::flash('error', 'You have made too many login request. Please try again in 10 minutes.');
         return Redirect::route('account.login')->withErrors($val)->withInput();
     }
-}
+});
 
 Route::filter('throttle.reset', function ($route, $request, $value) {
     if (!Throttle::hit($request, 5, 30)->check()) {
@@ -51,4 +51,4 @@ Route::filter('throttle.register', function ($route, $request, $value) {
         Session::flash('error', 'Your computer has been suspended from registration. Please contact support.');
         return Redirect::route('account.login')->withErrors($val)->withInput();
     }
-}
+});
