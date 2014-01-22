@@ -36,7 +36,7 @@ class Credentials
      *
      * @var mixed
      */
-    protected $check;
+    protected $cache;
 
     /**
      * The sentry instance.
@@ -79,11 +79,11 @@ class Credentials
      */
     public function check($cache = true)
     {
-        if (is_null($this->check) || $cache === false) {
-            $this->check = $this->sentry->check();
+        if (is_null($this->cache) || $cache === false) {
+            $this->cache = $this->sentry->check();
         }
 
-        return $this->check();
+        return $this->cache;
     }
 
     /**
