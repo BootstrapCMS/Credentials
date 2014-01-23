@@ -42,13 +42,13 @@ Route::filter('throttle.login', function ($route, $request) {
 Route::filter('throttle.reset', function ($route, $request) {
     if (!Throttle::hit($request, 5, 30)->check()) {
         Session::flash('error', 'Your computer has been suspended from resetting passwords. Please contact support.');
-        return Redirect::route('account.login')->withInput();
+        return Redirect::route('account.reset')->withInput();
     }
 });
 
 Route::filter('throttle.register', function ($route, $request) {
     if (!Throttle::hit($request, 10, 30)->check()) {
         Session::flash('error', 'Your computer has been suspended from registration. Please contact support.');
-        return Redirect::route('account.login')->withInput();
+        return Redirect::route('account.register')->withInput();
     }
 });
