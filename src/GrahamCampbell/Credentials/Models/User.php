@@ -116,7 +116,7 @@ class User extends SentryUser implements BaseModelInterface, NameModelInterface
         $key = md5(json_encode($permissions).json_encode($all));
 
         if (!array_key_exists($key, $this->access) || $cache === false) {
-            $this->access[$key] = __parent::hasAccess($permissions, $all);
+            $this->access[$key] = parent::hasAccess($permissions, $all);
         }
 
         return $this->access[$key];
