@@ -70,8 +70,8 @@ abstract class AbstractController extends Controller
     /**
      * Set the permission.
      *
-     * @pram  string  $action
-     * @pram  string  $permission
+     * @param  string  $action
+     * @param  string  $permission
      * @return void
      */
     protected function setPermission($action, $permission)
@@ -82,7 +82,7 @@ abstract class AbstractController extends Controller
     /**
      * Set the permissions.
      *
-     * @pram  array  $permissions
+     * @param  array  $permissions
      * @return void
      */
     protected function setPermissions($permissions)
