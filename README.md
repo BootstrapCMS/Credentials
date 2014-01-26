@@ -48,7 +48,9 @@ You'll then need to run `composer install` or `composer update` to download it a
 
 You will need to register the [Laravel Core](https://github.com/GrahamCampbell/Laravel-Core) service provider before you attempt to load the Laravel Credentials service provider. Open up `app/config/app.php` and add the following to the `providers` key.  
 
+`'Lightgear\Asset\AssetServiceProvider'`  
 `'Cartalyst\Sentry\SentryServiceProvider'`  
+`'GrahamCampbell\Core\CoreServiceProvider'`  
 `'GrahamCampbell\Viewer\ViewerServiceProvider'`  
 `'GrahamCampbell\Queuing\QueuingServiceProvider'`  
 `'GrahamCampbell\Security\SecurityMinServiceProvider'`  
