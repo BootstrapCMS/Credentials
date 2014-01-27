@@ -60,8 +60,6 @@ abstract class AbstractController extends Controller
     {
         $this->beforeFilter('csrf', array('on' => 'post'));
 
-        Credentials::getThrottleProvider()->enable();
-
         $this->beforeFilter('credentials:user', array('only' => $this->users));
         $this->beforeFilter('credentials:mod', array('only' => $this->mods));
         $this->beforeFilter('credentials:admin', array('only' => $this->admins));

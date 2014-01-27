@@ -49,6 +49,7 @@ class LoginController extends AbstractController
         ));
 
         $this->beforeFilter('throttle.login', array('only' => array('postLogin')));
+        $this->beforeFilter('throttle.sentry', array('only' => array('postLogin')));
 
         parent::__construct();
     }

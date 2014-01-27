@@ -32,6 +32,10 @@ Route::filter('credentials', function ($route, $request, $value) {
     }
 });
 
+Route::filter('throttle.sentry', function ($route, $request) {
+    Credentials::getThrottleProvider()->enable();
+});
+
 Route::filter('throttle.login', function ($route, $request) {
     if (!Throttle::hit($request, 10, 10)->check()) {
         Session::flash('error', 'You have made too many login requests. Please try again in 10 minutes.');
