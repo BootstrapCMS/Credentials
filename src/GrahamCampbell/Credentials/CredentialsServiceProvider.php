@@ -75,6 +75,11 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->registerUserProvider();
         $this->registerGroupProvider();
         $this->registerCredentials();
+        $this->registerAccountController();
+        $this->registerLoginController();
+        $this->registerRegistrationController();
+        $this->registerResetController();
+        $this->registerUserController();
     }
 
     /**
@@ -120,6 +125,76 @@ class CredentialsServiceProvider extends ServiceProvider
             $groupprovider = $app['groupprovider'];
 
             return new Classes\Credentials($sentry, $userprovider, $groupprovider);
+        });
+    }
+
+    /**
+     * Register the account controller class.
+     *
+     * @return void
+     */
+    protected function registerAccountController()
+    {
+        $this->app->bind('GrahamCampbell\Credentials\Controllers\AccountController', function ($app) {
+            $credentials = $app['credentials'];
+
+            return new Controllers\AccountController($credentials);
+        });
+    }
+
+    /**
+     * Register the login controller class.
+     *
+     * @return void
+     */
+    protected function registerLoginController()
+    {
+        $this->app->bind('GrahamCampbell\Credentials\Controllers\LoginController', function ($app) {
+            $credentials = $app['credentials'];
+
+            return new Controllers\LoginController($credentials);
+        });
+    }
+
+    /**
+     * Register the registration controller class.
+     *
+     * @return void
+     */
+    protected function registerRegistrationController()
+    {
+        $this->app->bind('GrahamCampbell\Credentials\Controllers\RegistrationController', function ($app) {
+            $credentials = $app['credentials'];
+
+            return new Controllers\RegistrationController($credentials);
+        });
+    }
+
+    /**
+     * Register the reset controller class.
+     *
+     * @return void
+     */
+    protected function registerResetController()
+    {
+        $this->app->bind('GrahamCampbell\Credentials\Controllers\ResetController', function ($app) {
+            $credentials = $app['credentials'];
+
+            return new Controllers\ResetController($credentials);
+        });
+    }
+
+    /**
+     * Register the user controller class.
+     *
+     * @return void
+     */
+    protected function registerUserController()
+    {
+        $this->app->bind('GrahamCampbell\Credentials\Controllers\UserController', function ($app) {
+            $credentials = $app['credentials'];
+
+            return new Controllers\UserController($credentials);
         });
     }
 
