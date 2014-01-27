@@ -27,7 +27,7 @@ use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Passwd\Facades\Passwd;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
-use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Classes\Credentials;
 
 /**
  * This is the reset controller class.
@@ -41,15 +41,16 @@ use GrahamCampbell\Credentials\Facades\Credentials;
 class ResetController extends AbstractController
 {
     /**
-     * Constructor (setup access permissions).
+     * Create a new instance.
      *
+     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
      * @return void
      */
-    public function __construct()
+    public function __construct(Credentials $credentials)
     {
-        parent::__construct();
-
         $this->beforeFilter('throttle.reset', array('only' => array('postReset')));
+
+        parent::__construct($credentials);
     }
 
     /**
@@ -83,7 +84,7 @@ class ResetController extends AbstractController
         }
 
         try {
-            $user = Credentials::getUserProvider()->findByLogin($input['email']);
+            $user = $this->credentials->getUserProvider()->findByLogin($input['email']);
 
             $data = array(
                 'view' => 'credentials::emails.reset',
@@ -124,7 +125,7 @@ class ResetController extends AbstractController
         }
 
         try {
-            $user = Credentials::getUserProvider()->findById($id);
+            $user = $this->credentials->getUserProvider()->findById($id);
 
             $password = Passwd::generate();
 

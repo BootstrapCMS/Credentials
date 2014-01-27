@@ -28,7 +28,7 @@ use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Passwd\Facades\Passwd;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
-use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Classes\Credentials;
 use GrahamCampbell\Credentials\Facades\UserProvider;
 use GrahamCampbell\Credentials\Facades\GroupProvider;
 
@@ -44,11 +44,12 @@ use GrahamCampbell\Credentials\Facades\GroupProvider;
 class UserController extends AbstractController
 {
     /**
-     * Constructor (setup access permissions).
+     * Create a new instance.
      *
+     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
      * @return void
      */
-    public function __construct()
+    public function __construct(Credentials $credentials)
     {
         $this->setPermissions(array(
             'index'   => 'mod',
@@ -61,7 +62,7 @@ class UserController extends AbstractController
             'destroy' => 'admin',
         ));
 
-        parent::__construct();
+        parent::__construct($credentials);
     }
 
     /**
@@ -244,7 +245,7 @@ class UserController extends AbstractController
     public function suspend($id)
     {
         try {
-            $throttle = Credentials::getThrottleProvider()->findByUserId($id);
+            $throttle = $this->credentials->getThrottleProvider()->findByUserId($id);
             $throttle->suspend();
         } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
             Log::notice($e);

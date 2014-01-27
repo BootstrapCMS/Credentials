@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
-use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Classes\Credentials;
 
 /**
  * This is the registration controller class.
@@ -41,15 +41,16 @@ use GrahamCampbell\Credentials\Facades\Credentials;
 class RegistrationController extends AbstractController
 {
     /**
-     * Constructor (setup access permissions).
+     * Create a new instance.
      *
+     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
      * @return void
      */
-    public function __construct()
+    public function __construct(Credentials $credentials)
     {
-        parent::__construct();
-
         $this->beforeFilter('throttle.register', array('only' => array('postRegister')));
+
+        parent::__construct($credentials);
     }
 
     /**
@@ -98,11 +99,11 @@ class RegistrationController extends AbstractController
         try {
             unset($input['password_confirmation']);
 
-            $user = Credentials::register($input);
+            $user = $this->credentials->register($input);
 
             if (!Config::get('credentials::regemail')) {
                 $user->attemptActivation($user->GetActivationCode());
-                $user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
+                $user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
 
                 Event::fire('user.registrationsuccessful', array(array('Email' => $input['email'], 'Activated' => true)));
                 Session::flash('success', 'Your account has been created successfully.');
@@ -152,14 +153,14 @@ class RegistrationController extends AbstractController
         }
 
         try {
-            $user = Credentials::getUserProvider()->findById($id);
+            $user = $this->credentials->getUserProvider()->findById($id);
 
             if (!$user->attemptActivation($code)) {
                 Session::flash('error', 'There was a problem activating this account. Please contact support.');
                 return Redirect::to(Config::get('credentials::home', '/'));
             }
 
-            $user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
+            $user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
 
             Event::fire('user.activationsuccessful', array(array('Email' => $user->email)));
             Session::flash('success', 'Your account has been activated successfully. You may now login.');

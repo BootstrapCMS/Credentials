@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
-use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Classes\Credentials;
 
 /**
  * This is the login controller class.
@@ -38,11 +38,12 @@ use GrahamCampbell\Credentials\Facades\Credentials;
 class LoginController extends AbstractController
 {
     /**
-     * Constructor (setup access permissions).
+     * Create a new instance.
      *
+     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
      * @return void
      */
-    public function __construct()
+    public function __construct(Credentials $credentials)
     {
         $this->setPermissions(array(
             'getLogout' => 'user',
@@ -51,7 +52,7 @@ class LoginController extends AbstractController
         $this->beforeFilter('throttle.login', array('only' => array('postLogin')));
         $this->beforeFilter('throttle.sentry', array('only' => array('postLogin')));
 
-        parent::__construct();
+        parent::__construct($credentials);
     }
 
     /**
@@ -90,10 +91,10 @@ class LoginController extends AbstractController
         }
 
         try {
-            $throttle = Credentials::getThrottleProvider()->findByUserLogin($input['email']);
+            $throttle = $this->credentials->getThrottleProvider()->findByUserLogin($input['email']);
             $throttle->check();
 
-            Credentials::authenticate($input, $remember);
+            $this->credentials->authenticate($input, $remember);
         } catch (\Cartalyst\Sentry\Users\WrongPasswordException $e) {
             Log::notice($e);
             Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
@@ -133,8 +134,8 @@ class LoginController extends AbstractController
      */
     public function getLogout()
     {
-        Event::fire('user.logout', array(array('Email' => Credentials::getUser()->email)));
-        Credentials::logout();
+        Event::fire('user.logout', array(array('Email' => $this->credentials->getUser()->email)));
+        $this->credentials->logout();
         return Redirect::to(Config::get('credentials::home', '/'));
     }
 }

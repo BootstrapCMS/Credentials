@@ -16,8 +16,8 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use GrahamCampbell\Credentials\Facades\Credentials;
-use GrahamCampbell\Core\Controllers\AbstractController as Controller;
+use Illuminate\Routing\Controller;
+use GrahamCampbell\Credentials\Classes\Credentials;
 
 /**
  * This is the abstract controller class.
@@ -52,12 +52,22 @@ abstract class AbstractController extends Controller
     protected $admins = array();
 
     /**
-     * Constructor (setup protection and permissions).
+     * The credentials instance.
      *
+     * @var \GrahamCampbell\Credentials\Classes\Credentials
+     */
+    protected $credentials;
+
+    /**
+     * Create a new instance.
+     *
+     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
      * @return void
      */
-    public function __construct()
+    public function __construct(Credentials $credentials)
     {
+        $this->credentials = $credentials;
+
         $this->beforeFilter('csrf', array('on' => 'post'));
 
         $this->beforeFilter('credentials:user', array('only' => $this->users));
@@ -97,10 +107,20 @@ abstract class AbstractController extends Controller
      */
     protected function getUserId()
     {
-        if (Credentials::getUser()) {
-            return Credentials::getUser()->id;
+        if ($this->credentials->check()) {
+            return $this->credentials->getUser()->id;
         } else {
             return 1;
         }
+    }
+
+    /**
+     * Return the credentials instance.
+     *
+     * @return \GrahamCampbell\Credentials\Classes\Credentials
+     */
+    public function getCredentials()
+    {
+        return $this->credentials;
     }
 }

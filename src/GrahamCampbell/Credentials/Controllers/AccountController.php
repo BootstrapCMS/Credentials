@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
-use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Classes\Credentials;
 
 /**
  * This is the account controller class.
@@ -38,11 +38,12 @@ use GrahamCampbell\Credentials\Facades\Credentials;
 class AccountController extends AbstractController
 {
     /**
-     * Constructor (setup access permissions).
+     * Create a new instance.
      *
+     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
      * @return void
      */
-    public function __construct()
+    public function __construct(Credentials $credentials)
     {
         $this->setPermissions(array(
             'getProfile'    => 'user',
@@ -51,7 +52,7 @@ class AccountController extends AbstractController
             'patchPassword' => 'user',
         ));
 
-        parent::__construct();
+        parent::__construct($credentials);
     }
 
     /**
@@ -71,11 +72,11 @@ class AccountController extends AbstractController
      */
     public function deleteProfile()
     {
-        $user = Credentials::getUser();
+        $user = $this->credentials->getUser();
         $this->checkUser($user);
 
         Event::fire('user.logout', array(array('Email' => $user->email)));
-        Credentials::logout();
+        $this->credentials->logout();
 
         $user->delete();
 
@@ -109,7 +110,7 @@ class AccountController extends AbstractController
             return Redirect::route('account.profile')->withInput()->withErrors($val->errors());
         }
 
-        $user = Credentials::getUser();
+        $user = $this->credentials->getUser();
         $this->checkUser($user);
 
         $user->update($input);
@@ -142,7 +143,7 @@ class AccountController extends AbstractController
 
         unset($input['password_confirmation']);
 
-        $user = Credentials::getUser();
+        $user = $this->credentials->getUser();
         $this->checkUser($user);
 
         $user->update($input);
