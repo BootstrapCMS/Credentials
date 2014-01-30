@@ -1,5 +1,8 @@
 <?php
 
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+
 /**
  * This file is part of Laravel Credentials by Graham Campbell.
  *
@@ -20,7 +23,7 @@ Route::filter('credentials', function ($route, $request, $value) {
     if (!Credentials::check()) {
         Log::info('User tried to access a page without being logged in', array('path' => $request->path()));
         if (Request::ajax()) {
-            return App::abort(401, 'Action Requires Login');
+            throw new UnauthorizedHttpException('Action Requires Login');
         }
         Session::flash('error', 'You must be logged in to perform that action.');
         return Redirect::guest(URL::route('account.login'));
@@ -28,7 +31,7 @@ Route::filter('credentials', function ($route, $request, $value) {
 
     if (!Credentials::hasAccess($value)) {
         Log::warning('User tried to access a page without permission', array('path' => $request->path(), 'permission' => $value));
-        return App::abort(403, ucwords($value).' Permissions Are Required');
+        throw new AccessDeniedHttpException(ucwords($value).' Permissions Are Required');
     }
 });
 

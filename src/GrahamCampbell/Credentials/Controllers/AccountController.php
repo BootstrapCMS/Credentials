@@ -16,7 +16,6 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
@@ -25,6 +24,7 @@ use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Credentials\Classes\Credentials;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * This is the account controller class.
@@ -161,7 +161,7 @@ class AccountController extends AbstractController
     protected function checkUser($user)
     {
         if (!$user) {
-            return App::abort(404, 'User Not Found');
+            throw new NotFoundHttpException('User Not Found');
         }
     }
 }

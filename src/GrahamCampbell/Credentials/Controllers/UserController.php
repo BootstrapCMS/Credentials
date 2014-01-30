@@ -17,7 +17,6 @@
 namespace GrahamCampbell\Credentials\Controllers;
 
 use DateTime;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
@@ -31,6 +30,7 @@ use GrahamCampbell\Queuing\Facades\Queuing;
 use GrahamCampbell\Credentials\Classes\Credentials;
 use GrahamCampbell\Credentials\Facades\UserProvider;
 use GrahamCampbell\Credentials\Facades\GroupProvider;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * This is the user controller class.
@@ -249,7 +249,7 @@ class UserController extends AbstractController
             $throttle->suspend();
         } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
             Log::notice($e);
-            return App::abort(404, 'User Not Found');
+            throw new NotFoundHttpException('User Not Found', $e);
         } catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
             Log::notice($e);
             $time = $throttle->getSuspensionTime();
@@ -338,7 +338,7 @@ class UserController extends AbstractController
     protected function checkUser($user)
     {
         if (!$user) {
-            return App::abort(404, 'User Not Found');
+            throw new NotFoundHttpException('User Not Found');
         }
     }
 }
