@@ -18,7 +18,7 @@ Edit {{{ $user->getName() }}}
                 Currently editing your profile:
             @else
                 Currently editing {{ $user->getName() }}'s profile:
-            @endif  
+            @endif
         </p>
     </div>
     <div class="col-xs-6">

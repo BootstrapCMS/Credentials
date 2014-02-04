@@ -44,12 +44,12 @@ return array(
 
     /*
     |--------------------------------------------------------------------------
-    | Require Email Verification On Registration
+    | Email Verification On Registration
     |--------------------------------------------------------------------------
     |
     | This defines if public registration requires email activation.
     |
-    | Default to true. 
+    | Default to true.
     |
     */
 
@@ -60,7 +60,7 @@ return array(
     | Login Page
     |--------------------------------------------------------------------------
     |
-    | This specifies the view that is used for the login page.
+    | This defines the view that is used for the login page.
     |
     */
 
@@ -71,7 +71,7 @@ return array(
     | Registration Page
     |--------------------------------------------------------------------------
     |
-    | This specifies the view that is used for the registration page.
+    | This defines the view that is used for the registration page.
     |
     */
 
@@ -82,7 +82,7 @@ return array(
     | Forgot Password Page
     |--------------------------------------------------------------------------
     |
-    | This specifies the view that is used for the forgot password page.
+    | This defines the view that is used for the forgot password page.
     |
     */
 
@@ -93,7 +93,7 @@ return array(
     | Profile Password Page
     |--------------------------------------------------------------------------
     |
-    | This specifies the view that is used for the profile page.
+    | This defines the view that is used for the profile page.
     |
     */
 

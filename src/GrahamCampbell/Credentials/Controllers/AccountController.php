@@ -114,7 +114,7 @@ class AccountController extends AbstractController
         $this->checkUser($user);
 
         $user->update($input);
-        
+
         Session::flash('success', 'Your details have been updated successfully.');
         return Redirect::route('account.profile');
     }
@@ -147,7 +147,7 @@ class AccountController extends AbstractController
         $this->checkUser($user);
 
         $user->update($input);
-        
+
         Session::flash('success', 'Your password has been updated successfully.');
         return Redirect::route('account.profile');
     }

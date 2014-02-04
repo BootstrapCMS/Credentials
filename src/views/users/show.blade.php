@@ -18,7 +18,7 @@
                 Currently showing your profile:
             @else
                 Currently showing {{ $user->getName() }}'s profile:
-            @endif  
+            @endif
         </p>
     </div>
     <div class="col-xs-6">

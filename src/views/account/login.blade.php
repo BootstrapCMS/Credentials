@@ -22,7 +22,7 @@ Login
                 {{ ($errors->has('email') ? $errors->first('email') : '') }}
             </div>
         </div>
-    
+
        <div class="form-group{{ ($errors->has('password')) ? ' has-error' : '' }}">
             <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="password">Password</label>
             <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
