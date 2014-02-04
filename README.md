@@ -48,25 +48,25 @@ You'll then need to run `composer install` or `composer update` to download it a
 
 You will need to register the [Laravel Core](https://github.com/GrahamCampbell/Laravel-Core) service provider before you attempt to load the Laravel Credentials service provider. Open up `app/config/app.php` and add the following to the `providers` key.
 
-`'Lightgear\Asset\AssetServiceProvider'`
-`'Cartalyst\Sentry\SentryServiceProvider'`
-`'GrahamCampbell\Core\CoreServiceProvider'`
-`'GrahamCampbell\Viewer\ViewerServiceProvider'`
-`'GrahamCampbell\Queuing\QueuingServiceProvider'`
-`'GrahamCampbell\Security\SecurityMinServiceProvider'`
-`'GrahamCampbell\Binput\BinputServiceProvider'`
-`'GrahamCampbell\Passwd\PasswdServiceProvider'`
-`'GrahamCampbell\Throttle\ThrottleServiceProvider'`
+* `'Lightgear\Asset\AssetServiceProvider'`
+* `'Cartalyst\Sentry\SentryServiceProvider'`
+* `'GrahamCampbell\Core\CoreServiceProvider'`
+* `'GrahamCampbell\Viewer\ViewerServiceProvider'`
+* `'GrahamCampbell\Queuing\QueuingServiceProvider'`
+* `'GrahamCampbell\Security\SecurityMinServiceProvider'`
+* `'GrahamCampbell\Binput\BinputServiceProvider'`
+* `'GrahamCampbell\Passwd\PasswdServiceProvider'`
+* `'GrahamCampbell\Throttle\ThrottleServiceProvider'`
 
 Once Laravel Credentials is installed, you need to register the service provider. Open up `app/config/app.php` and add the following to the `providers` key.
 
-`'GrahamCampbell\Credentials\CredentialsServiceProvider'`
+* `'GrahamCampbell\Credentials\CredentialsServiceProvider'`
 
 You can register the three facades in the `aliases` key of your `app/config/app.php` file if you like.
 
-`'UserProvider' => 'GrahamCampbell\Credentials\Facades\UserProvider'`
-`'GroupProvider' => 'GrahamCampbell\Credentials\Facades\GroupProvider'`
-`'Credentials' => 'GrahamCampbell\Credentials\Facades\Credentials'`
+* `'UserProvider' => 'GrahamCampbell\Credentials\Facades\UserProvider'`
+* `'GroupProvider' => 'GrahamCampbell\Credentials\Facades\GroupProvider'`
+* `'Credentials' => 'GrahamCampbell\Credentials\Facades\Credentials'`
 
 
 ## Configuration
@@ -110,6 +110,7 @@ This option (`'profile'`) defines the view that is used for the profile page. Th
 **Additional Configuration**
 
 You may want to check out the config for `cartalyst/sentry` too. For Laravel Credentials to function correctly, you must set the models to the following, or to a class which extends the following:
+
 * `'GrahamCampbell\Credentials\Models\Group'`
 * `'GrahamCampbell\Credentials\Models\User'`
 * `'GrahamCampbell\Credentials\Models\Throttle'`
