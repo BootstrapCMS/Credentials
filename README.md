@@ -109,7 +109,10 @@ This option (`'profile'`) defines the view that is used for the profile page. Th
 
 **Additional Configuration**
 
-You may want to check out the config for `cartalyst/sentry' too. For this Laravel Credentials to function correctly, you must set the group model to `'GrahamCampbell\Credentials\Models\Group'` or a class which extends this, the user model to  `'GrahamCampbell\Credentials\Models\User'` or a class which extends this, and the throttle model to `'GrahamCampbell\Credentials\Models\Throttle'` or a class which extends this.
+You may want to check out the config for `cartalyst/sentry` too. For Laravel Credentials to function correctly, you must set the models to the following, or to a class which extends the following:
+* `'GrahamCampbell\Credentials\Models\Group'`
+* `'GrahamCampbell\Credentials\Models\User'`
+* `'GrahamCampbell\Credentials\Models\Throttle'`
 
 
 ## Usage
