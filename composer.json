@@ -55,9 +55,9 @@
         "graham-campbell/navigation": "Easily add a navigation bar to the system."
     },
     "autoload": {
-        "psr-0": {
-            "GrahamCampbell\\Credentials": "src/",
-            "GrahamCampbell\\Tests\\Credentials": "tests/"
+        "psr-4": {
+            "GrahamCampbell\\Credentials\\": "src/",
+            "GrahamCampbell\\Tests\\Credentials\\": "tests/"
         }
     },
     "extra": {
