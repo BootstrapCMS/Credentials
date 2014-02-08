@@ -40,11 +40,7 @@ Laravel Credentials is a cool way to authenticate in [Laravel 4.1](http://larave
 
 Please check the system requirements before installing Laravel Credentials.
 
-To get the latest version of Laravel Credentials, simply require it in your `composer.json` file.
-
-`"graham-campbell/credentials": "*"`
-
-You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
+To get the latest version of Laravel Credentials, simply require `"graham-campbell/credentials": "0.1.*@alpha"` in your `composer.json` file. You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
 
 You will need to register the [Laravel Core](https://github.com/GrahamCampbell/Laravel-Core) service provider before you attempt to load the Laravel Credentials service provider. Open up `app/config/app.php` and add the following to the `providers` key.
 
