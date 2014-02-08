@@ -43,7 +43,7 @@ Route::get('account/password/{id}/{code}', array('as' => 'account.password', 'us
 
 
 // registration routes
-if (Config::get('credentials::regallowed')) {
+if (Config::get('graham-campbell/credentials::regallowed')) {
     Route::get('account/register', array('as' => 'account.register', 'uses' => 'GrahamCampbell\Credentials\Controllers\RegistrationController@getRegister'));
     Route::post('account/register', array('as' => 'account.register.post', 'uses' => 'GrahamCampbell\Credentials\Controllers\RegistrationController@postRegister'));
 }

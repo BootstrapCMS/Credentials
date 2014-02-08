@@ -36,7 +36,7 @@ Profile
             'email' => Credentials::getUser()->email,
     ));
     ?>
-    @include('credentials::account.details')
+    @include('graham-campbell/credentials::account.details')
 </div>
 <hr>
 <h3>Change Password</h3>
@@ -47,12 +47,12 @@ Profile
         'button' => 'Save Password',
     );
     ?>
-    @include('credentials::account.password')
+    @include('graham-campbell/credentials::account.password')
 </div>
 @stop
 
 @section('bottom')
-@include('credentials::account.delete')
+@include('graham-campbell/credentials::account.delete')
 @stop
 
 @section('css')

@@ -29,7 +29,7 @@ Create User
         }
     }
     ?>
-    @include('credentials::users.form')
+    @include('graham-campbell/credentials::users.form')
 </div>
 @stop
 

@@ -60,7 +60,7 @@ class RegistrationController extends AbstractController
      */
     public function getRegister()
     {
-        return Viewer::make(Config::get('credentials::register', 'credentials::account.register'));
+        return Viewer::make(Config::get('graham-campbell/credentials::register', 'graham-campbell/credentials::account.register'));
     }
 
     /**
@@ -70,7 +70,7 @@ class RegistrationController extends AbstractController
      */
     public function postRegister()
     {
-        if (!Config::get('credentials::regallowed')) {
+        if (!Config::get('graham-campbell/credentials::regallowed')) {
             return Redirect::route('account.register');
         }
 
@@ -101,19 +101,19 @@ class RegistrationController extends AbstractController
 
             $user = $this->credentials->register($input);
 
-            if (!Config::get('credentials::regemail')) {
+            if (!Config::get('graham-campbell/credentials::regemail')) {
                 $user->attemptActivation($user->GetActivationCode());
                 $user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
 
                 Event::fire('user.registrationsuccessful', array(array('Email' => $input['email'], 'Activated' => true)));
                 Session::flash('success', 'Your account has been created successfully.');
-                return Redirect::to(Config::get('credentials::home', '/'));
+                return Redirect::to(Config::get('graham-campbell/credentials::home', '/'));
             }
 
             try {
                 $data = array(
-                    'view'    => 'credentials::emails.welcome',
-                    'url'     => URL::to(Config::get('credentials::home', '/')),
+                    'view'    => 'graham-campbell/credentials::emails.welcome',
+                    'url'     => URL::to(Config::get('graham-campbell/credentials::home', '/')),
                     'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $user->GetActivationCode())),
                     'email'   => $user->getLogin(),
                     'subject' => Config::get('platform.name').' - Welcome',
@@ -130,7 +130,7 @@ class RegistrationController extends AbstractController
 
             Event::fire('user.registrationsuccessful', array(array('Email' => $input['email'], 'Activated' => false)));
             Session::flash('success', 'Your account has been created. Check your email for the confirmation link.');
-            return Redirect::to(Config::get('credentials::home', '/'));
+            return Redirect::to(Config::get('graham-campbell/credentials::home', '/'));
         } catch (\Cartalyst\Sentry\Users\UserExistsException $e) {
             Log::notice($e);
             Event::fire('user.registrationfailed', array(array('Email' => $input['email'])));
@@ -157,7 +157,7 @@ class RegistrationController extends AbstractController
 
             if (!$user->attemptActivation($code)) {
                 Session::flash('error', 'There was a problem activating this account. Please contact support.');
-                return Redirect::to(Config::get('credentials::home', '/'));
+                return Redirect::to(Config::get('graham-campbell/credentials::home', '/'));
             }
 
             $user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
@@ -169,7 +169,7 @@ class RegistrationController extends AbstractController
             Log::error($e);
             Event::fire('user.activationfailed');
             Session::flash('error', 'There was a problem activating this account. Please contact support.');
-            return Redirect::to(Config::get('credentials::home', '/'));
+            return Redirect::to(Config::get('graham-campbell/credentials::home', '/'));
         } catch (\Cartalyst\SEntry\Users\UserAlreadyActivatedException $e) {
             Log::notice($e);
             Event::fire('user.activationfailed', array(array('Email' => $user->email)));

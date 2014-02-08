@@ -75,7 +75,7 @@ class UserController extends AbstractController
         $users = UserProvider::paginate();
         $links = UserProvider::links();
 
-        return Viewer::make('credentials::users.index', array('users' => $users, 'links' => $links), 'admin');
+        return Viewer::make('graham-campbell/credentials::users.index', array('users' => $users, 'links' => $links), 'admin');
     }
 
     /**
@@ -87,7 +87,7 @@ class UserController extends AbstractController
     {
         $groups = GroupProvider::index();
 
-        return Viewer::make('credentials::users.create', array('groups' => $groups), 'admin');
+        return Viewer::make('graham-campbell/credentials::users.create', array('groups' => $groups), 'admin');
     }
 
     /**
@@ -134,8 +134,8 @@ class UserController extends AbstractController
 
             try {
                 $data = array(
-                    'view'     => 'credentials::emails.newuser',
-                    'url'      => URL::to(Config::get('credentials::home', '/')),
+                    'view'     => 'graham-campbell/credentials::emails.newuser',
+                    'url'      => URL::to(Config::get('graham-campbell/credentials::home', '/')),
                     'password' => $password,
                     'email'    => $user->getLogin(),
                     'subject'  => Config::get('platform.name').' - New Account Information'
@@ -169,7 +169,7 @@ class UserController extends AbstractController
         $user = UserProvider::find($id);
         $this->checkUser($user);
 
-        return Viewer::make('credentials::users.show', array('user' => $user), 'admin');
+        return Viewer::make('graham-campbell/credentials::users.show', array('user' => $user), 'admin');
     }
 
     /**
@@ -185,7 +185,7 @@ class UserController extends AbstractController
 
         $groups = GroupProvider::index();
 
-        return Viewer::make('credentials::users.edit', array('user' => $user, 'groups' => $groups), 'admin');
+        return Viewer::make('graham-campbell/credentials::users.edit', array('user' => $user, 'groups' => $groups), 'admin');
     }
 
     /**
@@ -294,7 +294,7 @@ class UserController extends AbstractController
 
         try {
             $data = array(
-                'view' => 'credentials::emails.password',
+                'view' => 'graham-campbell/credentials::emails.password',
                 'password' => $password,
                 'email' => $user->getLogin(),
                 'subject' => Config::get('platform.name').' - New Password Information',

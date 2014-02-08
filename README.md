@@ -93,19 +93,19 @@ This option (`'regemail'`) defines if public registration requires email activat
 
 **Login Page**
 
-This option (`'login'`) defines the view that is used for the login page. The default value for this setting is `'credentials::account.login'`.
+This option (`'login'`) defines the view that is used for the login page. The default value for this setting is `'graham-campbell/credentials::account.login'`.
 
 **Registration Page**
 
-This option (`'registration'`) defines the view that is used for the registration page. The default value for this setting is `'credentials::account.register'`.
+This option (`'registration'`) defines the view that is used for the registration page. The default value for this setting is `'graham-campbell/credentials::account.register'`.
 
 **Forgot Password Page**
 
-This option (`'reset'`) defines the view that is used for the forgot password page. The default value for this setting is `'credentials::account.reset'`.
+This option (`'reset'`) defines the view that is used for the forgot password page. The default value for this setting is `'graham-campbell/credentials::account.reset'`.
 
 **Profile Password Page**
 
-This option (`'profile'`) defines the view that is used for the profile page. The default value for this setting is `'credentials::account.profile'`.
+This option (`'profile'`) defines the view that is used for the profile page. The default value for this setting is `'graham-campbell/credentials::account.profile'`.
 
 **Additional Configuration**
 

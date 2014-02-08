@@ -62,7 +62,7 @@ class AccountController extends AbstractController
      */
     public function getProfile()
     {
-        return Viewer::make(Config::get('credentials::profile', 'credentials::account.profile'));
+        return Viewer::make(Config::get('graham-campbell/credentials::profile', 'graham-campbell/credentials::account.profile'));
     }
 
     /**
@@ -81,7 +81,7 @@ class AccountController extends AbstractController
         $user->delete();
 
         Session::flash('success', 'Your account has been deleted successfully.');
-        return Redirect::to(Config::get('credentials::home', '/'));
+        return Redirect::to(Config::get('graham-campbell/credentials::home', '/'));
     }
 
     /**

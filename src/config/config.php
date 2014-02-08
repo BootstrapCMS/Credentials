@@ -64,7 +64,7 @@ return array(
     |
     */
 
-    'login' => 'credentials::account.login',
+    'login' => 'graham-campbell/credentials::account.login',
 
     /*
     |--------------------------------------------------------------------------
@@ -75,7 +75,7 @@ return array(
     |
     */
 
-    'registration' => 'credentials::account.register',
+    'registration' => 'graham-campbell/credentials::account.register',
 
     /*
     |--------------------------------------------------------------------------
@@ -86,7 +86,7 @@ return array(
     |
     */
 
-    'reset' => 'credentials::account.reset',
+    'reset' => 'graham-campbell/credentials::account.reset',
 
     /*
     |--------------------------------------------------------------------------
@@ -97,6 +97,6 @@ return array(
     |
     */
 
-    'profile' => 'credentials::account.profile'
+    'profile' => 'graham-campbell/credentials::account.profile'
 
 );

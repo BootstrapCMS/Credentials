@@ -43,12 +43,12 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('graham-campbell/credentials');
+        $this->package('graham-campbell/credentials', 'graham-campbell/credentials', __DIR__);
 
         $this->setupViewer();
 
-        include __DIR__.'/../../routes.php';
-        include __DIR__.'/../../filters.php';
+        include __DIR__.'/routes.php';
+        include __DIR__.'/filters.php';
     }
 
     /**

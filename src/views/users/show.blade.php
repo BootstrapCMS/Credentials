@@ -99,9 +99,9 @@
 @stop
 
 @section('bottom')
-@include('credentials::users.suspend')
+@include('graham-campbell/credentials::users.suspend')
 @if (Credentials::check() && Credentials::hasAccess('admin'))
-    @include('credentials::users.reset')
-    @include('credentials::users.delete')
+    @include('graham-campbell/credentials::users.reset')
+    @include('graham-campbell/credentials::users.delete')
 @endif
 @stop
