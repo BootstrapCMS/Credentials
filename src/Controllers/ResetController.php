@@ -16,6 +16,7 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
@@ -23,7 +24,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
-use GrahamCampbell\Passwd\Facades\Passwd;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
 use GrahamCampbell\Credentials\Classes\Credentials;
@@ -127,7 +127,7 @@ class ResetController extends AbstractController
         try {
             $user = $this->credentials->getUserProvider()->findById($id);
 
-            $password = Passwd::generate();
+            $password = Str::random();
 
             if (!$user->attemptResetPassword($code, $password)) {
                 Log::error('There was a problem resetting a password', array('Id' => $id));

@@ -54,7 +54,6 @@ abstract class AbstractTestCase extends TestCase
             'GrahamCampbell\Queuing\QueuingServiceProvider',
             'GrahamCampbell\Security\SecurityServiceProvider',
             'GrahamCampbell\Binput\BinputServiceProvider',
-            'GrahamCampbell\Passwd\PasswdServiceProvider',
             'GrahamCampbell\Throttle\ThrottleServiceProvider'
         );
     }

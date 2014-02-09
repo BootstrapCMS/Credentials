@@ -51,7 +51,6 @@ You will need to register the [Laravel Core](https://github.com/GrahamCampbell/L
 * `'GrahamCampbell\Queuing\QueuingServiceProvider'`
 * `'GrahamCampbell\Security\SecurityMinServiceProvider'`
 * `'GrahamCampbell\Binput\BinputServiceProvider'`
-* `'GrahamCampbell\Passwd\PasswdServiceProvider'`
 * `'GrahamCampbell\Throttle\ThrottleServiceProvider'`
 
 Once Laravel Credentials is installed, you need to register the service provider. Open up `app/config/app.php` and add the following to the `providers` key.

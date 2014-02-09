@@ -17,6 +17,7 @@
 namespace GrahamCampbell\Credentials\Controllers;
 
 use DateTime;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
@@ -24,7 +25,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
-use GrahamCampbell\Passwd\Facades\Passwd;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
 use GrahamCampbell\Credentials\Classes\Credentials;
@@ -97,7 +97,7 @@ class UserController extends AbstractController
      */
     public function store()
     {
-        $password = Passwd::generate();
+        $password = Str::random();
 
         $input = array(
             'first_name'      => Binput::get('first_name'),
@@ -272,7 +272,7 @@ class UserController extends AbstractController
      */
     public function reset($id)
     {
-        $password = Passwd::generate();
+        $password = Str::random();
 
         $input = array(
             'password' => $password,
