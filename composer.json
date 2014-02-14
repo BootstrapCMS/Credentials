@@ -13,7 +13,7 @@
         {
             "type": "vcs",
             "url": "https://github.com/GrahamCampbell/asset"
-        },
+        }
     ],
     "require": {
         "php": ">=5.4.7",
