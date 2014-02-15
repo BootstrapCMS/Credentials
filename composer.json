@@ -29,7 +29,10 @@
         "graham-campbell/throttle": "0.2.*"
     },
     "require-dev": {
-        "graham-campbell/testbench": "0.3.*"
+        "graham-campbell/testbench": "0.3.*",
+        "pda/pheanstalk": "2.1.*",
+        "aws/aws-sdk-php": "2.5.*",
+        "iron-io/iron_mq": "1.5.*"
     },
     "suggest": {
         "graham-campbell/navigation": "Easily add a navigation bar to the system."
