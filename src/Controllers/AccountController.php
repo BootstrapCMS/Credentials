@@ -105,7 +105,6 @@ class AccountController extends AbstractController
 
         $val = Validator::make($input, $rules);
 
-        $val = Validator::make($input, $rules);
         if ($val->fails()) {
             return Redirect::route('account.profile')->withInput()->withErrors($val->errors());
         }
