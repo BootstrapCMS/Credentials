@@ -2,13 +2,12 @@ Laravel Credentials
 ===================
 
 
-[![Build Status](https://travis-ci.org/GrahamCampbell/Laravel-Credentials.png)](https://travis-ci.org/GrahamCampbell/Laravel-Credentials)
-[![Coverage Status](https://coveralls.io/repos/GrahamCampbell/Laravel-Credentials/badge.png)](https://coveralls.io/r/GrahamCampbell/Laravel-Credentials)
+[![Build Status](https://img.shields.io/travis/GrahamCampbell/Laravel-Credentials/master.svg)](https://travis-ci.org/GrahamCampbell/Laravel-Credentials)
+[![Coverage Status](https://img.shields.io/coveralls/GrahamCampbell/Laravel-Credentials/master.svg)](https://coveralls.io/r/GrahamCampbell/Laravel-Credentials)
+[![Software License](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md)
+[![Latest Version](https://img.shields.io/github/release/GrahamCampbell/Laravel-Credentials.svg)](https://github.com/GrahamCampbell/Laravel-Credentials/releases)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials/badges/quality-score.png?s=b384661adefa74fb4c695e50c7832c7f1ceea470)](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446/mini.png)](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446)
-[![Software License](https://poser.pugx.org/graham-campbell/credentials/license.png)](https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md)
-[![Latest Version](https://poser.pugx.org/graham-campbell/credentials/v/stable.png)](https://packagist.org/packages/graham-campbell/credentials)
-[![Still Maintained](http://stillmaintained.com/GrahamCampbell/Laravel-Credentials.png)](http://stillmaintained.com/GrahamCampbell/Laravel-Credentials)
 
 
 ## WARNING
@@ -31,7 +30,7 @@ Laravel Credentials is a cool way to authenticate in [Laravel 4.1](http://larave
 
 ## System Requirements
 
-* PHP 5.4.7+ or HHVM 2.4+ is required.
+* PHP 5.4.7+ or HHVM 3.0+ is required.
 * You will need [Laravel 4.1](http://laravel.com) because this package is designed for it.
 * You will need [Composer](https://getcomposer.org) installed to load the dependencies of Laravel Credentials.
 
