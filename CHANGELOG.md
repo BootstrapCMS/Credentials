@@ -7,6 +7,7 @@ CHANGE LOG
 * PHP 5.6 and HHVM compatibility
 * Updated to Bootstrap 3.1
 * Controller refactoring
+* Composer tweaks
 * Added more unit tests
 
 
