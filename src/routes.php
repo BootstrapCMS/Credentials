@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 // send users to the profile page
 Route::get('account', array('as' => 'account', function () {
     Session::flash('', ''); // work around laravel bug if there is no session yet

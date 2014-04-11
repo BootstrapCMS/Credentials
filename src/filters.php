@@ -17,7 +17,6 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
  * limitations under the License.
  */
 
-
 // check if the user is logged in and their access level
 Route::filter('credentials', function ($route, $request, $value) {
     if (!Credentials::check()) {
