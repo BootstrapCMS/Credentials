@@ -132,7 +132,7 @@ class ResetController extends AbstractController
             if (!$user->attemptResetPassword($code, $password)) {
                 Log::error('There was a problem resetting a password', array('Id' => $id));
                 Session::flash('error', 'There was a problem resetting your password. Please contact support.');
-                return Redirect::to(Config::get('graham-campbell/credentials::home', '/'));
+                return Redirect::to(Config::get('graham-campbell/core::home', '/'));
             }
 
             try {
@@ -147,16 +147,16 @@ class ResetController extends AbstractController
             } catch (\Exception $e) {
                 Log::alert($e);
                 Session::flash('error', 'We were unable to send you your password. Please contact support.');
-                return Redirect::to(Config::get('graham-campbell/credentials::home', '/'));
+                return Redirect::to(Config::get('graham-campbell/core::home', '/'));
             }
 
             Log::info('Password reset successfully', array('Email' => $data['email']));
             Session::flash('success', 'Your password has been changed. Check your email for the new password.');
-            return Redirect::to(Config::get('graham-campbell/credentials::home', '/'));
+            return Redirect::to(Config::get('graham-campbell/core::home', '/'));
         } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
             Log::error($e);
             Session::flash('error', 'There was a problem resetting your password. Please contact support.');
-            return Redirect::to(Config::get('graham-campbell/credentials::home', '/'));
+            return Redirect::to(Config::get('graham-campbell/core::home', '/'));
         }
     }
 }

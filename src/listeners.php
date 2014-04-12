@@ -14,5 +14,7 @@
  * limitations under the License.
  */
 
-$subscriber = App::make('GrahamCampbell\Credentials\Subscribers\CommandSubscriber');
-Event::subscribe($subscriber);
+if (Config::get('graham-campbell/core::commands')) {
+    $subscriber = App::make('GrahamCampbell\Credentials\Subscribers\CommandSubscriber');
+    Event::subscribe($subscriber);
+}

@@ -124,7 +124,7 @@ class LoginController extends AbstractController
         }
 
         Event::fire('user.loginsuccessful', array(array('Email' => $input['email'])));
-        return Redirect::intended(Config::get('graham-campbell/credentials::home', '/'));
+        return Redirect::intended(Config::get('graham-campbell/core::home', '/'));
     }
 
     /**
@@ -136,6 +136,6 @@ class LoginController extends AbstractController
     {
         Event::fire('user.logout', array(array('Email' => $this->credentials->getUser()->email)));
         $this->credentials->logout();
-        return Redirect::to(Config::get('graham-campbell/credentials::home', '/'));
+        return Redirect::to(Config::get('graham-campbell/core::home', '/'));
     }
 }

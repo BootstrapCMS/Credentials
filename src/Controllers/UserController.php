@@ -135,7 +135,7 @@ class UserController extends AbstractController
             try {
                 $data = array(
                     'view'     => 'graham-campbell/credentials::emails.newuser',
-                    'url'      => URL::to(Config::get('graham-campbell/credentials::home', '/')),
+                    'url'      => URL::to(Config::get('graham-campbell/core::home', '/')),
                     'password' => $password,
                     'email'    => $user->getLogin(),
                     'subject'  => Config::get('platform.name').' - New Account Information'

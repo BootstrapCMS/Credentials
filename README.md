@@ -73,10 +73,6 @@ To get started, first publish the package config file:
 
 There are many config options:
 
-**Home Page URL**
-
-This option (`'home'`) defines the url to use for the home page. The default value for this setting is `'/'`.
-
 **Enable Public Registration**
 
 This option (`'regallowed'`) defines if public registration is allowed. The default value for this setting is `true`.
