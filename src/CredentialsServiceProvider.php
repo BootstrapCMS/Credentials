@@ -76,6 +76,7 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->registerUserProvider();
         $this->registerGroupProvider();
         $this->registerCredentials();
+        $this->registerCommandSubscriber();
         $this->registerAccountController();
         $this->registerLoginController();
         $this->registerRegistrationController();
@@ -126,6 +127,18 @@ class CredentialsServiceProvider extends ServiceProvider
             $groupprovider = $app['groupprovider'];
 
             return new Classes\Credentials($sentry, $userprovider, $groupprovider);
+        });
+    }
+
+    /**
+     * Register the command subscriber class.
+     *
+     * @return void
+     */
+    protected function registerCommandSubscriber()
+    {
+        $this->app->bindShared('GrahamCampbell\Credentials\Subscribers\CommandSubscriber', function ($app) {
+            return new Subscribers\CommandSubscriber();
         });
     }
 

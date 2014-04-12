@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-$subscriber = new GrahamCampbell\Credentials\Subscribers\CommandSubscriber;
+$subscriber = App::make('GrahamCampbell\Credentials\Subscribers\CommandSubscriber');
 Event::subscribe($subscriber);
