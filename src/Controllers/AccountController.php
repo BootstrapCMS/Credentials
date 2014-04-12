@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Credentials\Classes\Credentials;
@@ -97,14 +96,7 @@ class AccountController extends AbstractController
             'email'      => Binput::get('email'),
         );
 
-        $rules = array (
-            'first_name' => 'required|min:2|max:32',
-            'last_name'  => 'required|min:2|max:32',
-            'email'      => 'required|min:4|max:32|email',
-        );
-
-        $val = Validator::make($input, $rules);
-
+        $val = $this->credentials->getUserProvider()->validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.profile')->withInput()->withErrors($val->errors());
         }
@@ -130,12 +122,7 @@ class AccountController extends AbstractController
             'password_confirmation' => Binput::get('password_confirmation'),
         );
 
-        $rules = array (
-            'password'              => 'required|min:6|confirmed',
-            'password_confirmation' => 'required',
-        );
-
-        $val = Validator::make($input, $rules);
+        $val = $this->credentials->getUserProvider()->validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.profile')->withInput()->withErrors($val->errors());
         }

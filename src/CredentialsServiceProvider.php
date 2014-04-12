@@ -96,7 +96,9 @@ class CredentialsServiceProvider extends ServiceProvider
             $model = $app['config']['cartalyst/sentry::users.model'];
             $user = new $model();
 
-            return new Providers\UserProvider($user);
+            $validator = $app['validator'];
+
+            return new Providers\UserProvider($user, $validator);
         });
     }
 
@@ -111,7 +113,9 @@ class CredentialsServiceProvider extends ServiceProvider
             $model = $app['config']['cartalyst/sentry::groups.model'];
             $group = new $model();
 
-            return new Providers\GroupProvider($group);
+            $validator = $app['validator'];
+
+            return new Providers\GroupProvider($group, $validator);
         });
     }
 

@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
@@ -82,18 +81,10 @@ class RegistrationController extends AbstractController
             'password_confirmation' => Binput::get('password_confirmation')
         );
 
-        $rules = array (
-            'first_name'            => 'required|min:2|max:32',
-            'last_name'             => 'required|min:2|max:32',
-            'email'                 => 'required|min:4|max:32|email',
-            'password'              => 'required|min:6|confirmed',
-            'password_confirmation' => 'required'
-        );
-
-        $val = Validator::make($input, $rules);
+        $val = $this->credentials->getUserProvider()->validate($input, array_keys($input));
         if ($val->fails()) {
             Event::fire('user.registrationfailed', array(array('Email' => $input['email'], 'Messages' => $val->messages()->all())));
-            return Redirect::route('account.register')->withErrors($val)->withInput();
+            return Redirect::route('account.register')->withInput()->withErrors($val->errors());
         }
 
         try {
@@ -135,7 +126,7 @@ class RegistrationController extends AbstractController
             Log::notice($e);
             Event::fire('user.registrationfailed', array(array('Email' => $input['email'])));
             Session::flash('error', 'That email address is taken.');
-            return Redirect::route('account.register')->withInput()->withErrors($val);
+            return Redirect::route('account.register')->withInput()->withErrors($val->errors());
         }
     }
 

@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
@@ -74,13 +73,9 @@ class ResetController extends AbstractController
             'email' => Binput::get('email'),
         );
 
-        $rules = array (
-            'email' => 'required|min:4|max:32|email',
-        );
-
-        $val = Validator::make($input, $rules);
+        $val = $this->credentials->getUserProvider()->validate($input, array_keys($input));
         if ($val->fails()) {
-            return Redirect::route('account.reset')->withErrors($val)->withInput();
+            return Redirect::route('account.reset')->withInput()->withErrors($val->errors());
         }
 
         try {

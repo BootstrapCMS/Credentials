@@ -14,6 +14,7 @@ CHANGE LOG
 * Controller refactoring
 * Moved home path to core package
 * Command improvements
+* Improved validation
 * Composer tweaks
 * Added more unit tests
 

@@ -79,6 +79,21 @@ class User extends SentryUser implements BaseModelInterface, NameModelInterface
     public static $sort = 'asc';
 
     /**
+     * The user validation rules.
+     *
+     * @var array
+     */
+    public static $rules = array(
+        'first_name'            => 'required|min:2|max:32',
+        'last_name'             => 'required|min:2|max:32',
+        'email'                 => 'required|min:4|max:32|email',
+        'password'              => 'required|min:6|confirmed',
+        'password_confirmation' => 'required',
+        'activated'             => 'required',
+        'activated_at'          => 'required'
+    );
+
+    /**
      * Access caches.
      *
      * @var array

@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Validator;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
@@ -108,16 +107,10 @@ class UserController extends AbstractController
             'activated_at'    => new DateTime
         );
 
-        $rules = array(
-            'first_name'   => 'required|min:2|max:32',
-            'last_name'    => 'required|min:2|max:32',
-            'email'        => 'required|min:4|max:32|email',
-            'password'     => 'required|min:6',
-            'activated'    => 'required',
-            'activated_at' => 'required'
-        );
+        $rules = $this->credentials->getUserProvider()->rules(array_keys($input));
+        $rules['password'] = 'required|min:6';
 
-        $val = Validator::make($input, $rules);
+        $val = $this->credentials->getUserProvider()->validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('users.create')->withInput()->withErrors($val->errors());
         }
@@ -154,7 +147,7 @@ class UserController extends AbstractController
         } catch (\Cartalyst\Sentry\Users\UserExistsException $e) {
             Log::notice($e);
             Session::flash('error', 'That email address is taken.');
-            return Redirect::route('users.create')->withInput()->withErrors($val);
+            return Redirect::route('users.create')->withInput()->withErrors($val->errors());
         }
     }
 
@@ -202,13 +195,7 @@ class UserController extends AbstractController
             'email'      => Binput::get('email')
         );
 
-        $rules = array(
-            'first_name' => 'required|min:2|max:32',
-            'last_name'  => 'required|min:2|max:32',
-            'email'      => 'required|min:4|max:32|email'
-        );
-
-        $val = Validator::make($input, $rules);
+        $val = $this->credentials->getUserProvider()->validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('users.edit', array('users' => $id))->withInput()->withErrors($val->errors());
         }
@@ -254,11 +241,11 @@ class UserController extends AbstractController
             Log::notice($e);
             $time = $throttle->getSuspensionTime();
             Session::flash('error', "This user is already suspended for $time minutes.");
-            return Redirect::route('users.suspend', array('users' => $user->id))->withErrors($val)->withInput();
+            return Redirect::route('users.suspend', array('users' => $user->id))->withInput()->withErrors($val->errors());
         } catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
             Log::notice($e);
             Session::flash('error', 'This user has already been banned.');
-            return Redirect::route('users.suspend', array('users' => $user->id))->withErrors($val)->withInput();
+            return Redirect::route('users.suspend', array('users' => $user->id))->withInput()->withErrors($val->errors());
         }
 
         Session::flash('success', 'The user has been suspended successfully.');
@@ -282,7 +269,7 @@ class UserController extends AbstractController
             'password' => 'required|min:6',
         );
 
-        $val = Validator::make($input, $rules);
+        $val = $this->credentials->getUserProvider()->validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('users.show', array('users' => $id))->withErrors($val->errors());
         }
