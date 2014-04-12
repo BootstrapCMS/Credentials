@@ -107,10 +107,10 @@ class UserController extends AbstractController
             'activated_at'    => new DateTime
         );
 
-        $rules = $this->credentials->getUserProvider()->rules(array_keys($input));
+        $rules = UserProvider::rules(array_keys($input));
         $rules['password'] = 'required|min:6';
 
-        $val = $this->credentials->getUserProvider()->validate($input, $rules, true);
+        $val = UserProvider::validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('users.create')->withInput()->withErrors($val->errors());
         }
@@ -195,7 +195,7 @@ class UserController extends AbstractController
             'email'      => Binput::get('email')
         );
 
-        $val = $this->credentials->getUserProvider()->validate($input, array_keys($input));
+        $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('users.edit', array('users' => $id))->withInput()->withErrors($val->errors());
         }
@@ -269,7 +269,7 @@ class UserController extends AbstractController
             'password' => 'required|min:6',
         );
 
-        $val = $this->credentials->getUserProvider()->validate($input, $rules, true);
+        $val = UserProvider::validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('users.show', array('users' => $id))->withErrors($val->errors());
         }

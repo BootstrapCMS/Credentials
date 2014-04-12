@@ -26,6 +26,7 @@ use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
 use GrahamCampbell\Credentials\Classes\Credentials;
+use GrahamCampbell\Credentials\Facades\UserProvider;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -73,7 +74,7 @@ class ResetController extends AbstractController
             'email' => Binput::get('email'),
         );
 
-        $val = $this->credentials->getUserProvider()->validate($input, array_keys($input));
+        $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.reset')->withInput()->withErrors($val->errors());
         }

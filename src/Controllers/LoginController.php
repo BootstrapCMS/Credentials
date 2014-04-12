@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Session;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Credentials\Classes\Credentials;
+use GrahamCampbell\Credentials\Facades\UserProvider;
 
 /**
  * This is the login controller class.
@@ -78,10 +79,10 @@ class LoginController extends AbstractController
             'password' => Binput::get('password'),
         );
 
-        $rules = $this->credentials->getUserProvider()->rules(array_keys($input));
+        $rules = UserProvider::rules(array_keys($input));
         $rules['password'] = 'required|min:6';
 
-        $val = $this->credentials->getUserProvider()->validate($input, $rules, true);
+        $val = UserProvider::validate($input, $rules, true);
         if ($val->fails()) {
             Event::fire('user.loginfailed', array(array('Email' => $input['email'], 'Messages' => $val->messages()->all())));
             return Redirect::route('account.login')->withInput()->withErrors($val->errors());

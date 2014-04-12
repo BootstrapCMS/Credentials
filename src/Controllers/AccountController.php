@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Session;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Credentials\Classes\Credentials;
+use GrahamCampbell\Credentials\Facades\UserProvider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -96,7 +97,7 @@ class AccountController extends AbstractController
             'email'      => Binput::get('email'),
         );
 
-        $val = $this->credentials->getUserProvider()->validate($input, array_keys($input));
+        $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.profile')->withInput()->withErrors($val->errors());
         }
@@ -122,7 +123,7 @@ class AccountController extends AbstractController
             'password_confirmation' => Binput::get('password_confirmation'),
         );
 
-        $val = $this->credentials->getUserProvider()->validate($input, array_keys($input));
+        $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.profile')->withInput()->withErrors($val->errors());
         }

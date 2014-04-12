@@ -26,6 +26,7 @@ use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
 use GrahamCampbell\Credentials\Classes\Credentials;
+use GrahamCampbell\Credentials\Facades\UserProvider;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -81,7 +82,7 @@ class RegistrationController extends AbstractController
             'password_confirmation' => Binput::get('password_confirmation')
         );
 
-        $val = $this->credentials->getUserProvider()->validate($input, array_keys($input));
+        $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
             Event::fire('user.registrationfailed', array(array('Email' => $input['email'], 'Messages' => $val->messages()->all())));
             return Redirect::route('account.register')->withInput()->withErrors($val->errors());
