@@ -13,6 +13,7 @@ CHANGE LOG
 * Updated to Bootstrap 3.1
 * Controller refactoring
 * Moved home path to core package
+* Improved user deletion
 * Command improvements
 * Improved validation
 * Composer tweaks
