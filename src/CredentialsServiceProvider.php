@@ -76,10 +76,7 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->registerUserProvider();
         $this->registerGroupProvider();
         $this->registerCredentials();
-
-        if ($this->app['config']['graham-campbell/core::commands']) {
-            $this->registerCommandSubscriber();
-        }
+        $this->registerCommandSubscriber();
 
         $this->registerAccountController();
         $this->registerLoginController();
