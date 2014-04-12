@@ -310,7 +310,12 @@ class UserController extends AbstractController
         $user = UserProvider::find($id);
         $this->checkUser($user);
 
-        $user->delete();
+        try {
+            $user->delete();
+        } catch (\Exception $e) {
+            Session::flash('error', 'We were unable to delete the account.');
+            return Redirect::route('users.show', array('users' => $id));
+        }
 
         Session::flash('success', 'The user has been deleted successfully.');
         return Redirect::route('users.index');

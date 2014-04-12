@@ -78,7 +78,12 @@ class AccountController extends AbstractController
         Event::fire('user.logout', array(array('Email' => $user->email)));
         $this->credentials->logout();
 
-        $user->delete();
+        try {
+            $user->delete();
+        } catch (\Exception $e) {
+            Session::flash('error', 'There was a problem deleting your account.');
+            return Redirect::to(Config::get('graham-campbell/core::home', '/'));
+        }
 
         Session::flash('success', 'Your account has been deleted successfully.');
         return Redirect::to(Config::get('graham-campbell/core::home', '/'));
