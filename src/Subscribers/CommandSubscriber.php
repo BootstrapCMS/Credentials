@@ -16,6 +16,9 @@
 
 namespace GrahamCampbell\Credentials\Subscribers;
 
+use Illuminate\Console\Command;
+use Illuminate\Events\Dispatcher;
+
 /**
  * This is the command subscriber class.
  *
@@ -33,7 +36,7 @@ class CommandSubscriber
      * @param  Illuminate\Events\Dispatcher  $events
      * @return array
      */
-    public function subscribe($events)
+    public function subscribe(Dispatcher $events)
     {
         $events->listen('command.runmigrations', 'GrahamCampbell\Core\Subscribers\CommandSubscriber@onRunMigrations', 2);
     }
@@ -41,10 +44,10 @@ class CommandSubscriber
     /**
      * Handle a command.runmigrations event.
      *
-     * @param  GrahamCampbell\Core\Commands\AbstractCommand  $command
+     * @param  Illuminate\Console\Command  $command
      * @return void
      */
-    public function onRunMigrations($command)
+    public function onRunMigrations(Command $command)
     {
         $command->call('migrate', array('--package' => 'cartalyst/sentry'));
     }
