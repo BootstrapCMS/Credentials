@@ -77,7 +77,7 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->registerGroupProvider();
         $this->registerCredentials();
 
-        if ($app['config']['graham-campbell/core::commands']) {
+        if ($this->app['config']['graham-campbell/core::commands']) {
             $this->registerCommandSubscriber();
         }
 
