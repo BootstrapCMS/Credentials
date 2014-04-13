@@ -164,7 +164,7 @@ class UserController extends AbstractController
             } catch (\Exception $e) {
                 $user->delete();
                 return Redirect::route('users.create')->withInput()
-                    ->('error', 'We were unable to create the user. Please contact support.');
+                    ->with('error', 'We were unable to create the user. Please contact support.');
             }
 
             return Redirect::route('users.show', array('users' => $user->id))
