@@ -101,7 +101,7 @@ abstract class AbstractController extends Controller
     }
 
     /**
-     * Set the user id.
+     * Get the user id.
      *
      * @return int
      */
