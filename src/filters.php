@@ -24,8 +24,8 @@ Route::filter('credentials', function ($route, $request, $value) {
         if (Request::ajax()) {
             throw new UnauthorizedHttpException('Action Requires Login');
         }
-        Session::flash('error', 'You must be logged in to perform that action.');
-        return Redirect::guest(URL::route('account.login'));
+        return Redirect::guest(URL::route('account.login'))
+            ->with('error', 'You must be logged in to perform that action.');
     }
 
     if (!Credentials::hasAccess($value)) {
@@ -40,21 +40,21 @@ Route::filter('throttle.sentry', function ($route, $request) {
 
 Route::filter('throttle.login', function ($route, $request) {
     if (!Throttle::hit($request, 10, 10)->check()) {
-        Session::flash('error', 'You have made too many login requests. Please try again in 10 minutes.');
-        return Redirect::route('account.login')->withInput();
+        return Redirect::route('account.login')->withInput()
+            ->with('error', 'You have made too many login requests. Please try again in 10 minutes.');
     }
 });
 
 Route::filter('throttle.reset', function ($route, $request) {
     if (!Throttle::hit($request, 5, 30)->check()) {
-        Session::flash('error', 'Your computer has been suspended from resetting passwords. Please contact support.');
-        return Redirect::route('account.reset')->withInput();
+        return Redirect::route('account.reset')->withInput()
+            ->with('error', 'Your computer has been suspended from resetting passwords. Please contact support.');
     }
 });
 
 Route::filter('throttle.register', function ($route, $request) {
     if (!Throttle::hit($request, 10, 30)->check()) {
-        Session::flash('error', 'Your computer has been suspended from registration. Please contact support.');
-        return Redirect::route('account.register')->withInput();
+        return Redirect::route('account.register')->withInput()
+            ->with('error', 'Your computer has been suspended from registration. Please contact support.');
     }
 });

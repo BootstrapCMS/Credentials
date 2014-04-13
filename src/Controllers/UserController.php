@@ -19,9 +19,7 @@ namespace GrahamCampbell\Credentials\Controllers;
 use DateTime;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
@@ -136,18 +134,16 @@ class UserController extends AbstractController
 
                 Queuing::pushMail($data);
             } catch (\Exception $e) {
-                Log::alert($e);
                 $user->delete();
-                Session::flash('error', 'We were unable to create the user. Please contact support.');
-                return Redirect::route('users.create')->withInput();
+                return Redirect::route('users.create')->withInput()
+                    ->('error', 'We were unable to create the user. Please contact support.');
             }
 
-            Session::flash('success', 'The user has been created successfully. Their password has been emailed to them.');
-            return Redirect::route('users.show', array('users' => $user->id));
+            return Redirect::route('users.show', array('users' => $user->id))
+                ->with('success', 'The user has been created successfully. Their password has been emailed to them.');
         } catch (\Cartalyst\Sentry\Users\UserExistsException $e) {
-            Log::notice($e);
-            Session::flash('error', 'That email address is taken.');
-            return Redirect::route('users.create')->withInput()->withErrors($val->errors());
+            return Redirect::route('users.create')->withInput()->withErrors($val->errors())
+                ->with('error', 'That email address is taken.');
         }
     }
 
@@ -219,8 +215,8 @@ class UserController extends AbstractController
             }
         }
 
-        Session::flash('success', 'The user has been updated successfully.');
-        return Redirect::route('users.show', array('users' => $user->id));
+        return Redirect::route('users.show', array('users' => $user->id))
+            ->with('success', 'The user has been updated successfully.');
     }
 
     /**
@@ -235,21 +231,18 @@ class UserController extends AbstractController
             $throttle = $this->credentials->getThrottleProvider()->findByUserId($id);
             $throttle->suspend();
         } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            Log::notice($e);
             throw new NotFoundHttpException('User Not Found', $e);
         } catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
-            Log::notice($e);
             $time = $throttle->getSuspensionTime();
-            Session::flash('error', "This user is already suspended for $time minutes.");
-            return Redirect::route('users.suspend', array('users' => $user->id))->withInput()->withErrors($val->errors());
+            return Redirect::route('users.suspend', array('users' => $user->id))->withInput()->withErrors($val->errors())
+                ->with('error', "This user is already suspended for $time minutes.");
         } catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
-            Log::notice($e);
-            Session::flash('error', 'This user has already been banned.');
-            return Redirect::route('users.suspend', array('users' => $user->id))->withInput()->withErrors($val->errors());
+            return Redirect::route('users.suspend', array('users' => $user->id))->withInput()->withErrors($val->errors())
+                ->with('error', 'This user has already been banned.');
         }
 
-        Session::flash('success', 'The user has been suspended successfully.');
-        return Redirect::route('users.show', array('users' => $id));
+        return Redirect::route('users.show', array('users' => $id))
+            ->with('success', 'The user has been suspended successfully.');
     }
 
     /**
@@ -289,14 +282,12 @@ class UserController extends AbstractController
 
             Queuing::pushMail($data);
         } catch (\Exception $e) {
-            Log::alert($e);
-            Session::flash('error', 'We were unable to send the password to the user.');
-            return Redirect::route('users.show', array('users' => $id));
+            return Redirect::route('users.show', array('users' => $id))
+                ->with('error', 'We were unable to send the password to the user.');
         }
 
-        Log::info('Password reset successfully', array('Email' => $data['email']));
-        Session::flash('success', 'The user\'s password has been successfully reset. Their new password has been emailed to them.');
-        return Redirect::route('users.show', array('users' => $id));
+        return Redirect::route('users.show', array('users' => $id))
+            ->with('success', 'The user\'s password has been successfully reset. Their new password has been emailed to them.');
     }
 
     /**
@@ -313,12 +304,12 @@ class UserController extends AbstractController
         try {
             $user->delete();
         } catch (\Exception $e) {
-            Session::flash('error', 'We were unable to delete the account.');
-            return Redirect::route('users.show', array('users' => $id));
+            return Redirect::route('users.show', array('users' => $id))
+                ->with('error', 'We were unable to delete the account.');
         }
 
-        Session::flash('success', 'The user has been deleted successfully.');
-        return Redirect::route('users.index');
+        return Redirect::route('users.index')
+            ->with('success', 'The user has been deleted successfully.');
     }
 
     /**

@@ -18,9 +18,7 @@ namespace GrahamCampbell\Credentials\Controllers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Credentials\Classes\Credentials;
@@ -94,31 +92,26 @@ class LoginController extends AbstractController
 
             $this->credentials->authenticate($input, $remember);
         } catch (\Cartalyst\Sentry\Users\WrongPasswordException $e) {
-            Log::notice($e);
             Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
-            Session::flash('error', 'Your password was incorrect.');
-            return Redirect::route('account.login')->withInput()->withErrors($val->errors());
+            return Redirect::route('account.login')->withInput()->withErrors($val->errors())
+                ->with('error', 'Your password was incorrect.');
         } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            Log::notice($e);
             Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
-            Session::flash('error', 'That user does not exist.');
-            return Redirect::route('account.login')->withInput()->withErrors($val->errors());
+            return Redirect::route('account.login')->withInput()->withErrors($val->errors())
+                ->with('error', 'That user does not exist.');
         } catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e) {
-            Log::notice($e);
             Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
-            Session::flash('error', 'You have not yet activated this account.');
-            return Redirect::route('account.login')->withInput()->withErrors($val->errors());
+            return Redirect::route('account.login')->withInput()->withErrors($val->errors())
+                ->with('error', 'You have not yet activated this account.');
         } catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
-            Log::notice($e);
             Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
             $time = $throttle->getSuspensionTime();
-            Session::flash('error', "Your account has been suspended for $time minutes.");
-            return Redirect::route('account.login')->withInput()->withErrors($val->errors());
+            return Redirect::route('account.login')->withInput()->withErrors($val->errors())
+                ->with('error', "Your account has been suspended for $time minutes.");
         } catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
-            Log::notice($e);
             Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
-            Session::flash('error', 'You have been banned. Please contact support.');
-            return Redirect::route('account.login')->withInput()->withErrors($val->errors());
+            return Redirect::route('account.login')->withInput()->withErrors($val->errors())
+                ->with('error', 'You have been banned. Please contact support.');
         }
 
         Event::fire('user.loginsuccessful', array(array('Email' => $input['email'])));

@@ -18,9 +18,7 @@ namespace GrahamCampbell\Credentials\Controllers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
@@ -98,8 +96,8 @@ class RegistrationController extends AbstractController
                 $user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
 
                 Event::fire('user.registrationsuccessful', array(array('Email' => $input['email'], 'Activated' => true)));
-                Session::flash('success', 'Your account has been created successfully.');
-                return Redirect::to(Config::get('graham-campbell/core::home', '/'));
+                return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+                    ->with('success', 'Your account has been created successfully.');
             }
 
             try {
@@ -113,21 +111,19 @@ class RegistrationController extends AbstractController
 
                 Queuing::pushMail($data);
             } catch (\Exception $e) {
-                Log::alert($e);
                 Event::fire('user.registrationfailed', array(array('Email' => $input['email'])));
                 $user->delete();
-                Session::flash('error', 'We were unable to create your account. Please contact support.');
-                return Redirect::route('account.register')->withInput();
+                return Redirect::route('account.register')->withInput()
+                    ->with('error', 'We were unable to create your account. Please contact support.');
             }
 
             Event::fire('user.registrationsuccessful', array(array('Email' => $input['email'], 'Activated' => false)));
-            Session::flash('success', 'Your account has been created. Check your email for the confirmation link.');
-            return Redirect::to(Config::get('graham-campbell/core::home', '/'));
+            return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+                ->with('success', 'Your account has been created. Check your email for the confirmation link.');
         } catch (\Cartalyst\Sentry\Users\UserExistsException $e) {
-            Log::notice($e);
             Event::fire('user.registrationfailed', array(array('Email' => $input['email'])));
-            Session::flash('error', 'That email address is taken.');
-            return Redirect::route('account.register')->withInput()->withErrors($val->errors());
+            return Redirect::route('account.register')->withInput()->withErrors($val->errors())
+                ->withflash('error', 'That email address is taken.');
         }
     }
 
@@ -148,25 +144,23 @@ class RegistrationController extends AbstractController
             $user = $this->credentials->getUserProvider()->findById($id);
 
             if (!$user->attemptActivation($code)) {
-                Session::flash('error', 'There was a problem activating this account. Please contact support.');
-                return Redirect::to(Config::get('graham-campbell/core::home', '/'));
+                return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+                    ->with('error', 'There was a problem activating this account. Please contact support.');
             }
 
             $user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
 
             Event::fire('user.activationsuccessful', array(array('Email' => $user->email)));
-            Session::flash('success', 'Your account has been activated successfully. You may now login.');
-            return Redirect::route('account.login');
+            return Redirect::route('account.login')
+                ->with('success', 'Your account has been activated successfully. You may now login.');
         } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            Log::error($e);
             Event::fire('user.activationfailed');
-            Session::flash('error', 'There was a problem activating this account. Please contact support.');
-            return Redirect::to(Config::get('graham-campbell/core::home', '/'));
-        } catch (\Cartalyst\SEntry\Users\UserAlreadyActivatedException $e) {
-            Log::notice($e);
+            return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+                ->with('error', 'There was a problem activating this account. Please contact support.');
+        } catch (\Cartalyst\Sentry\Users\UserAlreadyActivatedException $e) {
             Event::fire('user.activationfailed', array(array('Email' => $user->email)));
-            Session::flash('warning', 'You have already activated this account. You may want to login.');
-            return Redirect::route('account.login');
+            return Redirect::route('account.login')
+                ->with('warning', 'You have already activated this account. You may want to login.');
         }
     }
 }

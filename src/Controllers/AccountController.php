@@ -19,7 +19,6 @@ namespace GrahamCampbell\Credentials\Controllers;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Viewer\Facades\Viewer;
 use GrahamCampbell\Credentials\Classes\Credentials;
@@ -81,12 +80,12 @@ class AccountController extends AbstractController
         try {
             $user->delete();
         } catch (\Exception $e) {
-            Session::flash('error', 'There was a problem deleting your account.');
-            return Redirect::to(Config::get('graham-campbell/core::home', '/'));
+            return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+                ->with('error', 'There was a problem deleting your account.');
         }
 
-        Session::flash('success', 'Your account has been deleted successfully.');
-        return Redirect::to(Config::get('graham-campbell/core::home', '/'));
+        return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+            ->with('success', 'Your account has been deleted successfully.');
     }
 
     /**
@@ -112,8 +111,8 @@ class AccountController extends AbstractController
 
         $user->update($input);
 
-        Session::flash('success', 'Your details have been updated successfully.');
-        return Redirect::route('account.profile');
+        return Redirect::route('account.profile')
+            ->with('success', 'Your details have been updated successfully.');
     }
 
     /**
@@ -140,8 +139,8 @@ class AccountController extends AbstractController
 
         $user->update($input);
 
-        Session::flash('success', 'Your password has been updated successfully.');
-        return Redirect::route('account.profile');
+        return Redirect::route('account.profile')
+            ->with('success', 'Your password has been updated successfully.');
     }
 
     /**
