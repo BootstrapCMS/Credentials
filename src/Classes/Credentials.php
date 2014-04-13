@@ -17,8 +17,6 @@
 namespace GrahamCampbell\Credentials\Classes;
 
 use Cartalyst\Sentry\Sentry;
-use GrahamCampbell\Credentials\Providers\UserProvider;
-use GrahamCampbell\Credentials\Providers\GroupProvider;
 
 /**
  * This is the credentials class.
@@ -46,30 +44,14 @@ class Credentials
     protected $sentry;
 
     /**
-     * The user provider instance.
-     *
-     * @var \GrahamCampbell\Credentials\Providers\UserProvider
-     */
-    protected $userprovider;
-
-    /**
-     * The group provider instance.
-     *
-     * @var \GrahamCampbell\Credentials\Providers\GroupProvider
-     */
-    protected $groupprovider;
-
-    /**
      * Create a new instance.
      *
      * @param  \Cartalyst\Sentry\Sentry  $sentry
      * @return void
      */
-    public function __construct(Sentry $sentry, UserProvider $userprovider, GroupProvider $groupprovider)
+    public function __construct(Sentry $sentry)
     {
         $this->sentry = $sentry;
-        $this->userprovider = $userprovider;
-        $this->groupprovider = $groupprovider;
     }
 
     /**

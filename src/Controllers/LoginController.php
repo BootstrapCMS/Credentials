@@ -19,10 +19,10 @@ namespace GrahamCampbell\Credentials\Controllers;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
-use GrahamCampbell\Binput\Facades\Binput;
-use GrahamCampbell\Viewer\Facades\Viewer;
+use GrahamCampbell\Binput\Classes\Binput;
+use GrahamCampbell\Viewer\Classes\Viewer;
 use GrahamCampbell\Credentials\Classes\Credentials;
-use GrahamCampbell\Credentials\Facades\UserProvider;
+use GrahamCampbell\Credentials\Providers\UserProvider;
 
 /**
  * This is the login controller class.
@@ -36,13 +36,41 @@ use GrahamCampbell\Credentials\Facades\UserProvider;
 class LoginController extends AbstractController
 {
     /**
+     * The viewer instance.
+     *
+     * @var \GrahamCampbell\Viewer\Classes\Viewer
+     */
+    protected $viewer;
+
+    /**
+     * The binput instance.
+     *
+     * @var \GrahamCampbell\Binput\Classes\Binput
+     */
+    protected $binput;
+
+    /**
+     * The user provider instance.
+     *
+     * @var \GrahamCampbell\Credentials\Providers\UserProvider
+     */
+    protected $userprovider;
+
+    /**
      * Create a new instance.
      *
      * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
+     * @param  \GrahamCampbell\Viewer\Classes\Viewer  $viewer
+     * @param  \GrahamCampbell\Binput\Classes\Binput  $binput
+     * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
      * @return void
      */
-    public function __construct(Credentials $credentials)
+    public function __construct(Credentials $credentials, Viewer $viewer, Binput $binput, UserProvider $userprovider)
     {
+        $this->viewer = $viewer;
+        $this->binput = $binput;
+        $this->userprovider = $userprovider;
+
         $this->setPermissions(array(
             'getLogout' => 'user',
         ));
@@ -60,7 +88,7 @@ class LoginController extends AbstractController
      */
     public function getLogin()
     {
-        return Viewer::make(Config::get('graham-campbell/credentials::login', 'graham-campbell/credentials::account.login'));
+        return $this->viewer->make(Config::get('graham-campbell/credentials::login', 'graham-campbell/credentials::account.login'));
     }
 
     /**
@@ -70,17 +98,17 @@ class LoginController extends AbstractController
      */
     public function postLogin()
     {
-        $remember = Binput::get('rememberMe');
+        $remember = $this->binput->get('rememberMe');
 
         $input = array(
-            'email'    => Binput::get('email'),
-            'password' => Binput::get('password'),
+            'email'    => $this->binput->get('email'),
+            'password' => $this->binput->get('password'),
         );
 
-        $rules = UserProvider::rules(array_keys($input));
+        $rules = $this->userprovider->rules(array_keys($input));
         $rules['password'] = 'required|min:6';
 
-        $val = UserProvider::validate($input, $rules, true);
+        $val = $this->userprovider->validate($input, $rules, true);
         if ($val->fails()) {
             Event::fire('user.loginfailed', array(array('Email' => $input['email'], 'Messages' => $val->messages()->all())));
             return Redirect::route('account.login')->withInput()->withErrors($val->errors());
@@ -128,5 +156,35 @@ class LoginController extends AbstractController
         Event::fire('user.logout', array(array('Email' => $this->credentials->getUser()->email)));
         $this->credentials->logout();
         return Redirect::to(Config::get('graham-campbell/core::home', '/'));
+    }
+
+    /**
+     * Return the viewer instance.
+     *
+     * @return \GrahamCampbell\Viewer\Classes\Viewer
+     */
+    public function getViewer()
+    {
+        return $this->viewer;
+    }
+
+    /**
+     * Return the binput instance.
+     *
+     * @return \GrahamCampbell\Binput\Classes\Binput
+     */
+    public function getBinput()
+    {
+        return $this->binput;
+    }
+
+    /**
+     * Return the user provider instance.
+     *
+     * @return \GrahamCampbell\Credentials\Providers\UserProvider
+     */
+    public function getUserProvider()
+    {
+        return $this->userprovider;
     }
 }

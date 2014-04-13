@@ -21,11 +21,11 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use GrahamCampbell\Binput\Facades\Binput;
-use GrahamCampbell\Viewer\Facades\Viewer;
+use GrahamCampbell\Binput\Classes\Binput;
+use GrahamCampbell\Viewer\Classes\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
 use GrahamCampbell\Credentials\Classes\Credentials;
-use GrahamCampbell\Credentials\Facades\UserProvider;
+use GrahamCampbell\Credentials\Providers\UserProvider;
 use GrahamCampbell\Credentials\Facades\GroupProvider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -41,13 +41,41 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class UserController extends AbstractController
 {
     /**
+     * The viewer instance.
+     *
+     * @var \GrahamCampbell\Viewer\Classes\Viewer
+     */
+    protected $viewer;
+
+    /**
+     * The binput instance.
+     *
+     * @var \GrahamCampbell\Binput\Classes\Binput
+     */
+    protected $binput;
+
+    /**
+     * The user provider instance.
+     *
+     * @var \GrahamCampbell\Credentials\Providers\UserProvider
+     */
+    protected $userprovider;
+
+    /**
      * Create a new instance.
      *
      * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
+     * @param  \GrahamCampbell\Viewer\Classes\Viewer  $viewer
+     * @param  \GrahamCampbell\Binput\Classes\Binput  $binput
+     * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
      * @return void
      */
-    public function __construct(Credentials $credentials)
+    public function __construct(Credentials $credentials, Viewer $viewer, Binput $binput, UserProvider $userprovider)
     {
+        $this->viewer = $viewer;
+        $this->binput = $binput;
+        $this->userprovider = $userprovider;
+
         $this->setPermissions(array(
             'index'   => 'mod',
             'create'  => 'admin',
@@ -69,10 +97,10 @@ class UserController extends AbstractController
      */
     public function index()
     {
-        $users = UserProvider::paginate();
-        $links = UserProvider::links();
+        $users = $this->userprovider->paginate();
+        $links = $this->userprovider->links();
 
-        return Viewer::make('graham-campbell/credentials::users.index', array('users' => $users, 'links' => $links), 'admin');
+        return $this->viewer->make('graham-campbell/credentials::users.index', array('users' => $users, 'links' => $links), 'admin');
     }
 
     /**
@@ -84,7 +112,7 @@ class UserController extends AbstractController
     {
         $groups = GroupProvider::index();
 
-        return Viewer::make('graham-campbell/credentials::users.create', array('groups' => $groups), 'admin');
+        return $this->viewer->make('graham-campbell/credentials::users.create', array('groups' => $groups), 'admin');
     }
 
     /**
@@ -97,28 +125,28 @@ class UserController extends AbstractController
         $password = Str::random();
 
         $input = array(
-            'first_name'      => Binput::get('first_name'),
-            'last_name'       => Binput::get('last_name'),
-            'email'           => Binput::get('email'),
+            'first_name'      => $this->binput->get('first_name'),
+            'last_name'       => $this->binput->get('last_name'),
+            'email'           => $this->binput->get('email'),
             'password'        => $password,
             'activated'       => true,
             'activated_at'    => new DateTime
         );
 
-        $rules = UserProvider::rules(array_keys($input));
+        $rules = $this->userprovider->rules(array_keys($input));
         $rules['password'] = 'required|min:6';
 
-        $val = UserProvider::validate($input, $rules, true);
+        $val = $this->userprovider->validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('users.create')->withInput()->withErrors($val->errors());
         }
 
         try {
-            $user = UserProvider::create($input);
+            $user = $this->userprovider->create($input);
 
             $groups = GroupProvider::index();
             foreach ($groups as $group) {
-                if (Binput::get('group_'.$group->id) === 'on') {
+                if ($this->binput->get('group_'.$group->id) === 'on') {
                     $user->addGroup($group);
                 }
             }
@@ -155,10 +183,10 @@ class UserController extends AbstractController
      */
     public function show($id)
     {
-        $user = UserProvider::find($id);
+        $user = $this->userprovider->find($id);
         $this->checkUser($user);
 
-        return Viewer::make('graham-campbell/credentials::users.show', array('user' => $user), 'admin');
+        return $this->viewer->make('graham-campbell/credentials::users.show', array('user' => $user), 'admin');
     }
 
     /**
@@ -169,12 +197,12 @@ class UserController extends AbstractController
      */
     public function edit($id)
     {
-        $user = UserProvider::find($id);
+        $user = $this->userprovider->find($id);
         $this->checkUser($user);
 
         $groups = GroupProvider::index();
 
-        return Viewer::make('graham-campbell/credentials::users.edit', array('user' => $user, 'groups' => $groups), 'admin');
+        return $this->viewer->make('graham-campbell/credentials::users.edit', array('user' => $user, 'groups' => $groups), 'admin');
     }
 
     /**
@@ -186,17 +214,17 @@ class UserController extends AbstractController
     public function update($id)
     {
         $input = array(
-            'first_name' => Binput::get('first_name'),
-            'last_name'  => Binput::get('last_name'),
-            'email'      => Binput::get('email')
+            'first_name' => $this->binput->get('first_name'),
+            'last_name'  => $this->binput->get('last_name'),
+            'email'      => $this->binput->get('email')
         );
 
-        $val = UserProvider::validate($input, array_keys($input));
+        $val = $this->userprovider->validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('users.edit', array('users' => $id))->withInput()->withErrors($val->errors());
         }
 
-        $user = UserProvider::find($id);
+        $user = $this->userprovider->find($id);
         $this->checkUser($user);
 
         $user->update($input);
@@ -205,11 +233,11 @@ class UserController extends AbstractController
 
         foreach ($groups as $group) {
             if ($user->inGroup($group)) {
-                if (Binput::get('group_'.$group->id) !== 'on') {
+                if ($this->binput->get('group_'.$group->id) !== 'on') {
                     $user->removeGroup($group);
                 }
             } else {
-                if (Binput::get('group_'.$group->id) === 'on') {
+                if ($this->binput->get('group_'.$group->id) === 'on') {
                     $user->addGroup($group);
                 }
             }
@@ -262,12 +290,12 @@ class UserController extends AbstractController
             'password' => 'required|min:6',
         );
 
-        $val = UserProvider::validate($input, $rules, true);
+        $val = $this->userprovider->validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('users.show', array('users' => $id))->withErrors($val->errors());
         }
 
-        $user = UserProvider::find($id);
+        $user = $this->userprovider->find($id);
         $this->checkUser($user);
 
         $user->update($input);
@@ -298,7 +326,7 @@ class UserController extends AbstractController
      */
     public function destroy($id)
     {
-        $user = UserProvider::find($id);
+        $user = $this->userprovider->find($id);
         $this->checkUser($user);
 
         try {
@@ -323,5 +351,35 @@ class UserController extends AbstractController
         if (!$user) {
             throw new NotFoundHttpException('User Not Found');
         }
+    }
+
+    /**
+     * Return the viewer instance.
+     *
+     * @return \GrahamCampbell\Viewer\Classes\Viewer
+     */
+    public function getViewer()
+    {
+        return $this->viewer;
+    }
+
+    /**
+     * Return the binput instance.
+     *
+     * @return \GrahamCampbell\Binput\Classes\Binput
+     */
+    public function getBinput()
+    {
+        return $this->binput;
+    }
+
+    /**
+     * Return the user provider instance.
+     *
+     * @return \GrahamCampbell\Credentials\Providers\UserProvider
+     */
+    public function getUserProvider()
+    {
+        return $this->userprovider;
     }
 }

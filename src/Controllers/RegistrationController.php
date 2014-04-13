@@ -20,11 +20,11 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use GrahamCampbell\Binput\Facades\Binput;
-use GrahamCampbell\Viewer\Facades\Viewer;
+use GrahamCampbell\Binput\Classes\Binput;
+use GrahamCampbell\Viewer\Classes\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
 use GrahamCampbell\Credentials\Classes\Credentials;
-use GrahamCampbell\Credentials\Facades\UserProvider;
+use GrahamCampbell\Credentials\Providers\UserProvider;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -39,13 +39,41 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class RegistrationController extends AbstractController
 {
     /**
+     * The viewer instance.
+     *
+     * @var \GrahamCampbell\Viewer\Classes\Viewer
+     */
+    protected $viewer;
+
+    /**
+     * The binput instance.
+     *
+     * @var \GrahamCampbell\Binput\Classes\Binput
+     */
+    protected $binput;
+
+    /**
+     * The user provider instance.
+     *
+     * @var \GrahamCampbell\Credentials\Providers\UserProvider
+     */
+    protected $userprovider;
+
+    /**
      * Create a new instance.
      *
      * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
+     * @param  \GrahamCampbell\Viewer\Classes\Viewer  $viewer
+     * @param  \GrahamCampbell\Binput\Classes\Binput  $binput
+     * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
      * @return void
      */
-    public function __construct(Credentials $credentials)
+    public function __construct(Credentials $credentials, Viewer $viewer, Binput $binput, UserProvider $userprovider)
     {
+        $this->viewer = $viewer;
+        $this->binput = $binput;
+        $this->userprovider = $userprovider;
+
         $this->beforeFilter('throttle.register', array('only' => array('postRegister')));
 
         parent::__construct($credentials);
@@ -58,7 +86,7 @@ class RegistrationController extends AbstractController
      */
     public function getRegister()
     {
-        return Viewer::make(Config::get('graham-campbell/credentials::register', 'graham-campbell/credentials::account.register'));
+        return $this->viewer->make(Config::get('graham-campbell/credentials::register', 'graham-campbell/credentials::account.register'));
     }
 
     /**
@@ -73,14 +101,14 @@ class RegistrationController extends AbstractController
         }
 
         $input = array(
-            'first_name'            => Binput::get('first_name'),
-            'last_name'             => Binput::get('last_name'),
-            'email'                 => Binput::get('email'),
-            'password'              => Binput::get('password'),
-            'password_confirmation' => Binput::get('password_confirmation')
+            'first_name'            => $this->binput->get('first_name'),
+            'last_name'             => $this->binput->get('last_name'),
+            'email'                 => $this->binput->get('email'),
+            'password'              => $this->binput->get('password'),
+            'password_confirmation' => $this->binput->get('password_confirmation')
         );
 
-        $val = UserProvider::validate($input, array_keys($input));
+        $val = $this->userprovider->validate($input, array_keys($input));
         if ($val->fails()) {
             Event::fire('user.registrationfailed', array(array('Email' => $input['email'], 'Messages' => $val->messages()->all())));
             return Redirect::route('account.register')->withInput()->withErrors($val->errors());
@@ -162,5 +190,35 @@ class RegistrationController extends AbstractController
             return Redirect::route('account.login')
                 ->with('warning', 'You have already activated this account. You may want to login.');
         }
+    }
+
+    /**
+     * Return the viewer instance.
+     *
+     * @return \GrahamCampbell\Viewer\Classes\Viewer
+     */
+    public function getViewer()
+    {
+        return $this->viewer;
+    }
+
+    /**
+     * Return the binput instance.
+     *
+     * @return \GrahamCampbell\Binput\Classes\Binput
+     */
+    public function getBinput()
+    {
+        return $this->binput;
+    }
+
+    /**
+     * Return the user provider instance.
+     *
+     * @return \GrahamCampbell\Credentials\Providers\UserProvider
+     */
+    public function getUserProvider()
+    {
+        return $this->userprovider;
     }
 }

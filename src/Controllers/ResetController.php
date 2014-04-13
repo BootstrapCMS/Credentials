@@ -20,11 +20,11 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use GrahamCampbell\Binput\Facades\Binput;
-use GrahamCampbell\Viewer\Facades\Viewer;
+use GrahamCampbell\Binput\Classes\Binput;
+use GrahamCampbell\Viewer\Classes\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
 use GrahamCampbell\Credentials\Classes\Credentials;
-use GrahamCampbell\Credentials\Facades\UserProvider;
+use GrahamCampbell\Credentials\Providers\UserProvider;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -39,13 +39,41 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class ResetController extends AbstractController
 {
     /**
+     * The viewer instance.
+     *
+     * @var \GrahamCampbell\Viewer\Classes\Viewer
+     */
+    protected $viewer;
+
+    /**
+     * The binput instance.
+     *
+     * @var \GrahamCampbell\Binput\Classes\Binput
+     */
+    protected $binput;
+
+    /**
+     * The user provider instance.
+     *
+     * @var \GrahamCampbell\Credentials\Providers\UserProvider
+     */
+    protected $userprovider;
+
+    /**
      * Create a new instance.
      *
      * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
+     * @param  \GrahamCampbell\Viewer\Classes\Viewer  $viewer
+     * @param  \GrahamCampbell\Binput\Classes\Binput  $binput
+     * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
      * @return void
      */
-    public function __construct(Credentials $credentials)
+    public function __construct(Credentials $credentials, Viewer $viewer, Binput $binput, UserProvider $userprovider)
     {
+        $this->viewer = $viewer;
+        $this->binput = $binput;
+        $this->userprovider = $userprovider;
+
         $this->beforeFilter('throttle.reset', array('only' => array('postReset')));
 
         parent::__construct($credentials);
@@ -58,7 +86,7 @@ class ResetController extends AbstractController
      */
     public function getReset()
     {
-        return Viewer::make(Config::get('graham-campbell/credentials::reset', 'graham-campbell/credentials::account.reset'));
+        return $this->viewer->make(Config::get('graham-campbell/credentials::reset', 'graham-campbell/credentials::account.reset'));
     }
 
     /**
@@ -69,10 +97,10 @@ class ResetController extends AbstractController
     public function postReset()
     {
         $input = array(
-            'email' => Binput::get('email'),
+            'email' => $this->binput->get('email'),
         );
 
-        $val = UserProvider::validate($input, array_keys($input));
+        $val = $this->userprovider->validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.reset')->withInput()->withErrors($val->errors());
         }
@@ -145,5 +173,35 @@ class ResetController extends AbstractController
             return Redirect::to(Config::get('graham-campbell/core::home', '/'))
                 ->with('error', 'There was a problem resetting your password. Please contact support.');
         }
+    }
+
+    /**
+     * Return the viewer instance.
+     *
+     * @return \GrahamCampbell\Viewer\Classes\Viewer
+     */
+    public function getViewer()
+    {
+        return $this->viewer;
+    }
+
+    /**
+     * Return the binput instance.
+     *
+     * @return \GrahamCampbell\Binput\Classes\Binput
+     */
+    public function getBinput()
+    {
+        return $this->binput;
+    }
+
+    /**
+     * Return the user provider instance.
+     *
+     * @return \GrahamCampbell\Credentials\Providers\UserProvider
+     */
+    public function getUserProvider()
+    {
+        return $this->userprovider;
     }
 }

@@ -128,10 +128,8 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $this->app->bindShared('credentials', function ($app) {
             $sentry = $app['sentry'];
-            $userprovider = $app['userprovider'];
-            $groupprovider = $app['groupprovider'];
 
-            return new Classes\Credentials($sentry, $userprovider, $groupprovider);
+            return new Classes\Credentials($sentry);
         });
     }
 
@@ -156,8 +154,11 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $this->app->bind('GrahamCampbell\Credentials\Controllers\AccountController', function ($app) {
             $credentials = $app['credentials'];
+            $viewer = $app['viewer'];
+            $binput = $app['binput'];
+            $userprovider = $app['userprovider'];
 
-            return new Controllers\AccountController($credentials);
+            return new Controllers\AccountController($credentials, $viewer, $binput, $userprovider);
         });
     }
 
@@ -170,8 +171,11 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $this->app->bind('GrahamCampbell\Credentials\Controllers\LoginController', function ($app) {
             $credentials = $app['credentials'];
+            $viewer = $app['viewer'];
+            $binput = $app['binput'];
+            $userprovider = $app['userprovider'];
 
-            return new Controllers\LoginController($credentials);
+            return new Controllers\LoginController($credentials, $viewer, $binput, $userprovider);
         });
     }
 
@@ -184,8 +188,11 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $this->app->bind('GrahamCampbell\Credentials\Controllers\RegistrationController', function ($app) {
             $credentials = $app['credentials'];
+            $viewer = $app['viewer'];
+            $binput = $app['binput'];
+            $userprovider = $app['userprovider'];
 
-            return new Controllers\RegistrationController($credentials);
+            return new Controllers\RegistrationController($credentials, $viewer, $binput, $userprovider);
         });
     }
 
@@ -198,8 +205,11 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $this->app->bind('GrahamCampbell\Credentials\Controllers\ResetController', function ($app) {
             $credentials = $app['credentials'];
+            $viewer = $app['viewer'];
+            $binput = $app['binput'];
+            $userprovider = $app['userprovider'];
 
-            return new Controllers\ResetController($credentials);
+            return new Controllers\ResetController($credentials, $viewer, $binput, $userprovider);
         });
     }
 
@@ -212,8 +222,11 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $this->app->bind('GrahamCampbell\Credentials\Controllers\UserController', function ($app) {
             $credentials = $app['credentials'];
+            $viewer = $app['viewer'];
+            $binput = $app['binput'];
+            $userprovider = $app['userprovider'];
 
-            return new Controllers\UserController($credentials);
+            return new Controllers\UserController($credentials, $viewer, $binput, $userprovider);
         });
     }
 
