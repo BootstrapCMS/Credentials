@@ -100,13 +100,7 @@ class RegistrationController extends AbstractController
             return Redirect::route('account.register');
         }
 
-        $input = array(
-            'first_name'            => $this->binput->get('first_name'),
-            'last_name'             => $this->binput->get('last_name'),
-            'email'                 => $this->binput->get('email'),
-            'password'              => $this->binput->get('password'),
-            'password_confirmation' => $this->binput->get('password_confirmation')
-        );
+        $input = $this->binput->only(array('first_name', 'last_name', 'email', 'password', 'password_confirmation'));
 
         $val = $this->userprovider->validate($input, array_keys($input));
         if ($val->fails()) {

@@ -15,7 +15,7 @@ CHANGE LOG
 * Moved home path to core package
 * Improved user deletion
 * Command improvements
-* Improved validation
+* Improved input and validation
 * Composer tweaks
 * Added more unit tests
 

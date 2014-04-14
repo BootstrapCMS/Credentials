@@ -124,14 +124,11 @@ class UserController extends AbstractController
     {
         $password = Str::random();
 
-        $input = array(
-            'first_name'      => $this->binput->get('first_name'),
-            'last_name'       => $this->binput->get('last_name'),
-            'email'           => $this->binput->get('email'),
-            'password'        => $password,
-            'activated'       => true,
-            'activated_at'    => new DateTime
-        );
+        $input = array_merge($this->binput->only(array('first_name', 'last_name', 'email')), array(
+            'password'     => $password,
+            'activated'    => true,
+            'activated_at' => new DateTime
+        ));
 
         $rules = $this->userprovider->rules(array_keys($input));
         $rules['password'] = 'required|min:6';
@@ -213,11 +210,7 @@ class UserController extends AbstractController
      */
     public function update($id)
     {
-        $input = array(
-            'first_name' => $this->binput->get('first_name'),
-            'last_name'  => $this->binput->get('last_name'),
-            'email'      => $this->binput->get('email')
-        );
+        $input = $this->binput->only(array('first_name', 'last_name', 'email'));
 
         $val = $this->userprovider->validate($input, array_keys($input));
         if ($val->fails()) {

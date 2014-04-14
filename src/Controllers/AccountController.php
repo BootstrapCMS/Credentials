@@ -123,11 +123,7 @@ class AccountController extends AbstractController
      */
     public function patchDetails()
     {
-        $input = array(
-            'first_name' => $this->binput->get('first_name'),
-            'last_name'  => $this->binput->get('last_name'),
-            'email'      => $this->binput->get('email'),
-        );
+        $input = $this->binput->only(array('first_name', 'last_name', 'email'));
 
         $val = $this->userprovider->validate($input, array_keys($input));
         if ($val->fails()) {
@@ -150,10 +146,7 @@ class AccountController extends AbstractController
      */
     public function patchPassword()
     {
-        $input = array(
-            'password'              => $this->binput->get('password'),
-            'password_confirmation' => $this->binput->get('password_confirmation'),
-        );
+        $input = $this->binput->only(array('password', 'password_confirmation'));
 
         $val = $this->userprovider->validate($input, array_keys($input));
         if ($val->fails()) {

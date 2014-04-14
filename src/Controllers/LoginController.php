@@ -100,10 +100,7 @@ class LoginController extends AbstractController
     {
         $remember = $this->binput->get('rememberMe');
 
-        $input = array(
-            'email'    => $this->binput->get('email'),
-            'password' => $this->binput->get('password'),
-        );
+        $input = $this->binput->only(array('email', 'password'));
 
         $rules = $this->userprovider->rules(array_keys($input));
         $rules['password'] = 'required|min:6';

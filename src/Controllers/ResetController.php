@@ -96,9 +96,7 @@ class ResetController extends AbstractController
      */
     public function postReset()
     {
-        $input = array(
-            'email' => $this->binput->get('email'),
-        );
+        $input = $this->binput->only('email');
 
         $val = $this->userprovider->validate($input, array_keys($input));
         if ($val->fails()) {
