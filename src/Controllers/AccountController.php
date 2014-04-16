@@ -19,8 +19,10 @@ namespace GrahamCampbell\Credentials\Controllers;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 use GrahamCampbell\Binput\Classes\Binput;
 use GrahamCampbell\Viewer\Classes\Viewer;
+use GrahamCampbell\Queuing\Facades\Queuing;
 use GrahamCampbell\Credentials\Classes\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -157,6 +159,20 @@ class AccountController extends AbstractController
 
         $user = $this->credentials->getUser();
         $this->checkUser($user);
+
+        try {
+            $data = array(
+                'view'    => 'graham-campbell/credentials::emails.newpass',
+                'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+                'email'   => $user->getLogin(),
+                'subject' => Config::get('platform.name').' - New Password Notification',
+            );
+
+            Queuing::pushMail($data);
+        } catch (\Exception $e) {
+            return Redirect::route('account.profile')->withInput()
+                ->with('error', 'We were unable to update your password. Please contact support.');
+        }
 
         $user->update($input);
 
