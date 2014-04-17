@@ -75,11 +75,13 @@
         </div>
     </div>
 </div>
-<hr>
-<h3>User Object</h3>
-<div>
-    <pre>{{ var_dump($user) }}</pre>
-</div>
+@if (Credentials::check() && Credentials::hasAccess('admin'))
+    <hr>
+    <h3>User Object</h3>
+    <div>
+        <pre>{{ var_dump($user) }}</pre>
+    </div>
+@endif
 @stop
 
 @section('bottom')
