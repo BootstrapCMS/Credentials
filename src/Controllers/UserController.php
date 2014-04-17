@@ -183,7 +183,30 @@ class UserController extends AbstractController
         $user = $this->userprovider->find($id);
         $this->checkUser($user);
 
-        return $this->viewer->make('graham-campbell/credentials::users.show', array('user' => $user), 'admin');
+        if ($user->activated_at) {
+            $activated = $user->activated_at->diffForHumans();
+        } else {
+            $activated = 'Not Activated';
+        }
+
+        if ($this->credentials->getThrottleProvider()->findByUserId($id)->isSuspended()) {
+            $suspended = 'Currently Suspended';
+        } else {
+            $suspended = 'Not Suspended';
+        }
+
+        $groups = $user->getGroups();
+        if (count($groups) >= 1) {
+            $data = array();
+            foreach ($groups as $group) {
+                $data[] = $group->name;
+            }
+            $groups = implode(', ', $data);
+        } else {
+            $groups = 'No Group Memberships';
+        }
+
+        return $this->viewer->make('graham-campbell/credentials::users.show', array('user' => $user, 'groups' => $groups, 'activated' => $activated, 'suspended' => $suspended), 'admin');
     }
 
     /**

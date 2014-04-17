@@ -46,16 +46,15 @@
                 <p><strong>Last Name:</strong> {{ $user->last_name }} </p>
             @endif
             <p><strong>Email:</strong> {{ $user->email }}</p>
+            <p><strong>Groups:</strong> {{ $groups }}</strong>
+
         </div>
         <div class="col-xs-6">
             <div class="pull-right">
                 <p><em>Account Created: {{ $user->created_at->diffForHumans() }}</em></p>
                 <p><em>Account Updated: {{ $user->updated_at->diffForHumans() }}</em></p>
-                @if ($user->activated_at)
-                    <p><em>Account Activated: {{ $user->activated_at->diffForHumans() }}</em></p>
-                @else
-                    <p><em>Account Activated: Not Activated</em></p>
-                @endif
+                <p><em>Account Activated: {{ $activated }}</em></p>
+                <p><em>Account Suspended: {{ $suspended }}</em></p>
             </div>
         </div>
     </div>
@@ -68,28 +67,13 @@
                 <p><strong>Last Name:</strong> {{ $user->last_name }} </p>
             @endif
             <p><strong>Email:</strong> {{ $user->email }}</p>
+            <p><strong>Groups:</strong> {{ $groups }}</p>
             <p><strong>Account Created:</strong> {{ $user->created_at->diffForHumans() }}</p>
             <p><strong>Account Updated:</strong> {{ $user->updated_at->diffForHumans() }}</p>
-            @if ($user->activated_at)
-                <p><strong>Account Activated:</strong> {{ $user->activated_at->diffForHumans() }}</p>
-            @else
-                <p><strong>Account Activated:</strong> Not Activated</p>
-            @endif
+            <p><strong>Account Activated:</strong> {{ $activated }}</p>
+            <p><strong>Account Suspended:</strong> {{ $suspended }}</p>
         </div>
     </div>
-</div>
-<hr>
-<h3>User Group Memberships</h3>
-<div class="well">
-    <ul>
-    @if (count($user->getGroups()) >= 1)
-        @foreach ($user->getGroups() as $group)
-            <li>{{ $group['name'] }}</li>
-        @endforeach
-    @else
-        <li>No Group Memberships.</li>
-    @endif
-    </ul>
 </div>
 <hr>
 <h3>User Object</h3>
