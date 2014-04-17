@@ -114,7 +114,23 @@ class RegistrationController extends AbstractController
             $user = $this->credentials->register($input);
 
             if (!Config::get('graham-campbell/credentials::regemail')) {
-                $user->attemptActivation($user->GetActivationCode());
+                try {
+                    $data = array(
+                        'view'    => 'graham-campbell/credentials::emails.welcome',
+                        'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+                        'email'   => $user->getLogin(),
+                        'subject' => Config::get('platform.name').' - Welcome'
+                    );
+
+                    Queuing::pushMail($data);
+                } catch (\Exception $e) {
+                    Event::fire('user.registrationfailed', array(array('Email' => $input['email'])));
+                    $user->delete();
+                    return Redirect::route('account.register')->withInput()
+                        ->with('error', 'We were unable to create your account. Please contact support.');
+                }
+
+                $user->attemptActivation($user->getActivationCode());
                 $user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
 
                 Event::fire('user.registrationsuccessful', array(array('Email' => $input['email'], 'Activated' => true)));
@@ -128,7 +144,7 @@ class RegistrationController extends AbstractController
                     'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
                     'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $user->GetActivationCode())),
                     'email'   => $user->getLogin(),
-                    'subject' => Config::get('platform.name').' - Welcome',
+                    'subject' => Config::get('platform.name').' - Welcome'
                 );
 
                 Queuing::pushMail($data);
