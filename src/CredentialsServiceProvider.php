@@ -82,6 +82,7 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->registerLoginController();
         $this->registerRegistrationController();
         $this->registerResetController();
+        $this->registerResendController();
         $this->registerUserController();
     }
 
@@ -210,6 +211,23 @@ class CredentialsServiceProvider extends ServiceProvider
             $userprovider = $app['userprovider'];
 
             return new Controllers\ResetController($credentials, $viewer, $binput, $userprovider);
+        });
+    }
+
+    /**
+     * Register the resend controller class.
+     *
+     * @return void
+     */
+    protected function registerResendController()
+    {
+        $this->app->bind('GrahamCampbell\Credentials\Controllers\ResendController', function ($app) {
+            $credentials = $app['credentials'];
+            $viewer = $app['viewer'];
+            $binput = $app['binput'];
+            $userprovider = $app['userprovider'];
+
+            return new Controllers\ResendController($credentials, $viewer, $binput, $userprovider);
         });
     }
 

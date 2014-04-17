@@ -88,6 +88,7 @@
 @include('graham-campbell/credentials::users.suspend')
 @if (Credentials::check() && Credentials::hasAccess('admin'))
     @include('graham-campbell/credentials::users.reset')
+    @include('graham-campbell/credentials::users.resend')
     @include('graham-campbell/credentials::users.delete')
 @endif
 @stop

@@ -93,6 +93,10 @@ This option (`'registration'`) defines the view that is used for the registratio
 
 This option (`'reset'`) defines the view that is used for the forgot password page. The default value for this setting is `'graham-campbell/credentials::account.reset'`.
 
+**Resend Activation Page**
+
+This option (`'resend'`) defines the view that is used for the resend activation page. The default value for this setting is `'graham-campbell/credentials::account.resend'`.
+
 **Profile Password Page**
 
 This option (`'profile'`) defines the view that is used for the profile page. The default value for this setting is `'graham-campbell/credentials::account.profile'`.

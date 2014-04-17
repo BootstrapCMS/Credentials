@@ -52,6 +52,13 @@ Route::filter('throttle.reset', function ($route, $request) {
     }
 });
 
+Route::filter('throttle.resend', function ($route, $request) {
+    if (!Throttle::hit($request, 5, 30)->check()) {
+        return Redirect::route('account.resend')->withInput()
+            ->with('error', 'Your computer has been suspended from resending activation emails. Please contact support.');
+    }
+});
+
 Route::filter('throttle.register', function ($route, $request) {
     if (!Throttle::hit($request, 10, 30)->check()) {
         return Redirect::route('account.register')->withInput()

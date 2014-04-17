@@ -186,7 +186,11 @@ class UserController extends AbstractController
         if ($user->activated_at) {
             $activated = $user->activated_at->diffForHumans();
         } else {
-            $activated = 'Not Activated';
+            if ($this->credentials->hasAccess('admin')) {
+                $activated = 'No - <a href="#resend_user" data-toggle="modal" data-target="#resend_user">Resend Email</a>';
+            } else {
+                $activated = 'Not Activated';
+            }
         }
 
         if ($this->credentials->getThrottleProvider()->findByUserId($id)->isSuspended()) {
@@ -321,7 +325,7 @@ class UserController extends AbstractController
                 'view' => 'graham-campbell/credentials::emails.password',
                 'password' => $password,
                 'email' => $user->getLogin(),
-                'subject' => Config::get('platform.name').' - New Password Information',
+                'subject' => Config::get('platform.name').' - New Password Information'
             );
 
             Queuing::pushMail($data);
@@ -332,6 +336,40 @@ class UserController extends AbstractController
 
         return Redirect::route('users.show', array('users' => $id))
             ->with('success', 'The user\'s password has been successfully reset. Their new password has been emailed to them.');
+    }
+
+    /**
+     * Resend the activation email of an existing user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function resend($id)
+    {
+        $user = $this->userprovider->find($id);
+        $this->checkUser($user);
+
+        if ($user->activated) {
+            return Redirect::route('account.resend')->withInput()
+                ->with('error', 'That user is already activated.');
+        }
+
+        try {
+            $data = array(
+                'view'    => 'graham-campbell/credentials::emails.resend',
+                'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+                'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $user->getActivationCode())),
+                'email'   => $user->getLogin(),
+                'subject' => Config::get('platform.name').' - Activation'
+            );
+
+            Queuing::pushMail($data);
+        } catch (\Exception $e) {
+            return Redirect::route('users.show', array('users' => $id))
+                ->with('error', 'We were unable to send the activation email to the user.');
+        }
+
+        return Redirect::route('users.show', array('users' => $id))
+            ->with('success', 'The user\'s activation email has been successfully sent.');
     }
 
     /**
