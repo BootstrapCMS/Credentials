@@ -16,6 +16,7 @@ CHANGE LOG
 * Improved user deletion
 * Command improvements
 * Improved input and validation
+* Improved show user page
 * Composer tweaks
 * Added more unit tests
 
