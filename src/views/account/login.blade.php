@@ -42,7 +42,11 @@ Login
         <div class="form-group">
             <div class="col-md-offset-2 col-sm-offset-3 col-sm-10 col-xs-12">
                 <button class="btn btn-primary" type="submit"><i class="fa fa-rocket"></i> Log In</button>
-                <label><a href="{{ URL::route('account.reset') }}" class="btn btn-link">Forgot Password?</a>/<a href="{{ URL::route('account.resend') }}" class="btn btn-link">Not Activated?</a></label>
+                @if (Config::get('graham-campbell/credentials::regemail'))
+                    <label><a href="{{ URL::route('account.reset') }}" class="btn btn-link">Forgot Password?</a>/<a href="{{ URL::route('account.resend') }}" class="btn btn-link">Not Activated?</a></label>
+                @else
+                    <label><a href="{{ URL::route('account.reset') }}" class="btn btn-link">Forgot Password?</a>
+                @endif
             </div>
         </div>
 

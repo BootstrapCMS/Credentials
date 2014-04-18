@@ -125,9 +125,16 @@ class LoginController extends AbstractController
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'That user does not exist.');
         } catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e) {
-            Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
-            return Redirect::route('account.login')->withInput()->withErrors($val->errors())
+            if (Config::get('graham-campbell/credentials::regemail')) {
+                Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
+                return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'You have not yet activated this account.');
+            }
+            $throttle->user()->attemptActivation($user->getActivationCode());
+            $throttle->user()->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
+            $this->credentials->authenticate($input, $remember);
+            Event::fire('user.loginsuccessful', array(array('Email' => $input['email'])));
+            return Redirect::intended(Config::get('graham-campbell/core::home', '/'));
         } catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
             Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
             $time = $throttle->getSuspensionTime();

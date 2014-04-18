@@ -86,8 +86,10 @@
 @section('bottom')
 @include('graham-campbell/credentials::users.suspend')
 @if (Credentials::check() && Credentials::hasAccess('admin'))
+    @if (Config::get('graham-campbell/credentials::regemail'))
+        @include('graham-campbell/credentials::users.resend')
+    @endif
     @include('graham-campbell/credentials::users.reset')
-    @include('graham-campbell/credentials::users.resend')
     @include('graham-campbell/credentials::users.delete')
 @endif
 @stop
