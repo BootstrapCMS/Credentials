@@ -29,10 +29,19 @@ Route::patch('account/details', array('as' => 'account.details.patch', 'uses' =>
 Route::patch('account/password', array('as' => 'account.password.patch', 'uses' => 'GrahamCampbell\Credentials\Controllers\AccountController@patchPassword'));
 
 
-// login routes
-Route::get('account/login', array('as' => 'account.login', 'uses' => 'GrahamCampbell\Credentials\Controllers\LoginController@getLogin'));
-Route::post('account/login', array('as' => 'account.login.post', 'uses' => 'GrahamCampbell\Credentials\Controllers\LoginController@postLogin'));
-Route::get('account/logout', array('as' => 'account.logout', 'uses' => 'GrahamCampbell\Credentials\Controllers\LoginController@getLogout'));
+// registration routes
+if (Config::get('graham-campbell/credentials::regallowed')) {
+    Route::get('account/register', array('as' => 'account.register', 'uses' => 'GrahamCampbell\Credentials\Controllers\RegistrationController@getRegister'));
+    Route::post('account/register', array('as' => 'account.register.post', 'uses' => 'GrahamCampbell\Credentials\Controllers\RegistrationController@postRegister'));
+}
+
+
+// activation routes
+if (Config::get('graham-campbell/credentials::regemail')) {
+    Route::get('account/activate/{id}/{code}', array('as' => 'account.activate', 'uses' => 'GrahamCampbell\Credentials\Controllers\RegistrationController@getActivate'));
+    Route::get('account/resend', array('as' => 'account.resend', 'uses' => 'GrahamCampbell\Credentials\Controllers\ResendController@getResend'));
+    Route::post('account/resend', array('as' => 'account.resend.post', 'uses' => 'GrahamCampbell\Credentials\Controllers\ResendController@postResend'));
+}
 
 
 // reset routes
@@ -41,19 +50,10 @@ Route::post('account/reset', array('as' => 'account.reset.post', 'uses' => 'Grah
 Route::get('account/password/{id}/{code}', array('as' => 'account.password', 'uses' => 'GrahamCampbell\Credentials\Controllers\ResetController@getPassword'));
 
 
-// resend routes
-if (Config::get('graham-campbell/credentials::regemail')) {
-    Route::get('account/resend', array('as' => 'account.resend', 'uses' => 'GrahamCampbell\Credentials\Controllers\ResendController@getResend'));
-    Route::post('account/resend', array('as' => 'account.resend.post', 'uses' => 'GrahamCampbell\Credentials\Controllers\ResendController@postResend'));
-}
-
-
-// registration routes
-if (Config::get('graham-campbell/credentials::regallowed')) {
-    Route::get('account/register', array('as' => 'account.register', 'uses' => 'GrahamCampbell\Credentials\Controllers\RegistrationController@getRegister'));
-    Route::post('account/register', array('as' => 'account.register.post', 'uses' => 'GrahamCampbell\Credentials\Controllers\RegistrationController@postRegister'));
-    Route::get('account/activate/{id}/{code}', array('as' => 'account.activate', 'uses' => 'GrahamCampbell\Credentials\Controllers\RegistrationController@getActivate'));
-}
+// login routes
+Route::get('account/login', array('as' => 'account.login', 'uses' => 'GrahamCampbell\Credentials\Controllers\LoginController@getLogin'));
+Route::post('account/login', array('as' => 'account.login.post', 'uses' => 'GrahamCampbell\Credentials\Controllers\LoginController@postLogin'));
+Route::get('account/logout', array('as' => 'account.logout', 'uses' => 'GrahamCampbell\Credentials\Controllers\LoginController@getLogout'));
 
 
 // user routes
