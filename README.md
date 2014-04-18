@@ -10,11 +10,6 @@ Laravel Credentials
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446/mini.png)](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446)
 
 
-## WARNING
-
-#### This code is subject to extreme change and refactoring.
-
-
 ## What Is Laravel Credentials?
 
 Laravel Credentials is a cool way to authenticate in [Laravel 4.1](http://laravel.com).
