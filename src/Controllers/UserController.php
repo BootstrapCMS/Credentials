@@ -19,6 +19,7 @@ namespace GrahamCampbell\Credentials\Controllers;
 use DateTime;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use GrahamCampbell\Binput\Classes\Binput;
@@ -186,7 +187,7 @@ class UserController extends AbstractController
         $this->checkUser($user);
 
         if ($user->activated_at) {
-            $activated = $user->activated_at->diffForHumans();
+            $activated = HTML::ago($user->activated_at);
         } else {
             if ($this->credentials->hasAccess('admin')) {
                 $activated = 'No - <a href="#resend_user" data-toggle="modal" data-target="#resend_user">Resend Email</a>';
