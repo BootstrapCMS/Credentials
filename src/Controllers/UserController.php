@@ -84,6 +84,8 @@ class UserController extends AbstractController
             'edit'    => 'admin',
             'update'  => 'admin',
             'suspend' => 'mod',
+            'reset'   => 'admin',
+            'resend'  => 'admin',
             'destroy' => 'admin',
         ));
 
