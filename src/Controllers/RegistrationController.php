@@ -161,7 +161,7 @@ class RegistrationController extends AbstractController
         } catch (\Cartalyst\Sentry\Users\UserExistsException $e) {
             Event::fire('user.registrationfailed', array(array('Email' => $input['email'])));
             return Redirect::route('account.register')->withInput()->withErrors($val->errors())
-                ->withflash('error', 'That email address is taken.');
+                ->with('error', 'That email address is taken.');
         }
     }
 
