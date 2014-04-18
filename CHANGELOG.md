@@ -17,7 +17,7 @@ CHANGE LOG
 * Command improvements
 * Improved input and validation
 * Improved show user page
-* Added activation email resending
+* Improved activation
 * Composer tweaks
 * Minor improvements
 * Added more unit tests
