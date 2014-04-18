@@ -37,7 +37,7 @@ if (Config::get('graham-campbell/credentials::regallowed')) {
 
 
 // activation routes
-if (Config::get('graham-campbell/credentials::regemail')) {
+if (Config::get('graham-campbell/credentials::activation')) {
     Route::get('account/activate/{id}/{code}', array('as' => 'account.activate', 'uses' => 'GrahamCampbell\Credentials\Controllers\ActivationController@getActivate'));
     Route::get('account/resend', array('as' => 'account.resend', 'uses' => 'GrahamCampbell\Credentials\Controllers\ActivationController@getResend'));
     Route::post('account/resend', array('as' => 'account.resend.post', 'uses' => 'GrahamCampbell\Credentials\Controllers\ActivationController@postResend'));
@@ -60,6 +60,6 @@ Route::get('account/logout', array('as' => 'account.logout', 'uses' => 'GrahamCa
 Route::resource('users', 'GrahamCampbell\Credentials\Controllers\UserController');
 Route::post('users/{users}/suspend', array('as' => 'users.suspend', 'uses' => 'GrahamCampbell\Credentials\Controllers\UserController@suspend'));
 Route::post('users/{users}/reset', array('as' => 'users.reset', 'uses' => 'GrahamCampbell\Credentials\Controllers\UserController@reset'));
-if (Config::get('graham-campbell/credentials::regemail')) {
+if (Config::get('graham-campbell/credentials::activation')) {
     Route::post('users/{users}/resend', array('as' => 'users.resend', 'uses' => 'GrahamCampbell\Credentials\Controllers\UserController@resend'));
 }

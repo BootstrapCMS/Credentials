@@ -189,7 +189,7 @@ class UserController extends AbstractController
         if ($user->activated_at) {
             $activated = HTML::ago($user->activated_at);
         } else {
-            if ($this->credentials->hasAccess('admin') && Config::get('graham-campbell/credentials::regemail')) {
+            if ($this->credentials->hasAccess('admin') && Config::get('graham-campbell/credentials::activation')) {
                 $activated = 'No - <a href="#resend_user" data-toggle="modal" data-target="#resend_user">Resend Email</a>';
             } else {
                 $activated = 'Not Activated';

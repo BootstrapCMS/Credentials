@@ -77,9 +77,9 @@ There are many config options:
 
 This option (`'regallowed'`) defines if public registration is allowed. The default value for this setting is `true`.
 
-**Email Verification On Registration**
+**Require Account Activation**
 
-This option (`'regemail'`) defines if public registration requires email activation. The default value for this setting is `true`.
+This option (`'activation'`) defines if public registration requires email activation. The default value for this setting is `true`.
 
 **Login Page**
 

@@ -112,7 +112,7 @@ class RegistrationController extends AbstractController
 
             $user = $this->credentials->register($input);
 
-            if (!Config::get('graham-campbell/credentials::regemail')) {
+            if (!Config::get('graham-campbell/credentials::activation')) {
                 try {
                     $data = array(
                         'view'    => 'graham-campbell/credentials::emails.welcome',
