@@ -82,7 +82,7 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->registerLoginController();
         $this->registerRegistrationController();
         $this->registerResetController();
-        $this->registerResendController();
+        $this->registerActivationController();
         $this->registerUserController();
     }
 
@@ -219,15 +219,15 @@ class CredentialsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerResendController()
+    protected function registerActivationController()
     {
-        $this->app->bind('GrahamCampbell\Credentials\Controllers\ResendController', function ($app) {
+        $this->app->bind('GrahamCampbell\Credentials\Controllers\ActivationController', function ($app) {
             $credentials = $app['credentials'];
             $viewer = $app['viewer'];
             $binput = $app['binput'];
             $userprovider = $app['userprovider'];
 
-            return new Controllers\ResendController($credentials, $viewer, $binput, $userprovider);
+            return new Controllers\ActivationController($credentials, $viewer, $binput, $userprovider);
         });
     }
 

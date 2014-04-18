@@ -36,7 +36,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class ResendController extends AbstractController
+class ActivationController extends AbstractController
 {
     /**
      * The viewer instance.
@@ -77,6 +77,43 @@ class ResendController extends AbstractController
         $this->beforeFilter('throttle.resend', array('only' => array('postResend')));
 
         parent::__construct($credentials);
+    }
+
+    /**
+     * Activate an existing user.
+     *
+     * @param  int     $id
+     * @param  string  $code
+     * @return \Illuminate\Http\Response
+     */
+    public function getActivate($id, $code)
+    {
+        if (!$id || !$code) {
+            throw new BadRequestHttpException();
+        }
+
+        try {
+            $user = $this->credentials->getUserProvider()->findById($id);
+
+            if (!$user->attemptActivation($code)) {
+                return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+                    ->with('error', 'There was a problem activating this account. Please contact support.');
+            }
+
+            $user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
+
+            Event::fire('user.activationsuccessful', array(array('Email' => $user->email)));
+            return Redirect::route('account.login')
+                ->with('success', 'Your account has been activated successfully. You may now login.');
+        } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            Event::fire('user.activationfailed');
+            return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+                ->with('error', 'There was a problem activating this account. Please contact support.');
+        } catch (\Cartalyst\Sentry\Users\UserAlreadyActivatedException $e) {
+            Event::fire('user.activationfailed', array(array('Email' => $user->email)));
+            return Redirect::route('account.login')
+                ->with('warning', 'You have already activated this account. You may want to login.');
+        }
     }
 
     /**

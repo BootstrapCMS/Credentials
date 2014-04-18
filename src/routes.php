@@ -38,9 +38,9 @@ if (Config::get('graham-campbell/credentials::regallowed')) {
 
 // activation routes
 if (Config::get('graham-campbell/credentials::regemail')) {
-    Route::get('account/activate/{id}/{code}', array('as' => 'account.activate', 'uses' => 'GrahamCampbell\Credentials\Controllers\RegistrationController@getActivate'));
-    Route::get('account/resend', array('as' => 'account.resend', 'uses' => 'GrahamCampbell\Credentials\Controllers\ResendController@getResend'));
-    Route::post('account/resend', array('as' => 'account.resend.post', 'uses' => 'GrahamCampbell\Credentials\Controllers\ResendController@postResend'));
+    Route::get('account/activate/{id}/{code}', array('as' => 'account.activate', 'uses' => 'GrahamCampbell\Credentials\Controllers\ActivationController@getActivate'));
+    Route::get('account/resend', array('as' => 'account.resend', 'uses' => 'GrahamCampbell\Credentials\Controllers\ActivationController@getResend'));
+    Route::post('account/resend', array('as' => 'account.resend.post', 'uses' => 'GrahamCampbell\Credentials\Controllers\ActivationController@postResend'));
 }
 
 

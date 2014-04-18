@@ -25,7 +25,6 @@ use GrahamCampbell\Viewer\Classes\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
 use GrahamCampbell\Credentials\Classes\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * This is the registration controller class.
@@ -162,43 +161,6 @@ class RegistrationController extends AbstractController
             Event::fire('user.registrationfailed', array(array('Email' => $input['email'])));
             return Redirect::route('account.register')->withInput()->withErrors($val->errors())
                 ->with('error', 'That email address is taken.');
-        }
-    }
-
-    /**
-     * Activate an existing user.
-     *
-     * @param  int     $id
-     * @param  string  $code
-     * @return \Illuminate\Http\Response
-     */
-    public function getActivate($id, $code)
-    {
-        if (!$id || !$code) {
-            throw new BadRequestHttpException();
-        }
-
-        try {
-            $user = $this->credentials->getUserProvider()->findById($id);
-
-            if (!$user->attemptActivation($code)) {
-                return Redirect::to(Config::get('graham-campbell/core::home', '/'))
-                    ->with('error', 'There was a problem activating this account. Please contact support.');
-            }
-
-            $user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
-
-            Event::fire('user.activationsuccessful', array(array('Email' => $user->email)));
-            return Redirect::route('account.login')
-                ->with('success', 'Your account has been activated successfully. You may now login.');
-        } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            Event::fire('user.activationfailed');
-            return Redirect::to(Config::get('graham-campbell/core::home', '/'))
-                ->with('error', 'There was a problem activating this account. Please contact support.');
-        } catch (\Cartalyst\Sentry\Users\UserAlreadyActivatedException $e) {
-            Event::fire('user.activationfailed', array(array('Email' => $user->email)));
-            return Redirect::route('account.login')
-                ->with('warning', 'You have already activated this account. You may want to login.');
         }
     }
 
