@@ -130,8 +130,8 @@ class LoginController extends AbstractController
                 return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'You have not yet activated this account.');
             } else {
-                $throttle->user()->attemptActivation($throttle->user()->getActivationCode());
-                $throttle->user()->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
+                $throttle->user->attemptActivation($throttle->user->getActivationCode());
+                $throttle->user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
                 return $this->postLogin();
             }
         } catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {

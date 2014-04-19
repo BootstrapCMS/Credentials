@@ -18,6 +18,7 @@ namespace GrahamCampbell\Credentials\Controllers;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use GrahamCampbell\Binput\Classes\Binput;
