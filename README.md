@@ -43,7 +43,7 @@ You will need to register many service providers before you attempt to load the 
 * `'GrahamCampbell\Core\CoreServiceProvider'`
 * `'GrahamCampbell\Viewer\ViewerServiceProvider'`
 * `'GrahamCampbell\Queuing\QueuingServiceProvider'`
-* `'GrahamCampbell\Security\SecurityMinServiceProvider'`
+* `'GrahamCampbell\Security\SecurityServiceProvider'`
 * `'GrahamCampbell\Binput\BinputServiceProvider'`
 * `'GrahamCampbell\Throttle\ThrottleServiceProvider'`
 
