@@ -15,7 +15,7 @@ Laravel Credentials
 Laravel Credentials is a cool way to authenticate in [Laravel 4.1](http://laravel.com).
 
 * Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell).
-* Laravel Credentials relies on my [Laravel Core](https://github.com/GrahamCampbell/Laravel-Core) package.
+* Laravel Credentials relies on many of my packages including [Laravel Core](https://github.com/GrahamCampbell/Laravel-Core) and [Laravel Queuing](https://github.com/GrahamCampbell/Laravel-Queuing).
 * Laravel Credentials uses [Travis CI](https://travis-ci.org/GrahamCampbell/Laravel-Credentials) with [Coveralls](https://coveralls.io/r/GrahamCampbell/Laravel-Credentials) to check everything is working.
 * Laravel Credentials uses [Scrutinizer CI](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials) and [SensioLabsInsight](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446) to run additional checks.
 * Laravel Credentials uses [Composer](https://getcomposer.org) to load and manage dependencies.
@@ -36,7 +36,7 @@ Please check the system requirements before installing Laravel Credentials.
 
 To get the latest version of Laravel Credentials, simply require `"graham-campbell/credentials": "0.2.*@dev"` in your `composer.json` file. See the [Laravel Queuing](https://github.com/GrahamCampbell/Laravel-Queuing) readme for extra requirements before continuing. You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
 
-You will need to register the [Laravel Core](https://github.com/GrahamCampbell/Laravel-Core) service provider before you attempt to load the Laravel Credentials service provider. Open up `app/config/app.php` and add the following to the `providers` key.
+You will need to register many service providers before you attempt to load the Laravel Credentials service provider. Open up `app/config/app.php` and add the following to the `providers` key.
 
 * `'Lightgear\Asset\AssetServiceProvider'`
 * `'Cartalyst\Sentry\SentryServiceProvider'`
