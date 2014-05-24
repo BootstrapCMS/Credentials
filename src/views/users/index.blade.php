@@ -15,13 +15,13 @@ Users
     <div class="col-xs-8">
         <p class="lead">Here is a list of all the current users:</p>
     </div>
-    @if (Credentials::check() && Credentials::hasAccess('admin'))
+    @auth('admin')
         <div class="col-xs-4">
             <div class="pull-right">
                 <a class="btn btn-primary" href="{{ URL::route('users.create') }}"><i class="fa fa-user"></i> New User</a>
             </div>
         </div>
-    @endif
+    @endauth
 </div>
 <hr>
 <div class="well">
@@ -38,14 +38,14 @@ Users
                     <td>{{ $user->email }}</td>
                     <td>
                         &nbsp;<a class="btn btn-success" href="{{ URL::route('users.show', array('users' => $user->id)) }}"><i class="fa fa-file-text"></i> Show</a>
-                        @if (Credentials::check() && Credentials::hasAccess('admin'))
+                        @auth('admin')
                             &nbsp;<a class="btn btn-info" href="{{ URL::route('users.edit', array('users' => $user->id)) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
-                        @endif
+                        @endauth
                         &nbsp;<a class="btn btn-warning" href="#suspend_user_{{ $user->id }}" data-toggle="modal" data-target="#suspend_user_{{ $user->id }}"><i class="fa fa-ban"></i> Suspend</a>
-                        @if (Credentials::check() && Credentials::hasAccess('admin'))
+                        @auth('admin')
                             &nbsp;<a class="btn btn-inverse" href="#reset_user_{{ $user->id }}" data-toggle="modal" data-target="#reset_user_{{ $user->id }}"><i class="fa fa-lock"></i> Reset Password</a>
                             &nbsp;<a class="btn btn-danger" href="#delete_user_{{ $user->id }}" data-toggle="modal" data-target="#delete_user_{{ $user->id }}"><i class="fa fa-times"></i> Delete</a>
-                        @endif
+                        @endauth
                     </td>
                 </tr>
             @endforeach
@@ -57,8 +57,8 @@ Users
 
 @section('bottom')
 @include('graham-campbell/credentials::users.suspends')
-@if (Credentials::check() && Credentials::hasAccess('admin'))
+@auth('admin')
     @include('graham-campbell/credentials::users.resets')
     @include('graham-campbell/credentials::users.deletes')
-@endif
+@endauth
 @stop

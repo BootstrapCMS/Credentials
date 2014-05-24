@@ -23,14 +23,14 @@
     </div>
     <div class="col-xs-6">
         <div class="pull-right">
-            @if (Credentials::check() && Credentials::hasAccess('admin'))
+            @auth('admin')
                 &nbsp;<a class="btn btn-info" href="{{ URL::route('users.edit', array('users' => $user->id)) }}"><i class="fa fa-pencil-square-o"></i> Edit User</a>
-            @endif
+            @endauth
             &nbsp;<a class="btn btn-warning" href="#suspend_user" data-toggle="modal" data-target="#suspend_user"><i class="fa fa-ban"></i> Suspend User</a>
-            @if (Credentials::check() && Credentials::hasAccess('admin'))
+            @auth('admin')
                 &nbsp;<a class="btn btn-inverse" href="#reset_user" data-toggle="modal" data-target="#reset_user"><i class="fa fa-lock"></i> Reset Password</a>
                 &nbsp;<a class="btn btn-danger" href="#delete_user" data-toggle="modal" data-target="#delete_user"><i class="fa fa-times"></i> Delete</a>
-            @endif
+            @endauth
         </div>
     </div>
 </div>
@@ -74,22 +74,22 @@
         </div>
     </div>
 </div>
-@if (Credentials::check() && Credentials::hasAccess('admin'))
+@auth('admin')
     <hr>
     <h3>User Object</h3>
     <div>
         <pre>{{ var_dump($user) }}</pre>
     </div>
-@endif
+@endauth
 @stop
 
 @section('bottom')
 @include('graham-campbell/credentials::users.suspend')
-@if (Credentials::check() && Credentials::hasAccess('admin'))
+@auth('admin')
     @if (Config::get('graham-campbell/credentials::activation'))
         @include('graham-campbell/credentials::users.resend')
     @endif
     @include('graham-campbell/credentials::users.reset')
     @include('graham-campbell/credentials::users.delete')
-@endif
+@endauth
 @stop

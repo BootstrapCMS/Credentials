@@ -7,6 +7,11 @@ CHANGE LOG
 * Upgrade to Laravel 4.2
 
 
+## V0.2.1 Alpha (24/05/2014)
+
+* Added the "auth" helper to the blade compiler
+
+
 ## V0.2 Alpha (21/04/2014)
 
 * PHP 5.6 and HHVM compatibility

@@ -25,10 +25,10 @@ Edit {{{ $user->getName() }}}
         <div class="pull-right">
             &nbsp;<a class="btn btn-success" href="{{ URL::route('users.show', array('users' => $user->id)) }}"><i class="fa fa-file-text"></i> Show User</a>
             &nbsp;<a class="btn btn-warning" href="#suspend_user" data-toggle="modal" data-target="#suspend_user"><i class="fa fa-ban"></i> Suspend User</a>
-            @if (Credentials::check() && Credentials::hasAccess('admin'))
+            @auth('admin')
                 &nbsp;<a class="btn btn-inverse" href="#reset_user" data-toggle="modal" data-target="#reset_user"><i class="fa fa-lock"></i> Reset Password</a>
                 &nbsp;<a class="btn btn-danger" href="#delete_user" data-toggle="modal" data-target="#delete_user"><i class="fa fa-times"></i> Delete</a>
-            @endif
+            @endauth
         </div>
     </div>
 </div>
@@ -53,10 +53,10 @@ Edit {{{ $user->getName() }}}
 
 @section('bottom')
 @include('graham-campbell/credentials::users.suspend')
-@if (Credentials::check() && Credentials::hasAccess('admin'))
+@auth('admin')
     @include('graham-campbell/credentials::users.reset')
     @include('graham-campbell/credentials::users.delete')
-@endif
+@endauth
 @stop
 
 @section('css')
