@@ -17,7 +17,7 @@
 namespace GrahamCampbell\Credentials\Controllers;
 
 use Illuminate\Routing\Controller;
-use GrahamCampbell\Credentials\Classes\Credentials;
+use GrahamCampbell\Credentials\Credentials;
 
 /**
  * This is the abstract controller class.
@@ -54,14 +54,14 @@ abstract class AbstractController extends Controller
     /**
      * The credentials instance.
      *
-     * @var \GrahamCampbell\Credentials\Classes\Credentials
+     * @var \GrahamCampbell\Credentials\Credentials
      */
     protected $credentials;
 
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
+     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
      * @return void
      */
     public function __construct(Credentials $credentials)
@@ -117,7 +117,7 @@ abstract class AbstractController extends Controller
     /**
      * Return the credentials instance.
      *
-     * @return \GrahamCampbell\Credentials\Classes\Credentials
+     * @return \GrahamCampbell\Credentials\Credentials
      */
     public function getCredentials()
     {

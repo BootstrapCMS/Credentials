@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\URL;
 use GrahamCampbell\Binput\Classes\Binput;
 use GrahamCampbell\Viewer\Classes\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
-use GrahamCampbell\Credentials\Classes\Credentials;
+use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 
 /**
@@ -61,7 +61,7 @@ class RegistrationController extends AbstractController
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
+     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
      * @param  \GrahamCampbell\Viewer\Classes\Viewer  $viewer
      * @param  \GrahamCampbell\Binput\Classes\Binput  $binput
      * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
@@ -85,7 +85,7 @@ class RegistrationController extends AbstractController
      */
     public function getRegister()
     {
-        return $this->viewer->make(Config::get('graham-campbell/credentials::register', 'graham-campbell/credentials::account.register'));
+        return $this->viewer->make('graham-campbell/credentials::account.register');
     }
 
     /**

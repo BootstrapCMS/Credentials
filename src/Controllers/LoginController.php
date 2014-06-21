@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use GrahamCampbell\Binput\Classes\Binput;
 use GrahamCampbell\Viewer\Classes\Viewer;
-use GrahamCampbell\Credentials\Classes\Credentials;
+use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 
 /**
@@ -59,7 +59,7 @@ class LoginController extends AbstractController
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
+     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
      * @param  \GrahamCampbell\Viewer\Classes\Viewer  $viewer
      * @param  \GrahamCampbell\Binput\Classes\Binput  $binput
      * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
@@ -88,7 +88,7 @@ class LoginController extends AbstractController
      */
     public function getLogin()
     {
-        return $this->viewer->make(Config::get('graham-campbell/credentials::login', 'graham-campbell/credentials::account.login'));
+        return $this->viewer->make('graham-campbell/credentials::account.login');
     }
 
     /**

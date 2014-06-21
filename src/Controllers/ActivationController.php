@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\URL;
 use GrahamCampbell\Binput\Classes\Binput;
 use GrahamCampbell\Viewer\Classes\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
-use GrahamCampbell\Credentials\Classes\Credentials;
+use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -62,7 +62,7 @@ class ActivationController extends AbstractController
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
+     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
      * @param  \GrahamCampbell\Viewer\Classes\Viewer  $viewer
      * @param  \GrahamCampbell\Binput\Classes\Binput  $binput
      * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
@@ -123,7 +123,7 @@ class ActivationController extends AbstractController
      */
     public function getResend()
     {
-        return $this->viewer->make(Config::get('graham-campbell/credentials::resend', 'graham-campbell/credentials::account.resend'));
+        return $this->viewer->make('graham-campbell/credentials::account.resend');
     }
 
     /**

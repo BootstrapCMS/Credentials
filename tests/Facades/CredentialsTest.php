@@ -59,6 +59,6 @@ class CredentialsTest extends AbstractTestCase
      */
     protected function getFacadeRoot()
     {
-        return 'GrahamCampbell\Credentials\Classes\Credentials';
+        return 'GrahamCampbell\Credentials\Credentials';
     }
 }

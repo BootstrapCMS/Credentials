@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\URL;
 use GrahamCampbell\Binput\Classes\Binput;
 use GrahamCampbell\Viewer\Classes\Viewer;
 use GrahamCampbell\Queuing\Facades\Queuing;
-use GrahamCampbell\Credentials\Classes\Credentials;
+use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 use GrahamCampbell\Credentials\Facades\GroupProvider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -65,7 +65,7 @@ class UserController extends AbstractController
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
+     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
      * @param  \GrahamCampbell\Viewer\Classes\Viewer  $viewer
      * @param  \GrahamCampbell\Binput\Classes\Binput  $binput
      * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider

@@ -66,7 +66,7 @@ To get started, first publish the package config file:
 
     php artisan config:publish graham-campbell/credentials
 
-There are many config options:
+There are two config options:
 
 **Enable Public Registration**
 
@@ -75,26 +75,6 @@ This option (`'regallowed'`) defines if public registration is allowed. The defa
 **Require Account Activation**
 
 This option (`'activation'`) defines if public registration requires email activation. The default value for this setting is `true`.
-
-**Login Page**
-
-This option (`'login'`) defines the view that is used for the login page. The default value for this setting is `'graham-campbell/credentials::account.login'`.
-
-**Registration Page**
-
-This option (`'registration'`) defines the view that is used for the registration page. The default value for this setting is `'graham-campbell/credentials::account.register'`.
-
-**Forgot Password Page**
-
-This option (`'reset'`) defines the view that is used for the forgot password page. The default value for this setting is `'graham-campbell/credentials::account.reset'`.
-
-**Resend Activation Page**
-
-This option (`'resend'`) defines the view that is used for the resend activation page. The default value for this setting is `'graham-campbell/credentials::account.resend'`.
-
-**Profile Password Page**
-
-This option (`'profile'`) defines the view that is used for the profile page. The default value for this setting is `'graham-campbell/credentials::account.profile'`.
 
 **Additional Configuration**
 
