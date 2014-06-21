@@ -4,10 +4,10 @@ CHANGE LOG
 
 ## V0.3 Alpha (Upcoming - July 2014)
 
-* Upgrade to Laravel 4.2 (TODO)
+* Upgrade to Laravel 4.2
 * Config cleanup
-* Refactoring (TODO)
-* Added di aliases (TODO)
+* Refactoring
+* Added di aliases
 
 
 ## V0.2.1 Alpha (24/05/2014)

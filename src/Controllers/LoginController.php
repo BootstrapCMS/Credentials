@@ -16,11 +16,11 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
+use Illuminate\View\Factory;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
-use GrahamCampbell\Binput\Classes\Binput;
-use GrahamCampbell\Viewer\Classes\Viewer;
+use GrahamCampbell\Binput\Binput;
 use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 
@@ -33,44 +33,19 @@ use GrahamCampbell\Credentials\Providers\UserProvider;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class LoginController extends AbstractController
+class LoginController extends BaseController
 {
-    /**
-     * The viewer instance.
-     *
-     * @var \GrahamCampbell\Viewer\Classes\Viewer
-     */
-    protected $viewer;
-
-    /**
-     * The binput instance.
-     *
-     * @var \GrahamCampbell\Binput\Classes\Binput
-     */
-    protected $binput;
-
-    /**
-     * The user provider instance.
-     *
-     * @var \GrahamCampbell\Credentials\Providers\UserProvider
-     */
-    protected $userprovider;
-
     /**
      * Create a new instance.
      *
      * @param  \GrahamCampbell\Credentials\Credentials  $credentials
-     * @param  \GrahamCampbell\Viewer\Classes\Viewer  $viewer
-     * @param  \GrahamCampbell\Binput\Classes\Binput  $binput
+     * @param  \GrahamCampbell\Binput\Binput  $binput
      * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
+     * @param  \Illuminate\View\Factory  $view
      * @return void
      */
-    public function __construct(Credentials $credentials, Viewer $viewer, Binput $binput, UserProvider $userprovider)
+    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view)
     {
-        $this->viewer = $viewer;
-        $this->binput = $binput;
-        $this->userprovider = $userprovider;
-
         $this->setPermissions(array(
             'getLogout' => 'user',
         ));
@@ -78,7 +53,7 @@ class LoginController extends AbstractController
         $this->beforeFilter('throttle.login', array('only' => array('postLogin')));
         $this->beforeFilter('throttle.sentry', array('only' => array('postLogin')));
 
-        parent::__construct($credentials);
+        parent::__construct($credentials, $binput, $userprovider, $view);
     }
 
     /**
@@ -88,7 +63,7 @@ class LoginController extends AbstractController
      */
     public function getLogin()
     {
-        return $this->viewer->make('graham-campbell/credentials::account.login');
+        return $this->view->make('graham-campbell/credentials::account.login');
     }
 
     /**
@@ -159,35 +134,5 @@ class LoginController extends AbstractController
         Event::fire('user.logout', array(array('Email' => $this->credentials->getUser()->email)));
         $this->credentials->logout();
         return Redirect::to(Config::get('graham-campbell/core::home', '/'));
-    }
-
-    /**
-     * Return the viewer instance.
-     *
-     * @return \GrahamCampbell\Viewer\Classes\Viewer
-     */
-    public function getViewer()
-    {
-        return $this->viewer;
-    }
-
-    /**
-     * Return the binput instance.
-     *
-     * @return \GrahamCampbell\Binput\Classes\Binput
-     */
-    public function getBinput()
-    {
-        return $this->binput;
-    }
-
-    /**
-     * Return the user provider instance.
-     *
-     * @return \GrahamCampbell\Credentials\Providers\UserProvider
-     */
-    public function getUserProvider()
-    {
-        return $this->userprovider;
     }
 }

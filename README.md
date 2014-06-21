@@ -12,7 +12,7 @@ Laravel Credentials
 
 ## What Is Laravel Credentials?
 
-Laravel Credentials is a cool way to authenticate in [Laravel 4.1](http://laravel.com).
+Laravel Credentials is a cool way to authenticate in [Laravel 4.2](http://laravel.com).
 
 * Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell).
 * Laravel Credentials relies on many of my packages including [Laravel Core](https://github.com/GrahamCampbell/Laravel-Core) and [Laravel Queuing](https://github.com/GrahamCampbell/Laravel-Queuing).
@@ -25,8 +25,8 @@ Laravel Credentials is a cool way to authenticate in [Laravel 4.1](http://larave
 
 ## System Requirements
 
-* PHP 5.4.7+ or HHVM 3.0+ is required.
-* You will need [Laravel 4.1](http://laravel.com) because this package is designed for it.
+* PHP 5.4.7+ or HHVM 3.1+ is required.
+* You will need [Laravel 4.2](http://laravel.com) because this package is designed for it.
 * You will need [Composer](https://getcomposer.org) installed to load the dependencies of Laravel Credentials.
 
 
@@ -34,14 +34,13 @@ Laravel Credentials is a cool way to authenticate in [Laravel 4.1](http://larave
 
 Please check the system requirements before installing Laravel Credentials.
 
-To get the latest version of Laravel Credentials, simply require `"graham-campbell/credentials": "0.2.*@alpha"` in your `composer.json` file. See the [Laravel Queuing](https://github.com/GrahamCampbell/Laravel-Queuing) readme for extra requirements before continuing. You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
+To get the latest version of Laravel Credentials, simply require `"graham-campbell/credentials": "~0.3"` in your `composer.json` file. See the [Laravel Queuing](https://github.com/GrahamCampbell/Laravel-Queuing) readme for extra requirements before continuing. You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
 
 You will need to register many service providers before you attempt to load the Laravel Credentials service provider. Open up `app/config/app.php` and add the following to the `providers` key.
 
 * `'Lightgear\Asset\AssetServiceProvider'`
 * `'Cartalyst\Sentry\SentryServiceProvider'`
 * `'GrahamCampbell\Core\CoreServiceProvider'`
-* `'GrahamCampbell\Viewer\ViewerServiceProvider'`
 * `'GrahamCampbell\Queuing\QueuingServiceProvider'`
 * `'GrahamCampbell\Security\SecurityServiceProvider'`
 * `'GrahamCampbell\Binput\BinputServiceProvider'`

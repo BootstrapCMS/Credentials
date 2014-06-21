@@ -17,12 +17,12 @@
 namespace GrahamCampbell\Credentials\Controllers;
 
 use Illuminate\Support\Str;
+use Illuminate\View\Factory;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use GrahamCampbell\Binput\Classes\Binput;
-use GrahamCampbell\Viewer\Classes\Viewer;
-use GrahamCampbell\Queuing\Facades\Queuing;
+use GrahamCampbell\Binput\Binput;
 use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -36,47 +36,22 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class ResetController extends AbstractController
+class ResetController extends BaseController
 {
-    /**
-     * The viewer instance.
-     *
-     * @var \GrahamCampbell\Viewer\Classes\Viewer
-     */
-    protected $viewer;
-
-    /**
-     * The binput instance.
-     *
-     * @var \GrahamCampbell\Binput\Classes\Binput
-     */
-    protected $binput;
-
-    /**
-     * The user provider instance.
-     *
-     * @var \GrahamCampbell\Credentials\Providers\UserProvider
-     */
-    protected $userprovider;
-
     /**
      * Create a new instance.
      *
      * @param  \GrahamCampbell\Credentials\Credentials  $credentials
-     * @param  \GrahamCampbell\Viewer\Classes\Viewer  $viewer
-     * @param  \GrahamCampbell\Binput\Classes\Binput  $binput
+     * @param  \GrahamCampbell\Binput\Binput  $binput
      * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
+     * @param  \Illuminate\View\Factory  $view
      * @return void
      */
-    public function __construct(Credentials $credentials, Viewer $viewer, Binput $binput, UserProvider $userprovider)
+    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view)
     {
-        $this->viewer = $viewer;
-        $this->binput = $binput;
-        $this->userprovider = $userprovider;
-
         $this->beforeFilter('throttle.reset', array('only' => array('postReset')));
 
-        parent::__construct($credentials);
+        parent::__construct($credentials, $binput, $userprovider, $view);
     }
 
     /**
@@ -86,7 +61,7 @@ class ResetController extends AbstractController
      */
     public function getReset()
     {
-        return $this->viewer->make('graham-campbell/credentials::account.reset');
+        return $this->view->make('graham-campbell/credentials::account.reset');
     }
 
     /**
@@ -106,19 +81,15 @@ class ResetController extends AbstractController
         try {
             $user = $this->credentials->getUserProvider()->findByLogin($input['email']);
 
-            $data = array(
-                'view' => 'graham-campbell/credentials::emails.reset',
+            $mail = array(
                 'link' => URL::route('account.password', array('id' => $user->id, 'code' => $user->getResetPasswordCode())),
                 'email' => $user->getLogin(),
-                'subject' => Config::get('platform.name').' - Password Reset Confirmation',
+                'subject' => Config::get('platform.name').' - Password Reset Confirmation'
             );
 
-            try {
-                Queuing::pushMail($data);
-            } catch (\Exception $e) {
-                return Redirect::route('account.reset')->withInput()
-                    ->with('error', 'We were unable to reset your password. Please contact support.');
-            }
+            Mail::queue('graham-campbell/credentials::emails.reset', $mail, function($message) use ($mail) {
+                $message->to($mail['email'])->subject($mail['subject']);
+            });
 
             return Redirect::route('account.reset')
                 ->with('success', 'Check your email for password reset information.');
@@ -151,19 +122,15 @@ class ResetController extends AbstractController
                     ->with('error', 'There was a problem resetting your password. Please contact support.');
             }
 
-            try {
-                $data = array(
-                    'view' => 'graham-campbell/credentials::emails.password',
-                    'password' => $password,
-                    'email' => $user->getLogin(),
-                    'subject' => Config::get('platform.name').' - New Password Information',
-                );
+            $mail = array(
+                'password' => $password,
+                'email' => $user->getLogin(),
+                'subject' => Config::get('platform.name').' - New Password Information'
+            );
 
-                Queuing::pushMail($data);
-            } catch (\Exception $e) {
-                return Redirect::to(Config::get('graham-campbell/core::home', '/'))
-                    ->with('error', 'We were unable to send you your password. Please contact support.');
-            }
+            Mail::queue('graham-campbell/credentials::emails.password', $mail, function($message) use ($mail) {
+                $message->to($mail['email'])->subject($mail['subject']);
+            });
 
             return Redirect::to(Config::get('graham-campbell/core::home', '/'))
                 ->with('success', 'Your password has been changed. Check your email for the new password.');
@@ -171,35 +138,5 @@ class ResetController extends AbstractController
             return Redirect::to(Config::get('graham-campbell/core::home', '/'))
                 ->with('error', 'There was a problem resetting your password. Please contact support.');
         }
-    }
-
-    /**
-     * Return the viewer instance.
-     *
-     * @return \GrahamCampbell\Viewer\Classes\Viewer
-     */
-    public function getViewer()
-    {
-        return $this->viewer;
-    }
-
-    /**
-     * Return the binput instance.
-     *
-     * @return \GrahamCampbell\Binput\Classes\Binput
-     */
-    public function getBinput()
-    {
-        return $this->binput;
-    }
-
-    /**
-     * Return the user provider instance.
-     *
-     * @return \GrahamCampbell\Credentials\Providers\UserProvider
-     */
-    public function getUserProvider()
-    {
-        return $this->userprovider;
     }
 }

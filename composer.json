@@ -1,6 +1,6 @@
 {
     "name": "graham-campbell/credentials",
-    "description": "Credentials Is A Cool Way To Authenticate In Laravel 4.1",
+    "description": "Credentials Is A Cool Way To Authenticate In Laravel 4.2",
     "keywords": ["laravel", "framework", "credentials", "login", "users", "permissions", "sentry", "Credentials", "Laravel Credentials", "Laravel-Credentials", "Graham Campbell", "GrahamCampbell"],
     "license": "Apache-2.0",
     "authors": [
@@ -17,29 +17,26 @@
     ],
     "require": {
         "php": ">=5.4.7",
-        "laravel/framework": "4.1.*",
-        "symfony/config": "2.4.*",
-        "symfony/event-dispatcher": "2.4.*",
-        "symfony/filesystem": "2.4.*",
+        "illuminate/console": "4.2.*",
+        "illuminate/events": "4.2.*",
+        "illuminate/http": "4.2.*",
+        "illuminate/html": "4.2.*",
+        "illuminate/mail": "4.2.*",
+        "illuminate/routing": "4.2.*",
+        "illuminate/support": "4.2.*",
+        "illuminate/view": "4.2.*",
         "lightgear/asset": "1.4",
         "cartalyst/sentry": "2.1.*",
-        "graham-campbell/core": "0.3.*",
-        "graham-campbell/viewer": "0.2.*",
-        "graham-campbell/queuing": "0.3.*",
-        "graham-campbell/binput": "1.1.*",
-        "graham-campbell/throttle": "0.2.*"
+        "graham-campbell/core": "0.4.*",
+        "graham-campbell/queuing": "0.4.*",
+        "graham-campbell/binput": "~2.0",
+        "graham-campbell/throttle": "~1.0"
     },
     "require-dev": {
-        "graham-campbell/testbench": "0.3.*",
-        "pda/pheanstalk": "2.1.*",
-        "aws/aws-sdk-php": "2.6.*",
-        "iron-io/iron_mq": "1.5.*"
+        "graham-campbell/testbench": "~1.0"
     },
     "suggest": {
-        "graham-campbell/navigation": "Easily add a navigation bar.",
-        "pda/pheanstalk": "Enables the beanstalk connector.",
-        "aws/aws-sdk-php": "Enables the aws connector.",
-        "iron-io/iron_mq": "Enables the iron connector."
+        "graham-campbell/navigation": "Easily add a navigation bar."
     },
     "autoload": {
         "psr-4": {
