@@ -18,10 +18,10 @@ namespace GrahamCampbell\Credentials\Models;
 
 use Carbon\Carbon;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
-use GrahamCampbell\Core\Models\Interfaces\BaseModelInterface;
-use GrahamCampbell\Core\Models\Common\BaseModelTrait;
-use GrahamCampbell\Core\Models\Interfaces\NameModelInterface;
-use GrahamCampbell\Core\Models\Common\NameModelTrait;
+use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
+use GrahamCampbell\Database\Models\Common\BaseModelTrait;
+use GrahamCampbell\Database\Models\Interfaces\NameModelInterface;
+use GrahamCampbell\Database\Models\Common\NameModelTrait;
 
 /**
  * This is the user model class.
