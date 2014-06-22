@@ -1,6 +1,7 @@
 @extends(Config::get('views.default', 'layouts.default'))
 
 @section('title')
+<?php $__navtype = 'admin'; ?>
 Edit {{{ $user->getName() }}}
 @stop
 

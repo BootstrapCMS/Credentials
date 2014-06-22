@@ -82,7 +82,7 @@ class UserController extends BaseController
         $users = $this->userprovider->paginate();
         $links = $this->userprovider->links();
 
-        return $this->view->make('graham-campbell/credentials::users.index', array('users' => $users, 'links' => $links), 'admin');
+        return $this->view->make('graham-campbell/credentials::users.index', array('users' => $users, 'links' => $links));
     }
 
     /**
@@ -94,7 +94,7 @@ class UserController extends BaseController
     {
         $groups = GroupProvider::index();
 
-        return $this->view->make('graham-campbell/credentials::users.create', array('groups' => $groups), 'admin');
+        return $this->view->make('graham-campbell/credentials::users.create', array('groups' => $groups));
     }
 
     /**
@@ -187,7 +187,7 @@ class UserController extends BaseController
             $groups = 'No Group Memberships';
         }
 
-        return $this->view->make('graham-campbell/credentials::users.show', array('user' => $user, 'groups' => $groups, 'activated' => $activated, 'suspended' => $suspended), 'admin');
+        return $this->view->make('graham-campbell/credentials::users.show', array('user' => $user, 'groups' => $groups, 'activated' => $activated, 'suspended' => $suspended));
     }
 
     /**
@@ -203,7 +203,7 @@ class UserController extends BaseController
 
         $groups = GroupProvider::index();
 
-        return $this->view->make('graham-campbell/credentials::users.edit', array('user' => $user, 'groups' => $groups), 'admin');
+        return $this->view->make('graham-campbell/credentials::users.edit', array('user' => $user, 'groups' => $groups));
     }
 
     /**
