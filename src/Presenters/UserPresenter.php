@@ -16,7 +16,7 @@
 
 namespace GrahamCampbell\Credentials\Presenters;
 
-use GrahamCampbell\Credentials\Models\Users;
+use GrahamCampbell\Credentials\Models\User;
 use McCool\LaravelAutoPresenter\BasePresenter;
 
 /**
