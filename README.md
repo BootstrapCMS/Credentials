@@ -2,39 +2,23 @@ Laravel Credentials
 ===================
 
 
-[![Build Status](https://img.shields.io/travis/GrahamCampbell/Laravel-Credentials/master.svg)](https://travis-ci.org/GrahamCampbell/Laravel-Credentials)
-[![Coverage Status](https://img.shields.io/coveralls/GrahamCampbell/Laravel-Credentials/master.svg)](https://coveralls.io/r/GrahamCampbell/Laravel-Credentials)
-[![Software License](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md)
-[![Latest Version](https://img.shields.io/github/release/GrahamCampbell/Laravel-Credentials.svg)](https://github.com/GrahamCampbell/Laravel-Credentials/releases)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials/badges/quality-score.png?s=b384661adefa74fb4c695e50c7832c7f1ceea470)](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446/mini.png)](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446)
+[![Build Status](https://img.shields.io/travis/GrahamCampbell/Laravel-Credentials/master.svg?style=flat)](https://travis-ci.org/GrahamCampbell/Laravel-Credentials)
+[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/GrahamCampbell/Laravel-Credentials.svg?style=flat)](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials/code-structure)
+[![Quality Score](https://img.shields.io/scrutinizer/g/GrahamCampbell/Laravel-Credentials.svg?style=flat)](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials)
+[![Software License](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg?style=flat)](LICENSE.md)
+[![Latest Version](https://img.shields.io/github/release/GrahamCampbell/Laravel-Credentials.svg?style=flat)](https://github.com/GrahamCampbell/Laravel-Credentials/releases)
 
 
-## What Is Laravel Credentials?
+## Introduction
 
-Laravel Credentials is a cool way to authenticate in [Laravel 4.2+](http://laravel.com).
-
-* Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell).
-* Laravel Credentials relies on many of my packages including [Laravel Core](https://github.com/GrahamCampbell/Laravel-Core) and [Laravel Queuing](https://github.com/GrahamCampbell/Laravel-Queuing).
-* Laravel Credentials uses [Travis CI](https://travis-ci.org/GrahamCampbell/Laravel-Credentials) with [Coveralls](https://coveralls.io/r/GrahamCampbell/Laravel-Credentials) to check everything is working.
-* Laravel Credentials uses [Scrutinizer CI](https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials) and [SensioLabsInsight](https://insight.sensiolabs.com/projects/223971eb-99e6-47b4-8107-ee5b9a4b4446) to run additional checks.
-* Laravel Credentials uses [Composer](https://getcomposer.org) to load and manage dependencies.
-* Laravel Credentials provides a [change log](https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/CHANGELOG.md), [releases](https://github.com/GrahamCampbell/Laravel-Credentials/releases), and [api docs](http://grahamcampbell.github.io/Laravel-Credentials).
-* Laravel Credentials is licensed under the Apache License, available [here](https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md).
-
-
-## System Requirements
-
-* PHP 5.4.7+ or HHVM 3.1+ is required.
-* You will need [Laravel 4.2+](http://laravel.com) because this package is designed for it.
-* You will need [Composer](https://getcomposer.org) installed to load the dependencies of Laravel Credentials.
+Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell), and is a cool way to authenticate in [Laravel 4.2+](http://laravel.com). It utilises many of my packages and Cartalyst's [Sentry](https://github.com/cartalyst/sentry) package. Feel free to check out the [change log](CHANGELOG.md), [releases](https://github.com/GrahamCampbell/Laravel-Credentials/releases), [license](LICENSE.md), [api docs](http://grahamcampbell.github.io/Laravel-Credentials), and [contribution guidelines](CONTRIBUTING.md).
 
 
 ## Installation
 
-Please check the system requirements before installing Laravel Credentials.
+[PHP](https://php.net) 5.4.7+ or [HHVM](http://hhvm.com) 3.1+, and [Composer](https://getcomposer.org) are required.
 
-To get the latest version of Laravel Credentials, simply require `"graham-campbell/credentials": "~0.3"` in your `composer.json` file. See the [Laravel Queuing](https://github.com/GrahamCampbell/Laravel-Queuing) readme for extra requirements before continuing. You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
+To get the latest version of Laravel Credentials, simply require `"graham-campbell/credentials": "~0.3"` in your `composer.json` file. You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
 
 You will need to register many service providers before you attempt to load the Laravel Credentials service provider. Open up `app/config/app.php` and add the following to the `providers` key.
 
@@ -90,33 +74,6 @@ There is currently no usage documentation besides the [API Documentation](http:/
 ) for Laravel Credentials.
 
 You may see an example of implementation in [Bootstrap CMS](https://github.com/GrahamCampbell/Bootstrap-CMS).
-
-
-## Updating Your Fork
-
-Before submitting a pull request, you should ensure that your fork is up to date.
-
-You may fork Laravel Credentials:
-
-    git remote add upstream git://github.com/GrahamCampbell/Laravel-Credentials.git
-
-The first command is only necessary the first time. If you have issues merging, you will need to get a merge tool such as [P4Merge](http://perforce.com/product/components/perforce_visual_merge_and_diff_tools).
-
-You can then update the branch:
-
-    git pull --rebase upstream master
-    git push --force origin <branch_name>
-
-Once it is set up, run `git mergetool`. Once all conflicts are fixed, run `git rebase --continue`, and `git push --force origin <branch_name>`.
-
-
-## Pull Requests
-
-Please review these guidelines before submitting any pull requests.
-
-* When submitting bug fixes, check if a maintenance branch exists for an older series, then pull against that older branch if the bug is present in it.
-* Before sending a pull request for a new feature, you should first create an issue with [Proposal] in the title.
-* Please follow the [PSR-2 Coding Style](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) and [PHP-FIG Naming Conventions](https://github.com/php-fig/fig-standards/blob/master/bylaws/002-psr-naming-conventions.md).
 
 
 ## License
