@@ -29,7 +29,6 @@
         "cartalyst/sentry": "2.1.*",
         "graham-campbell/core": "0.4.*",
         "graham-campbell/database": "0.1.*",
-        "graham-campbell/queuing": "0.4.*",
         "graham-campbell/binput": "~2.0",
         "graham-campbell/throttle": "~1.0"
     },
@@ -37,6 +36,7 @@
         "graham-campbell/testbench": "~1.0"
     },
     "suggest": {
+        "graham-campbell/queuing": "Improved mailer performance.",
         "graham-campbell/navigation": "Easily add a navigation bar."
     },
     "autoload": {

@@ -50,7 +50,6 @@ abstract class AbstractTestCase extends TestCase
             'Lightgear\Asset\AssetServiceProvider',
             'Cartalyst\Sentry\SentryServiceProvider',
             'GrahamCampbell\Core\CoreServiceProvider',
-            'GrahamCampbell\Queuing\QueuingServiceProvider',
             'GrahamCampbell\Security\SecurityServiceProvider',
             'GrahamCampbell\Binput\BinputServiceProvider',
             'GrahamCampbell\Throttle\ThrottleServiceProvider'
