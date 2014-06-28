@@ -8,6 +8,7 @@ CHANGE LOG
 * Config cleanup
 * Refactoring
 * Added di aliases
+* Added presenters
 
 
 ## V0.2.1 Alpha (24/05/2014)

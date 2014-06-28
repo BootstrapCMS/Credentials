@@ -2,12 +2,12 @@
 
 @section('title')
 <?php $__navtype = 'admin'; ?>
-Edit {{{ $user->getName() }}}
+Edit {{{ $user->name }}}
 @stop
 
 @section('top')
 <div class="page-header">
-<h1>Edit {{{ $user->getName() }}}</h1>
+<h1>Edit {{{ $user->name }}}</h1>
 </div>
 @stop
 
@@ -18,7 +18,7 @@ Edit {{{ $user->getName() }}}
             @if($user->id == Credentials::getUser()->id)
                 Currently editing your profile:
             @else
-                Currently editing {{ $user->getName() }}'s profile:
+                Currently editing {{ $user->name }}'s profile:
             @endif
         </p>
     </div>

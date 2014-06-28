@@ -47,6 +47,7 @@ abstract class AbstractTestCase extends TestCase
     protected function getRequiredServiceProviders()
     {
         return array(
+            'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
             'Lightgear\Asset\AssetServiceProvider',
             'Cartalyst\Sentry\SentryServiceProvider',
             'GrahamCampbell\Core\CoreServiceProvider',

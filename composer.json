@@ -30,7 +30,8 @@
         "graham-campbell/core": "0.4.*",
         "graham-campbell/database": "0.1.*",
         "graham-campbell/binput": "~2.0",
-        "graham-campbell/throttle": "~1.0"
+        "graham-campbell/throttle": "~1.0",
+        "mccool/laravel-auto-presenter": "~2.1"
     },
     "require-dev": {
         "graham-campbell/testbench": "~1.0"
