@@ -156,7 +156,9 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function registerCommandSubscriber()
     {
         $this->app->bindShared('GrahamCampbell\Credentials\Subscribers\CommandSubscriber', function ($app) {
-            return new Subscribers\CommandSubscriber();
+            $force = trait_exists('Illuminate\Support\Traits\MacroableTrait');
+
+            return new Subscribers\CommandSubscriber($force);
         });
     }
 
