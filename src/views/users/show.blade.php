@@ -1,12 +1,13 @@
 @extends(Config::get('views.default', 'layouts.default'))
 
 @section('title')
-{{{ $user->getName() }}}
+<?php $__navtype = 'admin'; ?>
+{{{ $user->name }}}
 @stop
 
 @section('top')
 <div class="page-header">
-<h1>{{{ $user->getName() }}}</h1>
+<h1>{{{ $user->name }}}</h1>
 </div>
 @stop
 
@@ -17,7 +18,7 @@
             @if($user->id == Credentials::getUser()->id)
                 Currently showing your profile:
             @else
-                Currently showing {{ $user->getName() }}'s profile:
+                Currently showing {{ $user->name }}'s profile:
             @endif
         </p>
     </div>

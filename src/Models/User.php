@@ -17,11 +17,10 @@
 namespace GrahamCampbell\Credentials\Models;
 
 use Carbon\Carbon;
+use McCool\LaravelAutoPresenter\PresenterInterface;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
-use GrahamCampbell\Core\Models\Interfaces\BaseModelInterface;
-use GrahamCampbell\Core\Models\Common\BaseModelTrait;
-use GrahamCampbell\Core\Models\Interfaces\NameModelInterface;
-use GrahamCampbell\Core\Models\Common\NameModelTrait;
+use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
+use GrahamCampbell\Database\Models\Common\BaseModelTrait;
 
 /**
  * This is the user model class.
@@ -32,9 +31,9 @@ use GrahamCampbell\Core\Models\Common\NameModelTrait;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class User extends SentryUser implements BaseModelInterface, NameModelInterface
+class User extends SentryUser implements BaseModelInterface, PresenterInterface
 {
-    use BaseModelTrait, NameModelTrait;
+    use BaseModelTrait;
 
     /**
      * The table the users are stored in.
@@ -101,6 +100,16 @@ class User extends SentryUser implements BaseModelInterface, NameModelInterface
     protected $access = array();
 
     /**
+     * Get the presenter class.
+     *
+     * @var string
+     */
+    public function getPresenter()
+    {
+        return 'GrahamCampbell\Credentials\Presenters\UserPresenter';
+    }
+
+    /**
      * Activated at accessor.
      *
      * @param  mixed  $value
@@ -124,6 +133,7 @@ class User extends SentryUser implements BaseModelInterface, NameModelInterface
      *
      * @param  string|array  $permissions
      * @param  bool  $all
+     * @param  bool  $cache
      * @return bool
      */
     public function hasAccess($permissions, $all = true, $cache = true)

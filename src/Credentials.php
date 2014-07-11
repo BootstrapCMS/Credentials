@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Classes;
+namespace GrahamCampbell\Credentials;
 
 use Cartalyst\Sentry\Sentry;
 

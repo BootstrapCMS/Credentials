@@ -18,14 +18,14 @@ namespace GrahamCampbell\Credentials\Controllers;
 
 use DateTime;
 use Illuminate\Support\Str;
+use Illuminate\View\Factory;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\HTML;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use GrahamCampbell\Binput\Classes\Binput;
-use GrahamCampbell\Viewer\Classes\Viewer;
-use GrahamCampbell\Queuing\Facades\Queuing;
-use GrahamCampbell\Credentials\Classes\Credentials;
+use GrahamCampbell\Binput\Binput;
+use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 use GrahamCampbell\Credentials\Facades\GroupProvider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -39,43 +39,22 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class UserController extends AbstractController
+class UserController extends BaseController
 {
-    /**
-     * The viewer instance.
-     *
-     * @var \GrahamCampbell\Viewer\Classes\Viewer
-     */
-    protected $viewer;
-
-    /**
-     * The binput instance.
-     *
-     * @var \GrahamCampbell\Binput\Classes\Binput
-     */
-    protected $binput;
-
-    /**
-     * The user provider instance.
-     *
-     * @var \GrahamCampbell\Credentials\Providers\UserProvider
-     */
-    protected $userprovider;
-
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
-     * @param  \GrahamCampbell\Viewer\Classes\Viewer  $viewer
-     * @param  \GrahamCampbell\Binput\Classes\Binput  $binput
+     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
+     * @param  \GrahamCampbell\Binput\Binput  $binput
      * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
+     * @param  \Illuminate\View\Factory  $view
      * @return void
      */
-    public function __construct(Credentials $credentials, Viewer $viewer, Binput $binput, UserProvider $userprovider)
+    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view)
     {
-        $this->viewer = $viewer;
         $this->binput = $binput;
         $this->userprovider = $userprovider;
+        $this->view = $view;
 
         $this->setPermissions(array(
             'index'   => 'mod',
@@ -90,7 +69,7 @@ class UserController extends AbstractController
             'destroy' => 'admin',
         ));
 
-        parent::__construct($credentials);
+        parent::__construct($credentials, $binput, $userprovider, $view);
     }
 
     /**
@@ -103,7 +82,7 @@ class UserController extends AbstractController
         $users = $this->userprovider->paginate();
         $links = $this->userprovider->links();
 
-        return $this->viewer->make('graham-campbell/credentials::users.index', array('users' => $users, 'links' => $links), 'admin');
+        return $this->view->make('graham-campbell/credentials::users.index', array('users' => $users, 'links' => $links));
     }
 
     /**
@@ -115,7 +94,7 @@ class UserController extends AbstractController
     {
         $groups = GroupProvider::index();
 
-        return $this->viewer->make('graham-campbell/credentials::users.create', array('groups' => $groups), 'admin');
+        return $this->view->make('graham-campbell/credentials::users.create', array('groups' => $groups));
     }
 
     /**
@@ -151,21 +130,16 @@ class UserController extends AbstractController
                 }
             }
 
-            try {
-                $data = array(
-                    'view'     => 'graham-campbell/credentials::emails.newuser',
-                    'url'      => URL::to(Config::get('graham-campbell/core::home', '/')),
-                    'password' => $password,
-                    'email'    => $user->getLogin(),
-                    'subject'  => Config::get('platform.name').' - New Account Information'
-                );
+            $mail = array(
+                'url'      => URL::to(Config::get('graham-campbell/core::home', '/')),
+                'password' => $password,
+                'email'    => $user->getLogin(),
+                'subject'  => Config::get('platform.name').' - New Account Information'
+            );
 
-                Queuing::pushMail($data);
-            } catch (\Exception $e) {
-                $user->delete();
-                return Redirect::route('users.create')->withInput()
-                    ->with('error', 'We were unable to create the user. Please contact support.');
-            }
+            Mail::queue('graham-campbell/credentials::emails.newuser', $mail, function($message) use ($mail) {
+                $message->to($mail['email'])->subject($mail['subject']);
+            });
 
             return Redirect::route('users.show', array('users' => $user->id))
                 ->with('success', 'The user has been created successfully. Their password has been emailed to them.');
@@ -213,7 +187,7 @@ class UserController extends AbstractController
             $groups = 'No Group Memberships';
         }
 
-        return $this->viewer->make('graham-campbell/credentials::users.show', array('user' => $user, 'groups' => $groups, 'activated' => $activated, 'suspended' => $suspended), 'admin');
+        return $this->view->make('graham-campbell/credentials::users.show', array('user' => $user, 'groups' => $groups, 'activated' => $activated, 'suspended' => $suspended));
     }
 
     /**
@@ -229,7 +203,7 @@ class UserController extends AbstractController
 
         $groups = GroupProvider::index();
 
-        return $this->viewer->make('graham-campbell/credentials::users.edit', array('user' => $user, 'groups' => $groups), 'admin');
+        return $this->view->make('graham-campbell/credentials::users.edit', array('user' => $user, 'groups' => $groups));
     }
 
     /**
@@ -323,19 +297,15 @@ class UserController extends AbstractController
 
         $user->update($input);
 
-        try {
-            $data = array(
-                'view' => 'graham-campbell/credentials::emails.password',
-                'password' => $password,
-                'email' => $user->getLogin(),
-                'subject' => Config::get('platform.name').' - New Password Information'
-            );
+        $mail = array(
+            'password' => $password,
+            'email' => $user->getLogin(),
+            'subject' => Config::get('platform.name').' - New Password Information'
+        );
 
-            Queuing::pushMail($data);
-        } catch (\Exception $e) {
-            return Redirect::route('users.show', array('users' => $id))
-                ->with('error', 'We were unable to send the password to the user.');
-        }
+        Mail::queue('graham-campbell/credentials::emails.password', $mail, function($message) use ($mail) {
+            $message->to($mail['email'])->subject($mail['subject']);
+        });
 
         return Redirect::route('users.show', array('users' => $id))
             ->with('success', 'The user\'s password has been successfully reset. Their new password has been emailed to them.');
@@ -356,20 +326,16 @@ class UserController extends AbstractController
                 ->with('error', 'That user is already activated.');
         }
 
-        try {
-            $data = array(
-                'view'    => 'graham-campbell/credentials::emails.resend',
-                'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
-                'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $user->getActivationCode())),
-                'email'   => $user->getLogin(),
-                'subject' => Config::get('platform.name').' - Activation'
-            );
+        $mail = array(
+            'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+            'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $user->getActivationCode())),
+            'email'   => $user->getLogin(),
+            'subject' => Config::get('platform.name').' - Activation'
+        );
 
-            Queuing::pushMail($data);
-        } catch (\Exception $e) {
-            return Redirect::route('users.show', array('users' => $id))
-                ->with('error', 'We were unable to send the activation email to the user.');
-        }
+        Mail::queue('graham-campbell/credentials::emails.resend', $mail, function($message) use ($mail) {
+            $message->to($mail['email'])->subject($mail['subject']);
+        });
 
         return Redirect::route('users.show', array('users' => $id))
             ->with('success', 'The user\'s activation email has been successfully sent.');
@@ -408,35 +374,5 @@ class UserController extends AbstractController
         if (!$user) {
             throw new NotFoundHttpException('User Not Found');
         }
-    }
-
-    /**
-     * Return the viewer instance.
-     *
-     * @return \GrahamCampbell\Viewer\Classes\Viewer
-     */
-    public function getViewer()
-    {
-        return $this->viewer;
-    }
-
-    /**
-     * Return the binput instance.
-     *
-     * @return \GrahamCampbell\Binput\Classes\Binput
-     */
-    public function getBinput()
-    {
-        return $this->binput;
-    }
-
-    /**
-     * Return the user provider instance.
-     *
-     * @return \GrahamCampbell\Credentials\Providers\UserProvider
-     */
-    public function getUserProvider()
-    {
-        return $this->userprovider;
     }
 }

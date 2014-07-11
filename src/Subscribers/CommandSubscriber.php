@@ -31,6 +31,24 @@ use Illuminate\Events\Dispatcher;
 class CommandSubscriber
 {
     /**
+     * The forced flag.
+     *
+     * @var bool
+     */
+    protected $force;
+
+    /**
+     * Create a new instance.
+     *
+     * @param  bool  $force
+     * @return void
+     */
+    public function __construct($force)
+    {
+        $this->force = $force;
+    }
+
+    /**
      * Register the listeners for the subscriber.
      *
      * @param  \Illuminate\Events\Dispatcher  $events
@@ -53,6 +71,10 @@ class CommandSubscriber
      */
     public function onRunMigrations(Command $command)
     {
-        $command->call('migrate', array('--package' => 'cartalyst/sentry'));
+        if ($this->force) {
+            $command->call('migrate', array('--package' => 'cartalyst/sentry', '--force' => true));
+        } else {
+            $command->call('migrate', array('--package' => 'cartalyst/sentry'));
+        }
     }
 }

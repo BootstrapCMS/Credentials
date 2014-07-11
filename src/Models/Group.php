@@ -17,8 +17,8 @@
 namespace GrahamCampbell\Credentials\Models;
 
 use Cartalyst\Sentry\Groups\Eloquent\Group as SentryGroup;
-use GrahamCampbell\Core\Models\Interfaces\BaseModelInterface;
-use GrahamCampbell\Core\Models\Common\BaseModelTrait;
+use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
+use GrahamCampbell\Database\Models\Common\BaseModelTrait;
 
 /**
  * This is the group model class.

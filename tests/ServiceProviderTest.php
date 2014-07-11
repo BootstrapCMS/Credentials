@@ -30,4 +30,19 @@ use GrahamCampbell\TestBench\Traits\ServiceProviderTestCaseTrait;
 class ServiceProviderTest extends AbstractTestCase
 {
     use ServiceProviderTestCaseTrait;
+
+    public function testUserProviderIsInjectable()
+    {
+        $this->assertIsInjectable('GrahamCampbell\Credentials\Providers\UserProvider');
+    }
+
+    public function testGroupProviderIsInjectable()
+    {
+        $this->assertIsInjectable('GrahamCampbell\Credentials\Providers\GroupProvider');
+    }
+
+    public function testCredentialsIsInjectable()
+    {
+        $this->assertIsInjectable('GrahamCampbell\Credentials\Credentials');
+    }
 }

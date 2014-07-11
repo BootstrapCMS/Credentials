@@ -16,14 +16,14 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
+use Illuminate\View\Factory;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use GrahamCampbell\Binput\Classes\Binput;
-use GrahamCampbell\Viewer\Classes\Viewer;
-use GrahamCampbell\Queuing\Facades\Queuing;
-use GrahamCampbell\Credentials\Classes\Credentials;
+use GrahamCampbell\Binput\Binput;
+use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -36,44 +36,19 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class AccountController extends AbstractController
+class AccountController extends BaseController
 {
-    /**
-     * The viewer instance.
-     *
-     * @var \GrahamCampbell\Viewer\Classes\Viewer
-     */
-    protected $viewer;
-
-    /**
-     * The binput instance.
-     *
-     * @var \GrahamCampbell\Binput\Classes\Binput
-     */
-    protected $binput;
-
-    /**
-     * The user provider instance.
-     *
-     * @var \GrahamCampbell\Credentials\Providers\UserProvider
-     */
-    protected $userprovider;
-
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Classes\Credentials  $credentials
-     * @param  \GrahamCampbell\Viewer\Classes\Viewer  $viewer
-     * @param  \GrahamCampbell\Binput\Classes\Binput  $binput
+     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
+     * @param  \GrahamCampbell\Binput\Binput  $binput
      * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
+     * @param  \Illuminate\View\Factory  $view
      * @return void
      */
-    public function __construct(Credentials $credentials, Viewer $viewer, Binput $binput, UserProvider $userprovider)
+    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view)
     {
-        $this->viewer = $viewer;
-        $this->binput = $binput;
-        $this->userprovider = $userprovider;
-
         $this->setPermissions(array(
             'getProfile'    => 'user',
             'deleteProfile' => 'user',
@@ -81,7 +56,7 @@ class AccountController extends AbstractController
             'patchPassword' => 'user',
         ));
 
-        parent::__construct($credentials);
+        parent::__construct($credentials, $binput, $userprovider, $view);
     }
 
     /**
@@ -91,7 +66,7 @@ class AccountController extends AbstractController
      */
     public function getProfile()
     {
-        return $this->viewer->make(Config::get('graham-campbell/credentials::profile', 'graham-campbell/credentials::account.profile'));
+        return $this->view->make('graham-campbell/credentials::account.profile');
     }
 
     /**
@@ -160,19 +135,15 @@ class AccountController extends AbstractController
         $user = $this->credentials->getUser();
         $this->checkUser($user);
 
-        try {
-            $data = array(
-                'view'    => 'graham-campbell/credentials::emails.newpass',
-                'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
-                'email'   => $user->getLogin(),
-                'subject' => Config::get('platform.name').' - New Password Notification',
-            );
+        $mail = array(
+            'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+            'email'   => $user->getLogin(),
+            'subject' => Config::get('platform.name').' - New Password Notification'
+        );
 
-            Queuing::pushMail($data);
-        } catch (\Exception $e) {
-            return Redirect::route('account.profile')->withInput()
-                ->with('error', 'We were unable to update your password. Please contact support.');
-        }
+        Mail::queue('graham-campbell/credentials::emails.newpass', $mail, function($message) use ($mail) {
+            $message->to($mail['email'])->subject($mail['subject']);
+        });
 
         $user->update($input);
 
@@ -191,35 +162,5 @@ class AccountController extends AbstractController
         if (!$user) {
             throw new NotFoundHttpException('User Not Found');
         }
-    }
-
-    /**
-     * Return the viewer instance.
-     *
-     * @return \GrahamCampbell\Viewer\Classes\Viewer
-     */
-    public function getViewer()
-    {
-        return $this->viewer;
-    }
-
-    /**
-     * Return the binput instance.
-     *
-     * @return \GrahamCampbell\Binput\Classes\Binput
-     */
-    public function getBinput()
-    {
-        return $this->binput;
-    }
-
-    /**
-     * Return the user provider instance.
-     *
-     * @return \GrahamCampbell\Credentials\Providers\UserProvider
-     */
-    public function getUserProvider()
-    {
-        return $this->userprovider;
     }
 }

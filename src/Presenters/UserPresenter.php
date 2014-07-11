@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Classes;
+namespace GrahamCampbell\Credentials\Presenters;
 
-use Illuminate\View\Environment;
-use GrahamCampbell\Viewer\Classes\Viewer as BaseViewer;
+use GrahamCampbell\Credentials\Models\User;
+use McCool\LaravelAutoPresenter\BasePresenter;
 
 /**
- * This is the view class.
+ * This is the user presenter class.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -28,29 +28,26 @@ use GrahamCampbell\Viewer\Classes\Viewer as BaseViewer;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class Viewer extends BaseViewer
+class UserPresenter extends BasePresenter
 {
     /**
      * Create a new instance.
      *
-     * @param  \Illuminate\View\Environment  $view
+     * @param  \GrahamCampbell\Credentials\Models\Users  $user
      * @return void
      */
-    public function __construct(Environment $view)
+    public function __construct(User $user)
     {
-        parent::__construct($view);
+        $this->resource = $user;
     }
 
     /**
-     * Get a evaluated view contents for the given view.
+     * Get the user's name.
      *
-     * @param  string  $view
-     * @param  array   $data
-     * @param  string  $type
-     * @return \Illuminate\View\View
+     * @return string
      */
-    public function make($view, array $data = array(), $type = 'default')
+    public function name()
     {
-        return parent::make($view, $data);
+        return $this->resource->first_name.' '.$this->resource->last_name;
     }
 }

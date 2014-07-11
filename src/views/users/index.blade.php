@@ -1,6 +1,7 @@
 @extends(Config::get('views.default', 'layouts.default'))
 
 @section('title')
+<?php $__navtype = 'admin'; ?>
 Users
 @stop
 
@@ -34,7 +35,7 @@ Users
         <tbody>
             @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->getName() }}</td>
+                    <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
                         &nbsp;<a class="btn btn-success" href="{{ URL::route('users.show', array('users' => $user->id)) }}"><i class="fa fa-file-text"></i> Show</a>

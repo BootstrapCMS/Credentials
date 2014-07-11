@@ -16,7 +16,7 @@
 
 namespace GrahamCampbell\Tests\Credentials;
 
-use GrahamCampbell\TestBench\Classes\AbstractLaravelTestCase as TestCase;
+use GrahamCampbell\TestBench\AbstractLaravelTestCase as TestCase;
 
 /**
  * This is the abstract test case class.
@@ -47,11 +47,10 @@ abstract class AbstractTestCase extends TestCase
     protected function getRequiredServiceProviders()
     {
         return array(
+            'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
             'Lightgear\Asset\AssetServiceProvider',
             'Cartalyst\Sentry\SentryServiceProvider',
             'GrahamCampbell\Core\CoreServiceProvider',
-            'GrahamCampbell\Viewer\ViewerServiceProvider',
-            'GrahamCampbell\Queuing\QueuingServiceProvider',
             'GrahamCampbell\Security\SecurityServiceProvider',
             'GrahamCampbell\Binput\BinputServiceProvider',
             'GrahamCampbell\Throttle\ThrottleServiceProvider'
