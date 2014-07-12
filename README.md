@@ -11,7 +11,7 @@ Laravel Credentials
 
 ## Introduction
 
-Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell), and is a cool way to authenticate in [Laravel 4.2+](http://laravel.com). It utilises many of my packages and Cartalyst's [Sentry](https://github.com/cartalyst/sentry) package. Feel free to check out the [change log](CHANGELOG.md), [releases](https://github.com/GrahamCampbell/Laravel-Credentials/releases), [license](LICENSE.md), [api docs](http://grahamcampbell.github.io/Laravel-Credentials), and [contribution guidelines](CONTRIBUTING.md).
+Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell), and is a cool way to authenticate in [Laravel 4.2+](http://laravel.com). It utilises many of my packages and Cartalyst's [Sentry](https://github.com/cartalyst/sentry) package. Feel free to check out the [change log](CHANGELOG.md), [releases](https://github.com/GrahamCampbell/Laravel-Credentials/releases), [license](LICENSE.md), [api docs](http://docs.grahamjcampbell.co.uk), and [contribution guidelines](CONTRIBUTING.md).
 
 
 ## Installation
