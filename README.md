@@ -51,15 +51,15 @@ To get started, first publish the package config file:
 
 There are two config options:
 
-**Enable Public Registration**
+##### Enable Public Registration
 
 This option (`'regallowed'`) defines if public registration is allowed. The default value for this setting is `true`.
 
-**Require Account Activation**
+##### Require Account Activation
 
 This option (`'activation'`) defines if public registration requires email activation. The default value for this setting is `true`.
 
-**Additional Configuration**
+##### Additional Configuration
 
 You may want to check out the config for `cartalyst/sentry` too. For Laravel Credentials to function correctly, you must set the models to the following, or to a class which extends the following:
 
