@@ -113,14 +113,4 @@ abstract class AbstractController extends Controller
             return 1;
         }
     }
-
-    /**
-     * Return the credentials instance.
-     *
-     * @return \GrahamCampbell\Credentials\Credentials
-     */
-    public function getCredentials()
-    {
-        return $this->credentials;
-    }
 }

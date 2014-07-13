@@ -70,34 +70,4 @@ abstract class BaseController extends AbstractController
 
         parent::__construct($credentials);
     }
-
-    /**
-     * Return the binput instance.
-     *
-     * @return \GrahamCampbell\Binput\Binput
-     */
-    public function getBinput()
-    {
-        return $this->binput;
-    }
-
-    /**
-     * Return the user provider instance.
-     *
-     * @return \GrahamCampbell\Credentials\Providers\UserProvider
-     */
-    public function getUserProvider()
-    {
-        return $this->userprovider;
-    }
-
-    /**
-     * Return the view factory instance.
-     *
-     * @return \Illuminate\View\Factory
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
 }
