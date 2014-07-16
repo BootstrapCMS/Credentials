@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Redirect;
 use GrahamCampbell\Binput\Binput;
 use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
+use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 
 /**
  * This is the login controller class.
@@ -36,15 +37,23 @@ use GrahamCampbell\Credentials\Providers\UserProvider;
 class LoginController extends BaseController
 {
     /**
+     * The throttler instance.
+     *
+     * @var \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface
+     */
+    protected $throttler;
+
+    /**
      * Create a new instance.
      *
      * @param  \GrahamCampbell\Credentials\Credentials  $credentials
      * @param  \GrahamCampbell\Binput\Binput  $binput
      * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
      * @param  \Illuminate\View\Factory  $view
+     * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
      * @return void
      */
-    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view)
+    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view, ThrottlerInterface $throttler)
     {
         $this->setPermissions(array(
             'getLogout' => 'user',
@@ -52,6 +61,8 @@ class LoginController extends BaseController
 
         $this->beforeFilter('throttle.login', array('only' => array('postLogin')));
         $this->beforeFilter('throttle.sentry', array('only' => array('postLogin')));
+
+        $this->throttler = $throttler;
 
         parent::__construct($credentials, $binput, $userprovider, $view);
     }
@@ -85,6 +96,8 @@ class LoginController extends BaseController
             Event::fire('user.loginfailed', array(array('Email' => $input['email'], 'Messages' => $val->messages()->all())));
             return Redirect::route('account.login')->withInput()->withErrors($val->errors());
         }
+
+        $this->throttler->hit();
 
         try {
             $throttle = $this->credentials->getThrottleProvider()->findByUserLogin($input['email']);

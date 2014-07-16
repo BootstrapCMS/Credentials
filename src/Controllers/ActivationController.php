@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\URL;
 use GrahamCampbell\Binput\Binput;
 use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
+use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -45,11 +46,15 @@ class ActivationController extends BaseController
      * @param  \GrahamCampbell\Binput\Binput  $binput
      * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
      * @param  \Illuminate\View\Factory  $view
+     * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
      * @return void
      */
-    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view)
+    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view, ThrottlerInterface $throttler)
     {
+        $this->beforeFilter('throttle.activate', array('only' => array('getActivate')));
         $this->beforeFilter('throttle.resend', array('only' => array('postResend')));
+
+        $this->throttler = $throttler;
 
         parent::__construct($credentials, $binput, $userprovider, $view);
     }
@@ -114,6 +119,8 @@ class ActivationController extends BaseController
         if ($val->fails()) {
             return Redirect::route('account.resend')->withInput()->withErrors($val->errors());
         }
+
+        $this->throttler->hit();
 
         try {
             $user = $this->credentials->getUserProvider()->findByLogin($input['email']);

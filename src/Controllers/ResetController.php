@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\URL;
 use GrahamCampbell\Binput\Binput;
 use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
+use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -39,17 +40,27 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class ResetController extends BaseController
 {
     /**
+     * The throttler instance.
+     *
+     * @var \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface
+     */
+    protected $throttler;
+
+    /**
      * Create a new instance.
      *
      * @param  \GrahamCampbell\Credentials\Credentials  $credentials
      * @param  \GrahamCampbell\Binput\Binput  $binput
      * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
      * @param  \Illuminate\View\Factory  $view
+     * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
      * @return void
      */
-    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view)
+    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view, ThrottlerInterface $throttler)
     {
         $this->beforeFilter('throttle.reset', array('only' => array('postReset')));
+
+        $this->throttler = $throttler;
 
         parent::__construct($credentials, $binput, $userprovider, $view);
     }
@@ -77,6 +88,8 @@ class ResetController extends BaseController
         if ($val->fails()) {
             return Redirect::route('account.reset')->withInput()->withErrors($val->errors());
         }
+
+        $this->throttler->hit();
 
         try {
             $user = $this->credentials->getUserProvider()->findByLogin($input['email']);

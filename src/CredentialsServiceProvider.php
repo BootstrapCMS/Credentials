@@ -191,8 +191,9 @@ class CredentialsServiceProvider extends ServiceProvider
             $binput = $app['binput'];
             $userprovider = $app['userprovider'];
             $view = $app['view'];
+            $throttler = $app['throttle']->get($app['request'], 10, 10);
 
-            return new Controllers\LoginController($credentials, $binput, $userprovider, $view);
+            return new Controllers\LoginController($credentials, $binput, $userprovider, $view, $throttler);
         });
     }
 
@@ -208,8 +209,9 @@ class CredentialsServiceProvider extends ServiceProvider
             $binput = $app['binput'];
             $userprovider = $app['userprovider'];
             $view = $app['view'];
+            $throttler = $app['throttle']->get($app['request'], 5, 30);
 
-            return new Controllers\RegistrationController($credentials, $binput, $userprovider, $view);
+            return new Controllers\RegistrationController($credentials, $binput, $userprovider, $view, $throttler);
         });
     }
 
@@ -225,8 +227,9 @@ class CredentialsServiceProvider extends ServiceProvider
             $binput = $app['binput'];
             $userprovider = $app['userprovider'];
             $view = $app['view'];
+            $throttler = $app['throttle']->get($app['request'], 5, 30);
 
-            return new Controllers\ResetController($credentials, $binput, $userprovider, $view);
+            return new Controllers\ResetController($credentials, $binput, $userprovider, $view, $throttler);
         });
     }
 
@@ -242,8 +245,9 @@ class CredentialsServiceProvider extends ServiceProvider
             $binput = $app['binput'];
             $userprovider = $app['userprovider'];
             $view = $app['view'];
+            $throttler = $app['throttle']->get($app['request'], 5, 30);
 
-            return new Controllers\ActivationController($credentials, $binput, $userprovider, $view);
+            return new Controllers\ActivationController($credentials, $binput, $userprovider, $view, $throttler);
         });
     }
 

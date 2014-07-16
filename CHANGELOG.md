@@ -9,6 +9,7 @@ CHANGE LOG
 * Refactoring
 * Added di aliases
 * Added presenters
+* Throttling improvements
 
 
 ## V0.2.1 Alpha (24/05/2014)

@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\URL;
 use GrahamCampbell\Binput\Binput;
 use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
+use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 
 /**
  * This is the registration controller class.
@@ -44,11 +45,14 @@ class RegistrationController extends BaseController
      * @param  \GrahamCampbell\Binput\Binput  $binput
      * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
      * @param  \Illuminate\View\Factory  $view
+     * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
      * @return void
      */
-    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view)
+    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view, ThrottlerInterface $throttler)
     {
         $this->beforeFilter('throttle.register', array('only' => array('postRegister')));
+
+        $this->throttler = $throttler;
 
         parent::__construct($credentials, $binput, $userprovider, $view);
     }
@@ -81,6 +85,8 @@ class RegistrationController extends BaseController
             Event::fire('user.registrationfailed', array(array('Email' => $input['email'], 'Messages' => $val->messages()->all())));
             return Redirect::route('account.register')->withInput()->withErrors($val->errors());
         }
+
+        $this->throttler->hit();
 
         try {
             unset($input['password_confirmation']);
