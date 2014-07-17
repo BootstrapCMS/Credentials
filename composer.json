@@ -31,6 +31,7 @@
         "graham-campbell/database": "0.1.*",
         "graham-campbell/binput": "~2.0",
         "graham-campbell/throttle": "~1.0",
+        "venturecraft/revisionable": "~1.5",
         "mccool/laravel-auto-presenter": "~2.1"
     },
     "require-dev": {

@@ -77,9 +77,12 @@
 </div>
 @auth('admin')
     <hr>
-    <h3>User Object</h3>
+    <h3>User Revision History</h3>
     <div>
-        <pre>{{ var_dump($user) }}</pre>
+        {{--TODO--}}
+        <pre>{{ var_dump($user->revisonHistory) }}</pre>
+    }
+    }
     </div>
 @endauth
 @stop

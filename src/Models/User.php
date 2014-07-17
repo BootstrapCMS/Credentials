@@ -17,6 +17,7 @@
 namespace GrahamCampbell\Credentials\Models;
 
 use Carbon\Carbon;
+use Venturecraft\Revisionable\RevisionableTrait;
 use McCool\LaravelAutoPresenter\PresenterInterface;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
@@ -33,7 +34,7 @@ use GrahamCampbell\Database\Models\Common\BaseModelTrait;
  */
 class User extends SentryUser implements BaseModelInterface, PresenterInterface
 {
-    use BaseModelTrait;
+    use BaseModelTrait, RevisionableTrait;
 
     /**
      * The table the users are stored in.
