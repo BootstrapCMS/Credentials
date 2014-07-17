@@ -79,8 +79,7 @@
     <hr>
     <h3>User Revision History</h3>
     <div>
-        {{--TODO--}}
-        <pre>{{ var_dump($user->revisonHistory) }}</pre>
+        <pre>{{ var_dump($user->revisionHistory) }}</pre>
     }
     }
     </div>
