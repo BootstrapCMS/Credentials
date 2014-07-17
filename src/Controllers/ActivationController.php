@@ -40,6 +40,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class ActivationController extends BaseController
 {
     /**
+     * The throttler instance.
+     *
+     * @var \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface
+     */
+    protected $throttler;
+
+    /**
      * Create a new instance.
      *
      * @param  \GrahamCampbell\Credentials\Credentials  $credentials
