@@ -73,10 +73,10 @@ class CommandSubscriber
     {
         if ($this->force) {
             $command->call('migrate', array('--package' => 'cartalyst/sentry', '--force' => true));
-            $command->call('migrate', array('--package' => 'venturecraft/revisionable', '--force' => true));
+            $command->call('migrate', array('--package' => 'graham-campbell/credentials', '--force' => true));
         } else {
             $command->call('migrate', array('--package' => 'cartalyst/sentry'));
-            $command->call('migrate', array('--package' => 'venturecraft/revisionable'));
+            $command->call('migrate', array('--package' => 'graham-campbell/credentials'));
         }
     }
 }
