@@ -50,4 +50,9 @@ class UserPresenter extends BasePresenter
     {
         return $this->resource->first_name.' '.$this->resource->last_name;
     }
+
+    public function securityHistory()
+    {
+        return $this->resource->revisionHistory()->orderBy('id', 'desc')->take(20)->get();
+    }
 }
