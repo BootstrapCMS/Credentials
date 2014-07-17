@@ -43,9 +43,9 @@
             <div class="col-md-offset-2 col-sm-offset-3 col-sm-10 col-xs-12">
                 <button class="btn btn-primary" type="submit"><i class="fa fa-rocket"></i> {{{ Lang::get('graham-campbell/credentials::account.login.submit') }}}</button>
                 @if (Config::get('graham-campbell/credentials::activation'))
-                    <label><a href="{{ URL::route('account.reset') }}" class="btn btn-link">{{{ Lang::get('graham-campbell/credentials::account.login.password') }}}?</a>/<a href="{{ URL::route('account.resend') }}" class="btn btn-link">{{{ Lang::get('graham-campbell/credentials::account.login.activated') }}}?</a></label>
+                    <label><a href="{{ URL::route('account.reset') }}" class="btn btn-link">{{{ Lang::get('graham-campbell/credentials::account.user.password') }}}?</a>/<a href="{{ URL::route('account.resend') }}" class="btn btn-link">{{{ Lang::get('graham-campbell/credentials::account.user.activated') }}}?</a></label>
                 @else
-                    <label><a href="{{ URL::route('account.reset') }}" class="btn btn-link">{{{ Lang::get('graham-campbell/credentials::account.login.password') }}}?</a>
+                    <label><a href="{{ URL::route('account.reset') }}" class="btn btn-link">{{{ Lang::get('graham-campbell/credentials::account.user.password') }}}?</a>
                 @endif
             </div>
         </div>
