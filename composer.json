@@ -42,6 +42,9 @@
         "graham-campbell/navigation": "Easily add a navigation bar."
     },
     "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
         "psr-4": {
             "GrahamCampbell\\Credentials\\": "src/"
         }
