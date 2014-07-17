@@ -24,7 +24,7 @@ return array(
 
     'email' => 'Email',
 
-    'address' => 'Email Address'
+    'address' => 'Email Address',
 
     'password' => 'Password',
 
