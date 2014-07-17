@@ -1,7 +1,7 @@
 @extends(Config::get('views.email', 'layouts.email'))
 
 @section('content')
-<p>Here is your temporary password:</p>
-<blockquote>{{ $password }}</blockquote>
-<p>You should change it to something more memorable on the account page after you login.</p>
+<p>{{ Lang::get('graham-campbell/credentials::emails.temporarypassword') }}</p>
+<blockquote>{{{ $password }}}</blockquote>
+<p>{{ Lang::get('graham-campbell/credentials::emails.changepassword') }}</p>
 @stop
