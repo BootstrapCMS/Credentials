@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Presenters;
+namespace GrahamCampbell\Credentials\Presenters\RevisionDisplayers\User;
+
+use GrahamCampbell\Credentials\Presenters\RevisionDisplayers\RevisionDisplayerInterface;
 
 /**
- * This is the author presenter trait.
+ * This is the last login displayer class.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -25,21 +27,29 @@ namespace GrahamCampbell\Credentials\Presenters;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-trait AuthorPresenterTrait
+class LastLoginDisplayer extends AbstractDisplayer implements RevisionDisplayerInterface
 {
     /**
-     * Get the author's name.
+     * Get the change title.
      *
      * @return string
      */
-    public function author()
+    public function title()
     {
-        $user = $this->resource->user()
-            ->cacheDriver('array')->rememberForever()
-            ->first(array('first_name', 'last_name'));
+        return 'Login Event';
+    }
 
-        if ($user) {
-            return $user->first_name.' '.$user->last_name;
+    /**
+     * Get the change description.
+     *
+     * @return string
+     */
+    public function description()
+    {
+        if ($this->isCurrentUser()) {
+            return 'You logged into your account.';
+        } else {
+            return 'This user logged into their account.';
         }
     }
 }

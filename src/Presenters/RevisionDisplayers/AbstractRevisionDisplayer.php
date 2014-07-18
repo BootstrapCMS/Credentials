@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Presenters;
+namespace GrahamCampbell\Credentials\Presenters\RevisionDisplayers;
+
+use GrahamCampbell\Credentials\Presenters\RevisionPresenter;
 
 /**
- * This is the author presenter trait.
+ * This is the abstract revision displayer class.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -25,21 +27,31 @@ namespace GrahamCampbell\Credentials\Presenters;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-trait AuthorPresenterTrait
+abstract class AbstractRevisionDisplayer
 {
     /**
-     * Get the author's name.
+     * The presenter instance.
      *
-     * @return string
+     * @var \GrahamCampbell\Credentials\Presenters\RevisionPresenter
      */
-    public function author()
-    {
-        $user = $this->resource->user()
-            ->cacheDriver('array')->rememberForever()
-            ->first(array('first_name', 'last_name'));
+    protected $presenter;
 
-        if ($user) {
-            return $user->first_name.' '.$user->last_name;
-        }
+    /**
+     * The resource instance.
+     *
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    protected $resource;
+
+    /**
+     * Create a new instance.
+     *
+     * @param  \GrahamCampbell\Credentials\Presenters\RevisionPresenter  $presenter
+     * @return void
+     */
+    public function __construct(RevisionPresenter $presenter)
+    {
+        $this->presenter = $presenter;
+        $this->resource = $this->presenter->resource;
     }
 }

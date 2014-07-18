@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Presenters;
+namespace GrahamCampbell\Credentials\Presenters\RevisionDisplayers;
 
 /**
- * This is the owner presenter trait.
+ * This is the revisional interface.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -25,19 +25,19 @@ namespace GrahamCampbell\Credentials\Presenters;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-trait OwnerPresenterTrait
+interface RevisionDisplayerInterface
 {
     /**
-     * Get the owner.
+     * Get the change title.
      *
      * @return string
      */
-    public function owner()
-    {
-        $user = $this->resource->user()
-            ->cacheDriver('array')->rememberForever()
-            ->first(array('first_name', 'last_name', 'email'));
+    public function title();
 
-        return $user->first_name.' '.$user->last_name.' ('.$user->email.')';
-    }
+    /**
+     * Get the change description.
+     *
+     * @return string
+     */
+    public function description();
 }

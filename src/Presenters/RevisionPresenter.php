@@ -22,7 +22,7 @@ use GrahamCampbell\Credentials\Models\Revision;
 use GrahamCampbell\Credentials\Facades\Credentials;
 
 /**
- * This is the abstract revision presenter class.
+ * This is the revision presenter class.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -30,9 +30,9 @@ use GrahamCampbell\Credentials\Facades\Credentials;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-abstract class AbstractRevisionPresenter extends BasePresenter
+class RevisionPresenter extends BasePresenter
 {
-    use AuthorPresenterTrait, OwnerPresenterTrait;
+    use AuthorPresenterTrait;
 
     /**
      * Create a new instance.
@@ -52,8 +52,9 @@ abstract class AbstractRevisionPresenter extends BasePresenter
      */
     public function title()
     {
-        $method = camel_case($this->field()).'Title';
-        return $this->$method();
+        $class = $this->getDisplayerClass();
+
+        return with(new $class($this))->title();
     }
 
     /**
@@ -63,8 +64,25 @@ abstract class AbstractRevisionPresenter extends BasePresenter
      */
     public function description()
     {
-        $method = camel_case($this->field()).'Description';
-        return $this->$method();
+        $class = $this->getDisplayerClass();
+
+        return with(new $class($this))->description();
+    }
+
+    /**
+     * Get relevant displayer class.
+     *
+     * @return string
+     */
+    protected function getDisplayerClass()
+    {
+        $class = $this->resource->revisionable_type;
+        $short = end(explode('\\', $class));
+        $field = studly_case($this->field());
+
+        $temp = str_replace($short, 'RevisionDisplayers\\'.$short.'\\'.$field.'Displayer', $class);
+
+        return str_replace('Model', 'Presenter', $temp);
     }
 
     /**
@@ -74,11 +92,11 @@ abstract class AbstractRevisionPresenter extends BasePresenter
      */
     public function field()
     {
-        if (strpos($this->key, '_id')) {
-            return str_replace('_id', '', $this->key);
-        } else {
-            return $this->key;
+        if (strpos($this->resource->key, '_id')) {
+            return str_replace('_id', '', $this->resource->key);
         }
+
+        return $this->resource->key;
     }
 
     /**
@@ -92,37 +110,12 @@ abstract class AbstractRevisionPresenter extends BasePresenter
     }
 
     /**
-     * Get user name.
+     * Was the event invoked by the current user?
      *
-     * @return string
+     * @return bool
      */
-    public function userName()
+    public function wasByCurrentUser()
     {
-        if (Credentials::check()) {
-            if (Credentials::getUser()->id == $this->getUserId()) {
-                return 'You';
-            }
-
-            if (Credentials::hasAccess('admin')) {
-                return $this->owner();
-            }
-        }
-
-        return $this->author();
-    }
-
-    /**
-     * Get the user id.
-     *
-     * @return int
-     */
-    protected function getUserId()
-    {
-        $user = $this->resource->user()
-            ->cacheDriver('array')
-            ->rememberForever()
-            ->first(array('id'));
-
-        return $user->id;
+        return (Credentials::check() && Credentials::getUser()->id == $this->resource->user_id);
     }
 }

@@ -81,6 +81,6 @@ class Revision extends AbstractModel implements BelongsToUserInterface, Presente
      */
     public function getPresenter()
     {
-        return str_replace('Model', 'Presenter', $this->revisionable_type).'RevisionPresenter';
+        return 'GrahamCampbell\Credentials\Presenters\RevisionPresenter';
     }
 }
