@@ -142,6 +142,19 @@ trait RevisionableTrait
                 $revision = new Revision;
                 DB::table($revision->getTable())->insert($revisions);
             }
+        } else {
+            $revisions[] = array(
+                'revisionable_type' => get_class($this),
+                'revisionable_id'   => $this->getKey(),
+                'key'               => 'created_at',
+                'old_value'         => null,
+                'new_value'         => $this->created_at,
+                'user_id'           => $this->getUserId(),
+                'created_at'        => new \DateTime(),
+                'updated_at'        => new \DateTime(),
+            );
+            $revision = new Revision;
+            DB::table($revision->getTable())->insert($revisions);
         }
     }
 
@@ -233,7 +246,7 @@ trait RevisionableTrait
 
     /**
      * Identifiable Name
-     * When displaying revision history, when a foreigh key is updated
+     * When displaying revision history, when a foreign key is updated
      * instead of displaying the ID, you can choose to display a string
      * of your choice, just override this method in your model
      * By default, it will fall back to the models ID.
@@ -246,7 +259,7 @@ trait RevisionableTrait
 
     /**
      * Revision Unknown String
-     * When displaying revision history, when a foreigh key is updated
+     * When displaying revision history, when a foreign key is updated
      * instead of displaying the ID, you can choose to display a string
      * of your choice, just override this method in your model
      * By default, it will fall back to the models ID.
