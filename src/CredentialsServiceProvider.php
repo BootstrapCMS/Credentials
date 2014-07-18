@@ -292,6 +292,7 @@ class CredentialsServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
+            'differ',
             'userprovider',
             'groupprovider',
             'credentials'
