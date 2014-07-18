@@ -18,7 +18,7 @@ return array(
 
     'title' => 'Profile',
 
-    'lead' => 'Here is your profile',
+    'lead' => 'Here is your profile'
 
     'confirmdelete' => 'You are about to delete your account and all your content including any content you might own! This process cannot be undone.',
 
