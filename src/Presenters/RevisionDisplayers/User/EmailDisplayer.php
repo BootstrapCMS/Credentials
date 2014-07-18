@@ -47,21 +47,13 @@ class EmailDisplayer extends AbstractDisplayer implements RevisionDisplayerInter
     public function description()
     {
         if ($this->isCurrentUser()) {
-            if ($this->wasCurrentUser()) {
-                return 'You changed your email address' . $this->details();
-            } else {
-                return $this->author() . 'changed your email address' . $this->details();
-            }
-        } else {
-            if ($this->wasActualUser()) {
-                return 'The user changed their email address' . $this->details();
-            } else {
-                if ($this->wasCurrentUser()) {
-                    return 'You changed the user\'s email address' . $this->details();
-                } else {
-                    return $this->author() . 'changed the user\'s email address' . $this->details();
-                }
-            }
+            return $this->author() . 'changed your email address' . $this->details();
         }
+
+        if ($this->wasActualUser()) {
+            return 'The user changed their email address' . $this->details();
+        }
+
+        return $this->author() . 'changed the user\'s email address' . $this->details();
     }
 }

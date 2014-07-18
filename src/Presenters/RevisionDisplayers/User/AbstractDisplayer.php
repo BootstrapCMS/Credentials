@@ -82,7 +82,11 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer
      */
     public function author()
     {
-        return $this->presenter->author().' ';
+        if ($this->wasCurrentUser()) {
+            return 'You ';
+        }
+
+        return $this->presenter->author() . ' ';
     }
 
     /**

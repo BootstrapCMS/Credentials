@@ -47,29 +47,22 @@ class PasswordDisplayer extends AbstractDisplayer implements RevisionDisplayerIn
     public function description()
     {
         if ($this->isCurrentUser()) {
-            if ($this->wasCurrentUser()) {
-                return 'You changed your password.';
-            } else {
-                if ($this->author() === ' ') {
-                    return 'You reset your password.';
-                } else {
-                    return $this->author() . 'reset your password.';
-                }
+            if ($this->author() === ' ') {
+                'You reset your password.';
             }
-        } else {
-            if ($this->wasActualUser()) {
-                return 'The user changed their password.';
-            } else {
-                if ($this->author() === ' ') {
-                    return 'The user reset their password.';
-                } else {
-                    if ($this->wasCurrentUser()) {
-                        return 'You reset the user\'s password.';
-                    } else {
-                        return $this->author() . 'reset the user\'s password.';
-                    }
-                }
-            }
+
+            return $this->author() . 'changed your password.';
         }
+
+        if ($this->wasActualUser()) {
+            return 'The user changed their password.';
+        }
+
+        if ($this->author() === ' ') {
+            return 'The user reset their password.';
+        }
+
+        return $this->author() . 'reset the user\'s password.';
     }
 }
+

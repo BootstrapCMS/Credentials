@@ -47,21 +47,13 @@ class LastNameDisplayer extends AbstractDisplayer implements RevisionDisplayerIn
     public function description()
     {
         if ($this->isCurrentUser()) {
-            if ($this->wasCurrentUser()) {
-                return 'You changed your last name' . $this->details();
-            } else {
-                return $this->author() . 'changed your last name' . $this->details();
-            }
-        } else {
-            if ($this->wasActualUser()) {
-                return 'The user changed their last name' . $this->details();
-            } else {
-                if ($this->wasCurrentUser()) {
-                    return 'You changed the user\'s last name' . $this->details();
-                } else {
-                    return $this->author() . 'changed the user\'s last name' . $this->details();
-                }
-            }
+            return $this->author() . 'changed your last name' . $this->details();
         }
+
+        if ($this->wasActualUser()) {
+            return 'The user changed their last name' . $this->details();
+        }
+
+        return $this->author() . 'changed the user\'s last name' . $this->details();
     }
 }

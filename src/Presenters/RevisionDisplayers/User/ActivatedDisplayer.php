@@ -48,8 +48,8 @@ class ActivatedDisplayer extends AbstractDisplayer implements RevisionDisplayerI
     {
         if ($this->isCurrentUser()) {
             return 'Your account was activated.';
-        } else {
-            return 'This user\'s account was activated.';
         }
+
+        return 'This user\'s account was activated.';
     }
 }

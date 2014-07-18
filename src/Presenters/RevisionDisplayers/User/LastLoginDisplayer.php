@@ -48,8 +48,8 @@ class LastLoginDisplayer extends AbstractDisplayer implements RevisionDisplayerI
     {
         if ($this->isCurrentUser()) {
             return 'You logged into your account.';
-        } else {
-            return 'This user logged into their account.';
         }
+
+        return 'This user logged into their account.';
     }
 }
