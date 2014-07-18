@@ -16,8 +16,6 @@
 
 namespace GrahamCampbell\Credentials\Presenters\RevisionDisplayers\User;
 
-use GrahamCampbell\Credentials\Presenters\RevisionDisplayers\RevisionDisplayerInterface;
-
 /**
  * This is the password displayer class.
  *
@@ -27,7 +25,7 @@ use GrahamCampbell\Credentials\Presenters\RevisionDisplayers\RevisionDisplayerIn
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class PasswordDisplayer extends AbstractDisplayer implements RevisionDisplayerInterface
+class PasswordDisplayer extends AbstractDisplayer
 {
     /**
      * Get the change title.
@@ -40,20 +38,28 @@ class PasswordDisplayer extends AbstractDisplayer implements RevisionDisplayerIn
     }
 
     /**
-     * Get the change description.
+     * Get the change description from the context of
+     * the change being made to the current user.
      *
      * @return string
      */
-    public function description()
+    protected function current()
     {
-        if ($this->isCurrentUser()) {
-            if ($this->author() === ' ') {
-                'You reset your password.';
-            }
-
-            return $this->author() . 'changed your password.';
+        if ($this->author() === ' ') {
+            'You reset your password.';
         }
 
+        return $this->author() . 'changed your password.';
+    }
+
+    /**
+     * Get the change description from the context of
+     * the change not being made to the current user.
+     *
+     * @return string
+     */
+    protected function external()
+    {
         if ($this->wasActualUser()) {
             return 'The user changed their password.';
         }
@@ -65,4 +71,3 @@ class PasswordDisplayer extends AbstractDisplayer implements RevisionDisplayerIn
         return $this->author() . 'reset the user\'s password.';
     }
 }
-

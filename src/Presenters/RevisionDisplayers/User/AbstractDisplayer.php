@@ -18,6 +18,7 @@ namespace GrahamCampbell\Credentials\Presenters\RevisionDisplayers\User;
 
 use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Presenters\RevisionDisplayers\AbstractRevisionDisplayer;
+use GrahamCampbell\Credentials\Presenters\RevisionDisplayers\RevisionDisplayerInterface;
 
 /**
  * This is the abstract displayer class.
@@ -28,8 +29,38 @@ use GrahamCampbell\Credentials\Presenters\RevisionDisplayers\AbstractRevisionDis
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-abstract class AbstractDisplayer extends AbstractRevisionDisplayer
+abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements RevisionDisplayerInterface
 {
+    /**
+     * Get the change description.
+     *
+     * @return string
+     */
+    public function description()
+    {
+        if ($this->isCurrentUser()) {
+            return $this->current();
+        }
+
+        return $this->external();
+    }
+
+    /**
+     * Get the change description from the context of
+     * the change being made to the current user.
+     *
+     * @return string
+     */
+    abstract protected function current();
+
+    /**
+     * Get the change description from the context of
+     * the change not being made to the current user.
+     *
+     * @return string
+     */
+    abstract protected function external();
+
     /**
      * Was the action by the actual user?
      *
@@ -80,7 +111,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer
      *
      * @return string
      */
-    public function author()
+    protected function author()
     {
         if ($this->wasCurrentUser()) {
             return 'You ';

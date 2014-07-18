@@ -16,8 +16,6 @@
 
 namespace GrahamCampbell\Credentials\Presenters\RevisionDisplayers\User;
 
-use GrahamCampbell\Credentials\Presenters\RevisionDisplayers\RevisionDisplayerInterface;
-
 /**
  * This is the last name displayer class.
  *
@@ -27,7 +25,7 @@ use GrahamCampbell\Credentials\Presenters\RevisionDisplayers\RevisionDisplayerIn
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class LastNameDisplayer extends AbstractDisplayer implements RevisionDisplayerInterface
+class LastNameDisplayer extends AbstractDisplayer
 {
     /**
      * Get the change title.
@@ -40,16 +38,24 @@ class LastNameDisplayer extends AbstractDisplayer implements RevisionDisplayerIn
     }
 
     /**
-     * Get the change description.
+     * Get the change description from the context of
+     * the change being made to the current user.
      *
      * @return string
      */
-    public function description()
+    protected function current()
     {
-        if ($this->isCurrentUser()) {
-            return $this->author() . 'changed your last name' . $this->details();
-        }
+        return $this->author() . 'changed your last name' . $this->details();
+    }
 
+    /**
+     * Get the change description from the context of
+     * the change not being made to the current user.
+     *
+     * @return string
+     */
+    protected function external()
+    {
         if ($this->wasActualUser()) {
             return 'The user changed their last name' . $this->details();
         }

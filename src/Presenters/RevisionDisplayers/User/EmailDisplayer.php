@@ -16,8 +16,6 @@
 
 namespace GrahamCampbell\Credentials\Presenters\RevisionDisplayers\User;
 
-use GrahamCampbell\Credentials\Presenters\RevisionDisplayers\RevisionDisplayerInterface;
-
 /**
  * This is the email displayer class.
  *
@@ -27,7 +25,7 @@ use GrahamCampbell\Credentials\Presenters\RevisionDisplayers\RevisionDisplayerIn
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class EmailDisplayer extends AbstractDisplayer implements RevisionDisplayerInterface
+class EmailDisplayer extends AbstractDisplayer
 {
     /**
      * Get the change title.
@@ -40,16 +38,24 @@ class EmailDisplayer extends AbstractDisplayer implements RevisionDisplayerInter
     }
 
     /**
-     * Get the change description.
+     * Get the change description from the context of
+     * the change being made to the current user.
      *
      * @return string
      */
-    public function description()
+    protected function current()
     {
-        if ($this->isCurrentUser()) {
-            return $this->author() . 'changed your email address' . $this->details();
-        }
+        return $this->author() . 'changed your email address' . $this->details();
+    }
 
+    /**
+     * Get the change description from the context of
+     * the change not being made to the current user.
+     *
+     * @return string
+     */
+    protected function external()
+    {
         if ($this->wasActualUser()) {
             return 'The user changed their email address' . $this->details();
         }
