@@ -126,14 +126,14 @@ trait RevisionableTrait
             foreach ($changes_to_record as $key => $change) {
 
                 $revisions[] = array(
-                    'revisionable_type'     => get_class($this),
-                    'revisionable_id'       => $this->getKey(),
-                    'key'                   => $key,
-                    'old_value'             => array_get($this->originalData, $key),
-                    'new_value'             => $this->updatedData[$key],
-                    'user_id'               => $this->getUserId(),
-                    'created_at'            => new \DateTime(),
-                    'updated_at'            => new \DateTime(),
+                    'revisionable_type' => get_class($this),
+                    'revisionable_id'   => $this->getKey(),
+                    'key'               => $key,
+                    'old_value'         => $this->getDataValue('original', $key),
+                    'new_value'         => $this->getDataValue('updated', $key),
+                    'user_id'           => $this->getUserId(),
+                    'created_at'        => new \DateTime(),
+                    'updated_at'        => new \DateTime(),
                 );
 
             }
@@ -145,6 +145,17 @@ trait RevisionableTrait
         }
     }
 
+    protected function getDataValue($type, $key)
+    {
+        if ($key == 'password') {
+            return;
+        }
+
+        $name = $type.'Data';
+
+        return array_get($this->$name, $key);
+    }
+
     /**
      * If softdeletes are enabled, store the deleted time
      */
@@ -153,13 +164,13 @@ trait RevisionableTrait
         if ($this->softDelete && $this->isRevisionable('deleted_at')) {
             $revisions[] = array(
                 'revisionable_type' => get_class($this),
-                'revisionable_id' => $this->getKey(),
-                'key' => 'deleted_at',
-                'old_value' => null,
-                'new_value' => $this->deleted_at,
-                'user_id' => $this->getUserId(),
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
+                'revisionable_id'   => $this->getKey(),
+                'key'               => 'deleted_at',
+                'old_value'         => null,
+                'new_value'         => $this->deleted_at,
+                'user_id'           => $this->getUserId(),
+                'created_at'        => new \DateTime(),
+                'updated_at'        => new \DateTime(),
             );
             $revision = new Revision;
             DB::table($revision->getTable())->insert($revisions);
