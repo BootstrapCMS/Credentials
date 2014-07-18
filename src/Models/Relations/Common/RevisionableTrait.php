@@ -35,23 +35,52 @@ use GrahamCampbell\Credentials\Facades\Credentials;
  */
 trait RevisionableTrait
 {
-    private $originalData;
-    private $updatedData;
-    private $updating;
-    private $dontKeep = array();
-    private $doKeep = array();
+    /**
+     * Keeps track of the original data.
+     *
+     * @var array
+     */
+    protected $originalData;
 
     /**
-     * Keeps the list of values that have been updated
+     * Keeps track of the updated data.
+     *
+     * @var array
+     */
+    protected $updatedData;
+
+    /**
+     * Are we updating an existing model?
+     *
+     * @var bool
+     */
+    protected $updating;
+
+    /**
+     * Keeps track of columns to keep.
+     *
+     * @var array
+     */
+    protected $doKeep = array();
+
+    /**
+     * Keeps track of columns not to keep.
+     *
+     * @var array
+     */
+    protected $dontKeep = array();
+
+    /**
+     * Keeps the list of values that have been updated.
+     *
      * @var array
      */
     protected $dirtyData = array();
 
     /**
-     * Create the event listeners for the saving and saved events
-     * This lets us save revisions whenever a save is made, no matter the
-     * http method.
+     * Create the event listeners for the saving and saved events.
      *
+     * @return void
      */
     public static function boot()
     {
@@ -71,15 +100,35 @@ trait RevisionableTrait
         });
     }
 
+    /**
+     * Get the revision history relation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
     public function revisionHistory()
     {
         return $this->morphMany('GrahamCampbell\Credentials\Models\Revision', 'revisionable');
     }
 
     /**
-     * Invoked before a model is saved. Return false to abort the operation.
+     * Get the identifiable name.
      *
-     * @return bool
+     * When displaying revision history, when a foreign key is updated
+     * instead of displaying the ID, you can choose to display a string
+     * of your choice, just override this method in your model.
+     * By default, it will fall back to the models ID.
+     *
+     * @return string
+     */
+    public function identifiableName()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Do some work before we start the saving process.
+     *
+     * @return void
      */
     public function preSave()
     {
@@ -115,6 +164,9 @@ trait RevisionableTrait
     /**
      * Called after a model is successfully saved.
      *
+     * If the model is new, we log it's time of creation.
+     * If the model was updated, then we log each updated field separately.
+     *
      * @return void
      */
     public function postSave()
@@ -148,7 +200,7 @@ trait RevisionableTrait
                 'revisionable_id'   => $this->getKey(),
                 'key'               => 'created_at',
                 'old_value'         => null,
-                'new_value'         => $this->created_at,
+                'new_value'         => new \DateTime(),
                 'user_id'           => $this->getUserId(),
                 'created_at'        => new \DateTime(),
                 'updated_at'        => new \DateTime(),
@@ -158,6 +210,11 @@ trait RevisionableTrait
         }
     }
 
+    /**
+     * Get the value to be saved, stripping passwords.
+     *
+     * @return mixed
+     */
     protected function getDataValue($type, $key)
     {
         if ($key == 'password') {
@@ -170,7 +227,9 @@ trait RevisionableTrait
     }
 
     /**
-     * If softdeletes are enabled, store the deleted time
+     * Store the deleted time.
+     *
+     * @return void
      */
     public function postDelete()
     {
@@ -190,8 +249,10 @@ trait RevisionableTrait
 
     /**
      * Attempt to find the user id of the currently logged in user.
-     **/
-    private function getUserId()
+     *
+     * @return int|null
+     */
+    protected function getUserId()
     {
         if (Credentials::check()) {
             return Credentials::getUser()->id;
@@ -199,11 +260,11 @@ trait RevisionableTrait
     }
 
     /**
-     * Get all of the changes that have been made, that are also supposed
-     * to have their changes recorded
-     * @return array fields with new data, that should be recorded
+     * Get the fields for all of the storable changes that have been made.
+     *
+     * @return array
      */
-    private function changedRevisionableFields()
+    protected function changedRevisionableFields()
     {
         $changes_to_record = array();
         foreach ($this->dirtyData as $key => $value) {
@@ -225,13 +286,12 @@ trait RevisionableTrait
     }
 
     /**
-     * Check if this field should have a revision kept
+     * Check if this field should have a revision kept.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return boolean
      */
-    private function isRevisionable($key)
+    protected function isRevisionable($key)
     {
         // If the field is explicitly revisionable, then return true.
         // If it's explicitly not revisionable, return false.
@@ -240,43 +300,5 @@ trait RevisionableTrait
         if (isset($this->doKeep) && in_array($key, $this->doKeep)) return true;
         if (isset($this->dontKeep) && in_array($key, $this->dontKeep)) return false;
         return empty($this->doKeep);
-    }
-
-    /**
-     * Identifiable Name
-     * When displaying revision history, when a foreign key is updated
-     * instead of displaying the ID, you can choose to display a string
-     * of your choice, just override this method in your model
-     * By default, it will fall back to the models ID.
-     * @return string an identifying name for the model
-     */
-    public function identifiableName()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Revision Unknown String
-     * When displaying revision history, when a foreign key is updated
-     * instead of displaying the ID, you can choose to display a string
-     * of your choice, just override this method in your model
-     * By default, it will fall back to the models ID.
-     * @return string an identifying name for the model
-     */
-    public function getRevisionNullString()
-    {
-        return isset($this->revisionNullString)?$this->revisionNullString:'nothing';
-    }
-
-    /**
-     * No revision string
-     * When displaying revision history, if the revisions value
-     * cant be figured out, this is used instead.
-     * It can be overridden.
-     * @return string an identifying name for the model
-     */
-    public function getRevisionUnknownString()
-    {
-        return isset($this->revisionUnknownString)?$this->revisionUnknownString:'unknown';
     }
 }
