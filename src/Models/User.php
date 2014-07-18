@@ -56,7 +56,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
      *
      * @var array
      */
-    protected $keepRevisionOf = array('email', 'password', 'activated_at', 'last_login', 'first_name', 'last_name');
+    protected $keepRevisionOf = array('email', 'password', 'activated', 'last_login', 'first_name', 'last_name');
 
     /**
      * The columns to select when displaying an index.

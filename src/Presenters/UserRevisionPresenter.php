@@ -29,13 +29,87 @@ use Illuminate\Support\Facades\Html;
  */
 class UserRevisionPresenter extends AbstractRevisionPresenter
 {
-    public function lastLoginTitle()
+    protected function emailTitle()
+    {
+        return 'Email Changed';
+    }
+
+    protected function emailDescription()
+    {
+        if ($name = $this->userName() === 'You') {
+            return 'You changed your email address from "'.$this->resource->old_value.'" to "'.$this->resource->new_value.'".';
+        }
+
+        return 'They changed their email adddress from "'.$this->resource->old_value.'" to "'.$this->resource->new_value.'".';
+    }
+
+    protected function passwordTitle()
+    {
+        return 'Password Changed';
+    }
+
+    protected function passwordDescription()
+    {
+        if ($name = $this->userName() === 'You') {
+            return 'You changed your password.';
+        }
+
+        return 'They changed their password.';
+    }
+
+    protected function activatedTitle()
+    {
+        'Account Activated';
+    }
+
+    protected function activatedDescription()
+    {
+        if ($name = $this->userName() === 'You') {
+            return 'You activated your account.';
+        }
+
+        return 'They activated their account.';
+    }
+
+    protected function lastLoginTitle()
     {
         return 'Login Event';
     }
 
-    public function lastLoginDescription()
+    protected function lastLoginDescription()
     {
-        return $this->userName().' logged in at '.Html::ago($this->resource->updated_at);
+        if ($name = $this->userName() === 'You') {
+            return 'You logged into your account.';
+        }
+
+        return 'They logged into their account.';
+    }
+
+    protected function firstNameTitle()
+    {
+        return 'Fist Name Changed';
+    }
+
+    protected function firstNameDescription()
+    {
+        if ($name = $this->userName() === 'You') {
+            return 'You changed your first name from "'.$this->resource->old_value.'" to "'.$this->resource->new_value.'".';
+        }
+
+        return 'They changed their first name from "'.$this->resource->old_value.'" to "'.$this->resource->new_value.'".';
+    }
+
+    protected function lastNameTitle()
+    {
+        return 'Last Name Changed';
+    }
+
+    protected function lastNameDescription()
+    {
+        if ($name = $this->userName() === 'You') {
+            return 'You changed your last name from "'.$this->resource->old_value.'" to "'.$this->resource->new_value.'".';
+        }
+
+        return 'They changed their last name from "'.$this->resource->old_value.'" to "'.$this->resource->new_value.'".';
     }
 }

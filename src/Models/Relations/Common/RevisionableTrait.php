@@ -73,7 +73,7 @@ trait RevisionableTrait
 
     public function revisionHistory()
     {
-        return $this->morphMany('\GrahamCampbell\Credentials\Models\Revision', 'revisionable');
+        return $this->morphMany('GrahamCampbell\Credentials\Models\Revision', 'revisionable');
     }
 
     /**
