@@ -174,20 +174,18 @@ trait RevisionableTrait
      */
     public function postDelete()
     {
-        if ($this->softDelete && $this->isRevisionable('deleted_at')) {
-            $revisions[] = array(
-                'revisionable_type' => get_class($this),
-                'revisionable_id'   => $this->getKey(),
-                'key'               => 'deleted_at',
-                'old_value'         => null,
-                'new_value'         => $this->deleted_at,
-                'user_id'           => $this->getUserId(),
-                'created_at'        => new \DateTime(),
-                'updated_at'        => new \DateTime(),
-            );
-            $revision = new Revision;
-            DB::table($revision->getTable())->insert($revisions);
-        }
+        $revisions[] = array(
+            'revisionable_type' => get_class($this),
+            'revisionable_id'   => $this->getKey(),
+            'key'               => 'deleted_at',
+            'old_value'         => null,
+            'new_value'         => new \DateTime(),
+            'user_id'           => $this->getUserId(),
+            'created_at'        => new \DateTime(),
+            'updated_at'        => new \DateTime(),
+        );
+        $revision = new Revision;
+        DB::table($revision->getTable())->insert($revisions);
     }
 
     /**
