@@ -1,12 +1,12 @@
 @extends(Config::get('views.default', 'layouts.default'))
 
 @section('title')
-{{{ Lang::get('graham-campbell/credentials::profile.title') }}}
+Profile
 @stop
 
 @section('top')
 <div class="page-header">
-<h1>{{{ Lang::get('graham-campbell/credentials::profile.title') }}}</h1>
+<h1>Profile</h1>
 </div>
 @stop
 
@@ -14,22 +14,22 @@
 <div class="row">
     <div class="col-xs-8">
         <p class="lead">
-            {{{ Lang::get('graham-campbell/credentials::profile.lead') }}}:
+            Here is your profile:
         </p>
     </div>
     <div class="col-xs-4">
         <div class="pull-right">
-            <a class="btn btn-danger" href="#delete_account" data-toggle="modal" data-target="#delete_account"><i class="fa fa-times"></i> {{{ Lang::get('graham-campbell/credentials::profile.deletebutton') }}}</a>
+            <a class="btn btn-danger" href="#delete_account" data-toggle="modal" data-target="#delete_account"><i class="fa fa-times"></i> Delete Account</a>
         </div>
     </div>
 </div>
 <hr>
-<h3>{{{ Lang::get('graham-campbell/credentials::profile.changedetails') }}}</h3>
+<h3>Change Details</h3>
 <div class="well">
     <?php
     $form = array('url' => URL::route('account.details.patch'),
         'method' => 'PATCH',
-        'button' => Lang::get('graham-campbell/credentials::profile.savedetails'),
+        'button' => 'Save Details',
         'defaults' => array(
             'first_name' => Credentials::getUser()->first_name,
             'last_name' => Credentials::getUser()->last_name,
@@ -39,12 +39,12 @@
     @include('graham-campbell/credentials::account.details')
 </div>
 <hr>
-<h3>{{{ Lang::get('graham-campbell/credentials::profile.changepassword') }}}</h3>
+<h3>Change Password</h3>
 <div class="well">
     <?php
     $form = array('url' => URL::route('account.password.patch'),
         'method' => 'PATCH',
-        'button' => Lang::get('graham-campbell/credentials::profile.savepassword'),
+        'button' => 'Save Password',
     );
     ?>
     @include('graham-campbell/credentials::account.password')

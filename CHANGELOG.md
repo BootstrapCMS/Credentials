@@ -10,7 +10,6 @@ CHANGE LOG
 * Added di aliases
 * Added presenters
 * Throttling improvements
-* Localisation
 
 
 ## V0.2.1 Alpha (24/05/2014)
