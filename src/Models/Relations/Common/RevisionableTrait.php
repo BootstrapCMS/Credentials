@@ -288,17 +288,20 @@ trait RevisionableTrait
     /**
      * Check if this field should have a revision kept.
      *
+     * If the field is explicitly revisionable, then return true.
+     * If it's explicitly not revisionable, return false.
+     * Otherwise, if neither condition is met, only return true if
+     * we aren't specifying revisionable fields.
+     *
      * @param  string  $key
      * @return boolean
      */
     protected function isRevisionable($key)
     {
-        // If the field is explicitly revisionable, then return true.
-        // If it's explicitly not revisionable, return false.
-        // Otherwise, if neither condition is met, only return true if
-        // we aren't specifying revisionable fields.
-        if (isset($this->doKeep) && in_array($key, $this->doKeep)) return true;
-        if (isset($this->dontKeep) && in_array($key, $this->dontKeep)) return false;
+        return (isset($this->doKeep) && in_array($key, $this->doKeep)) {
+
+        return ! (isset($this->dontKeep) && in_array($key, $this->dontKeep));
+
         return empty($this->doKeep);
     }
 }
