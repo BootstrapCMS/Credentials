@@ -16,6 +16,19 @@
 
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * This is the create revisions table migration class.
+ *
+ * Some code in this trait it taken from Chris Duell's Revisionable.
+ * That code is licensed under the MIT License.
+ * See the original here: http://bit.ly/1oQzHFK.
+ *
+ * @package    Laravel-Credentials
+ * @author     Graham Campbell
+ * @copyright  Copyright 2013-2014 Graham Campbell
+ * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
+ * @link       https://github.com/GrahamCampbell/Laravel-Credentials
+ */
 class CreateRevisionsTable extends Migration {
 
     /**

@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Tests\Credentials;
-
-use GrahamCampbell\TestBench\Traits\ServiceProviderTestCaseTrait;
+namespace GrahamCampbell\Credentials\Models\Relations\Interfaces;
 
 /**
- * This is the service provider test class.
+ * This is the belongs to user interface.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -27,27 +25,12 @@ use GrahamCampbell\TestBench\Traits\ServiceProviderTestCaseTrait;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class ServiceProviderTest extends AbstractTestCase
+interface BelongsToUserInterface
 {
-    use ServiceProviderTestCaseTrait;
-
-    public function testDifferIsInjectable()
-    {
-        $this->assertIsInjectable('SebastianBergmann\Diff\Differ');
-    }
-
-    public function testUserProviderIsInjectable()
-    {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Providers\UserProvider');
-    }
-
-    public function testGroupProviderIsInjectable()
-    {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Providers\GroupProvider');
-    }
-
-    public function testCredentialsIsInjectable()
-    {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Credentials');
-    }
+    /**
+     * Get the user relation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user();
 }

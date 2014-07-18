@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Presenters;
+namespace GrahamCampbell\Tests\Credentials\Facades;
 
-use Illuminate\Support\Facades\App;
-use GrahamCampbell\Credentials\Models\User;
-use McCool\LaravelAutoPresenter\BasePresenter;
+use GrahamCampbell\Tests\Credentials\AbstractTestCase;
+use GrahamCampbell\TestBench\Traits\FacadeTestCaseTrait;
 
 /**
- * This is the user presenter class.
+ * This is the differ facade test class.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -29,34 +28,37 @@ use McCool\LaravelAutoPresenter\BasePresenter;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class UserPresenter extends BasePresenter
+class DifferTest extends AbstractTestCase
 {
-    /**
-     * Create a new instance.
-     *
-     * @param  \GrahamCampbell\Credentials\Models\Users  $user
-     * @return void
-     */
-    public function __construct(User $user)
-    {
-        $this->resource = $user;
-    }
+    use FacadeTestCaseTrait;
 
     /**
-     * Get the user's name.
+     * Get the facade accessor.
      *
      * @return string
      */
-    public function name()
+    protected function getFacadeAccessor()
     {
-        return $this->resource->first_name.' '.$this->resource->last_name;
+        return 'differ';
     }
 
-    public function securityHistory()
+    /**
+     * Get the facade class.
+     *
+     * @return string
+     */
+    protected function getFacadeClass()
     {
-        $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
-        $history = $this->resource->revisionHistory()->orderBy('id', 'desc')->take(20)->get();
+        return 'GrahamCampbell\Credentials\Facades\Differ';
+    }
 
-        return $presenter->decorate($history);
+    /**
+     * Get the facade route.
+     *
+     * @return string
+     */
+    protected function getFacadeRoot()
+    {
+        return 'SebastianBergmann\Diff\Differ';
     }
 }

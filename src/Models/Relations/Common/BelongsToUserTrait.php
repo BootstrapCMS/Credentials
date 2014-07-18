@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Presenters;
+namespace GrahamCampbell\Credentials\Models\Relations\Common;
 
-use Illuminate\Support\Facades\App;
-use GrahamCampbell\Credentials\Models\User;
-use McCool\LaravelAutoPresenter\BasePresenter;
+use Illuminate\Support\Facades\Config;
 
 /**
- * This is the user presenter class.
+ * This is the belongs to user trait.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -29,34 +27,15 @@ use McCool\LaravelAutoPresenter\BasePresenter;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class UserPresenter extends BasePresenter
+trait BelongsToUserTrait
 {
     /**
-     * Create a new instance.
+     * Get the user relation.
      *
-     * @param  \GrahamCampbell\Credentials\Models\Users  $user
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function __construct(User $user)
+    public function user()
     {
-        $this->resource = $user;
-    }
-
-    /**
-     * Get the user's name.
-     *
-     * @return string
-     */
-    public function name()
-    {
-        return $this->resource->first_name.' '.$this->resource->last_name;
-    }
-
-    public function securityHistory()
-    {
-        $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
-        $history = $this->resource->revisionHistory()->orderBy('id', 'desc')->take(20)->get();
-
-        return $presenter->decorate($history);
+        return $this->belongsTo(Config::get('cartalyst/sentry::users.model'));
     }
 }

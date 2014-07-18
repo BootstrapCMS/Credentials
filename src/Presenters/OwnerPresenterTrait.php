@@ -16,12 +16,8 @@
 
 namespace GrahamCampbell\Credentials\Presenters;
 
-use Illuminate\Support\Facades\App;
-use GrahamCampbell\Credentials\Models\User;
-use McCool\LaravelAutoPresenter\BasePresenter;
-
 /**
- * This is the user presenter class.
+ * This is the owner presenter trait.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -29,34 +25,19 @@ use McCool\LaravelAutoPresenter\BasePresenter;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class UserPresenter extends BasePresenter
+trait OwnerPresenterTrait
 {
     /**
-     * Create a new instance.
-     *
-     * @param  \GrahamCampbell\Credentials\Models\Users  $user
-     * @return void
-     */
-    public function __construct(User $user)
-    {
-        $this->resource = $user;
-    }
-
-    /**
-     * Get the user's name.
+     * Get the owner.
      *
      * @return string
      */
-    public function name()
+    public function owner()
     {
-        return $this->resource->first_name.' '.$this->resource->last_name;
-    }
+        $user = $this->resource->user()
+            ->cacheDriver('array')->rememberForever()
+            ->first(array('first_name', 'last_name', 'email'));
 
-    public function securityHistory()
-    {
-        $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
-        $history = $this->resource->revisionHistory()->orderBy('id', 'desc')->take(20)->get();
-
-        return $presenter->decorate($history);
+        return $user->first_name.' '.$user->last_name.' ('.$user->email.')';
     }
 }

@@ -16,12 +16,10 @@
 
 namespace GrahamCampbell\Credentials\Presenters;
 
-use Illuminate\Support\Facades\App;
-use GrahamCampbell\Credentials\Models\User;
-use McCool\LaravelAutoPresenter\BasePresenter;
+use Illuminate\Support\Facades\Html;
 
 /**
- * This is the user presenter class.
+ * This is the user revision presenter class.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -29,34 +27,15 @@ use McCool\LaravelAutoPresenter\BasePresenter;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class UserPresenter extends BasePresenter
+class UserRevisionPresenter extends AbstractRevisionPresenter
 {
-    /**
-     * Create a new instance.
-     *
-     * @param  \GrahamCampbell\Credentials\Models\Users  $user
-     * @return void
-     */
-    public function __construct(User $user)
+    public function lastLoginTitle()
     {
-        $this->resource = $user;
+        return 'Login Event';
     }
 
-    /**
-     * Get the user's name.
-     *
-     * @return string
-     */
-    public function name()
+    public function lastLoginDescription()
     {
-        return $this->resource->first_name.' '.$this->resource->last_name;
-    }
-
-    public function securityHistory()
-    {
-        $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
-        $history = $this->resource->revisionHistory()->orderBy('id', 'desc')->take(20)->get();
-
-        return $presenter->decorate($history);
+        return $this->userName().' logged in at '.Html::ago($this->resource->updated_at);
     }
 }

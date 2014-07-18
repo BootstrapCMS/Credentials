@@ -17,11 +17,12 @@
 namespace GrahamCampbell\Credentials\Models;
 
 use Carbon\Carbon;
-use Venturecraft\Revisionable\RevisionableTrait;
 use McCool\LaravelAutoPresenter\PresenterInterface;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
+use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface;
+use GrahamCampbell\Credentials\Models\Relations\Common\RevisionableTrait;
 
 /**
  * This is the user model class.
@@ -32,7 +33,7 @@ use GrahamCampbell\Database\Models\Common\BaseModelTrait;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class User extends SentryUser implements BaseModelInterface, PresenterInterface
+class User extends SentryUser implements BaseModelInterface, RevisionableInterface, PresenterInterface
 {
     use BaseModelTrait, RevisionableTrait;
 

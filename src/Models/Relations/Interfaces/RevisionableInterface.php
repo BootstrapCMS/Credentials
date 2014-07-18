@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Tests\Credentials;
-
-use GrahamCampbell\TestBench\Traits\ServiceProviderTestCaseTrait;
+namespace GrahamCampbell\Credentials\Models\Relations\Interfaces;
 
 /**
- * This is the service provider test class.
+ * This is the revisionable interface.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -27,27 +25,13 @@ use GrahamCampbell\TestBench\Traits\ServiceProviderTestCaseTrait;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class ServiceProviderTest extends AbstractTestCase
+interface RevisionableInterface
 {
-    use ServiceProviderTestCaseTrait;
+    public function revisionHistory();
 
-    public function testDifferIsInjectable()
-    {
-        $this->assertIsInjectable('SebastianBergmann\Diff\Differ');
-    }
+    public function identifiableName();
 
-    public function testUserProviderIsInjectable()
-    {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Providers\UserProvider');
-    }
+    public function getRevisionNullString();
 
-    public function testGroupProviderIsInjectable()
-    {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Providers\GroupProvider');
-    }
-
-    public function testCredentialsIsInjectable()
-    {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Credentials');
-    }
+    public function getRevisionUnknownString();
 }

@@ -16,6 +16,7 @@
 
 namespace GrahamCampbell\Credentials;
 
+use SebastianBergmann\Diff\Differ;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -81,6 +82,7 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerDiffer();
         $this->registerUserProvider();
         $this->registerGroupProvider();
         $this->registerCredentials();
@@ -92,6 +94,20 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->registerResetController();
         $this->registerActivationController();
         $this->registerUserController();
+    }
+
+    /**
+     * Register the differ class.
+     *
+     * @return void
+     */
+    protected function registerDiffer()
+    {
+        $this->app->bindShared('differ', function ($app) {
+            return new Differ();
+        });
+
+        $this->app->alias('differ', 'SebastianBergmann\Diff\Differ');
     }
 
     /**

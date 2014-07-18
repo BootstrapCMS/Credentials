@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Presenters;
+namespace GrahamCampbell\Credentials\Facades;
 
-use Illuminate\Support\Facades\App;
-use GrahamCampbell\Credentials\Models\User;
-use McCool\LaravelAutoPresenter\BasePresenter;
+use Illuminate\Support\Facades\Facade;
 
 /**
- * This is the user presenter class.
+ * This is the credentials facade class.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -29,34 +27,15 @@ use McCool\LaravelAutoPresenter\BasePresenter;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class UserPresenter extends BasePresenter
+class Differ extends Facade
 {
     /**
-     * Create a new instance.
-     *
-     * @param  \GrahamCampbell\Credentials\Models\Users  $user
-     * @return void
-     */
-    public function __construct(User $user)
-    {
-        $this->resource = $user;
-    }
-
-    /**
-     * Get the user's name.
+     * Get the registered name of the component.
      *
      * @return string
      */
-    public function name()
+    protected static function getFacadeAccessor()
     {
-        return $this->resource->first_name.' '.$this->resource->last_name;
-    }
-
-    public function securityHistory()
-    {
-        $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
-        $history = $this->resource->revisionHistory()->orderBy('id', 'desc')->take(20)->get();
-
-        return $presenter->decorate($history);
+        return 'differ';
     }
 }
