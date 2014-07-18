@@ -16,7 +16,6 @@
 
 namespace GrahamCampbell\Credentials\Presenters\RevisionDisplayers\User;
 
-
 /**
  * This is the activated displayer class.
  *
