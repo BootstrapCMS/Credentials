@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 /**
  * This is the create revisions table migration class.
- *
- * Some code in this trait it taken from Chris Duell's Revisionable.
- * That code is licensed under the MIT License.
- * See the original here: http://bit.ly/1oQzHFK.
  *
  * @package    Laravel-Credentials
  * @author     Graham Campbell
@@ -38,7 +36,7 @@ class CreateRevisionsTable extends Migration {
      */
     public function up()
     {
-        Schema::create('revisions', function ($table) {
+        Schema::create('revisions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('revisionable_type');
             $table->integer('revisionable_id');

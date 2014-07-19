@@ -18,6 +18,7 @@ namespace GrahamCampbell\Credentials\Models;
 
 use Carbon\Carbon;
 use McCool\LaravelAutoPresenter\PresenterInterface;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
@@ -35,7 +36,7 @@ use GrahamCampbell\Credentials\Models\Relations\Common\RevisionableTrait;
  */
 class User extends SentryUser implements BaseModelInterface, RevisionableInterface, PresenterInterface
 {
-    use BaseModelTrait, RevisionableTrait;
+    use BaseModelTrait, RevisionableTrait, SoftDeletingTrait;
 
     /**
      * The table the users are stored in.
@@ -50,6 +51,13 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
      * @var string
      */
     public static $name = 'user';
+
+    /**
+     * The properties on the model that are dates.
+     *
+     * @var array
+     */
+    protected $dates = array('deleted_at');
 
     /**
      * The revisionable columns.

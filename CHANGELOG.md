@@ -10,6 +10,8 @@ CHANGE LOG
 * Added di aliases
 * Added presenters
 * Throttling improvements
+* Added security history for users
+* Soft delete users
 
 
 ## V0.2.1 Alpha (24/05/2014)

@@ -23,7 +23,7 @@ use GrahamCampbell\Credentials\Facades\Credentials;
 /**
  * This is the revisionable trait.
  *
- * Some code in this trait it taken from Chris Duell's Revisionable.
+ * This code was originally based on Chris Duell's Revisionable.
  * That code is licensed under the MIT License.
  * See the original here: http://bit.ly/1tZfndq.
  *
