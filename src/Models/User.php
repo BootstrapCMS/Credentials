@@ -117,6 +117,16 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     protected $access = array();
 
     /**
+     * Get the recent action history for the user.
+     *
+     * @return \\Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function revisions()
+    {
+        return $this->hasMany('GrahamCampbell\Credentials\Models\Revision');
+    }
+
+    /**
      * Get the presenter class.
      *
      * @var string

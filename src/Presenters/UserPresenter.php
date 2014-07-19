@@ -17,6 +17,7 @@
 namespace GrahamCampbell\Credentials\Presenters;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 use GrahamCampbell\Credentials\Models\User;
 use McCool\LaravelAutoPresenter\BasePresenter;
 
@@ -56,6 +57,20 @@ class UserPresenter extends BasePresenter
     {
         $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
         $history = $this->resource->revisionHistory()->orderBy('id', 'desc')->take(20)->get();
+
+        return $presenter->decorate($history);
+    }
+
+    public function actionHistory()
+    {
+        $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
+        $history = $this->resource->revisions()
+            ->where('revisionable_type', '<>', Config::get('cartalyst/sentry::users.model'))
+            ->orWhere(function ($q) {
+                $q->where('revisionable_type', '=', Config::get('cartalyst/sentry::users.model'))
+                    ->where('revisionable_id', '=', $this->id);
+            })
+            ->orderBy('id', 'desc')->take(20)->get();
 
         return $presenter->decorate($history);
     }
