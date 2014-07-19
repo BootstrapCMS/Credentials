@@ -69,6 +69,19 @@ class Revision extends AbstractModel implements BelongsToUserInterface, Presente
      */
     public static $order = 'id';
 
+    /**
+     * This defines if the model should be treated
+     * in the context of being a security action.
+     *
+     * @var bool
+     */
+    public $security = false;
+
+    /**
+     * Get the model the action as been taken on.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
     public function revisionable()
     {
         return $this->morphTo();

@@ -119,7 +119,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     /**
      * Get the recent action history for the user.
      *
-     * @return \\Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function revisions()
     {

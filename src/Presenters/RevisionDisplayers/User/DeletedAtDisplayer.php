@@ -61,9 +61,9 @@ class DeletedAtDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'The user deleted their account.';
+            return 'This user deleted their account.';
         }
 
-        return $this->author() . 'deleted the user\'s account.';
+        return $this->author() . 'deleted' . $this->user(). 'account.';
     }
 }

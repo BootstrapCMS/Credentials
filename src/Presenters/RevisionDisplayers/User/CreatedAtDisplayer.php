@@ -61,9 +61,9 @@ class CreatedAtDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'The user created their account.';
+            return 'This user created their account.';
         }
 
-        return $this->author() . 'created the user\'s account.';
+        return $this->author() . 'created' . $this->user() . 'account.';
     }
 }

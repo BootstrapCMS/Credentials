@@ -68,7 +68,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
      */
     protected function wasActualUser()
     {
-        return ($this->resource->user_id == $this->userId() || !$this->resource->user_id);
+        return ($this->resource->user_id == $this->resource->revisionable_id || !$this->resource->user_id);
     }
 
     /**
@@ -88,22 +88,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
      */
     protected function isCurrentUser()
     {
-        return (Credentials::check() && Credentials::getUser()->id == $this->userId());
-    }
-
-    /**
-     * Get the user id.
-     *
-     * @return int
-     */
-    protected function userId()
-    {
-        $user = $this->resource->revisionable()
-            ->cacheDriver('array')
-            ->rememberForever()
-            ->first(array('id'));
-
-        return $user->id;
+        return (Credentials::check() && Credentials::getUser()->id == $this->resource->revisionable_id);
     }
 
     /**
@@ -117,7 +102,29 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
             return 'You ';
         }
 
+        if (!$this->resource->security) {
+            return 'This user ';
+        }
+
         return $this->presenter->author() . ' ';
+    }
+
+    /**
+     * Get the user details.
+     *
+     * @return string
+     */
+    protected function user()
+    {
+        if ($this->resource->security) {
+            return ' this user\'s ';
+        }
+
+        $user = $this->resource->revisionable()->withTrashed()
+        ->cacheDriver('array')->rememberForever()
+        ->first(array('first_name', 'last_name'));
+
+        return ' '.$user->first_name.' '.$user->last_name.'\'s ';
     }
 
     /**

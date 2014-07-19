@@ -57,9 +57,9 @@ class FirstNameDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'The user changed their first name' . $this->details();
+            return 'This user changed their first name' . $this->details();
         }
 
-        return $this->author() . 'changed the user\'s first name' . $this->details();
+        return $this->author() . 'changed' . $this->user() . 'first name' . $this->details();
     }
 }

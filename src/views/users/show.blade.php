@@ -109,8 +109,8 @@
     @else
         @foreach($actionEvents as $event)
             <div class="well clearfix">
-                <p><strong>{{{ 'EVENT TITLE' }}}</strong> - {{ 'EVENT DATE' }}</p>
-                {{{ 'EVENT DESCRIPTION' }}}</p>
+                <p><strong>{{{ $event->title }}}</strong> - {{ HTML::ago($event->updated_at) }}</p>
+                {{{ $event->description }}}</p>
             </div>
         @endforeach
     @endif

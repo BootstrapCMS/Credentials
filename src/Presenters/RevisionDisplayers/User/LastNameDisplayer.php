@@ -57,9 +57,9 @@ class LastNameDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'The user changed their last name' . $this->details();
+            return 'This user changed their last name' . $this->details();
         }
 
-        return $this->author() . 'changed the user\'s last name' . $this->details();
+        return $this->author() . 'changed' . $this->user() . 'last name' . $this->details();
     }
 }

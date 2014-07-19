@@ -61,9 +61,9 @@ class PasswordDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'The user changed their password.';
+            return 'This user changed their password.';
         }
 
-        return $this->author() . 'reset the user\'s password.';
+        return $this->author() . 'reset' . $this->user() . 'password.';
     }
 }

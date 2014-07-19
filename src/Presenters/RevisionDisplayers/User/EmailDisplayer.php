@@ -57,9 +57,9 @@ class EmailDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'The user changed their email address' . $this->details();
+            return 'This user changed their email address' . $this->details();
         }
 
-        return $this->author() . 'changed the user\'s email address' . $this->details();
+        return $this->author() . 'changed' . $this->user() . 'email address' . $this->details();
     }
 }

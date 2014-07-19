@@ -58,6 +58,10 @@ class UserPresenter extends BasePresenter
         $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
         $history = $this->resource->revisionHistory()->orderBy('id', 'desc')->take(20)->get();
 
+        $history->each(function ($item) {
+            $item->security = true;
+        });
+
         return $presenter->decorate($history);
     }
 
@@ -65,10 +69,14 @@ class UserPresenter extends BasePresenter
     {
         $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
         $history = $this->resource->revisions()
-            ->where('revisionable_type', '<>', Config::get('cartalyst/sentry::users.model'))
+            ->where(function ($q) {
+                $q->where('revisionable_type', '<>', Config::get('cartalyst/sentry::users.model'))
+                    ->where('user_id', '=', $this->id);
+            })
             ->orWhere(function ($q) {
                 $q->where('revisionable_type', '=', Config::get('cartalyst/sentry::users.model'))
-                    ->where('revisionable_id', '=', $this->id);
+                    ->where('revisionable_id', '<>', $this->id)
+                    ->where('user_id', '=', $this->id);
             })
             ->orderBy('id', 'desc')->take(20)->get();
 
