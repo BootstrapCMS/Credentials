@@ -64,10 +64,6 @@ class DeletedAtDisplayer extends AbstractDisplayer
             return 'The user deleted their account.';
         }
 
-        if ($this->author() === ' ') {
-            return 'The user deleted their account.';
-        }
-
         return $this->author() . 'deleted the user\'s account.';
     }
 }

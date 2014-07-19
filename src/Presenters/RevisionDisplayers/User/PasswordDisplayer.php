@@ -64,10 +64,6 @@ class PasswordDisplayer extends AbstractDisplayer
             return 'The user changed their password.';
         }
 
-        if ($this->author() === ' ') {
-            return 'The user reset their password.';
-        }
-
         return $this->author() . 'reset the user\'s password.';
     }
 }

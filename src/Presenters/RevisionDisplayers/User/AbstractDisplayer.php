@@ -68,7 +68,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
      */
     protected function wasActualUser()
     {
-        return ($this->resource->user_id == $this->userId());
+        return ($this->resource->user_id == $this->userId() || !$this->resource->user_id);
     }
 
     /**
@@ -113,7 +113,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
      */
     protected function author()
     {
-        if ($this->wasCurrentUser()) {
+        if ($this->wasCurrentUser() || !$this->resource->user_id) {
             return 'You ';
         }
 

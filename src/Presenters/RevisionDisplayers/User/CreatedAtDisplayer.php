@@ -64,10 +64,6 @@ class CreatedAtDisplayer extends AbstractDisplayer
             return 'The user created their account.';
         }
 
-        if ($this->author() === ' ') {
-            return 'The user created their account.';
-        }
-
         return $this->author() . 'created the user\'s account.';
     }
 }
