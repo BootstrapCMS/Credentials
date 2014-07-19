@@ -72,16 +72,6 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
     }
 
     /**
-     * Was the action by the current user?
-     *
-     * @return bool
-     */
-    protected function wasCurrentUser()
-    {
-        return $this->presenter->wasByCurrentUser();
-    }
-
-    /**
      * Is the current user's account?
      *
      * @return bool
@@ -98,7 +88,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
      */
     protected function author()
     {
-        if ($this->wasCurrentUser() || !$this->resource->user_id) {
+        if ($this->presenter->wasByCurrentUser() || !$this->resource->user_id) {
             return 'You ';
         }
 
@@ -127,13 +117,4 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
         return ' '.$user->first_name.' '.$user->last_name.'\'s ';
     }
 
-    /**
-     * Get the change details.
-     *
-     * @return string
-     */
-    protected function details()
-    {
-        return ' from "'.$this->resource->old_value.'" to "'.$this->resource->new_value.'".';
-    }
 }

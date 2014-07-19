@@ -54,4 +54,14 @@ abstract class AbstractRevisionDisplayer
         $this->presenter = $presenter;
         $this->resource = $this->presenter->resource;
     }
+
+    /**
+     * Get the change details.
+     *
+     * @return string
+     */
+    protected function details()
+    {
+        return ' from "'.$this->resource->old_value.'" to "'.$this->resource->new_value.'".';
+    }
 }
