@@ -27,7 +27,7 @@ use Illuminate\Database\Schema\Blueprint;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class CreateEventsTable extends Migration
+class UpdateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -36,7 +36,7 @@ class CreateEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -48,7 +48,7 @@ class CreateEventsTable extends Migration
      */
     public function down()
     {
-        Schema::table('comments', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->dropSoftDeletes();
         });
     }
