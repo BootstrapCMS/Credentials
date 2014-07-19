@@ -100,7 +100,7 @@
         @endforeach
     @endif
 </div>
-<hr class="hidden-lg">
+<hr class="hidden-md hidden-lg">
 <div class="col-md-6">
     <h3>Recent Actions</h3>
     <hr>
