@@ -275,11 +275,17 @@ trait RevisionableTrait
             if ($this->isRevisionable($key) && !is_array($value)) {
                 if (is_object($original = array_get($this->originalData, $key))) {
                     $original = $original->getTimestamp();
+                } elseif (is_string($original)) {
+                    $original = trim($original);
                 }
+
                 if (is_object($updated = array_get($this->updatedData, $key))) {
                     $updated = $updated->getTimestamp();
+                } elseif (is_string($updated)) {
+                    $updated = trim($updated);
                 }
-                if (trim($original) != trim($updated)) {
+
+                if ($original != $updated) {
                     $changes[$key] = $value;
                 }
             } else {
