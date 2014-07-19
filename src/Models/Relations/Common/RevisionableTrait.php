@@ -16,6 +16,7 @@
 
 namespace GrahamCampbell\Credentials\Models\Relations\Common;
 
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use GrahamCampbell\Credentials\Models\Revision;
 use GrahamCampbell\Credentials\Facades\Credentials;
@@ -68,7 +69,7 @@ trait RevisionableTrait
      *
      * @var array
      */
-    protected $dontKeep = array();
+    protected $dontKeep = array('id', 'created_at', 'updated_at', 'deleted_at');
 
     /**
      * Keeps the list of values that have been updated.
@@ -135,12 +136,14 @@ trait RevisionableTrait
         $this->originalData = $this->original;
         $this->updatedData  = $this->attributes;
 
-        // we can only safely compare basic items,
-        // so for now we drop any object based items, like DateTime
+        // we can only safely compare basic items, so for now we drop any object based
+        // items apart from DateTime objects where we compare them specially
         foreach ($this->updatedData as $key => $val) {
-            if (gettype($val) == 'object') {
-                unset($this->originalData[$key]);
-                unset($this->updatedData[$key]);
+            if (is_object($val)) {
+                if (!($val instanceof DateTime)) {
+                    unset($this->originalData[$key]);
+                    unset($this->updatedData[$key]);
+                }
             }
         }
 
@@ -184,8 +187,8 @@ trait RevisionableTrait
                     'old_value'         => $this->getDataValue('original', $key),
                     'new_value'         => $this->getDataValue('updated', $key),
                     'user_id'           => $this->getUserId(),
-                    'created_at'        => new \DateTime(),
-                    'updated_at'        => new \DateTime(),
+                    'created_at'        => new DateTime(),
+                    'updated_at'        => new DateTime(),
                 );
 
             }
@@ -200,10 +203,10 @@ trait RevisionableTrait
                 'revisionable_id'   => $this->getKey(),
                 'key'               => 'created_at',
                 'old_value'         => null,
-                'new_value'         => new \DateTime(),
+                'new_value'         => new DateTime(),
                 'user_id'           => $this->getUserId(),
-                'created_at'        => new \DateTime(),
-                'updated_at'        => new \DateTime(),
+                'created_at'        => new DateTime(),
+                'updated_at'        => new DateTime(),
             );
             $revision = new Revision;
             DB::table($revision->getTable())->insert($revisions);
@@ -238,10 +241,10 @@ trait RevisionableTrait
             'revisionable_id'   => $this->getKey(),
             'key'               => 'deleted_at',
             'old_value'         => null,
-            'new_value'         => new \DateTime(),
+            'new_value'         => new DateTime(),
             'user_id'           => $this->getUserId(),
-            'created_at'        => new \DateTime(),
-            'updated_at'        => new \DateTime(),
+            'created_at'        => new DateTime(),
+            'updated_at'        => new DateTime(),
         );
         $revision = new Revision;
         DB::table($revision->getTable())->insert($revisions);
@@ -266,23 +269,27 @@ trait RevisionableTrait
      */
     protected function changedRevisionableFields()
     {
-        $changes_to_record = array();
+        $changes = array();
         foreach ($this->dirtyData as $key => $value) {
-            // check that the field is revisionable, and double check
-            // that it's actually new data in case dirty is, well, clean
+            // check that the field is revisionable, and the data is dirty enough
             if ($this->isRevisionable($key) && !is_array($value)) {
-                if (!isset($this->originalData[$key]) || $this->originalData[$key] != $this->updatedData[$key]) {
-                    $changes_to_record[$key] = $value;
+                if (is_object($original = array_get($this->originalData, $key))) {
+                    $original = $original->getTimestamp();
+                }
+                if (is_object($updated = array_get($this->updatedData, $key))) {
+                    $updated = $updated->getTimestamp();
+                }
+                if (trim($original) != trim($updated)) {
+                    $changes[$key] = $value;
                 }
             } else {
-                // we don't need these any more, and they could
-                // contain a lot of data, so lets trash them.
+                // we're done with each key, each time, so let's save memory
                 unset($this->updatedData[$key]);
                 unset($this->originalData[$key]);
             }
         }
 
-        return $changes_to_record;
+        return $changes;
     }
 
     /**
