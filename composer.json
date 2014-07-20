@@ -36,7 +36,8 @@
         "mccool/laravel-auto-presenter": "~2.1"
     },
     "require-dev": {
-        "graham-campbell/testbench": "~1.0"
+        "graham-campbell/testbench": "~1.0",
+        "doctrine/dbal": "~2.4"
     },
     "suggest": {
         "graham-campbell/queuing": "Improved mailer performance.",
