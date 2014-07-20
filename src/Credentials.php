@@ -17,6 +17,7 @@
 namespace GrahamCampbell\Credentials;
 
 use Cartalyst\Sentry\Sentry;
+use McCool\LaravelAutoPresenter\PresenterDecorator;
 
 /**
  * This is the credentials class.
@@ -44,14 +45,23 @@ class Credentials
     protected $sentry;
 
     /**
+     * The decorator instance.
+     *
+     * @var \McCool\LaravelAutoPresenter\PresenterDecorator
+     */
+    protected $decorator;
+
+    /**
      * Create a new instance.
      *
      * @param  \Cartalyst\Sentry\Sentry  $sentry
+     * @param  \McCool\LaravelAutoPresenter\PresenterDecorator  $decorator
      * @return void
      */
-    public function __construct(Sentry $sentry)
+    public function __construct(Sentry $sentry, PresenterDecorator $decorator)
     {
         $this->sentry = $sentry;
+        $this->decorator = $decorator;
     }
 
     /**
@@ -66,6 +76,18 @@ class Credentials
         }
 
         return $this->cache;
+    }
+
+    /**
+     * Get the decorated current user.
+     *
+     * @return \GrahamCampbell\Credentials\Presenters\UserPresenter
+     */
+    public function getDecoratedUser()
+    {
+        if ($user = $this->sentry->getUser()) {
+            return $this->decorator->decorate($user);
+        }
     }
 
     /**

@@ -157,8 +157,9 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $this->app->bindShared('credentials', function ($app) {
             $sentry = $app['sentry'];
+            $decorator = $app->make('McCool\LaravelAutoPresenter\PresenterDecorator');
 
-            return new Credentials($sentry);
+            return new Credentials($sentry, $decorator);
         });
 
         $this->app->alias('credentials', 'GrahamCampbell\Credentials\Credentials');
