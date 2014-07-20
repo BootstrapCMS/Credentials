@@ -31,9 +31,9 @@ Profile
         'method' => 'PATCH',
         'button' => 'Save Details',
         'defaults' => array(
-            'first_name' => Credentials::getUser()->first_name,
-            'last_name' => Credentials::getUser()->last_name,
-            'email' => Credentials::getUser()->email,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
     ));
     ?>
     @include('graham-campbell/credentials::account.details')

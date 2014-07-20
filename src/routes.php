@@ -23,6 +23,10 @@ Route::get('account', array('as' => 'account', function () {
 
 
 // account routes
+Route::get('account/history', array(
+    'as' => 'account.history',
+    'uses' => 'GrahamCampbell\Credentials\Controllers\AccountController@getHistory'
+));
 Route::get('account/profile', array(
     'as' => 'account.profile',
     'uses' => 'GrahamCampbell\Credentials\Controllers\AccountController@getProfile'

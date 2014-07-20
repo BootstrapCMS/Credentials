@@ -50,6 +50,7 @@ class AccountController extends BaseController
     public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view)
     {
         $this->setPermissions(array(
+            'getHistory'    => 'user',
             'getProfile'    => 'user',
             'deleteProfile' => 'user',
             'patchDetails'  => 'user',
@@ -64,9 +65,19 @@ class AccountController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
+    public function getHistory()
+    {
+        return $this->view->make('graham-campbell/credentials::account.history', array('user' => $this->credentials->getUser()));
+    }
+
+    /**
+     * Display the user's profile.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getProfile()
     {
-        return $this->view->make('graham-campbell/credentials::account.profile');
+        return $this->view->make('graham-campbell/credentials::account.profile', array('user' => $this->credentials->getUser()));
     }
 
     /**
