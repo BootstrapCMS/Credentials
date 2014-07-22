@@ -6,12 +6,16 @@ CHANGE LOG
 
 * Upgrade to Laravel 4.2+
 * Config cleanup
-* Refactoring
+* Code cleanup
+* Controller refactoring
+* General refactoring
 * Added di aliases
 * Added presenters
 * Throttling improvements
-* Added security history for users
 * Soft delete users
+* Removed the user events system
+* Added security history for users
+* More unit tests
 
 
 ## V0.2.1 Alpha (24/05/2014)
