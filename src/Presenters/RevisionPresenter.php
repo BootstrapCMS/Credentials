@@ -77,7 +77,8 @@ class RevisionPresenter extends BasePresenter
     protected function getDisplayerClass()
     {
         $class = $this->resource->revisionable_type;
-        $short = end(explode('\\', $class));
+        $shortArray = explode('\\', $class);
+        $short = end($shortArray);
         $field = studly_case($this->field());
 
         $temp = str_replace($short, 'RevisionDisplayers\\'.$short.'\\'.$field.'Displayer', $class);
