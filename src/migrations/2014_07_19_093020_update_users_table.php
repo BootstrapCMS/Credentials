@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * This is the update users table migration class.

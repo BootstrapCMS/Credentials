@@ -16,16 +16,16 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use Illuminate\View\Factory;
+use GrahamCampbell\Binput\Binput;
+use GrahamCampbell\Credentials\Credentials;
+use GrahamCampbell\Credentials\Providers\UserProvider;
+use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use GrahamCampbell\Binput\Binput;
-use GrahamCampbell\Credentials\Credentials;
-use GrahamCampbell\Credentials\Providers\UserProvider;
-use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
+use Illuminate\View\Factory;
 
 /**
  * This is the registration controller class.
@@ -67,7 +67,7 @@ class RegistrationController extends BaseController
     /**
      * Display the registration form.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function getRegister()
     {

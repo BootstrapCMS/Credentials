@@ -17,8 +17,8 @@
 namespace GrahamCampbell\Credentials\Models;
 
 use Cartalyst\Sentry\Throttling\Eloquent\Throttle as SentryThrottle;
-use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
+use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
 
 /**
  * This is the throttle model class.

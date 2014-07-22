@@ -17,17 +17,17 @@
 namespace GrahamCampbell\Credentials\Controllers;
 
 use DateTime;
-use Illuminate\Support\Str;
-use Illuminate\View\Factory;
+use GrahamCampbell\Binput\Binput;
+use GrahamCampbell\Credentials\Credentials;
+use GrahamCampbell\Credentials\Facades\GroupProvider;
+use GrahamCampbell\Credentials\Providers\UserProvider;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use GrahamCampbell\Binput\Binput;
-use GrahamCampbell\Credentials\Credentials;
-use GrahamCampbell\Credentials\Providers\UserProvider;
-use GrahamCampbell\Credentials\Facades\GroupProvider;
+use Illuminate\Support\Str;
+use Illuminate\View\Factory;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -75,7 +75,7 @@ class UserController extends BaseController
     /**
      * Display a listing of the users.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -88,7 +88,7 @@ class UserController extends BaseController
     /**
      * Show the form for creating a new user.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -153,7 +153,7 @@ class UserController extends BaseController
      * Show the specified user.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show($id)
     {
@@ -194,7 +194,7 @@ class UserController extends BaseController
      * Show the form for editing the specified user.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit($id)
     {

@@ -16,8 +16,8 @@
 
 namespace GrahamCampbell\Credentials;
 
-use SebastianBergmann\Diff\Differ;
 use Illuminate\Support\ServiceProvider;
+use SebastianBergmann\Diff\Differ;
 
 /**
  * This is the credentials service provider class.
@@ -288,7 +288,7 @@ class CredentialsServiceProvider extends ServiceProvider
     /**
      * Get the services provided by the provider.
      *
-     * @return array
+     * @return string[]
      */
     public function provides()
     {

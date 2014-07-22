@@ -16,9 +16,9 @@
 
 namespace GrahamCampbell\Credentials\Presenters;
 
+use GrahamCampbell\Credentials\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
-use GrahamCampbell\Credentials\Models\User;
 use McCool\LaravelAutoPresenter\BasePresenter;
 
 /**

@@ -16,10 +16,10 @@
 
 namespace GrahamCampbell\Credentials\Presenters;
 
-use McCool\LaravelAutoPresenter\BasePresenter;
+use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Facades\Differ;
 use GrahamCampbell\Credentials\Models\Revision;
-use GrahamCampbell\Credentials\Facades\Credentials;
+use McCool\LaravelAutoPresenter\BasePresenter;
 
 /**
  * This is the revision presenter class.

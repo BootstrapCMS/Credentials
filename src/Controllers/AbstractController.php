@@ -16,8 +16,8 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use Illuminate\Routing\Controller;
 use GrahamCampbell\Credentials\Credentials;
+use Illuminate\Routing\Controller;
 
 /**
  * This is the abstract controller class.

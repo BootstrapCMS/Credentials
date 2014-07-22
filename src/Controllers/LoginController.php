@@ -16,14 +16,14 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use Illuminate\View\Factory;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Redirect;
 use GrahamCampbell\Binput\Binput;
 use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\Factory;
 
 /**
  * This is the login controller class.
@@ -70,7 +70,7 @@ class LoginController extends BaseController
     /**
      * Display the login form.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function getLogin()
     {

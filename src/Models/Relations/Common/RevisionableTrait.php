@@ -17,9 +17,9 @@
 namespace GrahamCampbell\Credentials\Models\Relations\Common;
 
 use DateTime;
-use Illuminate\Support\Facades\DB;
-use GrahamCampbell\Credentials\Models\Revision;
 use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Models\Revision;
+use Illuminate\Support\Facades\DB;
 
 /**
  * This is the revisionable trait.

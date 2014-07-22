@@ -16,15 +16,15 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use Illuminate\View\Factory;
+use GrahamCampbell\Binput\Binput;
+use GrahamCampbell\Credentials\Credentials;
+use GrahamCampbell\Credentials\Providers\UserProvider;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use GrahamCampbell\Binput\Binput;
-use GrahamCampbell\Credentials\Credentials;
-use GrahamCampbell\Credentials\Providers\UserProvider;
+use Illuminate\View\Factory;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -63,7 +63,7 @@ class AccountController extends BaseController
     /**
      * Display the user's profile.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function getHistory()
     {
@@ -73,7 +73,7 @@ class AccountController extends BaseController
     /**
      * Display the user's profile.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function getProfile()
     {

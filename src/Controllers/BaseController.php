@@ -16,10 +16,10 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use Illuminate\View\Factory;
 use GrahamCampbell\Binput\Binput;
 use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
+use Illuminate\View\Factory;
 
 /**
  * This is the base controller class.

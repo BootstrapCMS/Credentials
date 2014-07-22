@@ -17,13 +17,13 @@
 namespace GrahamCampbell\Credentials\Models;
 
 use Carbon\Carbon;
-use McCool\LaravelAutoPresenter\PresenterInterface;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
-use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
-use GrahamCampbell\Database\Models\Common\BaseModelTrait;
-use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface;
 use GrahamCampbell\Credentials\Models\Relations\Common\RevisionableTrait;
+use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface;
+use GrahamCampbell\Database\Models\Common\BaseModelTrait;
+use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use McCool\LaravelAutoPresenter\PresenterInterface;
 
 /**
  * This is the user model class.

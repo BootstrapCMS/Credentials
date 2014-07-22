@@ -16,10 +16,10 @@
 
 namespace GrahamCampbell\Credentials\Models;
 
+use GrahamCampbell\Credentials\Models\Relations\Common\BelongsToUserTrait;
+use GrahamCampbell\Credentials\Models\Relations\Interfaces\BelongsToUserInterface;
 use GrahamCampbell\Database\Models\AbstractModel;
 use McCool\LaravelAutoPresenter\PresenterInterface;
-use GrahamCampbell\Credentials\Models\Relations\Interfaces\BelongsToUserInterface;
-use GrahamCampbell\Credentials\Models\Relations\Common\BelongsToUserTrait;
 
 /**
  * This is the revision model class.

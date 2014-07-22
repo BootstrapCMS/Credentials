@@ -16,16 +16,16 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use Illuminate\Support\Str;
-use Illuminate\View\Factory;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\URL;
 use GrahamCampbell\Binput\Binput;
 use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
+use Illuminate\View\Factory;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -68,7 +68,7 @@ class ResetController extends BaseController
     /**
      * Display the password reset form.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function getReset()
     {
