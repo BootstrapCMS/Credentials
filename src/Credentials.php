@@ -69,7 +69,7 @@ class Credentials
      *
      * @return bool
      */
-    public function check($cache = true)
+    public function check()
     {
         if ($this->cache === null) {
             $this->cache = $this->sentry->check();
