@@ -56,8 +56,13 @@ class ActivationController extends BaseController
      * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
      * @return void
      */
-    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view, ThrottlerInterface $throttler)
-    {
+    public function __construct(
+        Credentials $credentials,
+        Binput $binput,
+        UserProvider $userprovider,
+        Factory $view,
+        ThrottlerInterface $throttler
+    ) {
         $this->beforeFilter('throttle.activate', array('only' => array('getActivate')));
         $this->beforeFilter('throttle.resend', array('only' => array('postResend')));
 
@@ -137,9 +142,11 @@ class ActivationController extends BaseController
                     ->with('error', 'That user is already activated.');
             }
 
+            $code = $user->getActivationCode();
+
             $mail = array(
                 'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
-                'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $user->getActivationCode())),
+                'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $code)),
                 'email'   => $user->getLogin(),
                 'subject' => Config::get('platform.name').' - Activation'
             );

@@ -67,7 +67,10 @@ class AccountController extends BaseController
      */
     public function getHistory()
     {
-        return $this->view->make('graham-campbell/credentials::account.history', array('user' => $this->credentials->getUser()));
+        return $this->view->make(
+            'graham-campbell/credentials::account.history',
+            array('user' => $this->credentials->getUser())
+        );
     }
 
     /**
@@ -77,7 +80,10 @@ class AccountController extends BaseController
      */
     public function getProfile()
     {
-        return $this->view->make('graham-campbell/credentials::account.profile', array('user' => $this->credentials->getUser()));
+        return $this->view->make(
+            'graham-campbell/credentials::account.profile',
+            array('user' => $this->credentials->getUser())
+        );
     }
 
     /**

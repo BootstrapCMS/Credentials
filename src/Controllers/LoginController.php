@@ -53,8 +53,13 @@ class LoginController extends BaseController
      * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
      * @return void
      */
-    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view, ThrottlerInterface $throttler)
-    {
+    public function __construct(
+        Credentials $credentials,
+        Binput $binput,
+        UserProvider $userprovider,
+        Factory $view,
+        ThrottlerInterface $throttler
+    ) {
         $this->setPermissions(array(
             'getLogout' => 'user',
         ));
@@ -91,9 +96,11 @@ class LoginController extends BaseController
         $rules = $this->userprovider->rules(array_keys($input));
         $rules['password'] = 'required|min:6';
 
+        $messages = $val->messages()->all();
+
         $val = $this->userprovider->validate($input, $rules, true);
         if ($val->fails()) {
-            Event::fire('user.loginfailed', array(array('Email' => $input['email'], 'Messages' => $val->messages()->all())));
+            Event::fire('user.loginfailed', array(array('Email' => $input['email'], 'Messages' => $messages)));
             return Redirect::route('account.login')->withInput()->withErrors($val->errors());
         }
 

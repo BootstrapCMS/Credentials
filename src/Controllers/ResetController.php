@@ -56,8 +56,13 @@ class ResetController extends BaseController
      * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
      * @return void
      */
-    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view, ThrottlerInterface $throttler)
-    {
+    public function __construct(
+        Credentials $credentials,
+        Binput $binput,
+        UserProvider $userprovider,
+        Factory $view,
+        ThrottlerInterface $throttler
+    ) {
         $this->beforeFilter('throttle.reset', array('only' => array('postReset')));
 
         $this->throttler = $throttler;
@@ -94,8 +99,10 @@ class ResetController extends BaseController
         try {
             $user = $this->credentials->getUserProvider()->findByLogin($input['email']);
 
+            $code = $user->getResetPasswordCode();
+
             $mail = array(
-                'link' => URL::route('account.password', array('id' => $user->id, 'code' => $user->getResetPasswordCode())),
+                'link' => URL::route('account.password', array('id' => $user->id, 'code' => $code)),
                 'email' => $user->getLogin(),
                 'subject' => Config::get('platform.name').' - Password Reset Confirmation'
             );

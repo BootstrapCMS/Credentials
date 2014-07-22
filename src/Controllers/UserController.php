@@ -82,7 +82,10 @@ class UserController extends BaseController
         $users = $this->userprovider->paginate();
         $links = $this->userprovider->links();
 
-        return $this->view->make('graham-campbell/credentials::users.index', array('users' => $users, 'links' => $links));
+        return $this->view->make(
+            'graham-campbell/credentials::users.index',
+            array('users' => $users, 'links' => $links)
+        );
     }
 
     /**
@@ -94,7 +97,10 @@ class UserController extends BaseController
     {
         $groups = GroupProvider::index();
 
-        return $this->view->make('graham-campbell/credentials::users.create', array('groups' => $groups));
+        return $this->view->make(
+            'graham-campbell/credentials::users.create',
+            array('groups' => $groups)
+        );
     }
 
     /**
@@ -187,7 +193,10 @@ class UserController extends BaseController
             $groups = 'No Group Memberships';
         }
 
-        return $this->view->make('graham-campbell/credentials::users.show', array('user' => $user, 'groups' => $groups, 'activated' => $activated, 'suspended' => $suspended));
+        return $this->view->make(
+            'graham-campbell/credentials::users.show',
+            array('user' => $user, 'groups' => $groups, 'activated' => $activated, 'suspended' => $suspended)
+        );
     }
 
     /**
@@ -203,7 +212,10 @@ class UserController extends BaseController
 
         $groups = GroupProvider::index();
 
-        return $this->view->make('graham-campbell/credentials::users.edit', array('user' => $user, 'groups' => $groups));
+        return $this->view->make(
+            'graham-campbell/credentials::users.edit',
+            array('user' => $user, 'groups' => $groups)
+        );
     }
 
     /**
@@ -218,7 +230,8 @@ class UserController extends BaseController
 
         $val = $this->userprovider->validate($input, array_keys($input));
         if ($val->fails()) {
-            return Redirect::route('users.edit', array('users' => $id))->withInput()->withErrors($val->errors());
+            return Redirect::route('users.edit', array('users' => $id))
+                ->withInput()->withErrors($val->errors());
         }
 
         $user = $this->userprovider->find($id);
@@ -259,10 +272,10 @@ class UserController extends BaseController
             throw new NotFoundHttpException('User Not Found', $e);
         } catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
             $time = $throttle->getSuspensionTime();
-            return Redirect::route('users.suspend', array('users' => $user->id))->withInput()->withErrors($val->errors())
+            return Redirect::route('users.suspend', array('users' => $user->id))->withInput()
                 ->with('error', "This user is already suspended for $time minutes.");
         } catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
-            return Redirect::route('users.suspend', array('users' => $user->id))->withInput()->withErrors($val->errors())
+            return Redirect::route('users.suspend', array('users' => $user->id))->withInput()
                 ->with('error', 'This user has already been banned.');
         }
 
@@ -326,9 +339,11 @@ class UserController extends BaseController
                 ->with('error', 'That user is already activated.');
         }
 
+        $code = $user->getActivationCode();
+
         $mail = array(
             'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
-            'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $user->getActivationCode())),
+            'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $code)),
             'email'   => $user->getLogin(),
             'subject' => Config::get('platform.name').' - Activation'
         );

@@ -55,8 +55,13 @@ class RegistrationController extends BaseController
      * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
      * @return void
      */
-    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view, ThrottlerInterface $throttler)
-    {
+    public function __construct(
+        Credentials $credentials,
+        Binput $binput,
+        UserProvider $userprovider,
+        Factory $view,
+        ThrottlerInterface $throttler
+    ) {
         $this->beforeFilter('throttle.register', array('only' => array('postRegister')));
 
         $this->throttler = $throttler;
@@ -87,9 +92,11 @@ class RegistrationController extends BaseController
 
         $input = $this->binput->only(array('first_name', 'last_name', 'email', 'password', 'password_confirmation'));
 
+        $messages = $val->messages()->all();
+
         $val = $this->userprovider->validate($input, array_keys($input));
         if ($val->fails()) {
-            Event::fire('user.registrationfailed', array(array('Email' => $input['email'], 'Messages' => $val->messages()->all())));
+            Event::fire('user.registrationfailed', array(array('Email' => $input['email'], 'Messages' => $messages)));
             return Redirect::route('account.register')->withInput()->withErrors($val->errors());
         }
 
@@ -119,9 +126,11 @@ class RegistrationController extends BaseController
                     ->with('success', 'Your account has been created successfully.');
             }
 
+            $code = $user->getActivationCode();
+
             $mail = array(
                 'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
-                'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $user->getActivationCode())),
+                'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $code)),
                 'email'   => $user->getLogin(),
                 'subject' => Config::get('platform.name').' - Welcome'
             );
