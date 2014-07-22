@@ -174,12 +174,12 @@ trait RevisionableTrait
      */
     public function postSave()
     {
+        $revisions = array();
+
         if ($this->updating) {
-            $changes_to_record = $this->changedRevisionableFields();
-            $revisions = array();
+            $changes = $this->changedRevisionableFields();
 
-            foreach ($changes_to_record as $key => $change) {
-
+            foreach ($changes as $key => $change) {
                 $revisions[] = array(
                     'revisionable_type' => get_class($this),
                     'revisionable_id'   => $this->getKey(),
@@ -190,7 +190,6 @@ trait RevisionableTrait
                     'created_at'        => new DateTime(),
                     'updated_at'        => new DateTime(),
                 );
-
             }
 
             if (count($revisions) > 0) {
@@ -208,6 +207,7 @@ trait RevisionableTrait
                 'created_at'        => new DateTime(),
                 'updated_at'        => new DateTime(),
             );
+
             $revision = new Revision;
             DB::table($revision->getTable())->insert($revisions);
         }
@@ -236,6 +236,8 @@ trait RevisionableTrait
      */
     public function postDelete()
     {
+        $revisions = array();
+
         $revisions[] = array(
             'revisionable_type' => get_class($this),
             'revisionable_id'   => $this->getKey(),
@@ -246,6 +248,7 @@ trait RevisionableTrait
             'created_at'        => new DateTime(),
             'updated_at'        => new DateTime(),
         );
+
         $revision = new Revision;
         DB::table($revision->getTable())->insert($revisions);
     }
