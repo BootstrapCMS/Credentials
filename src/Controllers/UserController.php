@@ -272,10 +272,10 @@ class UserController extends BaseController
             throw new NotFoundHttpException('User Not Found', $e);
         } catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
             $time = $throttle->getSuspensionTime();
-            return Redirect::route('users.suspend', array('users' => $user->id))->withInput()
+            return Redirect::route('users.suspend', array('users' => $id))->withInput()
                 ->with('error', "This user is already suspended for $time minutes.");
         } catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
-            return Redirect::route('users.suspend', array('users' => $user->id))->withInput()
+            return Redirect::route('users.suspend', array('users' => $id))->withInput()
                 ->with('error', 'This user has already been banned.');
         }
 
