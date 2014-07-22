@@ -321,7 +321,7 @@ class UserController extends BaseController
         });
 
         return Redirect::route('users.show', array('users' => $id))
-            ->with('success', 'The user\'s password has been successfully reset. Their new password has been emailed to them.');
+            ->with('success', 'The user\'s password has been reset successfully, and has been emailed to them.');
     }
 
     /**
@@ -353,7 +353,7 @@ class UserController extends BaseController
         });
 
         return Redirect::route('users.show', array('users' => $id))
-            ->with('success', 'The user\'s activation email has been successfully sent.');
+            ->with('success', 'The user\'s activation email has been sent successfully.');
     }
 
     /**
