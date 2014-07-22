@@ -91,8 +91,6 @@ class RegistrationController extends BaseController
 
         $input = $this->binput->only(array('first_name', 'last_name', 'email', 'password', 'password_confirmation'));
 
-        $messages = $val->messages()->all();
-
         $val = $this->userprovider->validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.register')->withInput()->withErrors($val->errors());

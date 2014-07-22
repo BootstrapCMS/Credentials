@@ -95,8 +95,6 @@ class LoginController extends BaseController
         $rules = $this->userprovider->rules(array_keys($input));
         $rules['password'] = 'required|min:6';
 
-        $messages = $val->messages()->all();
-
         $val = $this->userprovider->validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('account.login')->withInput()->withErrors($val->errors());
