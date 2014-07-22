@@ -311,9 +311,13 @@ trait RevisionableTrait
      */
     protected function isRevisionable($key)
     {
-        return (isset($this->doKeep) && in_array($key, $this->doKeep));
+        if (isset($this->doKeep) && in_array($key, $this->doKeep)) {
+            return true;
+        }
 
-        return ! (isset($this->dontKeep) && in_array($key, $this->dontKeep));
+        if (isset($this->dontKeep) && in_array($key, $this->dontKeep)) {
+            return false;
+        }
 
         return empty($this->doKeep);
     }
