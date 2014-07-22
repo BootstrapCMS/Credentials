@@ -116,5 +116,4 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
 
         return ' '.$user->first_name.' '.$user->last_name.'\'s ';
     }
-
 }
