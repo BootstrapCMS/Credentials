@@ -20,7 +20,6 @@ use GrahamCampbell\Binput\Binput;
 use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
@@ -96,7 +95,6 @@ class AccountController extends BaseController
         $user = $this->credentials->getUser();
         $this->checkUser($user);
 
-        Event::fire('user.logout', array(array('Email' => $user->email)));
         $this->credentials->logout();
 
         try {

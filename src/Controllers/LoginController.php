@@ -21,7 +21,6 @@ use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\Factory;
 
@@ -100,7 +99,6 @@ class LoginController extends BaseController
 
         $val = $this->userprovider->validate($input, $rules, true);
         if ($val->fails()) {
-            Event::fire('user.loginfailed', array(array('Email' => $input['email'], 'Messages' => $messages)));
             return Redirect::route('account.login')->withInput()->withErrors($val->errors());
         }
 
@@ -112,16 +110,13 @@ class LoginController extends BaseController
 
             $this->credentials->authenticate($input, $remember);
         } catch (\Cartalyst\Sentry\Users\WrongPasswordException $e) {
-            Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'Your password was incorrect.');
         } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'That user does not exist.');
         } catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e) {
             if (Config::get('graham-campbell/credentials::activation')) {
-                Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
                 return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'You have not yet activated this account.');
             } else {
@@ -130,17 +125,14 @@ class LoginController extends BaseController
                 return $this->postLogin();
             }
         } catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
-            Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
             $time = $throttle->getSuspensionTime();
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', "Your account has been suspended for $time minutes.");
         } catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
-            Event::fire('user.loginfailed', array(array('Email' => $input['email'])));
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'You have been banned. Please contact support.');
         }
 
-        Event::fire('user.loginsuccessful', array(array('Email' => $input['email'])));
         return Redirect::intended(Config::get('graham-campbell/core::home', '/'));
     }
 
@@ -151,8 +143,8 @@ class LoginController extends BaseController
      */
     public function getLogout()
     {
-        Event::fire('user.logout', array(array('Email' => $this->credentials->getUser()->email)));
         $this->credentials->logout();
+
         return Redirect::to(Config::get('graham-campbell/core::home', '/'));
     }
 }

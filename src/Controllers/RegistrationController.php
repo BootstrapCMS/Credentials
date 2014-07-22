@@ -21,7 +21,6 @@ use GrahamCampbell\Credentials\Credentials;
 use GrahamCampbell\Credentials\Providers\UserProvider;
 use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
@@ -96,7 +95,6 @@ class RegistrationController extends BaseController
 
         $val = $this->userprovider->validate($input, array_keys($input));
         if ($val->fails()) {
-            Event::fire('user.registrationfailed', array(array('Email' => $input['email'], 'Messages' => $messages)));
             return Redirect::route('account.register')->withInput()->withErrors($val->errors());
         }
 
@@ -121,7 +119,6 @@ class RegistrationController extends BaseController
                 $user->attemptActivation($user->getActivationCode());
                 $user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
 
-                Event::fire('user.registrationsuccessful', array(array('Email' => $input['email'], 'Activated' => true)));
                 return Redirect::to(Config::get('graham-campbell/core::home', '/'))
                     ->with('success', 'Your account has been created successfully.');
             }
@@ -139,11 +136,9 @@ class RegistrationController extends BaseController
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 
-            Event::fire('user.registrationsuccessful', array(array('Email' => $input['email'], 'Activated' => false)));
             return Redirect::to(Config::get('graham-campbell/core::home', '/'))
                 ->with('success', 'Your account has been created. Check your email for the confirmation link.');
         } catch (\Cartalyst\Sentry\Users\UserExistsException $e) {
-            Event::fire('user.registrationfailed', array(array('Email' => $input['email'])));
             return Redirect::route('account.register')->withInput()->withErrors($val->errors())
                 ->with('error', 'That email address is taken.');
         }
