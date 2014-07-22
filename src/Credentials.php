@@ -71,7 +71,7 @@ class Credentials
      */
     public function check($cache = true)
     {
-        if (is_null($this->cache) || $cache === false) {
+        if ($this->cache === null) {
             $this->cache = $this->sentry->check();
         }
 
