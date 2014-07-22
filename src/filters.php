@@ -1,8 +1,5 @@
 <?php
 
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
-
 /**
  * This file is part of Laravel Credentials by Graham Campbell.
  *
@@ -17,6 +14,9 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
  * limitations under the License.
  */
 
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+
 // check if the user is logged in and their access level
 Route::filter('credentials', function ($route, $request, $value) {
     if (!Credentials::check()) {
@@ -29,7 +29,10 @@ Route::filter('credentials', function ($route, $request, $value) {
     }
 
     if (!Credentials::hasAccess($value)) {
-        Log::warning('User tried to access a page without permission', array('path' => $request->path(), 'permission' => $value));
+        Log::warning(
+            'User tried to access a page without permission',
+            array('path' => $request->path(), 'permission' => $value)
+        );
         throw new AccessDeniedHttpException(ucwords($value).' Permissions Are Required');
     }
 });
@@ -61,7 +64,7 @@ Route::filter('throttle.resend', function ($route, $request) {
     // we can hit the throttle later on in the if validation passes
     if (!Throttle::check($request, 5, 30)) {
         return Redirect::route('account.resend')->withInput()
-            ->with('error', 'Your computer has been suspended from resending activation emails. Please contact support.');
+            ->with('error', 'Your have been suspended from resending activation emails. Please contact support.');
     }
 });
 
@@ -70,7 +73,7 @@ Route::filter('throttle.reset', function ($route, $request) {
     // we can hit the throttle later on in the if validation passes
     if (!Throttle::check($request, 5, 30)) {
         return Redirect::route('account.reset')->withInput()
-            ->with('error', 'Your computer has been suspended from resetting passwords. Please contact support.');
+            ->with('error', 'Your have been suspended from resetting passwords. Please contact support.');
     }
 });
 
@@ -79,6 +82,6 @@ Route::filter('throttle.register', function ($route, $request) {
     // we can hit the throttle later on in the if validation passes
     if (!Throttle::check($request, 5, 30)) {
         return Redirect::route('account.register')->withInput()
-            ->with('error', 'Your computer has been suspended from registration. Please contact support.');
+            ->with('error', 'Your have been suspended from registration. Please contact support.');
     }
 });

@@ -27,7 +27,8 @@ use Illuminate\Support\Facades\Schema;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class CreateRevisionsTable extends Migration {
+class CreateRevisionsTable extends Migration
+{
 
     /**
      * Run the migrations.
