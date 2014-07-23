@@ -16,15 +16,15 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use GrahamCampbell\Binput\Binput;
-use GrahamCampbell\Credentials\Credentials;
-use GrahamCampbell\Credentials\Providers\UserProvider;
+use GrahamCampbell\Binput\Facades\Binput;
+use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Facades\UserProvider;
 use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use Illuminate\View\Factory;
+use Illuminate\Support\Facades\View;
 
 /**
  * This is the registration controller class.
@@ -35,7 +35,7 @@ use Illuminate\View\Factory;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class RegistrationController extends BaseController
+class RegistrationController extends AbstractController
 {
     /**
      * The throttler instance.
@@ -47,25 +47,16 @@ class RegistrationController extends BaseController
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
-     * @param  \GrahamCampbell\Binput\Binput  $binput
-     * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
-     * @param  \Illuminate\View\Factory  $view
      * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
      * @return void
      */
-    public function __construct(
-        Credentials $credentials,
-        Binput $binput,
-        UserProvider $userprovider,
-        Factory $view,
-        ThrottlerInterface $throttler
-    ) {
-        $this->beforeFilter('throttle.register', array('only' => array('postRegister')));
-
+    public function __construct(ThrottlerInterface $throttler)
+    {
         $this->throttler = $throttler;
 
-        parent::__construct($credentials, $binput, $userprovider, $view);
+        $this->beforeFilter('throttle.register', array('only' => array('postRegister')));
+
+        parent::__construct();
     }
 
     /**
@@ -75,7 +66,7 @@ class RegistrationController extends BaseController
      */
     public function getRegister()
     {
-        return $this->view->make('graham-campbell/credentials::account.register');
+        return View::make('graham-campbell/credentials::account.register');
     }
 
     /**
@@ -89,9 +80,9 @@ class RegistrationController extends BaseController
             return Redirect::route('account.register');
         }
 
-        $input = $this->binput->only(array('first_name', 'last_name', 'email', 'password', 'password_confirmation'));
+        $input = Binput::only(array('first_name', 'last_name', 'email', 'password', 'password_confirmation'));
 
-        $val = $this->userprovider->validate($input, array_keys($input));
+        $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.register')->withInput()->withErrors($val->errors());
         }
@@ -101,7 +92,7 @@ class RegistrationController extends BaseController
         try {
             unset($input['password_confirmation']);
 
-            $user = $this->credentials->register($input);
+            $user = Credentials::register($input);
 
             if (!Config::get('graham-campbell/credentials::activation')) {
                 $mail = array(
@@ -115,7 +106,7 @@ class RegistrationController extends BaseController
                 });
 
                 $user->attemptActivation($user->getActivationCode());
-                $user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
+                $user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
 
                 return Redirect::to(Config::get('graham-campbell/core::home', '/'))
                     ->with('success', 'Your account has been created successfully.');

@@ -16,16 +16,16 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use GrahamCampbell\Binput\Binput;
-use GrahamCampbell\Credentials\Credentials;
-use GrahamCampbell\Credentials\Providers\UserProvider;
+use GrahamCampbell\Binput\Facades\Binput;
+use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Facades\UserProvider;
 use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
-use Illuminate\View\Factory;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -37,7 +37,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class ResetController extends BaseController
+class ResetController extends AbstractController
 {
     /**
      * The throttler instance.
@@ -49,23 +49,14 @@ class ResetController extends BaseController
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
-     * @param  \GrahamCampbell\Binput\Binput  $binput
-     * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
-     * @param  \Illuminate\View\Factory  $view
      * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
      * @return void
      */
-    public function __construct(
-        Credentials $credentials,
-        Binput $binput,
-        UserProvider $userprovider,
-        Factory $view,
-        ThrottlerInterface $throttler
-    ) {
-        $this->beforeFilter('throttle.reset', array('only' => array('postReset')));
-
+    public function __construct(ThrottlerInterface $throttler)
+    {
         $this->throttler = $throttler;
+
+        $this->beforeFilter('throttle.reset', array('only' => array('postReset')));
 
         parent::__construct($credentials, $binput, $userprovider, $view);
     }
@@ -77,7 +68,7 @@ class ResetController extends BaseController
      */
     public function getReset()
     {
-        return $this->view->make('graham-campbell/credentials::account.reset');
+        return View::make('graham-campbell/credentials::account.reset');
     }
 
     /**
@@ -87,9 +78,9 @@ class ResetController extends BaseController
      */
     public function postReset()
     {
-        $input = $this->binput->only('email');
+        $input = Binput::only('email');
 
-        $val = $this->userprovider->validate($input, array_keys($input));
+        $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.reset')->withInput()->withErrors($val->errors());
         }
@@ -97,7 +88,7 @@ class ResetController extends BaseController
         $this->throttler->hit();
 
         try {
-            $user = $this->credentials->getUserProvider()->findByLogin($input['email']);
+            $user = Credentials::getUserProvider()->findByLogin($input['email']);
 
             $code = $user->getResetPasswordCode();
 
@@ -133,7 +124,7 @@ class ResetController extends BaseController
         }
 
         try {
-            $user = $this->credentials->getUserProvider()->findById($id);
+            $user = Credentials::getUserProvider()->findById($id);
 
             $password = Str::random();
 

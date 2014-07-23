@@ -16,7 +16,6 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Routing\Controller;
 
 /**
@@ -52,22 +51,12 @@ abstract class AbstractController extends Controller
     protected $admins = array();
 
     /**
-     * The credentials instance.
-     *
-     * @var \GrahamCampbell\Credentials\Credentials
-     */
-    protected $credentials;
-
-    /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
      * @return void
      */
-    public function __construct(Credentials $credentials)
+    public function __construct()
     {
-        $this->credentials = $credentials;
-
         $this->beforeFilter('csrf', array('on' => 'post'));
 
         $this->beforeFilter('credentials:user', array('only' => $this->users));
@@ -97,20 +86,6 @@ abstract class AbstractController extends Controller
     {
         foreach ($permissions as $action => $permission) {
             $this->setPermission($action, $permission);
-        }
-    }
-
-    /**
-     * Get the user id.
-     *
-     * @return int
-     */
-    protected function getUserId()
-    {
-        if ($this->credentials->check()) {
-            return $this->credentials->getUser()->id;
-        } else {
-            return 1;
         }
     }
 }

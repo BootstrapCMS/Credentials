@@ -16,14 +16,14 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use GrahamCampbell\Binput\Binput;
-use GrahamCampbell\Credentials\Credentials;
-use GrahamCampbell\Credentials\Providers\UserProvider;
+use GrahamCampbell\Binput\Facades\Binput;
+use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Facades\UserProvider;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use Illuminate\View\Factory;
+use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -35,18 +35,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class AccountController extends BaseController
+class AccountController extends AbstractController
 {
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
-     * @param  \GrahamCampbell\Binput\Binput  $binput
-     * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
-     * @param  \Illuminate\View\Factory  $view
      * @return void
      */
-    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view)
+    public function __construct()
     {
         $this->setPermissions(array(
             'getHistory'    => 'user',
@@ -56,7 +52,7 @@ class AccountController extends BaseController
             'patchPassword' => 'user',
         ));
 
-        parent::__construct($credentials, $binput, $userprovider, $view);
+        parent::__construct();
     }
 
     /**
@@ -66,9 +62,9 @@ class AccountController extends BaseController
      */
     public function getHistory()
     {
-        return $this->view->make(
+        return View::make(
             'graham-campbell/credentials::account.history',
-            array('user' => $this->credentials->getUser())
+            array('user' => Credentials::getUser())
         );
     }
 
@@ -79,9 +75,9 @@ class AccountController extends BaseController
      */
     public function getProfile()
     {
-        return $this->view->make(
+        return View::make(
             'graham-campbell/credentials::account.profile',
-            array('user' => $this->credentials->getUser())
+            array('user' => Credentials::getUser())
         );
     }
 
@@ -92,10 +88,10 @@ class AccountController extends BaseController
      */
     public function deleteProfile()
     {
-        $user = $this->credentials->getUser();
+        $user = Credentials::getUser();
         $this->checkUser($user);
 
-        $this->credentials->logout();
+        Credentials::logout();
 
         try {
             $user->delete();
@@ -115,14 +111,14 @@ class AccountController extends BaseController
      */
     public function patchDetails()
     {
-        $input = $this->binput->only(array('first_name', 'last_name', 'email'));
+        $input = Binput::only(array('first_name', 'last_name', 'email'));
 
-        $val = $this->userprovider->validate($input, array_keys($input));
+        $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.profile')->withInput()->withErrors($val->errors());
         }
 
-        $user = $this->credentials->getUser();
+        $user = Credentials::getUser();
         $this->checkUser($user);
 
         $user->update($input);
@@ -138,16 +134,16 @@ class AccountController extends BaseController
      */
     public function patchPassword()
     {
-        $input = $this->binput->only(array('password', 'password_confirmation'));
+        $input = Binput::only(array('password', 'password_confirmation'));
 
-        $val = $this->userprovider->validate($input, array_keys($input));
+        $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.profile')->withInput()->withErrors($val->errors());
         }
 
         unset($input['password_confirmation']);
 
-        $user = $this->credentials->getUser();
+        $user = Credentials::getUser();
         $this->checkUser($user);
 
         $mail = array(

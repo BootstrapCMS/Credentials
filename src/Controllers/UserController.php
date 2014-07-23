@@ -17,17 +17,17 @@
 namespace GrahamCampbell\Credentials\Controllers;
 
 use DateTime;
-use GrahamCampbell\Binput\Binput;
-use GrahamCampbell\Credentials\Credentials;
+use GrahamCampbell\Binput\Facades\Binput;
+use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Facades\GroupProvider;
-use GrahamCampbell\Credentials\Providers\UserProvider;
+use GrahamCampbell\Credentials\Facades\UserProvider;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
-use Illuminate\View\Factory;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -39,23 +39,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class UserController extends BaseController
+class UserController extends AbstractController
 {
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
-     * @param  \GrahamCampbell\Binput\Binput  $binput
-     * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
-     * @param  \Illuminate\View\Factory  $view
      * @return void
      */
-    public function __construct(Credentials $credentials, Binput $binput, UserProvider $userprovider, Factory $view)
+    public function __construct()
     {
-        $this->binput = $binput;
-        $this->userprovider = $userprovider;
-        $this->view = $view;
-
         $this->setPermissions(array(
             'index'   => 'mod',
             'create'  => 'admin',
@@ -69,7 +61,7 @@ class UserController extends BaseController
             'destroy' => 'admin',
         ));
 
-        parent::__construct($credentials, $binput, $userprovider, $view);
+        parent::__construct();
     }
 
     /**
@@ -79,10 +71,10 @@ class UserController extends BaseController
      */
     public function index()
     {
-        $users = $this->userprovider->paginate();
-        $links = $this->userprovider->links();
+        $users = UserProvider::paginate();
+        $links = UserProvider::links();
 
-        return $this->view->make(
+        return View::make(
             'graham-campbell/credentials::users.index',
             array('users' => $users, 'links' => $links)
         );
@@ -97,7 +89,7 @@ class UserController extends BaseController
     {
         $groups = GroupProvider::index();
 
-        return $this->view->make(
+        return View::make(
             'graham-campbell/credentials::users.create',
             array('groups' => $groups)
         );
@@ -112,26 +104,26 @@ class UserController extends BaseController
     {
         $password = Str::random();
 
-        $input = array_merge($this->binput->only(array('first_name', 'last_name', 'email')), array(
+        $input = array_merge(Binput::only(array('first_name', 'last_name', 'email')), array(
             'password'     => $password,
             'activated'    => true,
             'activated_at' => new DateTime
         ));
 
-        $rules = $this->userprovider->rules(array_keys($input));
+        $rules = UserProvider::rules(array_keys($input));
         $rules['password'] = 'required|min:6';
 
-        $val = $this->userprovider->validate($input, $rules, true);
+        $val = UserProvider::validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('users.create')->withInput()->withErrors($val->errors());
         }
 
         try {
-            $user = $this->userprovider->create($input);
+            $user = UserProvider::create($input);
 
             $groups = GroupProvider::index();
             foreach ($groups as $group) {
-                if ($this->binput->get('group_'.$group->id) === 'on') {
+                if (Binput::get('group_'.$group->id) === 'on') {
                     $user->addGroup($group);
                 }
             }
@@ -163,20 +155,20 @@ class UserController extends BaseController
      */
     public function show($id)
     {
-        $user = $this->userprovider->find($id);
+        $user = UserProvider::find($id);
         $this->checkUser($user);
 
         if ($user->activated_at) {
             $activated = HTML::ago($user->activated_at);
         } else {
-            if ($this->credentials->hasAccess('admin') && Config::get('graham-campbell/credentials::activation')) {
+            if (Credentials::hasAccess('admin') && Config::get('graham-campbell/credentials::activation')) {
                 $activated = 'No - <a href="#resend_user" data-toggle="modal" data-target="#resend_user">Resend Email</a>';
             } else {
                 $activated = 'Not Activated';
             }
         }
 
-        if ($this->credentials->getThrottleProvider()->findByUserId($id)->isSuspended()) {
+        if (Credentials::getThrottleProvider()->findByUserId($id)->isSuspended()) {
             $suspended = 'Currently Suspended';
         } else {
             $suspended = 'Not Suspended';
@@ -193,7 +185,7 @@ class UserController extends BaseController
             $groups = 'No Group Memberships';
         }
 
-        return $this->view->make(
+        return View::make(
             'graham-campbell/credentials::users.show',
             array('user' => $user, 'groups' => $groups, 'activated' => $activated, 'suspended' => $suspended)
         );
@@ -207,12 +199,12 @@ class UserController extends BaseController
      */
     public function edit($id)
     {
-        $user = $this->userprovider->find($id);
+        $user = UserProvider::find($id);
         $this->checkUser($user);
 
         $groups = GroupProvider::index();
 
-        return $this->view->make(
+        return View::make(
             'graham-campbell/credentials::users.edit',
             array('user' => $user, 'groups' => $groups)
         );
@@ -226,15 +218,15 @@ class UserController extends BaseController
      */
     public function update($id)
     {
-        $input = $this->binput->only(array('first_name', 'last_name', 'email'));
+        $input = Binput::only(array('first_name', 'last_name', 'email'));
 
-        $val = $this->userprovider->validate($input, array_keys($input));
+        $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('users.edit', array('users' => $id))
                 ->withInput()->withErrors($val->errors());
         }
 
-        $user = $this->userprovider->find($id);
+        $user = UserProvider::find($id);
         $this->checkUser($user);
 
         $user->update($input);
@@ -243,11 +235,11 @@ class UserController extends BaseController
 
         foreach ($groups as $group) {
             if ($user->inGroup($group)) {
-                if ($this->binput->get('group_'.$group->id) !== 'on') {
+                if (Binput::get('group_'.$group->id) !== 'on') {
                     $user->removeGroup($group);
                 }
             } else {
-                if ($this->binput->get('group_'.$group->id) === 'on') {
+                if (Binput::get('group_'.$group->id) === 'on') {
                     $user->addGroup($group);
                 }
             }
@@ -266,7 +258,7 @@ class UserController extends BaseController
     public function suspend($id)
     {
         try {
-            $throttle = $this->credentials->getThrottleProvider()->findByUserId($id);
+            $throttle = Credentials::getThrottleProvider()->findByUserId($id);
             $throttle->suspend();
         } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
             throw new NotFoundHttpException('User Not Found', $e);
@@ -300,12 +292,12 @@ class UserController extends BaseController
             'password' => 'required|min:6',
         );
 
-        $val = $this->userprovider->validate($input, $rules, true);
+        $val = UserProvider::validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('users.show', array('users' => $id))->withErrors($val->errors());
         }
 
-        $user = $this->userprovider->find($id);
+        $user = UserProvider::find($id);
         $this->checkUser($user);
 
         $user->update($input);
@@ -331,7 +323,7 @@ class UserController extends BaseController
      */
     public function resend($id)
     {
-        $user = $this->userprovider->find($id);
+        $user = UserProvider::find($id);
         $this->checkUser($user);
 
         if ($user->activated) {
@@ -364,7 +356,7 @@ class UserController extends BaseController
      */
     public function destroy($id)
     {
-        $user = $this->userprovider->find($id);
+        $user = UserProvider::find($id);
         $this->checkUser($user);
 
         try {

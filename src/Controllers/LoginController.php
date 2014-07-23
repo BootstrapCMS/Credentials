@@ -16,13 +16,13 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use GrahamCampbell\Binput\Binput;
-use GrahamCampbell\Credentials\Credentials;
-use GrahamCampbell\Credentials\Providers\UserProvider;
+use GrahamCampbell\Binput\Facades\Binput;
+use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Facades\UserProvider;
 use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\Factory;
+use Illuminate\Support\Facades\View;
 
 /**
  * This is the login controller class.
@@ -33,7 +33,7 @@ use Illuminate\View\Factory;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class LoginController extends BaseController
+class LoginController extends AbstractController
 {
     /**
      * The throttler instance.
@@ -45,20 +45,13 @@ class LoginController extends BaseController
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
-     * @param  \GrahamCampbell\Binput\Binput  $binput
-     * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
-     * @param  \Illuminate\View\Factory  $view
      * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
      * @return void
      */
-    public function __construct(
-        Credentials $credentials,
-        Binput $binput,
-        UserProvider $userprovider,
-        Factory $view,
-        ThrottlerInterface $throttler
-    ) {
+    public function __construct(ThrottlerInterface $throttler)
+    {
+        $this->throttler = $throttler;
+
         $this->setPermissions(array(
             'getLogout' => 'user',
         ));
@@ -66,9 +59,7 @@ class LoginController extends BaseController
         $this->beforeFilter('throttle.login', array('only' => array('postLogin')));
         $this->beforeFilter('throttle.sentry', array('only' => array('postLogin')));
 
-        $this->throttler = $throttler;
-
-        parent::__construct($credentials, $binput, $userprovider, $view);
+        parent::__construct();
     }
 
     /**
@@ -78,7 +69,7 @@ class LoginController extends BaseController
      */
     public function getLogin()
     {
-        return $this->view->make('graham-campbell/credentials::account.login');
+        return View::make('graham-campbell/credentials::account.login');
     }
 
     /**
@@ -88,14 +79,14 @@ class LoginController extends BaseController
      */
     public function postLogin()
     {
-        $remember = $this->binput->get('rememberMe');
+        $remember = Binput::get('rememberMe');
 
-        $input = $this->binput->only(array('email', 'password'));
+        $input = Binput::only(array('email', 'password'));
 
-        $rules = $this->userprovider->rules(array_keys($input));
+        $rules = UserProvider::rules(array_keys($input));
         $rules['password'] = 'required|min:6';
 
-        $val = $this->userprovider->validate($input, $rules, true);
+        $val = UserProvider::validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('account.login')->withInput()->withErrors($val->errors());
         }
@@ -103,10 +94,10 @@ class LoginController extends BaseController
         $this->throttler->hit();
 
         try {
-            $throttle = $this->credentials->getThrottleProvider()->findByUserLogin($input['email']);
+            $throttle = Credentials::getThrottleProvider()->findByUserLogin($input['email']);
             $throttle->check();
 
-            $this->credentials->authenticate($input, $remember);
+            Credentials::authenticate($input, $remember);
         } catch (\Cartalyst\Sentry\Users\WrongPasswordException $e) {
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'Your password was incorrect.');
@@ -119,7 +110,7 @@ class LoginController extends BaseController
                 ->with('error', 'You have not yet activated this account.');
             } else {
                 $throttle->user->attemptActivation($throttle->user->getActivationCode());
-                $throttle->user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
+                $throttle->user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
                 return $this->postLogin();
             }
         } catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
@@ -141,7 +132,7 @@ class LoginController extends BaseController
      */
     public function getLogout()
     {
-        $this->credentials->logout();
+        Credentials::logout();
 
         return Redirect::to(Config::get('graham-campbell/core::home', '/'));
     }

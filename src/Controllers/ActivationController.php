@@ -16,15 +16,15 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
-use GrahamCampbell\Binput\Binput;
-use GrahamCampbell\Credentials\Credentials;
-use GrahamCampbell\Credentials\Providers\UserProvider;
+use GrahamCampbell\Binput\Facades\Binput;
+use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Facades\UserProvider;
 use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use Illuminate\View\Factory;
+use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -36,7 +36,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
  * @link       https://github.com/GrahamCampbell/Laravel-Credentials
  */
-class ActivationController extends BaseController
+class ActivationController extends AbstractController
 {
     /**
      * The throttler instance.
@@ -48,26 +48,17 @@ class ActivationController extends BaseController
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Credentials  $credentials
-     * @param  \GrahamCampbell\Binput\Binput  $binput
-     * @param  \GrahamCampbell\Credentials\Providers\UserProvider  $userprovider
-     * @param  \Illuminate\View\Factory  $view
      * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
      * @return void
      */
-    public function __construct(
-        Credentials $credentials,
-        Binput $binput,
-        UserProvider $userprovider,
-        Factory $view,
-        ThrottlerInterface $throttler
-    ) {
+    public function __construct(ThrottlerInterface $throttler)
+    {
+        $this->throttler = $throttler;
+
         $this->beforeFilter('throttle.activate', array('only' => array('getActivate')));
         $this->beforeFilter('throttle.resend', array('only' => array('postResend')));
 
-        $this->throttler = $throttler;
-
-        parent::__construct($credentials, $binput, $userprovider, $view);
+        parent::__construct();
     }
 
     /**
@@ -84,14 +75,14 @@ class ActivationController extends BaseController
         }
 
         try {
-            $user = $this->credentials->getUserProvider()->findById($id);
+            $user = Credentials::getUserProvider()->findById($id);
 
             if (!$user->attemptActivation($code)) {
                 return Redirect::to(Config::get('graham-campbell/core::home', '/'))
                     ->with('error', 'There was a problem activating this account. Please contact support.');
             }
 
-            $user->addGroup($this->credentials->getGroupProvider()->findByName('Users'));
+            $user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
 
             return Redirect::route('account.login')
                 ->with('success', 'Your account has been activated successfully. You may now login.');
@@ -111,7 +102,7 @@ class ActivationController extends BaseController
      */
     public function getResend()
     {
-        return $this->view->make('graham-campbell/credentials::account.resend');
+        return View::make('graham-campbell/credentials::account.resend');
     }
 
     /**
@@ -121,9 +112,9 @@ class ActivationController extends BaseController
      */
     public function postResend()
     {
-        $input = $this->binput->only('email');
+        $input = Binput::only('email');
 
-        $val = $this->userprovider->validate($input, array_keys($input));
+        $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.resend')->withInput()->withErrors($val->errors());
         }
@@ -131,7 +122,7 @@ class ActivationController extends BaseController
         $this->throttler->hit();
 
         try {
-            $user = $this->credentials->getUserProvider()->findByLogin($input['email']);
+            $user = Credentials::getUserProvider()->findByLogin($input['email']);
 
             if ($user->activated) {
                 return Redirect::route('account.resend')->withInput()

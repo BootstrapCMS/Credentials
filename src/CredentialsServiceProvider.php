@@ -187,12 +187,7 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function registerAccountController()
     {
         $this->app->bind('GrahamCampbell\Credentials\Controllers\AccountController', function ($app) {
-            $credentials = $app['credentials'];
-            $binput = $app['binput'];
-            $userprovider = $app['userprovider'];
-            $view = $app['view'];
-
-            return new Controllers\AccountController($credentials, $binput, $userprovider, $view);
+            return new Controllers\AccountController();
         });
     }
 
@@ -204,13 +199,9 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function registerLoginController()
     {
         $this->app->bind('GrahamCampbell\Credentials\Controllers\LoginController', function ($app) {
-            $credentials = $app['credentials'];
-            $binput = $app['binput'];
-            $userprovider = $app['userprovider'];
-            $view = $app['view'];
             $throttler = $app['throttle']->get($app['request'], 10, 10);
 
-            return new Controllers\LoginController($credentials, $binput, $userprovider, $view, $throttler);
+            return new Controllers\LoginController($throttler);
         });
     }
 
@@ -222,13 +213,9 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function registerRegistrationController()
     {
         $this->app->bind('GrahamCampbell\Credentials\Controllers\RegistrationController', function ($app) {
-            $credentials = $app['credentials'];
-            $binput = $app['binput'];
-            $userprovider = $app['userprovider'];
-            $view = $app['view'];
             $throttler = $app['throttle']->get($app['request'], 5, 30);
 
-            return new Controllers\RegistrationController($credentials, $binput, $userprovider, $view, $throttler);
+            return new Controllers\RegistrationController($throttler);
         });
     }
 
@@ -240,13 +227,9 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function registerResetController()
     {
         $this->app->bind('GrahamCampbell\Credentials\Controllers\ResetController', function ($app) {
-            $credentials = $app['credentials'];
-            $binput = $app['binput'];
-            $userprovider = $app['userprovider'];
-            $view = $app['view'];
             $throttler = $app['throttle']->get($app['request'], 5, 30);
 
-            return new Controllers\ResetController($credentials, $binput, $userprovider, $view, $throttler);
+            return new Controllers\ResetController($throttler);
         });
     }
 
@@ -258,13 +241,9 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function registerActivationController()
     {
         $this->app->bind('GrahamCampbell\Credentials\Controllers\ActivationController', function ($app) {
-            $credentials = $app['credentials'];
-            $binput = $app['binput'];
-            $userprovider = $app['userprovider'];
-            $view = $app['view'];
             $throttler = $app['throttle']->get($app['request'], 5, 30);
 
-            return new Controllers\ActivationController($credentials, $binput, $userprovider, $view, $throttler);
+            return new Controllers\ActivationController($throttler);
         });
     }
 
@@ -276,12 +255,7 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function registerUserController()
     {
         $this->app->bind('GrahamCampbell\Credentials\Controllers\UserController', function ($app) {
-            $credentials = $app['credentials'];
-            $binput = $app['binput'];
-            $userprovider = $app['userprovider'];
-            $view = $app['view'];
-
-            return new Controllers\UserController($credentials, $binput, $userprovider, $view);
+            return new Controllers\UserController();
         });
     }
 
