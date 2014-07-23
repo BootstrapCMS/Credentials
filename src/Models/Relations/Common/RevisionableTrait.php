@@ -216,6 +216,8 @@ trait RevisionableTrait
     /**
      * Get the value to be saved, stripping passwords.
      *
+     * @param  string  $type
+     * @param  string  $key
      * @return mixed
      */
     protected function getDataValue($type, $key)
