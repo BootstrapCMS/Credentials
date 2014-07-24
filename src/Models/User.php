@@ -129,7 +129,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     /**
      * Get the presenter class.
      *
-     * @var string
+     * @return string
      */
     public function getPresenter()
     {

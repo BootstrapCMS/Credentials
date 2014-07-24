@@ -53,6 +53,11 @@ class UserPresenter extends BasePresenter
         return $this->resource->first_name.' '.$this->resource->last_name;
     }
 
+    /**
+     * Get the user's security history.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function securityHistory()
     {
         $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
@@ -65,6 +70,11 @@ class UserPresenter extends BasePresenter
         return $presenter->decorate($history);
     }
 
+    /**
+     * Get the user's action history.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function actionHistory()
     {
         $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');

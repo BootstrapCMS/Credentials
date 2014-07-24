@@ -90,7 +90,7 @@ class Revision extends AbstractModel implements BelongsToUserInterface, Presente
     /**
      * Get the presenter class.
      *
-     * @var string
+     * @return string
      */
     public function getPresenter()
     {
