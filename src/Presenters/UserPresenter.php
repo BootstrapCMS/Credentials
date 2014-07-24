@@ -35,7 +35,7 @@ class UserPresenter extends BasePresenter
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Models\Users  $user
+     * @param  \GrahamCampbell\Credentials\Models\User  $user
      * @return void
      */
     public function __construct(User $user)
