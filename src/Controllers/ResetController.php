@@ -16,6 +16,7 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
+use Cartalyst\Sentry\Users\UserNotFoundException;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Facades\UserProvider;
@@ -104,7 +105,7 @@ class ResetController extends AbstractController
 
             return Redirect::route('account.reset')
                 ->with('success', 'Check your email for password reset information.');
-        } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
+        } catch (UserNotFoundException $e) {
             return Redirect::route('account.reset')
                 ->with('error', 'That user does not exist.');
         }
@@ -116,6 +117,8 @@ class ResetController extends AbstractController
      * @param  int     $id
      * @param  string  $code
      * @return \Illuminate\Http\Response
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
      */
     public function getPassword($id, $code)
     {
@@ -145,7 +148,7 @@ class ResetController extends AbstractController
 
             return Redirect::to(Config::get('graham-campbell/core::home', '/'))
                 ->with('success', 'Your password has been changed. Check your email for the new password.');
-        } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
+        } catch (UserNotFoundException $e) {
             return Redirect::to(Config::get('graham-campbell/core::home', '/'))
                 ->with('error', 'There was a problem resetting your password. Please contact support.');
         }

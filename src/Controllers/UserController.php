@@ -16,6 +16,10 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
+use Cartalyst\Sentry\Throttling\UserBannedException;
+use Cartalyst\Sentry\Throttling\UserSuspendedException;
+use Cartalyst\Sentry\Users\UserExistsException;
+use Cartalyst\Sentry\Users\UserNotFoundException;
 use DateTime;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Credentials\Facades\Credentials;
@@ -141,7 +145,7 @@ class UserController extends AbstractController
 
             return Redirect::route('users.show', array('users' => $user->id))
                 ->with('success', 'The user has been created successfully. Their password has been emailed to them.');
-        } catch (\Cartalyst\Sentry\Users\UserExistsException $e) {
+        } catch (UserExistsException $e) {
             return Redirect::route('users.create')->withInput()->withErrors($val->errors())
                 ->with('error', 'That email address is taken.');
         }
@@ -254,19 +258,21 @@ class UserController extends AbstractController
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function suspend($id)
     {
         try {
             $throttle = Credentials::getThrottleProvider()->findByUserId($id);
             $throttle->suspend();
-        } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
+        } catch (UserNotFoundException $e) {
             throw new NotFoundHttpException('User Not Found', $e);
-        } catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
+        } catch (UserSuspendedException $e) {
             $time = $throttle->getSuspensionTime();
             return Redirect::route('users.suspend', array('users' => $id))->withInput()
                 ->with('error', "This user is already suspended for $time minutes.");
-        } catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
+        } catch (UserBannedException $e) {
             return Redirect::route('users.suspend', array('users' => $id))->withInput()
                 ->with('error', 'This user has already been banned.');
         }
@@ -375,6 +381,8 @@ class UserController extends AbstractController
      *
      * @param  mixed  $user
      * @return void
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     protected function checkUser($user)
     {

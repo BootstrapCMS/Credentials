@@ -16,6 +16,11 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
+use Cartalyst\Sentry\Throttling\UserBannedException;
+use Cartalyst\Sentry\Throttling\UserSuspendedException;
+use Cartalyst\Sentry\Users\UserAlreadyActivatedException;
+use Cartalyst\Sentry\Users\UserNotFoundException;
+use Cartalyst\Sentry\Users\WrongPasswordException;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Facades\UserProvider;
@@ -98,13 +103,13 @@ class LoginController extends AbstractController
             $throttle->check();
 
             Credentials::authenticate($input, $remember);
-        } catch (\Cartalyst\Sentry\Users\WrongPasswordException $e) {
+        } catch (WrongPasswordException $e) {
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'Your password was incorrect.');
-        } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
+        } catch (UserNotFoundException $e) {
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'That user does not exist.');
-        } catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e) {
+        } catch (UserNotActivatedException $e) {
             if (Config::get('graham-campbell/credentials::activation')) {
                 return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'You have not yet activated this account.');
@@ -113,11 +118,11 @@ class LoginController extends AbstractController
                 $throttle->user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
                 return $this->postLogin();
             }
-        } catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
+        } catch (UserSuspendedException $e) {
             $time = $throttle->getSuspensionTime();
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', "Your account has been suspended for $time minutes.");
-        } catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
+        } catch (UserBannedException $e) {
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'You have been banned. Please contact support.');
         }

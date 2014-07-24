@@ -16,6 +16,8 @@
 
 namespace GrahamCampbell\Credentials\Controllers;
 
+use Cartalyst\Sentry\Users\UserAlreadyActivatedException;
+use Cartalyst\Sentry\Users\UserNotFoundException;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Facades\UserProvider;
@@ -67,6 +69,8 @@ class ActivationController extends AbstractController
      * @param  int     $id
      * @param  string  $code
      * @return \Illuminate\Http\Response
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
      */
     public function getActivate($id, $code)
     {
@@ -86,10 +90,10 @@ class ActivationController extends AbstractController
 
             return Redirect::route('account.login')
                 ->with('success', 'Your account has been activated successfully. You may now login.');
-        } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
+        } catch (UserNotFoundException $e) {
             return Redirect::to(Config::get('graham-campbell/core::home', '/'))
                 ->with('error', 'There was a problem activating this account. Please contact support.');
-        } catch (\Cartalyst\Sentry\Users\UserAlreadyActivatedException $e) {
+        } catch (UserAlreadyActivatedException $e) {
             return Redirect::route('account.login')
                 ->with('warning', 'You have already activated this account. You may want to login.');
         }
@@ -144,7 +148,7 @@ class ActivationController extends AbstractController
 
             return Redirect::route('account.resend')
                 ->with('success', 'Check your email for your new activation email.');
-        } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
+        } catch (UserNotFoundException $e) {
             return Redirect::route('account.resend')
                 ->with('error', 'That user does not exist.');
         }
