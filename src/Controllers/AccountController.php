@@ -167,6 +167,8 @@ class AccountController extends AbstractController
      *
      * @param  mixed  $user
      * @return void
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     protected function checkUser($user)
     {
