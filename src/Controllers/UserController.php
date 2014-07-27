@@ -286,6 +286,8 @@ class UserController extends AbstractController
     /**
      * Reset the password of an existing user.
      *
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function reset($id)
@@ -326,6 +328,8 @@ class UserController extends AbstractController
 
     /**
      * Resend the activation email of an existing user.
+     *
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
