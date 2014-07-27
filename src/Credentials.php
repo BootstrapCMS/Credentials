@@ -22,40 +22,39 @@ use McCool\LaravelAutoPresenter\PresenterDecorator;
 /**
  * This is the credentials class.
  *
- * @package    Laravel-Credentials
- * @author     Graham Campbell
- * @copyright  Copyright 2013-2014 Graham Campbell
- * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
- * @link       https://github.com/GrahamCampbell/Laravel-Credentials
+ * @author    Graham Campbell <graham@mineuk.com>
+ * @copyright 2013-2014 Graham Campbell
+ * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
 class Credentials
 {
     /**
      * The cache of the check method.
      *
-     * @var mixed
+     * @type mixed
      */
     protected $cache;
 
     /**
      * The sentry instance.
      *
-     * @var \Cartalyst\Sentry\Sentry
+     * @type \Cartalyst\Sentry\Sentry
      */
     protected $sentry;
 
     /**
      * The decorator instance.
      *
-     * @var \McCool\LaravelAutoPresenter\PresenterDecorator
+     * @type \McCool\LaravelAutoPresenter\PresenterDecorator
      */
     protected $decorator;
 
     /**
      * Create a new instance.
      *
-     * @param  \Cartalyst\Sentry\Sentry  $sentry
-     * @param  \McCool\LaravelAutoPresenter\PresenterDecorator  $decorator
+     * @param \Cartalyst\Sentry\Sentry                        $sentry
+     * @param \McCool\LaravelAutoPresenter\PresenterDecorator $decorator
+     *
      * @return void
      */
     public function __construct(Sentry $sentry, PresenterDecorator $decorator)
@@ -93,8 +92,9 @@ class Credentials
     /**
      * Dynamically pass all other methods to sentry.
      *
-     * @param  string  $method
-     * @param  array   $parameters
+     * @param string $method
+     * @param array  $parameters
+     *
      * @return mixed
      */
     public function __call($method, $parameters)

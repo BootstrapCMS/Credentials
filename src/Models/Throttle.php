@@ -23,11 +23,9 @@ use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
 /**
  * This is the throttle model class.
  *
- * @package    Laravel-Credentials
- * @author     Graham Campbell
- * @copyright  Copyright 2013-2014 Graham Campbell
- * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
- * @link       https://github.com/GrahamCampbell/Laravel-Credentials
+ * @author    Graham Campbell <graham@mineuk.com>
+ * @copyright 2013-2014 Graham Campbell
+ * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
 class Throttle extends SentryThrottle implements BaseModelInterface
 {
@@ -36,14 +34,14 @@ class Throttle extends SentryThrottle implements BaseModelInterface
     /**
      * The table the throttles are stored in.
      *
-     * @var string
+     * @type string
      */
     protected $table = 'throttle';
 
     /**
      * The model name.
      *
-     * @var string
+     * @type string
      */
     public static $name = 'throttle';
 }

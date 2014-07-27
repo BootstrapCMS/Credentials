@@ -22,25 +22,24 @@ use Illuminate\Events\Dispatcher;
 /**
  * This is the command subscriber class.
  *
- * @package    Laravel-Credentials
- * @author     Graham Campbell
- * @copyright  Copyright 2013-2014 Graham Campbell
- * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
- * @link       https://github.com/GrahamCampbell/Laravel-Credentials
+ * @author    Graham Campbell <graham@mineuk.com>
+ * @copyright 2013-2014 Graham Campbell
+ * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
 class CommandSubscriber
 {
     /**
      * The forced flag.
      *
-     * @var bool
+     * @type bool
      */
     protected $force;
 
     /**
      * Create a new instance.
      *
-     * @param  bool  $force
+     * @param bool $force
+     *
      * @return void
      */
     public function __construct($force)
@@ -51,8 +50,9 @@ class CommandSubscriber
     /**
      * Register the listeners for the subscriber.
      *
-     * @param  \Illuminate\Events\Dispatcher  $events
-     * @return array
+     * @param \Illuminate\Events\Dispatcher $events
+     *
+     * @return void
      */
     public function subscribe(Dispatcher $events)
     {
@@ -66,7 +66,8 @@ class CommandSubscriber
     /**
      * Handle a command.runmigrations event.
      *
-     * @param  \Illuminate\Console\Command  $command
+     * @param \Illuminate\Console\Command $command
+     *
      * @return void
      */
     public function onRunMigrations(Command $command)

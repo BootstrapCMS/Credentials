@@ -37,11 +37,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * This is the user controller class.
  *
- * @package    Laravel-Credentials
- * @author     Graham Campbell
- * @copyright  Copyright 2013-2014 Graham Campbell
- * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
- * @link       https://github.com/GrahamCampbell/Laravel-Credentials
+ * @author    Graham Campbell <graham@mineuk.com>
+ * @copyright 2013-2014 Graham Campbell
+ * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
 class UserController extends AbstractController
 {
@@ -139,7 +137,7 @@ class UserController extends AbstractController
                 'subject'  => Config::get('platform.name').' - New Account Information'
             );
 
-            Mail::queue('graham-campbell/credentials::emails.newuser', $mail, function($message) use ($mail) {
+            Mail::queue('graham-campbell/credentials::emails.newuser', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 
@@ -154,7 +152,8 @@ class UserController extends AbstractController
     /**
      * Show the specified user.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\View\View
      */
     public function show($id)
@@ -198,7 +197,8 @@ class UserController extends AbstractController
     /**
      * Show the form for editing the specified user.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\View\View
      */
     public function edit($id)
@@ -217,7 +217,8 @@ class UserController extends AbstractController
     /**
      * Update an existing user.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update($id)
@@ -256,10 +257,11 @@ class UserController extends AbstractController
     /**
      * Suspend an existing user.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Illuminate\Http\Response
      */
     public function suspend($id)
     {
@@ -314,7 +316,7 @@ class UserController extends AbstractController
             'subject' => Config::get('platform.name').' - New Password Information'
         );
 
-        Mail::queue('graham-campbell/credentials::emails.password', $mail, function($message) use ($mail) {
+        Mail::queue('graham-campbell/credentials::emails.password', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
         });
 
@@ -346,7 +348,7 @@ class UserController extends AbstractController
             'subject' => Config::get('platform.name').' - Activation'
         );
 
-        Mail::queue('graham-campbell/credentials::emails.resend', $mail, function($message) use ($mail) {
+        Mail::queue('graham-campbell/credentials::emails.resend', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
         });
 
@@ -357,7 +359,8 @@ class UserController extends AbstractController
     /**
      * Delete an existing user.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -379,10 +382,11 @@ class UserController extends AbstractController
     /**
      * Check the user model.
      *
-     * @param  mixed  $user
-     * @return void
+     * @param mixed $user
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
      */
     protected function checkUser($user)
     {

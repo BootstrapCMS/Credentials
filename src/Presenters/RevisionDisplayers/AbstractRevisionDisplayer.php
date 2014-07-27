@@ -21,32 +21,31 @@ use GrahamCampbell\Credentials\Presenters\RevisionPresenter;
 /**
  * This is the abstract revision displayer class.
  *
- * @package    Laravel-Credentials
- * @author     Graham Campbell
- * @copyright  Copyright 2013-2014 Graham Campbell
- * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
- * @link       https://github.com/GrahamCampbell/Laravel-Credentials
+ * @author    Graham Campbell <graham@mineuk.com>
+ * @copyright 2013-2014 Graham Campbell
+ * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
 abstract class AbstractRevisionDisplayer
 {
     /**
      * The presenter instance.
      *
-     * @var \GrahamCampbell\Credentials\Presenters\RevisionPresenter
+     * @type \GrahamCampbell\Credentials\Presenters\RevisionPresenter
      */
     protected $presenter;
 
     /**
      * The resource instance.
      *
-     * @var \Illuminate\Database\Eloquent\Model
+     * @type \Illuminate\Database\Eloquent\Model
      */
     protected $resource;
 
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Credentials\Presenters\RevisionPresenter  $presenter
+     * @param \GrahamCampbell\Credentials\Presenters\RevisionPresenter $presenter
+     *
      * @return void
      */
     public function __construct(RevisionPresenter $presenter)

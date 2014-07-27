@@ -29,11 +29,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * This is the account controller class.
  *
- * @package    Laravel-Credentials
- * @author     Graham Campbell
- * @copyright  Copyright 2013-2014 Graham Campbell
- * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
- * @link       https://github.com/GrahamCampbell/Laravel-Credentials
+ * @author    Graham Campbell <graham@mineuk.com>
+ * @copyright 2013-2014 Graham Campbell
+ * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
 class AccountController extends AbstractController
 {
@@ -152,7 +150,7 @@ class AccountController extends AbstractController
             'subject' => Config::get('platform.name').' - New Password Notification'
         );
 
-        Mail::queue('graham-campbell/credentials::emails.newpass', $mail, function($message) use ($mail) {
+        Mail::queue('graham-campbell/credentials::emails.newpass', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
         });
 
@@ -165,10 +163,11 @@ class AccountController extends AbstractController
     /**
      * Check the user model.
      *
-     * @param  mixed  $user
-     * @return void
+     * @param mixed $user
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
      */
     protected function checkUser($user)
     {

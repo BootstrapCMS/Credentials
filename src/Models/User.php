@@ -28,11 +28,9 @@ use McCool\LaravelAutoPresenter\PresenterInterface;
 /**
  * This is the user model class.
  *
- * @package    Laravel-Credentials
- * @author     Graham Campbell
- * @copyright  Copyright 2013-2014 Graham Campbell
- * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
- * @link       https://github.com/GrahamCampbell/Laravel-Credentials
+ * @author    Graham Campbell <graham@mineuk.com>
+ * @copyright 2013-2014 Graham Campbell
+ * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
 class User extends SentryUser implements BaseModelInterface, RevisionableInterface, PresenterInterface
 {
@@ -41,63 +39,63 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     /**
      * The table the users are stored in.
      *
-     * @var string
+     * @type string
      */
     protected $table = 'users';
 
     /**
      * The model name.
      *
-     * @var string
+     * @type string
      */
     public static $name = 'user';
 
     /**
      * The properties on the model that are dates.
      *
-     * @var array
+     * @type array
      */
     protected $dates = array('deleted_at');
 
     /**
      * The revisionable columns.
      *
-     * @var array
+     * @type array
      */
     protected $keepRevisionOf = array('email', 'password', 'activated', 'last_login', 'first_name', 'last_name');
 
     /**
      * The columns to select when displaying an index.
      *
-     * @var array
+     * @type array
      */
     public static $index = array('id', 'email', 'first_name', 'last_name');
 
     /**
      * The max users per page when displaying a paginated index.
      *
-     * @var int
+     * @type int
      */
     public static $paginate = 20;
 
     /**
      * The columns to order by when displaying an index.
      *
-     * @var string
+     * @type string
      */
     public static $order = 'email';
 
     /**
      * The direction to order by when displaying an index.
      *
-     * @var string
+     * @type string
      */
     public static $sort = 'asc';
 
     /**
      * The user validation rules.
      *
-     * @var array
+     * @type array
      */
     public static $rules = array(
         'first_name'            => 'required|min:2|max:32',
@@ -112,7 +110,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     /**
      * Access caches.
      *
-     * @var array
+     * @type array
      */
     protected $access = array();
 
@@ -139,7 +137,8 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     /**
      * Activated at accessor.
      *
-     * @param  mixed  $value
+     * @param mixed $value
+     *
      * @return \Carbon\Carbon
      */
     public function getActivatedAtAccessor($value)
@@ -158,9 +157,10 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     /**
      * Check a user's access.
      *
-     * @param  string|array  $permissions
-     * @param  bool  $all
-     * @param  bool  $cache
+     * @param string|array $permissions
+     * @param bool         $all
+     * @param bool         $cache
+     *
      * @return bool
      */
     public function hasAccess($permissions, $all = true, $cache = true)

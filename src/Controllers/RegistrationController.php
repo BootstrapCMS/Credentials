@@ -30,25 +30,24 @@ use Illuminate\Support\Facades\View;
 /**
  * This is the registration controller class.
  *
- * @package    Laravel-Credentials
- * @author     Graham Campbell
- * @copyright  Copyright 2013-2014 Graham Campbell
- * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
- * @link       https://github.com/GrahamCampbell/Laravel-Credentials
+ * @author    Graham Campbell <graham@mineuk.com>
+ * @copyright 2013-2014 Graham Campbell
+ * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
 class RegistrationController extends AbstractController
 {
     /**
      * The throttler instance.
      *
-     * @var \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface
+     * @type \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface
      */
     protected $throttler;
 
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
+     * @param \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface $throttler
+     *
      * @return void
      */
     public function __construct(ThrottlerInterface $throttler)
@@ -102,7 +101,7 @@ class RegistrationController extends AbstractController
                     'subject' => Config::get('platform.name').' - Welcome'
                 );
 
-                Mail::queue('graham-campbell/credentials::emails.welcome', $mail, function($message) use ($mail) {
+                Mail::queue('graham-campbell/credentials::emails.welcome', $mail, function ($message) use ($mail) {
                     $message->to($mail['email'])->subject($mail['subject']);
                 });
 
@@ -122,7 +121,7 @@ class RegistrationController extends AbstractController
                 'subject' => Config::get('platform.name').' - Welcome'
             );
 
-            Mail::queue('graham-campbell/credentials::emails.welcome', $mail, function($message) use ($mail) {
+            Mail::queue('graham-campbell/credentials::emails.welcome', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 

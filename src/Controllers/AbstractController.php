@@ -21,32 +21,30 @@ use Illuminate\Routing\Controller;
 /**
  * This is the abstract controller class.
  *
- * @package    Laravel-Credentials
- * @author     Graham Campbell
- * @copyright  Copyright 2013-2014 Graham Campbell
- * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
- * @link       https://github.com/GrahamCampbell/Laravel-Credentials
+ * @author    Graham Campbell <graham@mineuk.com>
+ * @copyright 2013-2014 Graham Campbell
+ * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
 abstract class AbstractController extends Controller
 {
     /**
      * A list of methods protected by user permissions.
      *
-     * @var array
+     * @type array
      */
     protected $users = array();
 
     /**
      * A list of methods protected by mod permissions.
      *
-     * @var array
+     * @type array
      */
     protected $mods = array();
 
     /**
      * A list of methods protected by admin permissions.
      *
-     * @var array
+     * @type array
      */
     protected $admins = array();
 
@@ -67,8 +65,9 @@ abstract class AbstractController extends Controller
     /**
      * Set the permission.
      *
-     * @param  string  $action
-     * @param  string  $permission
+     * @param string $action
+     * @param string $permission
+     *
      * @return void
      */
     protected function setPermission($action, $permission)
@@ -79,7 +78,8 @@ abstract class AbstractController extends Controller
     /**
      * Set the permissions.
      *
-     * @param  array  $permissions
+     * @param array $permissions
+     *
      * @return void
      */
     protected function setPermissions($permissions)

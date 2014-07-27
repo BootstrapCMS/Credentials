@@ -32,25 +32,24 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 /**
  * This is the reset controller class.
  *
- * @package    Laravel-Credentials
- * @author     Graham Campbell
- * @copyright  Copyright 2013-2014 Graham Campbell
- * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
- * @link       https://github.com/GrahamCampbell/Laravel-Credentials
+ * @author    Graham Campbell <graham@mineuk.com>
+ * @copyright 2013-2014 Graham Campbell
+ * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
 class ResetController extends AbstractController
 {
     /**
      * The throttler instance.
      *
-     * @var \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface
+     * @type \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface
      */
     protected $throttler;
 
     /**
      * Create a new instance.
      *
-     * @param  \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface  $throttler
+     * @param \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface $throttler
+     *
      * @return void
      */
     public function __construct(ThrottlerInterface $throttler)
@@ -99,7 +98,7 @@ class ResetController extends AbstractController
                 'subject' => Config::get('platform.name').' - Password Reset Confirmation'
             );
 
-            Mail::queue('graham-campbell/credentials::emails.reset', $mail, function($message) use ($mail) {
+            Mail::queue('graham-campbell/credentials::emails.reset', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 
@@ -114,11 +113,12 @@ class ResetController extends AbstractController
     /**
      * Reset the user's password.
      *
-     * @param  int     $id
-     * @param  string  $code
-     * @return \Illuminate\Http\Response
+     * @param int    $id
+     * @param string $code
      *
      * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     *
+     * @return \Illuminate\Http\Response
      */
     public function getPassword($id, $code)
     {
@@ -142,7 +142,7 @@ class ResetController extends AbstractController
                 'subject' => Config::get('platform.name').' - New Password Information'
             );
 
-            Mail::queue('graham-campbell/credentials::emails.password', $mail, function($message) use ($mail) {
+            Mail::queue('graham-campbell/credentials::emails.password', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 

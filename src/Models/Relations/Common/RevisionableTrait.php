@@ -28,53 +28,51 @@ use Illuminate\Support\Facades\DB;
  * That code is licensed under the MIT License.
  * See the original here: http://bit.ly/1tZfndq.
  *
- * @package    Laravel-Credentials
- * @author     Graham Campbell
- * @copyright  Copyright 2013-2014 Graham Campbell
- * @license    https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md
- * @link       https://github.com/GrahamCampbell/Laravel-Credentials
+ * @author    Graham Campbell <graham@mineuk.com>
+ * @copyright 2013-2014 Graham Campbell
+ * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
 trait RevisionableTrait
 {
     /**
      * Keeps track of the original data.
      *
-     * @var array
+     * @type array
      */
     protected $originalData;
 
     /**
      * Keeps track of the updated data.
      *
-     * @var array
+     * @type array
      */
     protected $updatedData;
 
     /**
      * Are we updating an existing model?
      *
-     * @var bool
+     * @type bool
      */
     protected $updating;
 
     /**
      * Keeps track of columns to keep.
      *
-     * @var array
+     * @type array
      */
     protected $doKeep = array();
 
     /**
      * Keeps track of columns not to keep.
      *
-     * @var array
+     * @type array
      */
     protected $dontKeep = array('id', 'created_at', 'updated_at', 'deleted_at');
 
     /**
      * Keeps the list of values that have been updated.
      *
-     * @var array
+     * @type array
      */
     protected $dirtyData = array();
 
@@ -216,8 +214,9 @@ trait RevisionableTrait
     /**
      * Get the value to be saved, stripping passwords.
      *
-     * @param  string  $type
-     * @param  string  $key
+     * @param string $type
+     * @param string $key
+     *
      * @return mixed
      */
     protected function getDataValue($type, $key)
@@ -270,7 +269,7 @@ trait RevisionableTrait
     /**
      * Get the fields for all of the storable changes that have been made.
      *
-     * @return array
+     * @return string[]
      */
     protected function changedRevisionableFields()
     {
@@ -311,7 +310,8 @@ trait RevisionableTrait
      * Otherwise, if neither condition is met, only return true if
      * we aren't specifying revisionable fields.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return boolean
      */
     protected function isRevisionable($key)
