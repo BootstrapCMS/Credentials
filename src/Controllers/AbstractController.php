@@ -30,21 +30,21 @@ abstract class AbstractController extends Controller
     /**
      * A list of methods protected by user permissions.
      *
-     * @type array
+     * @type string[]
      */
     protected $users = array();
 
     /**
      * A list of methods protected by mod permissions.
      *
-     * @type array
+     * @type string[]
      */
     protected $mods = array();
 
     /**
      * A list of methods protected by admin permissions.
      *
-     * @type array
+     * @type string[]
      */
     protected $admins = array();
 
@@ -78,7 +78,7 @@ abstract class AbstractController extends Controller
     /**
      * Set the permissions.
      *
-     * @param array $permissions
+     * @param string[] $permissions
      *
      * @return void
      */
