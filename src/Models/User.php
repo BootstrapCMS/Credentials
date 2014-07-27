@@ -157,17 +157,16 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     /**
      * Check a user's access.
      *
-     * @param string|array $permissions
-     * @param bool         $all
-     * @param bool         $cache
+     * @param string|string[] $permissions
+     * @param bool            $all
      *
      * @return bool
      */
-    public function hasAccess($permissions, $all = true, $cache = true)
+    public function hasAccess($permissions, $all = true)
     {
         $key = md5(json_encode($permissions).json_encode($all));
 
-        if (!array_key_exists($key, $this->access) || $cache === false) {
+        if (!array_key_exists($key, $this->access)) {
             $this->access[$key] = parent::hasAccess($permissions, $all);
         }
 
