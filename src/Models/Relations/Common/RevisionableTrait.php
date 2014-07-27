@@ -217,7 +217,7 @@ trait RevisionableTrait
      * @param string $type
      * @param string $key
      *
-     * @return mixed
+     * @return string|\Carbon\Carbon
      */
     protected function getDataValue($type, $key)
     {

@@ -137,7 +137,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     /**
      * Activated at accessor.
      *
-     * @param mixed $value
+     * @param string $value
      *
      * @return \Carbon\Carbon
      */
