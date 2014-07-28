@@ -18,8 +18,8 @@ namespace GrahamCampbell\Credentials\Models\Relations\Common;
 
 use DateTime;
 use GrahamCampbell\Credentials\Facades\Credentials;
-use GrahamCampbell\Credentials\Models\Revision;
-use Illuminate\Support\Facades\DB;
+use GrahamCampbell\Credentials\Facades\RevisionProvider;
+use Illuminate\Support\Facades\Config;
 
 /**
  * This is the revisionable trait.
@@ -106,7 +106,7 @@ trait RevisionableTrait
      */
     public function revisionHistory()
     {
-        return $this->morphMany('GrahamCampbell\Credentials\Models\Revision', 'revisionable');
+        return $this->morphMany(Config::get('graham-campbell/credentials::revision'), 'revisionable');
     }
 
     /**
@@ -172,42 +172,26 @@ trait RevisionableTrait
      */
     public function postSave()
     {
-        $revisions = array();
-
         if ($this->updating) {
-            $changes = $this->changedRevisionableFields();
-
-            foreach ($changes as $key => $change) {
-                $revisions[] = array(
+            foreach ($this->changedRevisionableFields() as $key => $change) {
+                RevisionProvider::create(array(
                     'revisionable_type' => get_class($this),
                     'revisionable_id'   => $this->getKey(),
                     'key'               => $key,
                     'old_value'         => $this->getDataValue('original', $key),
                     'new_value'         => $this->getDataValue('updated', $key),
-                    'user_id'           => $this->getUserId(),
-                    'created_at'        => new DateTime(),
-                    'updated_at'        => new DateTime(),
-                );
-            }
-
-            if (count($revisions) > 0) {
-                $revision = new Revision;
-                DB::table($revision->getTable())->insert($revisions);
+                    'user_id'           => $this->getUserId()
+                ));
             }
         } else {
-            $revisions[] = array(
+            RevisionProvider::create(array(
                 'revisionable_type' => get_class($this),
                 'revisionable_id'   => $this->getKey(),
                 'key'               => 'created_at',
                 'old_value'         => null,
                 'new_value'         => new DateTime(),
-                'user_id'           => $this->getUserId(),
-                'created_at'        => new DateTime(),
-                'updated_at'        => new DateTime(),
-            );
-
-            $revision = new Revision;
-            DB::table($revision->getTable())->insert($revisions);
+                'user_id'           => $this->getUserId()
+            ));
         }
     }
 
@@ -237,21 +221,14 @@ trait RevisionableTrait
      */
     public function postDelete()
     {
-        $revisions = array();
-
-        $revisions[] = array(
+        RevisionProvider::create(array(
             'revisionable_type' => get_class($this),
             'revisionable_id'   => $this->getKey(),
             'key'               => 'deleted_at',
             'old_value'         => null,
             'new_value'         => new DateTime(),
-            'user_id'           => $this->getUserId(),
-            'created_at'        => new DateTime(),
-            'updated_at'        => new DateTime(),
-        );
-
-        $revision = new Revision;
-        DB::table($revision->getTable())->insert($revisions);
+            'user_id'           => $this->getUserId()
+        ));
     }
 
     /**

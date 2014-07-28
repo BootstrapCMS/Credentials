@@ -61,6 +61,10 @@ This option (`'regallowed'`) defines if public registration is allowed. The defa
 
 This option (`'activation'`) defines if public registration requires email activation. The default value for this setting is `true`.
 
+##### Revision Model
+
+This option (`'revision'`) defines the revision model to be used. The default value for this setting is `'GrahamCampbell\Credentials\Models\Revision'`.
+
 ##### Additional Configuration
 
 You may want to check out the config for `cartalyst/sentry` too. For Laravel Credentials to function correctly, you must set the models to the following, or to a class which extends the following:

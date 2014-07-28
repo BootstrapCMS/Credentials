@@ -34,6 +34,11 @@ class ServiceProviderTest extends AbstractTestCase
         $this->assertIsInjectable('SebastianBergmann\Diff\Differ');
     }
 
+    public function testRevisionProviderIsInjectable()
+    {
+        $this->assertIsInjectable('GrahamCampbell\Credentials\Providers\RevisionProvider');
+    }
+
     public function testUserProviderIsInjectable()
     {
         $this->assertIsInjectable('GrahamCampbell\Credentials\Providers\UserProvider');

@@ -81,6 +81,7 @@ class CredentialsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerDiffer();
+        $this->registerRevisionProvider();
         $this->registerUserProvider();
         $this->registerGroupProvider();
         $this->registerCredentials();
@@ -106,6 +107,25 @@ class CredentialsServiceProvider extends ServiceProvider
         });
 
         $this->app->alias('differ', 'SebastianBergmann\Diff\Differ');
+    }
+
+    /**
+     * Register the revision provider class.
+     *
+     * @return void
+     */
+    protected function registerRevisionProvider()
+    {
+        $this->app->bindShared('revisionprovider', function ($app) {
+            $model = $app['config']['graham-campbell/credentials::revision'];
+            $revision = new $model();
+
+            $validator = $app['validator'];
+
+            return new Providers\RevisionProvider($revision, $validator);
+        });
+
+        $this->app->alias('revisionprovider', 'GrahamCampbell\Credentials\Providers\RevisionProvider');
     }
 
     /**
@@ -268,7 +288,8 @@ class CredentialsServiceProvider extends ServiceProvider
             'differ',
             'userprovider',
             'groupprovider',
-            'credentials'
+            'credentials',
+            'revisionprovider'
         );
     }
 }
