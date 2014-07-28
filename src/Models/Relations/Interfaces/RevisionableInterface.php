@@ -31,16 +31,4 @@ interface RevisionableInterface
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function revisionHistory();
-
-    /**
-     * Get the identifiable name.
-     *
-     * When displaying revision history, when a foreign key is updated
-     * instead of displaying the ID, you can choose to display a string
-     * of your choice, just override this method in your model.
-     * By default, it will fall back to the models ID.
-     *
-     * @return string
-     */
-    public function identifiableName();
 }
