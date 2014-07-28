@@ -186,7 +186,7 @@ trait RevisionableTrait
      * @param string $type
      * @param string $key
      *
-     * @return string|\Carbon\Carbon
+     * @return string|\DateTime
      */
     protected function getDataValue($type, $key)
     {
@@ -239,15 +239,11 @@ trait RevisionableTrait
         foreach ($this->dirtyData as $key => $value) {
             // check that the field is revisionable, and the data is dirty enough
             if ($this->isRevisionable($key) && !is_array($value)) {
-                if (is_object($original = array_get($this->originalData, $key))) {
-                    $original = $original->getTimestamp();
-                } elseif (is_string($original)) {
+                if (is_object($original = array_get($this->originalData, $key)) || is_string($original)) {
                     $original = trim($original);
                 }
 
-                if (is_object($updated = array_get($this->updatedData, $key))) {
-                    $updated = $updated->getTimestamp();
-                } elseif (is_string($updated)) {
+                if (is_object($updated = array_get($this->updatedData, $key)) || is_string($updated)) {
                     $updated = trim($updated);
                 }
 
