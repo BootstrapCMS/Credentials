@@ -119,7 +119,26 @@ class AccountController extends AbstractController
         $user = Credentials::getUser();
         $this->checkUser($user);
 
+        $email = $user['email'];
+
         $user->update($input);
+
+        if ($email !== $input['email']) {
+            $mail = array(
+                'old'     => $email,
+                'new'     => $input['email'],
+                'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+                'subject' => Config::get('platform.name').' - New Email Information'
+            );
+
+            Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
+                $message->to($mail['old'])->subject($mail['subject']);
+            });
+
+            Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
+                $message->to($mail['new'])->subject($mail['subject']);
+            });
+        }
 
         return Redirect::route('account.profile')
             ->with('success', 'Your details have been updated successfully.');

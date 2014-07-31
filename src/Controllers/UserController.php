@@ -234,6 +234,8 @@ class UserController extends AbstractController
         $user = UserProvider::find($id);
         $this->checkUser($user);
 
+        $email = $user['email'];
+
         $user->update($input);
 
         $groups = GroupProvider::index();
@@ -248,6 +250,23 @@ class UserController extends AbstractController
                     $user->addGroup($group);
                 }
             }
+        }
+
+        if ($email !== $input['email']) {
+            $mail = array(
+                'old'     => $email,
+                'new'     => $input['email'],
+                'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+                'subject' => Config::get('platform.name').' - New Email Information'
+            );
+
+            Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
+                $message->to($mail['old'])->subject($mail['subject']);
+            });
+
+            Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
+                $message->to($mail['new'])->subject($mail['subject']);
+            });
         }
 
         return Redirect::route('users.show', array('users' => $user->id))
