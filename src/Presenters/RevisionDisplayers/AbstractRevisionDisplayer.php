@@ -30,14 +30,14 @@ abstract class AbstractRevisionDisplayer
     /**
      * The presenter instance.
      *
-     * @type \GrahamCampbell\Credentials\Presenters\RevisionPresenter
+     * @var \GrahamCampbell\Credentials\Presenters\RevisionPresenter
      */
     protected $presenter;
 
     /**
      * The resource instance.
      *
-     * @type \Illuminate\Database\Eloquent\Model
+     * @var \Illuminate\Database\Eloquent\Model
      */
     protected $resource;
 

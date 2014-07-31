@@ -35,35 +35,35 @@ class Revision extends AbstractModel implements BelongsToUserInterface, Presente
     /**
      * The table the groups are stored in.
      *
-     * @type string
+     * @var string
      */
     protected $table = 'revisions';
 
     /**
      * The model name.
      *
-     * @type string
+     * @var string
      */
     public static $name = 'revision';
 
     /**
      * The columns to select when displaying an index.
      *
-     * @type array
+     * @var array
      */
     public static $index = array('*');
 
     /**
      * The max groups per page when displaying a paginated index.
      *
-     * @type int
+     * @var int
      */
     public static $paginate = 20;
 
     /**
      * The columns to order by when displaying an index.
      *
-     * @type string
+     * @var string
      */
     public static $order = 'id';
 
@@ -71,7 +71,7 @@ class Revision extends AbstractModel implements BelongsToUserInterface, Presente
      * This defines if the model should be treated
      * in the context of being a security action.
      *
-     * @type bool
+     * @var bool
      */
     public $security = false;
 

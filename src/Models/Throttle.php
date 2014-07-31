@@ -34,14 +34,14 @@ class Throttle extends SentryThrottle implements BaseModelInterface
     /**
      * The table the throttles are stored in.
      *
-     * @type string
+     * @var string
      */
     protected $table = 'throttle';
 
     /**
      * The model name.
      *
-     * @type string
+     * @var string
      */
     public static $name = 'throttle';
 }

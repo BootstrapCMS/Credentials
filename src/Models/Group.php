@@ -34,42 +34,42 @@ class Group extends SentryGroup implements BaseModelInterface
     /**
      * The table the groups are stored in.
      *
-     * @type string
+     * @var string
      */
     protected $table = 'groups';
 
     /**
      * The model name.
      *
-     * @type string
+     * @var string
      */
     public static $name = 'group';
 
     /**
      * The columns to select when displaying an index.
      *
-     * @type array
+     * @var array
      */
     public static $index = array('id', 'name');
 
     /**
      * The max groups per page when displaying a paginated index.
      *
-     * @type int
+     * @var int
      */
     public static $paginate = 20;
 
     /**
      * The columns to order by when displaying an index.
      *
-     * @type string
+     * @var string
      */
     public static $order = 'name';
 
     /**
      * The direction to order by when displaying an index.
      *
-     * @type string
+     * @var string
      */
     public static $sort = 'asc';
 }

@@ -37,42 +37,42 @@ trait RevisionableTrait
     /**
      * Keeps track of the original data.
      *
-     * @type array
+     * @var array
      */
     protected $originalData;
 
     /**
      * Keeps track of the updated data.
      *
-     * @type array
+     * @var array
      */
     protected $updatedData;
 
     /**
      * Are we updating an existing model?
      *
-     * @type bool
+     * @var bool
      */
     protected $updating;
 
     /**
      * Keeps track of columns to keep.
      *
-     * @type array
+     * @var array
      */
     protected $doKeep = array();
 
     /**
      * Keeps track of columns not to keep.
      *
-     * @type array
+     * @var array
      */
     protected $dontKeep = array('id', 'created_at', 'updated_at', 'deleted_at');
 
     /**
      * Keeps the list of values that have been updated.
      *
-     * @type array
+     * @var array
      */
     protected $dirtyData = array();
 

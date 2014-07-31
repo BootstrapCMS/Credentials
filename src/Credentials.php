@@ -31,21 +31,21 @@ class Credentials
     /**
      * The cache of the check method.
      *
-     * @type mixed
+     * @var mixed
      */
     protected $cache;
 
     /**
      * The sentry instance.
      *
-     * @type \Cartalyst\Sentry\Sentry
+     * @var \Cartalyst\Sentry\Sentry
      */
     protected $sentry;
 
     /**
      * The decorator instance.
      *
-     * @type \McCool\LaravelAutoPresenter\PresenterDecorator
+     * @var \McCool\LaravelAutoPresenter\PresenterDecorator
      */
     protected $decorator;
 

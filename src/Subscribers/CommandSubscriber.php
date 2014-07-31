@@ -31,7 +31,7 @@ class CommandSubscriber
     /**
      * The forced flag.
      *
-     * @type bool
+     * @var bool
      */
     protected $force;
 

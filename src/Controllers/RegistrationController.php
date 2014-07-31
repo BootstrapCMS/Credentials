@@ -39,7 +39,7 @@ class RegistrationController extends AbstractController
     /**
      * The throttler instance.
      *
-     * @type \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface
+     * @var \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface
      */
     protected $throttler;
 
