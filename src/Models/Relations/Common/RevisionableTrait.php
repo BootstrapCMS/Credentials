@@ -227,6 +227,8 @@ trait RevisionableTrait
             return $this->getCustomUserId();
         } elseif (Credentials::check()) {
             return Credentials::getUser()->id;
+        } elseif (isset($this['user_id']) && $this['user_id']) {
+            return $this['user_id'];
         }
     }
 
