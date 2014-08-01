@@ -17,13 +17,15 @@
 namespace GrahamCampbell\Credentials\Models;
 
 use Carbon\Carbon;
+use Cartalyst\Sentry\Groups\GroupInterface;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
+use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Facades\RevisionProvider;
 use GrahamCampbell\Credentials\Models\Relations\Common\RevisionableTrait;
 use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface;
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
-use Illuminate\Support\Facades\Config;
 use McCool\LaravelAutoPresenter\PresenterInterface;
 
 /**
@@ -134,11 +136,11 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     {
         return $this->revisions()
             ->where(function ($q) {
-                $q->where('revisionable_type', '<>', Config::get('cartalyst/sentry::users.model'))
+                $q->where('revisionable_type', '<>', get_class($this))
                     ->where('user_id', '=', $this->id);
             })
             ->orWhere(function ($q) {
-                $q->where('revisionable_type', '=', Config::get('cartalyst/sentry::users.model'))
+                $q->where('revisionable_type', '=', get_class($this))
                     ->where('revisionable_id', '<>', $this->id)
                     ->where('user_id', '=', $this->id);
             })
@@ -202,5 +204,49 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
         }
 
         return $this->access[$key];
+    }
+
+    /**
+     * Adds the user to the given group.
+     *
+     * @param \Cartalyst\Sentry\Groups\GroupInterface $group
+     *
+     * @return bool
+     */
+    public function addGroup(GroupInterface $group)
+    {
+        if (Credentials::check()) {
+            RevisionProvider::create(array(
+                'revisionable_type' => get_class($this),
+                'revisionable_id'   => $this->getKey(),
+                'key'               => 'added_group',
+                'old_value'         => null,
+                'new_value'         => $group->getName(),
+                'user_id'           => Credentials::getUser()->id
+            ));
+        }
+
+        return parent::addGroup($group);
+    }
+
+    /**
+     * Removes the user from the given group.
+     *
+     * @param \Cartalyst\Sentry\Groups\GroupInterface $group
+     *
+     * @return bool
+     */
+    public function removeGroup(GroupInterface $group)
+    {
+        RevisionProvider::create(array(
+            'revisionable_type' => get_class($this),
+            'revisionable_id'   => $this->getKey(),
+            'key'               => 'removed_group',
+            'old_value'         => null,
+            'new_value'         => $group->getName(),
+            'user_id'           => Credentials::getUser()->id
+        ));
+
+        return parent::removeGroup($group);
     }
 }
