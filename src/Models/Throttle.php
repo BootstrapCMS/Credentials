@@ -17,8 +17,8 @@
 namespace GrahamCampbell\Credentials\Models;
 
 use Cartalyst\Sentry\Throttling\Eloquent\Throttle as SentryThrottle;
-use GrahamCampbell\Credentials\Models\Relations\Common\RevisionableTrait;
-use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface;
+use DateTime;
+use GrahamCampbell\Credentials\Facades\RevisionProvider;
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
 use Illuminate\Support\Facades\Config;
@@ -30,9 +30,9 @@ use Illuminate\Support\Facades\Config;
  * @copyright 2013-2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class Throttle extends SentryThrottle implements BaseModelInterface, RevisionableInterface
+class Throttle extends SentryThrottle implements BaseModelInterface
 {
-    use BaseModelTrait, RevisionableTrait;
+    use BaseModelTrait;
 
     /**
      * The table the throttles are stored in.
@@ -49,43 +49,40 @@ class Throttle extends SentryThrottle implements BaseModelInterface, Revisionabl
     public static $name = 'throttle';
 
     /**
-     * The revisionable columns.
+     * Add a new login attempt.
      *
-     * @var array
-     */
-    protected $keepRevisionOf = array('last_attempt_at', 'suspended_at');
-
-    /**
-     * Should we only track updates?
-     *
-     * @var bool
-     */
-    protected $onlyTrackUpdates = true;
-
-    /**
-     * Should we track null updates?
-     *
-     * @var bool
-     */
-    protected $trackNullUpdates = false;
-
-    /**
-     * Get the custom model id.
-     *
-     * @var int
-     */
-    protected function getCustomKey()
+     * @return void
+    */
+    public function addLoginAttempt()
     {
-        return $this['user_id'];
+        RevisionProvider::create(array(
+            'revisionable_type' => Config::get('cartalyst/sentry::users.model'),
+            'revisionable_id'   => $this['user_id'],
+            'key'               => 'last_attempt_at',
+            'old_value'         => $this['last_attempt_at'],
+            'new_value'         => new DateTime(),
+            'user_id'           => null
+        ));
+
+        parent::addLoginAttempt();
     }
 
     /**
-     * Get the custom model type.
+     * Suspend the user associated with the throttle.
      *
-     * @var string
-     */
-    protected function getCustomType()
+     * @return void
+    */
+    public function suspend()
     {
-        return Config::get('cartalyst/sentry::users.model');
+        RevisionProvider::create(array(
+            'revisionable_type' => Config::get('cartalyst/sentry::users.model'),
+            'revisionable_id'   => $this['user_id'],
+            'key'               => 'suspended_at',
+            'old_value'         => $this['suspended_at'],
+            'new_value'         => new DateTime(),
+            'user_id'           => null
+        ));
+
+        parent::suspend();
     }
 }

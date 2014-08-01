@@ -160,18 +160,18 @@ trait RevisionableTrait
         if ($this->updating) {
             foreach ($this->changedRevisionableFields() as $key => $change) {
                 RevisionProvider::create(array(
-                    'revisionable_type' => $this->getUsableType(),
-                    'revisionable_id'   => $this->getUsableKey(),
+                    'revisionable_type' => get_class($this),
+                    'revisionable_id'   => $this->getKey(),
                     'key'               => $key,
                     'old_value'         => $this->getDataValue('original', $key),
                     'new_value'         => $this->getDataValue('updated', $key),
                     'user_id'           => $this->getUserId()
                 ));
             }
-        } elseif (!$this->shouldOnlyTrackUpdates()) {
+        } else {
             RevisionProvider::create(array(
-                'revisionable_type' => $this->getUsableType(),
-                'revisionable_id'   => $this->getUsableKey(),
+                'revisionable_type' => get_class($this),
+                'revisionable_id'   => $this->getKey(),
                 'key'               => 'created_at',
                 'old_value'         => null,
                 'new_value'         => new DateTime(),
@@ -206,44 +206,14 @@ trait RevisionableTrait
      */
     public function postDelete()
     {
-        if (!$this->shouldOnlyTrackUpdates()) {
-            RevisionProvider::create(array(
-                'revisionable_type' => $this->getUsableType(),
-                'revisionable_id'   => $this->getUsableKey(),
-                'key'               => 'deleted_at',
-                'old_value'         => null,
-                'new_value'         => new DateTime(),
-                'user_id'           => $this->getUserId()
-            ));
-        }
-    }
-
-    /**
-     * Get the model id.
-     *
-     * @return int
-     */
-    protected function getUsableType()
-    {
-        if (method_exists($this, 'getCustomType')) {
-            return $this->getCustomType();
-        }
-
-        return get_class($this);
-    }
-
-    /**
-     * Get the model id.
-     *
-     * @return int
-     */
-    protected function getUsableKey()
-    {
-        if (method_exists($this, 'getCustomKey')) {
-            return $this->getCustomKey();
-        }
-
-        return $this->getKey();
+        RevisionProvider::create(array(
+            'revisionable_type' => get_class($this),
+            'revisionable_id'   => $this->getKey(),
+            'key'               => 'deleted_at',
+            'old_value'         => null,
+            'new_value'         => new DateTime(),
+            'user_id'           => $this->getUserId()
+        ));
     }
 
     /**
@@ -307,10 +277,6 @@ trait RevisionableTrait
      */
     protected function isRevisionable($key)
     {
-        if (isset($this->trackNullUpdates) && $this->trackNullUpdates === false && array_get($this->updatedData, $key) === null) {
-            return false;
-        }
-
         if (isset($this->doKeep) && in_array($key, $this->doKeep)) {
             return true;
         }
@@ -320,21 +286,5 @@ trait RevisionableTrait
         }
 
         return empty($this->doKeep);
-    }
-
-    /**
-     * Check if we should only track model updates.
-     *
-     * If this is true, then we do nothing when models are created/deleted.
-     *
-     * @return bool
-     */
-    protected function shouldOnlyTrackUpdates()
-    {
-        if (isset($this->onlyTrackUpdates) && $this->onlyTrackUpdates === true) {
-            return true;
-        }
-
-        return false;
     }
 }
