@@ -89,6 +89,8 @@ class AccountController extends AbstractController
         $user = Credentials::getUser();
         $this->checkUser($user);
 
+        $email = $user->getLogin();
+
         Credentials::logout();
 
         try {
@@ -97,6 +99,16 @@ class AccountController extends AbstractController
             return Redirect::to(Config::get('graham-campbell/core::home', '/'))
                 ->with('error', 'There was a problem deleting your account.');
         }
+
+        $mail = array(
+            'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+            'email'   => $email,
+            'subject' => Config::get('platform.name').' - Account Deleted Notification'
+        );
+
+        Mail::queue('graham-campbell/credentials::emails.userdeleted', $mail, function ($message) use ($mail) {
+            $message->to($mail['email'])->subject($mail['subject']);
+        });
 
         return Redirect::to(Config::get('graham-campbell/core::home', '/'))
             ->with('success', 'Your account has been deleted successfully.');

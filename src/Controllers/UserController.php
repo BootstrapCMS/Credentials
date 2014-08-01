@@ -391,12 +391,24 @@ class UserController extends AbstractController
         $user = UserProvider::find($id);
         $this->checkUser($user);
 
+        $email = $user->getLogin();
+
         try {
             $user->delete();
         } catch (\Exception $e) {
             return Redirect::route('users.show', array('users' => $id))
                 ->with('error', 'We were unable to delete the account.');
         }
+
+        $mail = array(
+            'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+            'email'   => $email,
+            'subject' => Config::get('platform.name').' - Account Deleted Notification'
+        );
+
+        Mail::queue('graham-campbell/credentials::emails.admindeleted', $mail, function ($message) use ($mail) {
+            $message->to($mail['email'])->subject($mail['subject']);
+        });
 
         return Redirect::route('users.index')
             ->with('success', 'The user has been deleted successfully.');
