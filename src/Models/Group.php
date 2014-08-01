@@ -19,6 +19,7 @@ namespace GrahamCampbell\Credentials\Models;
 use Cartalyst\Sentry\Groups\Eloquent\Group as SentryGroup;
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 /**
  * This is the group model class.
@@ -29,7 +30,7 @@ use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
  */
 class Group extends SentryGroup implements BaseModelInterface
 {
-    use BaseModelTrait;
+    use BaseModelTrait, SoftDeletingTrait;
 
     /**
      * The table the groups are stored in.
@@ -44,6 +45,13 @@ class Group extends SentryGroup implements BaseModelInterface
      * @var string
      */
     public static $name = 'group';
+
+    /**
+     * The properties on the model that are dates.
+     *
+     * @var array
+     */
+    protected $dates = array('deleted_at');
 
     /**
      * The columns to select when displaying an index.
