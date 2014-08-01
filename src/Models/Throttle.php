@@ -21,7 +21,6 @@ use GrahamCampbell\Credentials\Models\Relations\Common\RevisionableTrait;
 use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface;
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
 use Illuminate\Support\Facades\Config;
 
 /**
@@ -33,7 +32,7 @@ use Illuminate\Support\Facades\Config;
  */
 class Throttle extends SentryThrottle implements BaseModelInterface, RevisionableInterface
 {
-    use BaseModelTrait, RevisionableTrait, SoftDeletingTrait;
+    use BaseModelTrait, RevisionableTrait;
 
     /**
      * The table the throttles are stored in.
@@ -48,13 +47,6 @@ class Throttle extends SentryThrottle implements BaseModelInterface, Revisionabl
      * @var string
      */
     public static $name = 'throttle';
-
-    /**
-     * The properties on the model that are dates.
-     *
-     * @var array
-     */
-    protected $dates = array('last_attempt_at', 'suspended_at', 'banned_at', 'deleted_at');
 
     /**
      * The revisionable columns.
