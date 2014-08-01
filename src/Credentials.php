@@ -74,7 +74,7 @@ class Credentials
             $this->cache = $this->sentry->check();
         }
 
-        return $this->cache;
+        return $this->cache && $this->getUser();
     }
 
     /**
