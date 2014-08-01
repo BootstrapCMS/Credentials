@@ -43,7 +43,7 @@ class LastAttemptAtDisplayer extends AbstractDisplayer
      */
     protected function current()
     {
-        return 'Somebody failed logged into your account.';
+        return 'Somebody tried to login to your account.';
     }
 
     /**
@@ -54,6 +54,6 @@ class LastAttemptAtDisplayer extends AbstractDisplayer
      */
     protected function external()
     {
-        return 'Somebody failed to login to this user\'s account.';
+        return 'Somebody tried to login to this user\'s account.';
     }
 }
