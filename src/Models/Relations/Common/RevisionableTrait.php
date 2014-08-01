@@ -160,18 +160,18 @@ trait RevisionableTrait
         if ($this->updating) {
             foreach ($this->changedRevisionableFields() as $key => $change) {
                 RevisionProvider::create(array(
-                    'revisionable_type' => get_class($this),
-                    'revisionable_id'   => $this->getKey(),
+                    'revisionable_type' => $this->getUsableType(),
+                    'revisionable_id'   => $this->getUsableKey(),
                     'key'               => $key,
                     'old_value'         => $this->getDataValue('original', $key),
                     'new_value'         => $this->getDataValue('updated', $key),
                     'user_id'           => $this->getUserId()
                 ));
             }
-        } else {
+        } elseif (!$this->shouldOnlyTrackUpdates()) {
             RevisionProvider::create(array(
-                'revisionable_type' => get_class($this),
-                'revisionable_id'   => $this->getKey(),
+                'revisionable_type' => $this->getUsableType(),
+                'revisionable_id'   => $this->getUsableKey(),
                 'key'               => 'created_at',
                 'old_value'         => null,
                 'new_value'         => new DateTime(),
@@ -206,14 +206,44 @@ trait RevisionableTrait
      */
     public function postDelete()
     {
-        RevisionProvider::create(array(
-            'revisionable_type' => get_class($this),
-            'revisionable_id'   => $this->getKey(),
-            'key'               => 'deleted_at',
-            'old_value'         => null,
-            'new_value'         => new DateTime(),
-            'user_id'           => $this->getUserId()
-        ));
+        if (!$this->shouldOnlyTrackUpdates()) {
+            RevisionProvider::create(array(
+                'revisionable_type' => $this->getUsableType(),
+                'revisionable_id'   => $this->getUsableKey(),
+                'key'               => 'deleted_at',
+                'old_value'         => null,
+                'new_value'         => new DateTime(),
+                'user_id'           => $this->getUserId()
+            ));
+        }
+    }
+
+    /**
+     * Get the model id.
+     *
+     * @return int
+     */
+    protected function getUsableType()
+    {
+        if (method_exists($this, 'getCustomType')) {
+            return $this->getCustomType();
+        }
+
+        return get_class($this);
+    }
+
+    /**
+     * Get the model id.
+     *
+     * @return int
+     */
+    protected function getUsableKey()
+    {
+        if (method_exists($this, 'getCustomKey')) {
+            return $this->getCustomKey();
+        }
+
+        return $this->getKey();
     }
 
     /**
@@ -223,7 +253,9 @@ trait RevisionableTrait
      */
     protected function getUserId()
     {
-        if (Credentials::check()) {
+        if (method_exists($this, 'getCustomUserId')) {
+            return $this->getCustomUserId();
+        } elseif (Credentials::check()) {
             return Credentials::getUser()->id;
         }
     }
@@ -251,7 +283,7 @@ trait RevisionableTrait
                     $changes[$key] = $value;
                 }
             } else {
-                // we're done with each key, each time, so let's save memory
+                // if it's not dirty enough, then remove the field from the array
                 unset($this->updatedData[$key]);
                 unset($this->originalData[$key]);
             }
@@ -263,17 +295,22 @@ trait RevisionableTrait
     /**
      * Check if this field should have a revision kept.
      *
-     * If the field is explicitly revisionable, then return true.
-     * If it's explicitly not revisionable, return false.
-     * Otherwise, if neither condition is met, only return true if
-     * we aren't specifying revisionable fields.
+     * If we are not tracking updates that null the field, and the update nulls
+     * the field, then return false. If the field is explicitly revisionable,
+     * then return true.  If it's explicitly not revisionable, return false.
+     * Otherwise, if neither condition is met, only return true if  we aren't
+     * specifying revisionable fields.
      *
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     protected function isRevisionable($key)
     {
+        if (isset($this->trackNullUpdates) && $this->trackNullUpdates === false && array_get($this->updatedData, $key) === null) {
+            return false;
+        }
+
         if (isset($this->doKeep) && in_array($key, $this->doKeep)) {
             return true;
         }
@@ -283,5 +320,21 @@ trait RevisionableTrait
         }
 
         return empty($this->doKeep);
+    }
+
+    /**
+     * Check if we should only track model updates.
+     *
+     * If this is true, then we do nothing when models are created/deleted.
+     *
+     * @return bool
+     */
+    protected function shouldOnlyTrackUpdates()
+    {
+        if (isset($this->onlyTrackUpdates) && $this->onlyTrackUpdates === true) {
+            return true;
+        }
+
+        return false;
     }
 }

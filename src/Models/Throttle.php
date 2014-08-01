@@ -17,8 +17,12 @@
 namespace GrahamCampbell\Credentials\Models;
 
 use Cartalyst\Sentry\Throttling\Eloquent\Throttle as SentryThrottle;
+use GrahamCampbell\Credentials\Models\Relations\Common\RevisionableTrait;
+use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface;
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Support\Facades\Config;
 
 /**
  * This is the throttle model class.
@@ -27,9 +31,9 @@ use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
  * @copyright 2013-2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class Throttle extends SentryThrottle implements BaseModelInterface
+class Throttle extends SentryThrottle implements BaseModelInterface, RevisionableInterface
 {
-    use BaseModelTrait;
+    use BaseModelTrait, RevisionableTrait, SoftDeletingTrait;
 
     /**
      * The table the throttles are stored in.
@@ -44,4 +48,52 @@ class Throttle extends SentryThrottle implements BaseModelInterface
      * @var string
      */
     public static $name = 'throttle';
+
+    /**
+     * The properties on the model that are dates.
+     *
+     * @var array
+     */
+    protected $dates = array('last_attempt_at', 'suspended_at', 'banned_at', 'deleted_at');
+
+    /**
+     * The revisionable columns.
+     *
+     * @var array
+     */
+    protected $keepRevisionOf = array('last_attempt_at', 'suspended_at');
+
+    /**
+     * Should we only track updates?
+     *
+     * @var bool
+     */
+    protected $onlyTrackUpdates = true;
+
+    /**
+     * Should we track null updates?
+     *
+     * @var bool
+     */
+    protected $trackNullUpdates = false;
+
+    /**
+     * Get the custom model id.
+     *
+     * @var int
+     */
+    protected function getCustomKey()
+    {
+        return $this['user_id'];
+    }
+
+    /**
+     * Get the custom model type.
+     *
+     * @var string
+     */
+    protected function getCustomType()
+    {
+        return Config::get('cartalyst/sentry::users.model');
+    }
 }

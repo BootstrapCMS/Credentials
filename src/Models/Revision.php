@@ -19,6 +19,7 @@ namespace GrahamCampbell\Credentials\Models;
 use GrahamCampbell\Credentials\Models\Relations\Common\BelongsToUserTrait;
 use GrahamCampbell\Credentials\Models\Relations\Interfaces\BelongsToUserInterface;
 use GrahamCampbell\Database\Models\AbstractModel;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 use McCool\LaravelAutoPresenter\PresenterInterface;
 
 /**
@@ -30,7 +31,7 @@ use McCool\LaravelAutoPresenter\PresenterInterface;
  */
 class Revision extends AbstractModel implements BelongsToUserInterface, PresenterInterface
 {
-    use BelongsToUserTrait;
+    use BelongsToUserTrait, SoftDeletingTrait;
 
     /**
      * The table the groups are stored in.
@@ -45,6 +46,13 @@ class Revision extends AbstractModel implements BelongsToUserInterface, Presente
      * @var string
      */
     public static $name = 'revision';
+
+    /**
+     * The properties on the model that are dates.
+     *
+     * @var array
+     */
+    protected $dates = array('deleted_at');
 
     /**
      * The columns to select when displaying an index.
