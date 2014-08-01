@@ -240,14 +240,18 @@ class UserController extends AbstractController
 
         $groups = GroupProvider::index();
 
+        $changed = false;
+
         foreach ($groups as $group) {
             if ($user->inGroup($group)) {
                 if (Binput::get('group_'.$group->id) !== 'on') {
                     $user->removeGroup($group);
+                    $changed = true;
                 }
             } else {
                 if (Binput::get('group_'.$group->id) === 'on') {
                     $user->addGroup($group);
+                    $changed = true;
                 }
             }
         }
@@ -266,6 +270,18 @@ class UserController extends AbstractController
 
             Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
                 $message->to($mail['new'])->subject($mail['subject']);
+            });
+        }
+
+        if ($changed) {
+            $mail = array(
+                'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+                'email'   => $input['email'],
+                'subject' => Config::get('platform.name').' - Group Membership Changes'
+            );
+
+            Mail::queue('graham-campbell/credentials::emails.groups', $mail, function ($message) use ($mail) {
+                $message->to($mail['email'])->subject($mail['subject']);
             });
         }
 
