@@ -23,6 +23,7 @@ use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Support\Facades\Config;
 use McCool\LaravelAutoPresenter\PresenterInterface;
 
 /**
@@ -122,6 +123,36 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     public function revisions()
     {
         return $this->hasMany('GrahamCampbell\Credentials\Models\Revision');
+    }
+
+    /**
+     * Get the user's action history.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function actions()
+    {
+        return $this->revisions()
+            ->where(function ($q) {
+                $q->where('revisionable_type', '<>', Config::get('cartalyst/sentry::users.model'))
+                    ->where('user_id', '=', $this->id);
+            })
+            ->orWhere(function ($q) {
+                $q->where('revisionable_type', '=', Config::get('cartalyst/sentry::users.model'))
+                    ->where('revisionable_id', '<>', $this->id)
+                    ->where('user_id', '=', $this->id);
+            })
+            ->orderBy('id', 'desc')->take(20);
+    }
+
+    /**
+     * Get the user's security history.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function security()
+    {
+        return $this->revisionHistory()->orderBy('id', 'desc')->take(20);
     }
 
     /**
