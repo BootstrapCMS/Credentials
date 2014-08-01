@@ -56,7 +56,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
      *
      * @var array
      */
-    protected $dates = array('activated_at', 'last_login', 'deleted_at');
+    protected $dates = array('deleted_at');
 
     /**
      * The revisionable columns.
