@@ -52,7 +52,7 @@ class Throttle extends SentryThrottle implements BaseModelInterface
      * Add a new login attempt.
      *
      * @return void
-    */
+     */
     public function addLoginAttempt()
     {
         RevisionProvider::create(array(
@@ -71,7 +71,7 @@ class Throttle extends SentryThrottle implements BaseModelInterface
      * Suspend the user associated with the throttle.
      *
      * @return void
-    */
+     */
     public function suspend()
     {
         RevisionProvider::create(array(
