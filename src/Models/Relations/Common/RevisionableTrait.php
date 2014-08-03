@@ -223,9 +223,7 @@ trait RevisionableTrait
      */
     protected function getUserId()
     {
-        if (method_exists($this, 'getCustomUserId')) {
-            return $this->getCustomUserId();
-        } elseif (Credentials::check()) {
+        if (Credentials::check()) {
             return Credentials::getUser()->id;
         } elseif (isset($this['user_id']) && $this['user_id']) {
             return $this['user_id'];

@@ -13,9 +13,8 @@ CHANGE LOG
 * Added presenters
 * Throttling improvements
 * Soft delete users
-* Removed the user events system
+* Removed the user events system (replaced)
 * Added security history for users
-* More unit tests
 
 
 ## V0.2.1 Alpha (24/05/2014)
