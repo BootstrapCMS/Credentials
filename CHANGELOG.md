@@ -2,7 +2,7 @@ CHANGE LOG
 ==========
 
 
-## V0.3 Alpha (Upcoming - August 2014)
+## V0.3 Alpha (Upcoming)
 
 * Upgrade to Laravel 4.2+
 * Config cleanup
@@ -15,6 +15,7 @@ CHANGE LOG
 * Soft delete users
 * Removed the user events system (replaced)
 * Added security history for users
+* Corrected the license comments
 
 
 ## V0.2.1 Alpha (24/05/2014)
