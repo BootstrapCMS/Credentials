@@ -2,7 +2,7 @@ CHANGE LOG
 ==========
 
 
-## V0.3 Alpha (Upcoming)
+## V0.3 Alpha (12/08/2014)
 
 * Upgrade to Laravel 4.2+
 * Config cleanup
