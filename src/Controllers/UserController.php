@@ -109,7 +109,7 @@ class UserController extends AbstractController
         $input = array_merge(Binput::only(array('first_name', 'last_name', 'email')), array(
             'password'     => $password,
             'activated'    => true,
-            'activated_at' => new DateTime
+            'activated_at' => new DateTime()
         ));
 
         $rules = UserProvider::rules(array_keys($input));

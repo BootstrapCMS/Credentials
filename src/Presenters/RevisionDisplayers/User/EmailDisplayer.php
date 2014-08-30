@@ -43,7 +43,7 @@ class EmailDisplayer extends AbstractDisplayer
      */
     protected function current()
     {
-        return $this->author() . 'changed your email address' . $this->details();
+        return $this->author().'changed your email address'.$this->details();
     }
 
     /**
@@ -55,9 +55,9 @@ class EmailDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'This user changed their email address' . $this->details();
+            return 'This user changed their email address'.$this->details();
         }
 
-        return $this->author() . 'changed' . $this->user() . 'email address' . $this->details();
+        return $this->author().'changed'.$this->user().'email address'.$this->details();
     }
 }

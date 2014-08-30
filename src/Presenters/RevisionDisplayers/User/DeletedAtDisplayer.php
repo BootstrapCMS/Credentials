@@ -47,7 +47,7 @@ class DeletedAtDisplayer extends AbstractDisplayer
             'You deleted your account.';
         }
 
-        return $this->author() . 'deleted your account.';
+        return $this->author().'deleted your account.';
     }
 
     /**
@@ -62,6 +62,6 @@ class DeletedAtDisplayer extends AbstractDisplayer
             return 'This user deleted their account.';
         }
 
-        return $this->author() . 'deleted' . $this->user(). 'account.';
+        return $this->author().'deleted'.$this->user().'account.';
     }
 }

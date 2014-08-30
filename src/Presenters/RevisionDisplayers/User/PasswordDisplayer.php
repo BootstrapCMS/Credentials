@@ -47,7 +47,7 @@ class PasswordDisplayer extends AbstractDisplayer
             'You reset your password.';
         }
 
-        return $this->author() . 'changed your password.';
+        return $this->author().'changed your password.';
     }
 
     /**
@@ -62,6 +62,6 @@ class PasswordDisplayer extends AbstractDisplayer
             return 'This user changed their password.';
         }
 
-        return $this->author() . 'reset' . $this->user() . 'password.';
+        return $this->author().'reset'.$this->user().'password.';
     }
 }

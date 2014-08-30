@@ -47,7 +47,7 @@ class CreatedAtDisplayer extends AbstractDisplayer
             'You created your account.';
         }
 
-        return $this->author() . 'created your account.';
+        return $this->author().'created your account.';
     }
 
     /**
@@ -62,6 +62,6 @@ class CreatedAtDisplayer extends AbstractDisplayer
             return 'This user created their account.';
         }
 
-        return $this->author() . 'created' . $this->user() . 'account.';
+        return $this->author().'created'.$this->user().'account.';
     }
 }

@@ -94,7 +94,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
             return 'This user ';
         }
 
-        return $this->presenter->author() . ' ';
+        return $this->presenter->author().' ';
     }
 
     /**

@@ -47,7 +47,7 @@ class RemovedGroupDisplayer extends AbstractDisplayer
             return 'You removed yourself from the "'.$this->resource->new_value.'" group.';
         }
 
-        return $this->author() . 'removed you from the "'.$this->resource->new_value.'" group.';
+        return $this->author().'removed you from the "'.$this->resource->new_value.'" group.';
     }
 
     /**
@@ -62,6 +62,6 @@ class RemovedGroupDisplayer extends AbstractDisplayer
             return 'This user removed themselves from the "'.$this->resource->new_value.'" group.';
         }
 
-        return $this->author() . 'removed' . substr($this->user(), 0, -3) . ' from the "'.$this->resource->new_value.'" group.';
+        return $this->author().'removed'.substr($this->user(), 0, -3).' from the "'.$this->resource->new_value.'" group.';
     }
 }

@@ -47,7 +47,7 @@ class AddedGroupDisplayer extends AbstractDisplayer
             return 'You added yourself to the "'.$this->resource->new_value.'" group.';
         }
 
-        return $this->author() . 'added you to the "'.$this->resource->new_value.'" group.';
+        return $this->author().'added you to the "'.$this->resource->new_value.'" group.';
     }
 
     /**
@@ -62,6 +62,6 @@ class AddedGroupDisplayer extends AbstractDisplayer
             return 'This user added themselves to the "'.$this->resource->new_value.'" group.';
         }
 
-        return $this->author() . 'added' . substr($this->user(), 0, -3) . ' to the "'.$this->resource->new_value.'" group.';
+        return $this->author().'added'.substr($this->user(), 0, -3).' to the "'.$this->resource->new_value.'" group.';
     }
 }

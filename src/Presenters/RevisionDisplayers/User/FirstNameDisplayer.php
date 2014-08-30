@@ -43,7 +43,7 @@ class FirstNameDisplayer extends AbstractDisplayer
      */
     protected function current()
     {
-        return $this->author() . 'changed your first name' . $this->details();
+        return $this->author().'changed your first name'.$this->details();
     }
 
     /**
@@ -55,9 +55,9 @@ class FirstNameDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'This user changed their first name' . $this->details();
+            return 'This user changed their first name'.$this->details();
         }
 
-        return $this->author() . 'changed' . $this->user() . 'first name' . $this->details();
+        return $this->author().'changed'.$this->user().'first name'.$this->details();
     }
 }
