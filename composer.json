@@ -33,7 +33,7 @@
         "graham-campbell/binput": "~2.0",
         "graham-campbell/throttle": "~1.0",
         "sebastian/diff": "~1.1",
-        "mccool/laravel-auto-presenter": "~2.1"
+        "mccool/laravel-auto-presenter": "2.1.*"
     },
     "require-dev": {
         "graham-campbell/testbench": "~1.0",
