@@ -43,23 +43,23 @@ class CommandTest extends AbstractTestCase
 
     public function testInstall()
     {
-        $this->assertEquals(0, $this->app['artisan']->call('app:install'));
+        $this->assertSame(0, $this->app['artisan']->call('app:install'));
     }
 
     public function testReset()
     {
-        $this->assertEquals(0, $this->app['artisan']->call('migrate', array('--force' => true)));
-        $this->assertEquals(0, $this->app['artisan']->call('app:reset'));
+        $this->assertSame(0, $this->app['artisan']->call('migrate', array('--force' => true)));
+        $this->assertSame(0, $this->app['artisan']->call('app:reset'));
     }
 
     public function testUpdate()
     {
-        $this->assertEquals(0, $this->app['artisan']->call('app:update'));
+        $this->assertSame(0, $this->app['artisan']->call('app:update'));
     }
 
     public function testResetAfterInstall()
     {
-        $this->assertEquals(0, $this->app['artisan']->call('app:install'));
-        $this->assertEquals(0, $this->app['artisan']->call('app:reset'));
+        $this->assertSame(0, $this->app['artisan']->call('app:install'));
+        $this->assertSame(0, $this->app['artisan']->call('app:reset'));
     }
 }
