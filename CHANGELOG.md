@@ -2,6 +2,12 @@ CHANGE LOG
 ==========
 
 
+## V0.3.1 Alpha (Upcoming)
+
+* Presenter fixes
+* Improved the test suite
+
+
 ## V0.3 Alpha (12/08/2014)
 
 * Upgrade to Laravel 4.2
