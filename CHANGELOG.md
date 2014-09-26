@@ -2,7 +2,7 @@ CHANGE LOG
 ==========
 
 
-## V0.3.1 Alpha (Upcoming)
+## V0.3.1 Alpha (26/09/2014)
 
 * Presenter fixes and improvements
 * Automatically find parent displayer classes
