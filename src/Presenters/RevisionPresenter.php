@@ -78,7 +78,7 @@ class RevisionPresenter extends BasePresenter
      */
     protected function getDisplayerClass()
     {
-        $class = $this->resource->revisionable_type
+        $class = $this->resource->revisionable_type;
 
         do {
             if (class_exists($displayer = $this->generateDisplayerName($class))) {

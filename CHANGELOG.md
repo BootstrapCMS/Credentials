@@ -5,7 +5,7 @@ CHANGE LOG
 ## V0.3.1 Alpha (Upcoming)
 
 * Presenter fixes and improvements
-* Search and find parent displayer classes
+* Automatically find parent displayer classes
 * Improved the test suite
 
 
