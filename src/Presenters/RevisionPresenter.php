@@ -16,6 +16,7 @@
 
 namespace GrahamCampbell\Credentials\Presenters;
 
+use Exception;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Facades\Differ;
 use GrahamCampbell\Credentials\Models\Revision;
@@ -69,13 +70,32 @@ class RevisionPresenter extends BasePresenter
     }
 
     /**
-     * Get relevant displayer class.
+     * Get the relevant displayer class.
+     *
+     * @throws \Exception
      *
      * @return string
      */
     protected function getDisplayerClass()
     {
-        $class = $this->resource->revisionable_type;
+        $class = $this->resource->revisionable_type
+
+        do {
+            if (class_exists($displayer = $this->generateDisplayerName($class))) {
+                return $displayer;
+            }
+        } while ($class = get_parent_class($class));
+
+        throw new Exception('No displayers could be found');
+    }
+
+    /**
+     * Generate a possible displayer class name.
+     *
+     * @return string
+     */
+    protected function generateDisplayerName($class)
+    {
         $shortArray = explode('\\', $class);
         $short = end($shortArray);
         $field = studly_case($this->field());
