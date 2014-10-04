@@ -28,7 +28,7 @@
         "illuminate/view": "~4.2",
         "lightgear/asset": "1.4",
         "cartalyst/sentry": "2.1.*",
-        "graham-campbell/core": "0.4.*",
+        "graham-campbell/core": "~1.0",
         "graham-campbell/database": "0.1.*",
         "graham-campbell/binput": "~2.0",
         "graham-campbell/throttle": "~1.0",
