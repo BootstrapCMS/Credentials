@@ -31,7 +31,7 @@
         "graham-campbell/core": "~1.0",
         "graham-campbell/database": "0.1.*",
         "graham-campbell/binput": "~2.0",
-        "graham-campbell/throttle": "~1.0",
+        "graham-campbell/throttle": "~2.0",
         "sebastian/diff": "~1.1",
         "mccool/laravel-auto-presenter": "2.1.*"
     },
