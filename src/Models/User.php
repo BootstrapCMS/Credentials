@@ -107,7 +107,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
         'password'              => 'required|min:6|confirmed',
         'password_confirmation' => 'required',
         'activated'             => 'required',
-        'activated_at'          => 'required'
+        'activated_at'          => 'required',
     );
 
     /**
@@ -222,7 +222,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
                 'key'               => 'added_group',
                 'old_value'         => null,
                 'new_value'         => $group->getName(),
-                'user_id'           => Credentials::getUser()->id
+                'user_id'           => Credentials::getUser()->id,
             ));
         }
 
@@ -244,7 +244,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
             'key'               => 'removed_group',
             'old_value'         => null,
             'new_value'         => $group->getName(),
-            'user_id'           => Credentials::getUser()->id
+            'user_id'           => Credentials::getUser()->id,
         ));
 
         return parent::removeGroup($group);

@@ -139,7 +139,7 @@ class ActivationController extends AbstractController
                 'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
                 'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $code)),
                 'email'   => $user->getLogin(),
-                'subject' => Config::get('platform.name').' - Activation'
+                'subject' => Config::get('platform.name').' - Activation',
             );
 
             Mail::queue('graham-campbell/credentials::emails.resend', $mail, function ($message) use ($mail) {

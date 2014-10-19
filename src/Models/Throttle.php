@@ -61,7 +61,7 @@ class Throttle extends SentryThrottle implements BaseModelInterface
             'key'               => 'last_attempt_at',
             'old_value'         => $this['last_attempt_at'],
             'new_value'         => new DateTime(),
-            'user_id'           => null
+            'user_id'           => null,
         ));
 
         parent::addLoginAttempt();
@@ -80,7 +80,7 @@ class Throttle extends SentryThrottle implements BaseModelInterface
             'key'               => 'suspended_at',
             'old_value'         => $this['suspended_at'],
             'new_value'         => new DateTime(),
-            'user_id'           => null
+            'user_id'           => null,
         ));
 
         parent::suspend();

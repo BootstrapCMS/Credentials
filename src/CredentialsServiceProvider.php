@@ -289,7 +289,7 @@ class CredentialsServiceProvider extends ServiceProvider
             'userprovider',
             'groupprovider',
             'credentials',
-            'revisionprovider'
+            'revisionprovider',
         );
     }
 }

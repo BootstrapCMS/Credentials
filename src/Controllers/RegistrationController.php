@@ -98,7 +98,7 @@ class RegistrationController extends AbstractController
                 $mail = array(
                     'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
                     'email'   => $user->getLogin(),
-                    'subject' => Config::get('platform.name').' - Welcome'
+                    'subject' => Config::get('platform.name').' - Welcome',
                 );
 
                 Mail::queue('graham-campbell/credentials::emails.welcome', $mail, function ($message) use ($mail) {
@@ -118,7 +118,7 @@ class RegistrationController extends AbstractController
                 'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
                 'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $code)),
                 'email'   => $user->getLogin(),
-                'subject' => Config::get('platform.name').' - Welcome'
+                'subject' => Config::get('platform.name').' - Welcome',
             );
 
             Mail::queue('graham-campbell/credentials::emails.welcome', $mail, function ($message) use ($mail) {

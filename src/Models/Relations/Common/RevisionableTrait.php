@@ -165,7 +165,7 @@ trait RevisionableTrait
                     'key'               => $key,
                     'old_value'         => $this->getDataValue('original', $key),
                     'new_value'         => $this->getDataValue('updated', $key),
-                    'user_id'           => $this->getUserId()
+                    'user_id'           => $this->getUserId(),
                 ));
             }
         } else {
@@ -175,7 +175,7 @@ trait RevisionableTrait
                 'key'               => 'created_at',
                 'old_value'         => null,
                 'new_value'         => new DateTime(),
-                'user_id'           => $this->getUserId()
+                'user_id'           => $this->getUserId(),
             ));
         }
     }
@@ -212,7 +212,7 @@ trait RevisionableTrait
             'key'               => 'deleted_at',
             'old_value'         => null,
             'new_value'         => new DateTime(),
-            'user_id'           => $this->getUserId()
+            'user_id'           => $this->getUserId(),
         ));
     }
 

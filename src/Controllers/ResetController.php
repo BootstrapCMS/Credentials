@@ -95,7 +95,7 @@ class ResetController extends AbstractController
             $mail = array(
                 'link' => URL::route('account.password', array('id' => $user->id, 'code' => $code)),
                 'email' => $user->getLogin(),
-                'subject' => Config::get('platform.name').' - Password Reset Confirmation'
+                'subject' => Config::get('platform.name').' - Password Reset Confirmation',
             );
 
             Mail::queue('graham-campbell/credentials::emails.reset', $mail, function ($message) use ($mail) {
@@ -139,7 +139,7 @@ class ResetController extends AbstractController
             $mail = array(
                 'password' => $password,
                 'email' => $user->getLogin(),
-                'subject' => Config::get('platform.name').' - New Password Information'
+                'subject' => Config::get('platform.name').' - New Password Information',
             );
 
             Mail::queue('graham-campbell/credentials::emails.password', $mail, function ($message) use ($mail) {

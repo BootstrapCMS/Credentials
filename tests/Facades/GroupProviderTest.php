@@ -16,8 +16,8 @@
 
 namespace GrahamCampbell\Tests\Credentials\Facades;
 
-use GrahamCampbell\Tests\Credentials\AbstractTestCase;
 use GrahamCampbell\TestBench\Traits\FacadeTestCaseTrait;
+use GrahamCampbell\Tests\Credentials\AbstractTestCase;
 
 /**
  * This is the group provider facade test class.

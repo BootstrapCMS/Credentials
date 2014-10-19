@@ -43,7 +43,7 @@ Edit {{{ $user->name }}}
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
             'email' => $user->email,
-    ));
+    ), );
     foreach ($groups as $group) {
         $form['defaults']['group_'.$group->id] = ($user->inGroup($group));
     }

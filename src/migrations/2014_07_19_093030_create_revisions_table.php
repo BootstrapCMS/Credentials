@@ -27,7 +27,6 @@ use Illuminate\Support\Facades\Schema;
  */
 class CreateRevisionsTable extends Migration
 {
-
     /**
      * Run the migrations.
      *

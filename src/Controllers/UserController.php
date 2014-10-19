@@ -109,7 +109,7 @@ class UserController extends AbstractController
         $input = array_merge(Binput::only(array('first_name', 'last_name', 'email')), array(
             'password'     => $password,
             'activated'    => true,
-            'activated_at' => new DateTime()
+            'activated_at' => new DateTime(),
         ));
 
         $rules = UserProvider::rules(array_keys($input));
@@ -134,7 +134,7 @@ class UserController extends AbstractController
                 'url'      => URL::to(Config::get('graham-campbell/core::home', '/')),
                 'password' => $password,
                 'email'    => $user->getLogin(),
-                'subject'  => Config::get('platform.name').' - New Account Information'
+                'subject'  => Config::get('platform.name').' - New Account Information',
             );
 
             Mail::queue('graham-campbell/credentials::emails.newuser', $mail, function ($message) use ($mail) {
@@ -261,7 +261,7 @@ class UserController extends AbstractController
                 'old'     => $email,
                 'new'     => $input['email'],
                 'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
-                'subject' => Config::get('platform.name').' - New Email Information'
+                'subject' => Config::get('platform.name').' - New Email Information',
             );
 
             Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
@@ -277,7 +277,7 @@ class UserController extends AbstractController
             $mail = array(
                 'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
                 'email'   => $input['email'],
-                'subject' => Config::get('platform.name').' - Group Membership Changes'
+                'subject' => Config::get('platform.name').' - Group Membership Changes',
             );
 
             Mail::queue('graham-campbell/credentials::emails.groups', $mail, function ($message) use ($mail) {
@@ -350,7 +350,7 @@ class UserController extends AbstractController
         $mail = array(
             'password' => $password,
             'email' => $user->getLogin(),
-            'subject' => Config::get('platform.name').' - New Password Information'
+            'subject' => Config::get('platform.name').' - New Password Information',
         );
 
         Mail::queue('graham-campbell/credentials::emails.password', $mail, function ($message) use ($mail) {
@@ -384,7 +384,7 @@ class UserController extends AbstractController
             'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
             'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $code)),
             'email'   => $user->getLogin(),
-            'subject' => Config::get('platform.name').' - Activation'
+            'subject' => Config::get('platform.name').' - Activation',
         );
 
         Mail::queue('graham-campbell/credentials::emails.resend', $mail, function ($message) use ($mail) {
@@ -419,7 +419,7 @@ class UserController extends AbstractController
         $mail = array(
             'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
             'email'   => $email,
-            'subject' => Config::get('platform.name').' - Account Deleted Notification'
+            'subject' => Config::get('platform.name').' - Account Deleted Notification',
         );
 
         Mail::queue('graham-campbell/credentials::emails.admindeleted', $mail, function ($message) use ($mail) {

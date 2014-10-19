@@ -41,7 +41,7 @@ abstract class AbstractTestCase extends TestCase
             'GrahamCampbell\Core\CoreServiceProvider',
             'GrahamCampbell\Security\SecurityServiceProvider',
             'GrahamCampbell\Binput\BinputServiceProvider',
-            'GrahamCampbell\Throttle\ThrottleServiceProvider'
+            'GrahamCampbell\Throttle\ThrottleServiceProvider',
         );
     }
 

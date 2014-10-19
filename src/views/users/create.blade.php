@@ -21,7 +21,7 @@ Create User
             'first_name' => '',
             'last_name' => '',
             'email' => '',
-    ));
+    ), );
     foreach ($groups as $group) {
         if ($group->name == 'Users') {
             $form['defaults']['group_'.$group->id] = true;
