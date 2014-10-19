@@ -172,7 +172,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
      *
      * @param string $value
      *
-     * @return \Carbon\Carbon
+     * @return \Carbon\Carbon|false
      */
     public function getActivatedAtAccessor($value)
     {
