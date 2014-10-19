@@ -2,7 +2,7 @@ CHANGE LOG
 ==========
 
 
-## V0.3.2 Alpha (Upcoming)
+## V0.3.2 Alpha (19/10/2014)
 
 * Fixed a few issues with the test suite
 * Added cs fixers to the test suite
