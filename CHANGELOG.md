@@ -2,13 +2,18 @@ CHANGE LOG
 ==========
 
 
+## V0.3.2 Alpha (Upcoming)
+
+* Fixed a few issues with the test suite
+* Added cs fixers to the test suite
+* Improved the docs
+
+
 ## V0.3.1 Alpha (26/09/2014)
 
 * Presenter fixes and improvements
 * Automatically find parent displayer classes
 * Improved the test suite
-* Added cs fixers to the test suite
-* Improved the docs
 
 
 ## V0.3 Alpha (12/08/2014)
