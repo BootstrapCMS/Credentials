@@ -7,6 +7,8 @@ CHANGE LOG
 * Presenter fixes and improvements
 * Automatically find parent displayer classes
 * Improved the test suite
+* Added cs fixers to the test suite
+* Improved the docs
 
 
 ## V0.3 Alpha (12/08/2014)
