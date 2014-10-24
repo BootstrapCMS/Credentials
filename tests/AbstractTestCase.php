@@ -36,7 +36,6 @@ abstract class AbstractTestCase extends TestCase
     {
         return array(
             'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
-            'Lightgear\Asset\AssetServiceProvider',
             'Cartalyst\Sentry\SentryServiceProvider',
             'GrahamCampbell\Core\CoreServiceProvider',
             'GrahamCampbell\Security\SecurityServiceProvider',

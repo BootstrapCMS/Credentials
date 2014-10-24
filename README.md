@@ -23,7 +23,6 @@ To get the latest version of Laravel Credentials, simply require `"graham-campbe
 You will need to register many service providers before you attempt to load the Laravel Credentials service provider. Open up `app/config/app.php` and add the following to the `providers` key.
 
 * `'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider'`
-* `'Lightgear\Asset\AssetServiceProvider'`
 * `'Cartalyst\Sentry\SentryServiceProvider'`
 * `'GrahamCampbell\Core\CoreServiceProvider'`
 * `'GrahamCampbell\Security\SecurityServiceProvider'`
