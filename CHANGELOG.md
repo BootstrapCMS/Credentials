@@ -2,6 +2,11 @@ CHANGE LOG
 ==========
 
 
+## V0.3.3 Alpha (24/10/2014)
+
+* Asset updates
+
+
 ## V0.3.2 Alpha (19/10/2014)
 
 * Fixed a few issues with the test suite
