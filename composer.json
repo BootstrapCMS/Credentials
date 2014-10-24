@@ -9,12 +9,6 @@
             "email": "graham@mineuk.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/GrahamCampbell/asset"
-        }
-    ],
     "require": {
         "php": ">=5.4.7",
         "illuminate/console": "~4.2",
@@ -26,7 +20,6 @@
         "illuminate/routing": "~4.2",
         "illuminate/support": "~4.2",
         "illuminate/view": "~4.2",
-        "lightgear/asset": "1.4",
         "cartalyst/sentry": "2.1.*",
         "graham-campbell/core": "~1.0",
         "graham-campbell/database": "0.1.*",
