@@ -39,9 +39,9 @@ You can register the three facades in the `aliases` key of your `app/config/app.
 * `'GroupProvider' => 'GrahamCampbell\Credentials\Facades\GroupProvider'`
 * `'Credentials' => 'GrahamCampbell\Credentials\Facades\Credentials'`
 
-#### Looking for a laravel 5 compatable version?
+#### Looking for a laravel 4 compatable version?
 
-Checkout the [0.4 branch](https://github.com/GrahamCampbell/Laravel-Credentials/tree/master), installable by requiring `"graham-campbell/credentials": "0.4.*"`.
+Checkout the [0.3 branch](https://github.com/GrahamCampbell/Laravel-Credentials/tree/0.3), installable by requiring `"graham-campbell/credentials": "0.3.*"`.
 
 
 ## Configuration
