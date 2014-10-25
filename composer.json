@@ -13,6 +13,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/GrahamCampbell/framework"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/GrahamCampbell/sentry"
         }
     ],
     "require": {
@@ -26,7 +30,7 @@
         "illuminate/routing": "~5.0",
         "illuminate/support": "~5.0",
         "illuminate/view": "~5.0",
-        "cartalyst/sentry": "2.1.*",
+        "cartalyst/sentry": "~3.0",
         "graham-campbell/core": "~2.0",
         "graham-campbell/database": "0.2.*",
         "graham-campbell/binput": "~3.0",
