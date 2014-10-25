@@ -51,7 +51,7 @@ Laravel Credentials supports optional configuration.
 To get started, first publish the package config file:
 
 ```bash
-$ php artisan config:publish graham-campbell/credentials
+$ php artisan publish:config graham-campbell/credentials
 ```
 
 There are two config options:

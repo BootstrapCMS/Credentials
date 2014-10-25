@@ -17,6 +17,7 @@
 namespace GrahamCampbell\Tests\Credentials\Functional;
 
 use GrahamCampbell\Tests\Credentials\AbstractTestCase;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * This is the command test class.
@@ -30,11 +31,11 @@ class CommandTest extends AbstractTestCase
     /**
      * Additional application environment setup.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
      *
      * @return void
      */
-    protected function additionalSetup($app)
+    protected function additionalSetup(Application $app)
     {
         if (!class_exists('DatabaseSeeder')) {
             eval('class DatabaseSeeder extends Illuminate\Database\Seeder { public function run() {} }');
