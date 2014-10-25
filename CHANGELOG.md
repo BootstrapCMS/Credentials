@@ -2,6 +2,11 @@ CHANGE LOG
 ==========
 
 
+## V0.4 Alpha (Upcoming)
+
+* Upgraded to laravel 5
+
+
 ## V0.3.3 Alpha (24/10/2014)
 
 * Asset updates
