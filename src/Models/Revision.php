@@ -20,7 +20,7 @@ use GrahamCampbell\Credentials\Models\Relations\Common\BelongsToUserTrait;
 use GrahamCampbell\Credentials\Models\Relations\Interfaces\BelongsToUserInterface;
 use GrahamCampbell\Database\Models\AbstractModel;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
-use McCool\LaravelAutoPresenter\PresenterInterface;
+use McCool\LaravelAutoPresenter\HasPresenter;
 
 /**
  * This is the revision model class.
@@ -29,7 +29,7 @@ use McCool\LaravelAutoPresenter\PresenterInterface;
  * @copyright 2013-2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class Revision extends AbstractModel implements BelongsToUserInterface, PresenterInterface
+class Revision extends AbstractModel implements BelongsToUserInterface, HasPresenter
 {
     use BelongsToUserTrait, SoftDeletingTrait;
 
@@ -98,7 +98,7 @@ class Revision extends AbstractModel implements BelongsToUserInterface, Presente
      *
      * @return string
      */
-    public function getPresenter()
+    public function getPresenterClass()
     {
         return 'GrahamCampbell\Credentials\Presenters\RevisionPresenter';
     }

@@ -26,7 +26,7 @@ use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
-use McCool\LaravelAutoPresenter\PresenterInterface;
+use McCool\LaravelAutoPresenter\HasPresenter;
 
 /**
  * This is the user model class.
@@ -35,7 +35,7 @@ use McCool\LaravelAutoPresenter\PresenterInterface;
  * @copyright 2013-2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class User extends SentryUser implements BaseModelInterface, RevisionableInterface, PresenterInterface
+class User extends SentryUser implements BaseModelInterface, RevisionableInterface, HasPresenter
 {
     use BaseModelTrait, RevisionableTrait, SoftDeletingTrait;
 
@@ -162,7 +162,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
      *
      * @return string
      */
-    public function getPresenter()
+    public function getPresenterClass()
     {
         return 'GrahamCampbell\Credentials\Presenters\UserPresenter';
     }
