@@ -26,7 +26,7 @@ To get the latest version of Laravel Credentials, simply add the following line 
 
 You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
 
-You will need to register many service providers before you attempt to load the Laravel Credentials service provider. Open up `app/config/app.php` and add the following to the `providers` key.
+You will need to register many service providers before you attempt to load the Laravel Credentials service provider. Open up `config/app.php` and add the following to the `providers` key.
 
 * `'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider'`
 * `'Cartalyst\Sentry\SentryServiceProvider'`
@@ -35,11 +35,11 @@ You will need to register many service providers before you attempt to load the 
 * `'GrahamCampbell\Binput\BinputServiceProvider'`
 * `'GrahamCampbell\Throttle\ThrottleServiceProvider'`
 
-Once Laravel Credentials is installed, you need to register the service provider. Open up `app/config/app.php` and add the following to the `providers` key.
+Once Laravel Credentials is installed, you need to register the service provider. Open up `config/app.php` and add the following to the `providers` key.
 
 * `'GrahamCampbell\Credentials\CredentialsServiceProvider'`
 
-You can register the three facades in the `aliases` key of your `app/config/app.php` file if you like.
+You can register the three facades in the `aliases` key of your `config/app.php` file if you like.
 
 * `'UserProvider' => 'GrahamCampbell\Credentials\Facades\UserProvider'`
 * `'GroupProvider' => 'GrahamCampbell\Credentials\Facades\GroupProvider'`
