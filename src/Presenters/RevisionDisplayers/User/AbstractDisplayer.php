@@ -66,7 +66,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
      */
     protected function wasActualUser()
     {
-        return ($this->resource->user_id == $this->resource->revisionable_id || !$this->resource->user_id);
+        return ($this->wrappedObject->user_id == $this->wrappedObject->revisionable_id || !$this->wrappedObject->user_id);
     }
 
     /**
@@ -76,7 +76,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
      */
     protected function isCurrentUser()
     {
-        return (Credentials::check() && Credentials::getUser()->id == $this->resource->revisionable_id);
+        return (Credentials::check() && Credentials::getUser()->id == $this->wrappedObject->revisionable_id);
     }
 
     /**
@@ -86,11 +86,11 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
      */
     protected function author()
     {
-        if ($this->presenter->wasByCurrentUser() || !$this->resource->user_id) {
+        if ($this->presenter->wasByCurrentUser() || !$this->wrappedObject->user_id) {
             return 'You ';
         }
 
-        if (!$this->resource->security) {
+        if (!$this->wrappedObject->security) {
             return 'This user ';
         }
 
@@ -104,11 +104,11 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
      */
     protected function user()
     {
-        if ($this->resource->security) {
+        if ($this->wrappedObject->security) {
             return ' this user\'s ';
         }
 
-        $user = $this->resource->revisionable()->withTrashed()
+        $user = $this->wrappedObject->revisionable()->withTrashed()
         ->cacheDriver('array')->rememberForever()
         ->first(array('first_name', 'last_name'));
 

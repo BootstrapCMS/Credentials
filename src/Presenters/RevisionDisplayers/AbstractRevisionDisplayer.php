@@ -51,7 +51,7 @@ abstract class AbstractRevisionDisplayer
     public function __construct(RevisionPresenter $presenter)
     {
         $this->presenter = $presenter;
-        $this->resource = $this->presenter->resource;
+        $this->wrappedObject = $this->presenter->wrappedObject;
     }
 
     /**
@@ -61,6 +61,6 @@ abstract class AbstractRevisionDisplayer
      */
     protected function details()
     {
-        return ' from "'.$this->resource->old_value.'" to "'.$this->resource->new_value.'".';
+        return ' from "'.$this->wrappedObject->old_value.'" to "'.$this->wrappedObject->new_value.'".';
     }
 }

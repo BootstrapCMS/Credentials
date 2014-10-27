@@ -44,10 +44,10 @@ class RemovedGroupDisplayer extends AbstractDisplayer
     protected function current()
     {
         if ($this->author() === 'You ') {
-            return 'You removed yourself from the "'.$this->resource->new_value.'" group.';
+            return 'You removed yourself from the "'.$this->wrappedObject->new_value.'" group.';
         }
 
-        return $this->author().'removed you from the "'.$this->resource->new_value.'" group.';
+        return $this->author().'removed you from the "'.$this->wrappedObject->new_value.'" group.';
     }
 
     /**
@@ -59,9 +59,9 @@ class RemovedGroupDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'This user removed themselves from the "'.$this->resource->new_value.'" group.';
+            return 'This user removed themselves from the "'.$this->wrappedObject->new_value.'" group.';
         }
 
-        return $this->author().'removed'.substr($this->user(), 0, -3).' from the "'.$this->resource->new_value.'" group.';
+        return $this->author().'removed'.substr($this->user(), 0, -3).' from the "'.$this->wrappedObject->new_value.'" group.';
     }
 }

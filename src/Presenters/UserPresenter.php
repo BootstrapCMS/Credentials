@@ -38,7 +38,7 @@ class UserPresenter extends BasePresenter
      */
     public function __construct(User $user)
     {
-        $this->resource = $user;
+        $this->wrappedObject = $user;
     }
 
     /**
@@ -48,7 +48,7 @@ class UserPresenter extends BasePresenter
      */
     public function name()
     {
-        return $this->resource->first_name.' '.$this->resource->last_name;
+        return $this->wrappedObject->first_name.' '.$this->wrappedObject->last_name;
     }
 
     /**
@@ -59,7 +59,7 @@ class UserPresenter extends BasePresenter
     public function securityHistory()
     {
         $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
-        $history = $this->resource->security()->get();
+        $history = $this->wrappedObject->security()->get();
 
         $history->each(function ($item) {
             $item->security = true;
@@ -76,7 +76,7 @@ class UserPresenter extends BasePresenter
     public function actionHistory()
     {
         $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
-        $history = $this->resource->actions()->get();
+        $history = $this->wrappedObject->actions()->get();
 
         return $presenter->decorate($history);
     }

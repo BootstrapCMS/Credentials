@@ -42,7 +42,7 @@ class RevisionPresenter extends BasePresenter
      */
     public function __construct(Revision $revision)
     {
-        $this->resource = $revision;
+        $this->wrappedObject = $revision;
     }
 
     /**
@@ -78,7 +78,7 @@ class RevisionPresenter extends BasePresenter
      */
     protected function getDisplayerClass()
     {
-        $class = $this->resource->revisionable_type;
+        $class = $this->wrappedObject->revisionable_type;
 
         do {
             if (class_exists($displayer = $this->generateDisplayerName($class))) {
@@ -112,11 +112,11 @@ class RevisionPresenter extends BasePresenter
      */
     public function field()
     {
-        if (strpos($this->resource->key, '_id')) {
-            return str_replace('_id', '', $this->resource->key);
+        if (strpos($this->wrappedObject->key, '_id')) {
+            return str_replace('_id', '', $this->wrappedObject->key);
         }
 
-        return $this->resource->key;
+        return $this->wrappedObject->key;
     }
 
     /**
@@ -126,7 +126,7 @@ class RevisionPresenter extends BasePresenter
      */
     public function diff()
     {
-        return Differ::diff($this->resource->old_value, $this->resource->new_value);
+        return Differ::diff($this->wrappedObject->old_value, $this->wrappedObject->new_value);
     }
 
     /**
@@ -136,6 +136,6 @@ class RevisionPresenter extends BasePresenter
      */
     public function wasByCurrentUser()
     {
-        return (Credentials::check() && Credentials::getUser()->id == $this->resource->user_id);
+        return (Credentials::check() && Credentials::getUser()->id == $this->wrappedObject->user_id);
     }
 }

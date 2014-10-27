@@ -44,10 +44,10 @@ class AddedGroupDisplayer extends AbstractDisplayer
     protected function current()
     {
         if ($this->author() === 'You ') {
-            return 'You added yourself to the "'.$this->resource->new_value.'" group.';
+            return 'You added yourself to the "'.$this->wrappedObject->new_value.'" group.';
         }
 
-        return $this->author().'added you to the "'.$this->resource->new_value.'" group.';
+        return $this->author().'added you to the "'.$this->wrappedObject->new_value.'" group.';
     }
 
     /**
@@ -59,9 +59,9 @@ class AddedGroupDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'This user added themselves to the "'.$this->resource->new_value.'" group.';
+            return 'This user added themselves to the "'.$this->wrappedObject->new_value.'" group.';
         }
 
-        return $this->author().'added'.substr($this->user(), 0, -3).' to the "'.$this->resource->new_value.'" group.';
+        return $this->author().'added'.substr($this->user(), 0, -3).' to the "'.$this->wrappedObject->new_value.'" group.';
     }
 }
