@@ -35,6 +35,13 @@ abstract class AbstractRevisionDisplayer
     protected $presenter;
 
     /**
+     * The credentials instance.
+     *
+     * @var \GrahamCampbell\Credentials\Credentials
+     */
+    protected $credentials;
+
+    /**
      * The resource instance.
      *
      * @var \Illuminate\Database\Eloquent\Model
@@ -51,7 +58,8 @@ abstract class AbstractRevisionDisplayer
     public function __construct(RevisionPresenter $presenter)
     {
         $this->presenter = $presenter;
-        $this->wrappedObject = $this->presenter->wrappedObject;
+        $this->credentials = $this->presenter->getCredentials();
+        $this->wrappedObject = $this->presenter->getWrappedObject();
     }
 
     /**

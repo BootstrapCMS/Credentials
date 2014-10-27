@@ -16,9 +16,8 @@
 
 namespace GrahamCampbell\Credentials\Presenters;
 
-use GrahamCampbell\Credentials\Models\User;
-use Illuminate\Support\Facades\App;
 use McCool\LaravelAutoPresenter\BasePresenter;
+use McCool\LaravelAutoPresenter\PresenterDecorator;
 
 /**
  * This is the user presenter class.
@@ -30,15 +29,25 @@ use McCool\LaravelAutoPresenter\BasePresenter;
 class UserPresenter extends BasePresenter
 {
     /**
+     * The auto presenter instance.
+     *
+     * @var \McCool\LaravelAutoPresenter\PresenterDecorator
+     */
+    protected $presenter;
+
+    /**
      * Create a new instance.
      *
-     * @param \GrahamCampbell\Credentials\Models\User $user
+     * @param \McCool\LaravelAutoPresenter\PresenterDecorator $presenter
+     * @param \GrahamCampbell\Credentials\Models\User         $resource
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(PresenterDecorator $presenter, $resource)
     {
-        $this->wrappedObject = $user;
+        $this->presenter = $presenter;
+
+        parent::__construct($resource);
     }
 
     /**
@@ -58,14 +67,13 @@ class UserPresenter extends BasePresenter
      */
     public function securityHistory()
     {
-        $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
         $history = $this->wrappedObject->security()->get();
 
         $history->each(function ($item) {
             $item->security = true;
         });
 
-        return $presenter->decorate($history);
+        return $this->presenter->decorate($history);
     }
 
     /**
@@ -75,9 +83,18 @@ class UserPresenter extends BasePresenter
      */
     public function actionHistory()
     {
-        $presenter = App::make('McCool\LaravelAutoPresenter\PresenterDecorator');
         $history = $this->wrappedObject->actions()->get();
 
-        return $presenter->decorate($history);
+        return $this->presenter->decorate($history);
+    }
+
+    /**
+     * Get the auto presenter instance.
+     *
+     * @return \McCool\LaravelAutoPresenter\PresenterDecorator
+     */
+    public function getPresenter()
+    {
+        return $this->presenter;
     }
 }

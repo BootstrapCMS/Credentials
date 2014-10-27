@@ -16,7 +16,6 @@
 
 namespace GrahamCampbell\Credentials\Presenters\RevisionDisplayers\User;
 
-use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Presenters\RevisionDisplayers\AbstractRevisionDisplayer;
 use GrahamCampbell\Credentials\Presenters\RevisionDisplayers\RevisionDisplayerInterface;
 
@@ -76,7 +75,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
      */
     protected function isCurrentUser()
     {
-        return (Credentials::check() && Credentials::getUser()->id == $this->wrappedObject->revisionable_id);
+        return ($this->credentials->check() && $this->credentials->getUser()->id == $this->wrappedObject->revisionable_id);
     }
 
     /**

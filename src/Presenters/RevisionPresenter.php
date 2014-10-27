@@ -17,10 +17,10 @@
 namespace GrahamCampbell\Credentials\Presenters;
 
 use Exception;
-use GrahamCampbell\Credentials\Facades\Credentials;
-use GrahamCampbell\Credentials\Facades\Differ;
-use GrahamCampbell\Credentials\Models\Revision;
+use GrahamCampbell\Credentials\Credentials;
 use McCool\LaravelAutoPresenter\BasePresenter;
+use McCool\LaravelAutoPresenter\PresenterDecorator;
+use SebastianBergmann\Diff\Differ;
 
 /**
  * This is the revision presenter class.
@@ -34,15 +34,34 @@ class RevisionPresenter extends BasePresenter
     use AuthorPresenterTrait;
 
     /**
+     * The credentials instance.
+     *
+     * @var \GrahamCampbell\Credentials\Credentials
+     */
+    protected $credentials;
+
+    /**
+     * The differ instance.
+     *
+     * @var \SebastianBergmann\Diff\Differ
+     */
+    protected $differ;
+
+    /**
      * Create a new instance.
      *
-     * @param \GrahamCampbell\Credentials\Models\Revision $revision
+     * @param \GrahamCampbell\Credentials\Credentials     $credentials
+     * @param \SebastianBergmann\Diff\Differ              $differ
+     * @param \GrahamCampbell\Credentials\Models\Revision $resource
      *
      * @return void
      */
-    public function __construct(Revision $revision)
+    public function __construct(Credentials $credentials, Differ $differ, $resource)
     {
-        $this->wrappedObject = $revision;
+        $this->credentials = $credentials;
+        $this->differ = $differ;
+
+        parent::__construct($resource);
     }
 
     /**
@@ -126,7 +145,7 @@ class RevisionPresenter extends BasePresenter
      */
     public function diff()
     {
-        return Differ::diff($this->wrappedObject->old_value, $this->wrappedObject->new_value);
+        return $this->differ->diff($this->wrappedObject->old_value, $this->wrappedObject->new_value);
     }
 
     /**
@@ -136,6 +155,26 @@ class RevisionPresenter extends BasePresenter
      */
     public function wasByCurrentUser()
     {
-        return (Credentials::check() && Credentials::getUser()->id == $this->wrappedObject->user_id);
+        return ($this->credentials->check() && $this->credentials->getUser()->id == $this->wrappedObject->user_id);
+    }
+
+    /**
+     * Get credentials instance.
+     *
+     * @return \GrahamCampbell\Credentials\Credentials
+     */
+    public function getCredentials()
+    {
+        return $this->credentials;
+    }
+
+    /**
+     * Get the differ instance.
+     *
+     * @return \SebastianBergmann\Diff\Differ
+     */
+    public function getDiffer()
+    {
+        return $this->differ;
     }
 }
