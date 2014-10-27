@@ -19,7 +19,6 @@ namespace GrahamCampbell\Credentials\Presenters;
 use Exception;
 use GrahamCampbell\Credentials\Credentials;
 use McCool\LaravelAutoPresenter\BasePresenter;
-use McCool\LaravelAutoPresenter\PresenterDecorator;
 use SebastianBergmann\Diff\Differ;
 
 /**
