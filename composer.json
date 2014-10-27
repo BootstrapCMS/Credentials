@@ -12,10 +12,6 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/GrahamCampbell/framework"
-        },
-        {
-            "type": "vcs",
             "url": "https://github.com/GrahamCampbell/sentry"
         }
     ],
@@ -40,7 +36,6 @@
         "mccool/laravel-auto-presenter": "~3.0"
     },
     "require-dev": {
-        "laravel/framework": "dev-5.0-patched as 5.0.x-dev",
         "graham-campbell/testbench": "~2.0",
         "doctrine/dbal": "~2.4"
     },
