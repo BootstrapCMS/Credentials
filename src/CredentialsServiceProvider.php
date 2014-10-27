@@ -102,7 +102,7 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerDiffer()
     {
-        $this->app->bindShared('differ', function ($app) {
+        $this->app->singleton('differ', function ($app) {
             return new Differ();
         });
 
@@ -116,7 +116,7 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerRevisionProvider()
     {
-        $this->app->bindShared('revisionprovider', function ($app) {
+        $this->app->singleton('revisionprovider', function ($app) {
             $model = $app['config']['graham-campbell/credentials::revision'];
             $revision = new $model();
 
@@ -135,7 +135,7 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerUserProvider()
     {
-        $this->app->bindShared('userprovider', function ($app) {
+        $this->app->singleton('userprovider', function ($app) {
             $model = $app['config']['cartalyst/sentry::users.model'];
             $user = new $model();
 
@@ -154,7 +154,7 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerGroupProvider()
     {
-        $this->app->bindShared('groupprovider', function ($app) {
+        $this->app->singleton('groupprovider', function ($app) {
             $model = $app['config']['cartalyst/sentry::groups.model'];
             $group = new $model();
 
@@ -173,7 +173,7 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerCredentials()
     {
-        $this->app->bindShared('credentials', function ($app) {
+        $this->app->singleton('credentials', function ($app) {
             $sentry = $app['sentry'];
             $decorator = $app->make('McCool\LaravelAutoPresenter\PresenterDecorator');
 
@@ -190,7 +190,7 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerCommandSubscriber()
     {
-        $this->app->bindShared('GrahamCampbell\Credentials\Subscribers\CommandSubscriber', function ($app) {
+        $this->app->singleton('GrahamCampbell\Credentials\Subscribers\CommandSubscriber', function ($app) {
             return new Subscribers\CommandSubscriber();
         });
     }
