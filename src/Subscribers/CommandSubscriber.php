@@ -17,7 +17,7 @@
 namespace GrahamCampbell\Credentials\Subscribers;
 
 use Illuminate\Console\Command;
-use Illuminate\Events\Dispatcher;
+use Illuminate\Contracts\Events\Dispatcher;
 
 /**
  * This is the command subscriber class.
@@ -29,28 +29,9 @@ use Illuminate\Events\Dispatcher;
 class CommandSubscriber
 {
     /**
-     * The forced flag.
-     *
-     * @var bool
-     */
-    protected $force;
-
-    /**
-     * Create a new instance.
-     *
-     * @param bool $force
-     *
-     * @return void
-     */
-    public function __construct($force)
-    {
-        $this->force = $force;
-    }
-
-    /**
      * Register the listeners for the subscriber.
      *
-     * @param \Illuminate\Events\Dispatcher $events
+     * @param \Illuminate\Contracts\Events\Dispatcher $events
      *
      * @return void
      */
@@ -72,12 +53,7 @@ class CommandSubscriber
      */
     public function onRunMigrations(Command $command)
     {
-        if ($this->force) {
-            $command->call('migrate', array('--package' => 'cartalyst/sentry', '--force' => true));
-            $command->call('migrate', array('--package' => 'graham-campbell/credentials', '--force' => true));
-        } else {
-            $command->call('migrate', array('--package' => 'cartalyst/sentry'));
-            $command->call('migrate', array('--package' => 'graham-campbell/credentials'));
-        }
+        $command->call('migrate', array('--package' => 'cartalyst/sentry', '--force' => true));
+        $command->call('migrate', array('--package' => 'graham-campbell/credentials', '--force' => true));
     }
 }
