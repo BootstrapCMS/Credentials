@@ -39,7 +39,7 @@ class SentryThrottle implements Middleware
     /**
      * Create a new instance.
      *
-     * @param \GrahamCampbell\Credentials\Credentials     $credentials
+     * @param \GrahamCampbell\Credentials\Credentials $credentials
      *
      * @return void
      */
