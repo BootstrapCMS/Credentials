@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+use GrahamCampbell\Throttle\Facades\Throttle;
+
 Route::filter('throttle.login', function ($route, $request) {
     // check if we've reached the rate limit, but don't hit the throttle yet
     // we can hit the throttle later on in the if validation passes
