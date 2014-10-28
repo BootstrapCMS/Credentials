@@ -49,7 +49,7 @@ class CommandTest extends AbstractTestCase
 
     public function testReset()
     {
-        $this->assertSame(0, $this->getKernel()->call('migrate', array('--force' => true)));
+        $this->assertSame(0, $this->getKernel()->call('migrate', ['--force' => true]));
         $this->assertSame(0, $this->getKernel()->call('app:reset'));
     }
 

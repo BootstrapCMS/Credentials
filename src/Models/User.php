@@ -58,21 +58,21 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
      *
      * @var array
      */
-    protected $dates = array('deleted_at');
+    protected $dates = ['deleted_at'];
 
     /**
      * The revisionable columns.
      *
      * @var array
      */
-    protected $keepRevisionOf = array('email', 'password', 'activated', 'last_login', 'first_name', 'last_name');
+    protected $keepRevisionOf = ['email', 'password', 'activated', 'last_login', 'first_name', 'last_name'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index = array('id', 'email', 'first_name', 'last_name');
+    public static $index = ['id', 'email', 'first_name', 'last_name'];
 
     /**
      * The max users per page when displaying a paginated index.
@@ -100,7 +100,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
      *
      * @var array
      */
-    public static $rules = array(
+    public static $rules = [
         'first_name'            => 'required|min:2|max:32',
         'last_name'             => 'required|min:2|max:32',
         'email'                 => 'required|min:4|max:32|email',
@@ -108,14 +108,14 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
         'password_confirmation' => 'required',
         'activated'             => 'required',
         'activated_at'          => 'required',
-    );
+    ];
 
     /**
      * Access caches.
      *
      * @var array
      */
-    protected $access = array();
+    protected $access = [];
 
     /**
      * Get the recent action history for the user.
@@ -216,14 +216,14 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     public function addGroup(GroupInterface $group)
     {
         if (Credentials::check()) {
-            RevisionRepository::create(array(
+            RevisionRepository::create([
                 'revisionable_type' => get_class($this),
                 'revisionable_id'   => $this->getKey(),
                 'key'               => 'added_group',
                 'old_value'         => null,
                 'new_value'         => $group->getName(),
                 'user_id'           => Credentials::getUser()->id,
-            ));
+            ]);
         }
 
         return parent::addGroup($group);
@@ -238,14 +238,14 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
      */
     public function removeGroup(GroupInterface $group)
     {
-        RevisionRepository::create(array(
+        RevisionRepository::create([
             'revisionable_type' => get_class($this),
             'revisionable_id'   => $this->getKey(),
             'key'               => 'removed_group',
             'old_value'         => null,
             'new_value'         => $group->getName(),
             'user_id'           => Credentials::getUser()->id,
-        ));
+        ]);
 
         return parent::removeGroup($group);
     }

@@ -27,14 +27,14 @@ Profile
 <h3>Change Details</h3>
 <div class="well">
     <?php
-    $form = array('url' => URL::route('account.details.patch'),
+    $form = ['url' => URL::route('account.details.patch'),
         'method' => 'PATCH',
         'button' => 'Save Details',
-        'defaults' => array(
+        'defaults' => [
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
             'email' => $user->email,
-    ), );
+    ], ];
     ?>
     @include('graham-campbell/credentials::account.details')
 </div>
@@ -42,10 +42,10 @@ Profile
 <h3>Change Password</h3>
 <div class="well">
     <?php
-    $form = array('url' => URL::route('account.password.patch'),
+    $form = ['url' => URL::route('account.password.patch'),
         'method' => 'PATCH',
         'button' => 'Save Password',
-    );
+    ];
     ?>
     @include('graham-campbell/credentials::account.password')
 </div>

@@ -56,8 +56,8 @@ class ActivationController extends AbstractController
     {
         $this->throttler = $throttler;
 
-        $this->beforeFilter('throttle.activate', array('only' => array('getActivate')));
-        $this->beforeFilter('throttle.resend', array('only' => array('postResend')));
+        $this->beforeFilter('throttle.activate', ['only' => ['getActivate']]);
+        $this->beforeFilter('throttle.resend', ['only' => ['postResend']]);
 
         parent::__construct();
     }
@@ -135,12 +135,12 @@ class ActivationController extends AbstractController
 
             $code = $user->getActivationCode();
 
-            $mail = array(
+            $mail = [
                 'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
-                'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $code)),
+                'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
                 'email'   => $user->getLogin(),
                 'subject' => Config::get('platform.name').' - Activation',
-            );
+            ];
 
             Mail::queue('graham-campbell/credentials::emails.resend', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);

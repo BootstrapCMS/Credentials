@@ -56,12 +56,12 @@ class LoginController extends AbstractController
     {
         $this->throttler = $throttler;
 
-        $this->setPermissions(array(
+        $this->setPermissions([
             'getLogout' => 'user',
-        ));
+        ]);
 
-        $this->beforeFilter('throttle.login', array('only' => array('postLogin')));
-        $this->beforeFilter('throttle.sentry', array('only' => array('postLogin')));
+        $this->beforeFilter('throttle.login', ['only' => ['postLogin']]);
+        $this->beforeFilter('throttle.sentry', ['only' => ['postLogin']]);
 
         parent::__construct();
     }
@@ -85,7 +85,7 @@ class LoginController extends AbstractController
     {
         $remember = Binput::get('rememberMe');
 
-        $input = Binput::only(array('email', 'password'));
+        $input = Binput::only(['email', 'password']);
 
         $rules = UserRepository::rules(array_keys($input));
         $rules['password'] = 'required|min:6';

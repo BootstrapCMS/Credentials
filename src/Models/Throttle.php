@@ -55,14 +55,14 @@ class Throttle extends SentryThrottle implements BaseModelInterface
      */
     public function addLoginAttempt()
     {
-        RevisionRepository::create(array(
+        RevisionRepository::create([
             'revisionable_type' => Config::get('cartalyst/sentry::users.model'),
             'revisionable_id'   => $this['user_id'],
             'key'               => 'last_attempt_at',
             'old_value'         => $this['last_attempt_at'],
             'new_value'         => new DateTime(),
             'user_id'           => null,
-        ));
+        ]);
 
         parent::addLoginAttempt();
     }
@@ -74,14 +74,14 @@ class Throttle extends SentryThrottle implements BaseModelInterface
      */
     public function suspend()
     {
-        RevisionRepository::create(array(
+        RevisionRepository::create([
             'revisionable_type' => Config::get('cartalyst/sentry::users.model'),
             'revisionable_id'   => $this['user_id'],
             'key'               => 'suspended_at',
             'old_value'         => $this['suspended_at'],
             'new_value'         => new DateTime(),
             'user_id'           => null,
-        ));
+        ]);
 
         parent::suspend();
     }

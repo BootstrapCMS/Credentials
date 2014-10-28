@@ -36,14 +36,14 @@ Edit {{ $user->name }}
 <hr>
 <div class="well">
     <?php
-    $form = array('url' => URL::route('users.update', array('users' => $user->id)),
+    $form = ['url' => URL::route('users.update', ['users' => $user->id]),
         'method' => 'PATCH',
         'button' => 'Save User',
-        'defaults' => array(
+        'defaults' => [
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
             'email' => $user->email,
-    ), );
+    ], ];
     foreach ($groups as $group) {
         $form['defaults']['group_'.$group->id] = ($user->inGroup($group));
     }

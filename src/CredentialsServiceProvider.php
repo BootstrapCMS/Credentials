@@ -282,12 +282,12 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array(
+        return [
             'differ',
             'revisionrepository',
             'userrepository',
             'grouprepository',
             'credentials',
-        );
+        ];
     }
 }

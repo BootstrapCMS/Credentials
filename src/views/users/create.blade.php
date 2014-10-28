@@ -14,14 +14,14 @@ Create User
 @section('content')
 <div class="well">
     <?php
-    $form = array('url' => URL::route('users.store'),
+    $form = ['url' => URL::route('users.store'),
         'method' => 'POST',
         'button' => 'Create New User',
-        'defaults' => array(
+        'defaults' => [
             'first_name' => '',
             'last_name' => '',
             'email' => '',
-    ), );
+    ], ];
     foreach ($groups as $group) {
         if ($group->name == 'Users') {
             $form['defaults']['group_'.$group->id] = true;

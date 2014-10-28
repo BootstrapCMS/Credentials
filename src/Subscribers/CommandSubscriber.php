@@ -53,7 +53,7 @@ class CommandSubscriber
      */
     public function onRunMigrations(Command $command)
     {
-        $command->call('migrate', array('--package' => 'cartalyst/sentry', '--force' => true));
-        $command->call('migrate', array('--package' => 'graham-campbell/credentials', '--force' => true));
+        $command->call('migrate', ['--package' => 'cartalyst/sentry', '--force' => true]);
+        $command->call('migrate', ['--package' => 'graham-campbell/credentials', '--force' => true]);
     }
 }
