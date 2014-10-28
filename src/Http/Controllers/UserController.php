@@ -23,8 +23,8 @@ use Cartalyst\Sentry\Users\UserNotFoundException;
 use DateTime;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Credentials\Facades\Credentials;
-use GrahamCampbell\Credentials\Facades\GroupProvider;
-use GrahamCampbell\Credentials\Facades\UserProvider;
+use GrahamCampbell\Credentials\Facades\GroupRepository;
+use GrahamCampbell\Credentials\Facades\UserRepository;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\Mail;
@@ -73,8 +73,8 @@ class UserController extends AbstractController
      */
     public function index()
     {
-        $users = UserProvider::paginate();
-        $links = UserProvider::links();
+        $users = UserRepository::paginate();
+        $links = UserRepository::links();
 
         return View::make(
             'graham-campbell/credentials::users.index',
@@ -89,7 +89,7 @@ class UserController extends AbstractController
      */
     public function create()
     {
-        $groups = GroupProvider::index();
+        $groups = GroupRepository::index();
 
         return View::make(
             'graham-campbell/credentials::users.create',
@@ -112,18 +112,18 @@ class UserController extends AbstractController
             'activated_at' => new DateTime(),
         ));
 
-        $rules = UserProvider::rules(array_keys($input));
+        $rules = UserRepository::rules(array_keys($input));
         $rules['password'] = 'required|min:6';
 
-        $val = UserProvider::validate($input, $rules, true);
+        $val = UserRepository::validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('users.create')->withInput()->withErrors($val->errors());
         }
 
         try {
-            $user = UserProvider::create($input);
+            $user = UserRepository::create($input);
 
-            $groups = GroupProvider::index();
+            $groups = GroupRepository::index();
             foreach ($groups as $group) {
                 if (Binput::get('group_'.$group->id) === 'on') {
                     $user->addGroup($group);
@@ -158,7 +158,7 @@ class UserController extends AbstractController
      */
     public function show($id)
     {
-        $user = UserProvider::find($id);
+        $user = UserRepository::find($id);
         $this->checkUser($user);
 
         if ($user->activated_at) {
@@ -203,10 +203,10 @@ class UserController extends AbstractController
      */
     public function edit($id)
     {
-        $user = UserProvider::find($id);
+        $user = UserRepository::find($id);
         $this->checkUser($user);
 
-        $groups = GroupProvider::index();
+        $groups = GroupRepository::index();
 
         return View::make(
             'graham-campbell/credentials::users.edit',
@@ -225,20 +225,20 @@ class UserController extends AbstractController
     {
         $input = Binput::only(array('first_name', 'last_name', 'email'));
 
-        $val = UserProvider::validate($input, array_keys($input));
+        $val = UserRepository::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('users.edit', array('users' => $id))
                 ->withInput()->withErrors($val->errors());
         }
 
-        $user = UserProvider::find($id);
+        $user = UserRepository::find($id);
         $this->checkUser($user);
 
         $email = $user['email'];
 
         $user->update($input);
 
-        $groups = GroupProvider::index();
+        $groups = GroupRepository::index();
 
         $changed = false;
 
@@ -337,12 +337,12 @@ class UserController extends AbstractController
             'password' => 'required|min:6',
         );
 
-        $val = UserProvider::validate($input, $rules, true);
+        $val = UserRepository::validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('users.show', array('users' => $id))->withErrors($val->errors());
         }
 
-        $user = UserProvider::find($id);
+        $user = UserRepository::find($id);
         $this->checkUser($user);
 
         $user->update($input);
@@ -370,7 +370,7 @@ class UserController extends AbstractController
      */
     public function resend($id)
     {
-        $user = UserProvider::find($id);
+        $user = UserRepository::find($id);
         $this->checkUser($user);
 
         if ($user->activated) {
@@ -404,7 +404,7 @@ class UserController extends AbstractController
      */
     public function destroy($id)
     {
-        $user = UserProvider::find($id);
+        $user = UserRepository::find($id);
         $this->checkUser($user);
 
         $email = $user->getLogin();

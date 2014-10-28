@@ -14,26 +14,20 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Facades;
+namespace GrahamCampbell\Credentials\Repositories;
 
-use Illuminate\Support\Facades\Facade;
+use GrahamCampbell\Database\Repositories\AbstractRepository;
+use GrahamCampbell\Database\Repositories\Common\PaginateRepositoryTrait;
+use GrahamCampbell\Database\Repositories\Interfaces\PaginateRepositoryInterface;
 
 /**
- * This is the group provider facade class.
+ * This is the user repository class.
  *
  * @author    Graham Campbell <graham@mineuk.com>
  * @copyright 2013-2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class GroupProvider extends Facade
+class UserRepository extends AbstractRepository implements PaginateRepositoryInterface
 {
-    /**
-     * Get the registered name of the component.
-     *
-     * @return string
-     */
-    protected static function getFacadeAccessor()
-    {
-        return 'groupprovider';
-    }
+    use PaginateRepositoryTrait;
 }

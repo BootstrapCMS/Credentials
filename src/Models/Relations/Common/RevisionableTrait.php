@@ -18,7 +18,7 @@ namespace GrahamCampbell\Credentials\Models\Relations\Common;
 
 use DateTime;
 use GrahamCampbell\Credentials\Facades\Credentials;
-use GrahamCampbell\Credentials\Facades\RevisionProvider;
+use GrahamCampbell\Credentials\Facades\RevisionRepository;
 use Illuminate\Support\Facades\Config;
 
 /**
@@ -159,7 +159,7 @@ trait RevisionableTrait
     {
         if ($this->updating) {
             foreach ($this->changedRevisionableFields() as $key => $change) {
-                RevisionProvider::create(array(
+                RevisionRepository::create(array(
                     'revisionable_type' => get_class($this),
                     'revisionable_id'   => $this->getKey(),
                     'key'               => $key,
@@ -169,7 +169,7 @@ trait RevisionableTrait
                 ));
             }
         } else {
-            RevisionProvider::create(array(
+            RevisionRepository::create(array(
                 'revisionable_type' => get_class($this),
                 'revisionable_id'   => $this->getKey(),
                 'key'               => 'created_at',
@@ -206,7 +206,7 @@ trait RevisionableTrait
      */
     public function postDelete()
     {
-        RevisionProvider::create(array(
+        RevisionRepository::create(array(
             'revisionable_type' => get_class($this),
             'revisionable_id'   => $this->getKey(),
             'key'               => 'deleted_at',

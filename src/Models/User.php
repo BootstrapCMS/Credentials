@@ -20,7 +20,7 @@ use Carbon\Carbon;
 use Cartalyst\Sentry\Groups\GroupInterface;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
 use GrahamCampbell\Credentials\Facades\Credentials;
-use GrahamCampbell\Credentials\Facades\RevisionProvider;
+use GrahamCampbell\Credentials\Facades\RevisionRepository;
 use GrahamCampbell\Credentials\Models\Relations\Common\RevisionableTrait;
 use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface;
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
@@ -216,7 +216,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     public function addGroup(GroupInterface $group)
     {
         if (Credentials::check()) {
-            RevisionProvider::create(array(
+            RevisionRepository::create(array(
                 'revisionable_type' => get_class($this),
                 'revisionable_id'   => $this->getKey(),
                 'key'               => 'added_group',
@@ -238,7 +238,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
      */
     public function removeGroup(GroupInterface $group)
     {
-        RevisionProvider::create(array(
+        RevisionRepository::create(array(
             'revisionable_type' => get_class($this),
             'revisionable_id'   => $this->getKey(),
             'key'               => 'removed_group',

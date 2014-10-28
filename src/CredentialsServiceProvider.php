@@ -81,9 +81,9 @@ class CredentialsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerDiffer();
-        $this->registerRevisionProvider();
-        $this->registerUserProvider();
-        $this->registerGroupProvider();
+        $this->registerRevisionRepository();
+        $this->registerUserRepository();
+        $this->registerGroupRepository();
         $this->registerCredentials();
         $this->registerCommandSubscriber();
 
@@ -110,60 +110,60 @@ class CredentialsServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the revision provider class.
+     * Register the revision repository class.
      *
      * @return void
      */
-    protected function registerRevisionProvider()
+    protected function registerRevisionRepository()
     {
-        $this->app->singleton('revisionprovider', function ($app) {
+        $this->app->singleton('revisionrepository', function ($app) {
             $model = $app['config']['graham-campbell/credentials::revision'];
             $revision = new $model();
 
             $validator = $app['validator'];
 
-            return new Providers\RevisionProvider($revision, $validator);
+            return new Repositories\RevisionRepository($revision, $validator);
         });
 
-        $this->app->alias('revisionprovider', 'GrahamCampbell\Credentials\Providers\RevisionProvider');
+        $this->app->alias('revisionrepository', 'GrahamCampbell\Credentials\Repositories\RevisionRepository');
     }
 
     /**
-     * Register the user provider class.
+     * Register the user repository class.
      *
      * @return void
      */
-    protected function registerUserProvider()
+    protected function registerUserRepository()
     {
-        $this->app->singleton('userprovider', function ($app) {
+        $this->app->singleton('userrepository', function ($app) {
             $model = $app['config']['cartalyst/sentry::users.model'];
             $user = new $model();
 
             $validator = $app['validator'];
 
-            return new Providers\UserProvider($user, $validator);
+            return new Repositories\UserRepository($user, $validator);
         });
 
-        $this->app->alias('userprovider', 'GrahamCampbell\Credentials\Providers\UserProvider');
+        $this->app->alias('userrepository', 'GrahamCampbell\Credentials\Repositories\UserRepository');
     }
 
     /**
-     * Register the group provider class.
+     * Register the group repository class.
      *
      * @return void
      */
-    protected function registerGroupProvider()
+    protected function registerGroupRepository()
     {
-        $this->app->singleton('groupprovider', function ($app) {
+        $this->app->singleton('grouprepository', function ($app) {
             $model = $app['config']['cartalyst/sentry::groups.model'];
             $group = new $model();
 
             $validator = $app['validator'];
 
-            return new Providers\GroupProvider($group, $validator);
+            return new Repositories\GroupRepository($group, $validator);
         });
 
-        $this->app->alias('groupprovider', 'GrahamCampbell\Credentials\Providers\GroupProvider');
+        $this->app->alias('grouprepository', 'GrahamCampbell\Credentials\Repositories\GroupRepository');
     }
 
     /**
@@ -284,10 +284,10 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         return array(
             'differ',
-            'userprovider',
-            'groupprovider',
+            'revisionrepository',
+            'userrepository',
+            'grouprepository',
             'credentials',
-            'revisionprovider',
         );
     }
 }

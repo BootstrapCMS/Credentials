@@ -20,13 +20,13 @@ use GrahamCampbell\TestBench\Traits\FacadeTestCaseTrait;
 use GrahamCampbell\Tests\Credentials\AbstractTestCase;
 
 /**
- * This is the revision provider facade test class.
+ * This is the revision repository facade test class.
  *
  * @author    Graham Campbell <graham@mineuk.com>
  * @copyright 2013-2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class RevisionProviderTest extends AbstractTestCase
+class RevisionRepositoryTest extends AbstractTestCase
 {
     use FacadeTestCaseTrait;
 
@@ -37,7 +37,7 @@ class RevisionProviderTest extends AbstractTestCase
      */
     protected function getFacadeAccessor()
     {
-        return 'revisionprovider';
+        return 'revisionrepository';
     }
 
     /**
@@ -47,7 +47,7 @@ class RevisionProviderTest extends AbstractTestCase
      */
     protected function getFacadeClass()
     {
-        return 'GrahamCampbell\Credentials\Facades\RevisionProvider';
+        return 'GrahamCampbell\Credentials\Facades\RevisionRepository';
     }
 
     /**
@@ -57,6 +57,6 @@ class RevisionProviderTest extends AbstractTestCase
      */
     protected function getFacadeRoot()
     {
-        return 'GrahamCampbell\Credentials\Providers\RevisionProvider';
+        return 'GrahamCampbell\Credentials\Repositories\RevisionRepository';
     }
 }

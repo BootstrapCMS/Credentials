@@ -20,13 +20,13 @@ use GrahamCampbell\TestBench\Traits\FacadeTestCaseTrait;
 use GrahamCampbell\Tests\Credentials\AbstractTestCase;
 
 /**
- * This is the user repository facade test class.
+ * This is the group repository facade test class.
  *
  * @author    Graham Campbell <graham@mineuk.com>
  * @copyright 2013-2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class UserRepositoryTest extends AbstractTestCase
+class GroupRepositoryTest extends AbstractTestCase
 {
     use FacadeTestCaseTrait;
 
@@ -37,7 +37,7 @@ class UserRepositoryTest extends AbstractTestCase
      */
     protected function getFacadeAccessor()
     {
-        return 'userrepository';
+        return 'grouprepository';
     }
 
     /**
@@ -47,7 +47,7 @@ class UserRepositoryTest extends AbstractTestCase
      */
     protected function getFacadeClass()
     {
-        return 'GrahamCampbell\Credentials\Facades\UserRepository';
+        return 'GrahamCampbell\Credentials\Facades\GroupRepository';
     }
 
     /**
@@ -57,6 +57,6 @@ class UserRepositoryTest extends AbstractTestCase
      */
     protected function getFacadeRoot()
     {
-        return 'GrahamCampbell\Credentials\Repositories\UserRepository';
+        return 'GrahamCampbell\Credentials\Repositories\GroupRepository';
     }
 }

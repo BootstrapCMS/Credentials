@@ -19,13 +19,13 @@ namespace GrahamCampbell\Credentials\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * This is the revision provider facade class.
+ * This is the revision repository facade class.
  *
  * @author    Graham Campbell <graham@mineuk.com>
  * @copyright 2013-2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class RevisionProvider extends Facade
+class RevisionRepository extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -34,6 +34,6 @@ class RevisionProvider extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'revisionprovider';
+        return 'revisionrepository';
     }
 }

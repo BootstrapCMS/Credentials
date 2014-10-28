@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Providers;
+namespace GrahamCampbell\Credentials\Repositories;
 
-use GrahamCampbell\Database\Providers\AbstractProvider;
-use GrahamCampbell\Database\Providers\Common\PaginateProviderTrait;
-use GrahamCampbell\Database\Providers\Interfaces\PaginateProviderInterface;
+use GrahamCampbell\Database\Repositories\AbstractRepository;
 
 /**
- * This is the user provider class.
+ * This is the group repository class.
  *
  * @author    Graham Campbell <graham@mineuk.com>
  * @copyright 2013-2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class UserProvider extends AbstractProvider implements PaginateProviderInterface
+class GroupRepository extends AbstractRepository
 {
-    use PaginateProviderTrait;
+    //
 }

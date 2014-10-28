@@ -20,7 +20,7 @@ use Cartalyst\Sentry\Users\UserAlreadyActivatedException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Credentials\Facades\Credentials;
-use GrahamCampbell\Credentials\Facades\UserProvider;
+use GrahamCampbell\Credentials\Facades\UserRepository;
 use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
@@ -118,7 +118,7 @@ class ActivationController extends AbstractController
     {
         $input = Binput::only('email');
 
-        $val = UserProvider::validate($input, array_keys($input));
+        $val = UserRepository::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.resend')->withInput()->withErrors($val->errors());
         }

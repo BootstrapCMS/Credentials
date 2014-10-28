@@ -23,7 +23,7 @@ use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Users\WrongPasswordException;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Credentials\Facades\Credentials;
-use GrahamCampbell\Credentials\Facades\UserProvider;
+use GrahamCampbell\Credentials\Facades\UserRepository;
 use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
@@ -87,10 +87,10 @@ class LoginController extends AbstractController
 
         $input = Binput::only(array('email', 'password'));
 
-        $rules = UserProvider::rules(array_keys($input));
+        $rules = UserRepository::rules(array_keys($input));
         $rules['password'] = 'required|min:6';
 
-        $val = UserProvider::validate($input, $rules, true);
+        $val = UserRepository::validate($input, $rules, true);
         if ($val->fails()) {
             return Redirect::route('account.login')->withInput()->withErrors($val->errors());
         }

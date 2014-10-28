@@ -14,49 +14,26 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Tests\Credentials\Facades;
+namespace GrahamCampbell\Credentials\Facades;
 
-use GrahamCampbell\TestBench\Traits\FacadeTestCaseTrait;
-use GrahamCampbell\Tests\Credentials\AbstractTestCase;
+use Illuminate\Support\Facades\Facade;
 
 /**
- * This is the group provider facade test class.
+ * This is the user repository facade class.
  *
  * @author    Graham Campbell <graham@mineuk.com>
  * @copyright 2013-2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class GroupProviderTest extends AbstractTestCase
+class UserRepository extends Facade
 {
-    use FacadeTestCaseTrait;
-
     /**
-     * Get the facade accessor.
+     * Get the registered name of the component.
      *
      * @return string
      */
-    protected function getFacadeAccessor()
+    protected static function getFacadeAccessor()
     {
-        return 'groupprovider';
-    }
-
-    /**
-     * Get the facade class.
-     *
-     * @return string
-     */
-    protected function getFacadeClass()
-    {
-        return 'GrahamCampbell\Credentials\Facades\GroupProvider';
-    }
-
-    /**
-     * Get the facade route.
-     *
-     * @return string
-     */
-    protected function getFacadeRoot()
-    {
-        return 'GrahamCampbell\Credentials\Providers\GroupProvider';
+        return 'userrepository';
     }
 }

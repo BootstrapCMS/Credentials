@@ -18,7 +18,7 @@ namespace GrahamCampbell\Credentials\Http\Controllers;
 
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Credentials\Facades\Credentials;
-use GrahamCampbell\Credentials\Facades\UserProvider;
+use GrahamCampbell\Credentials\Facades\UserRepository;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
@@ -123,7 +123,7 @@ class AccountController extends AbstractController
     {
         $input = Binput::only(array('first_name', 'last_name', 'email'));
 
-        $val = UserProvider::validate($input, array_keys($input));
+        $val = UserRepository::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.profile')->withInput()->withErrors($val->errors());
         }
@@ -165,7 +165,7 @@ class AccountController extends AbstractController
     {
         $input = Binput::only(array('password', 'password_confirmation'));
 
-        $val = UserProvider::validate($input, array_keys($input));
+        $val = UserRepository::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.profile')->withInput()->withErrors($val->errors());
         }

@@ -34,19 +34,19 @@ class ServiceProviderTest extends AbstractTestCase
         $this->assertIsInjectable('SebastianBergmann\Diff\Differ');
     }
 
-    public function testRevisionProviderIsInjectable()
+    public function testRevisionRepositoryIsInjectable()
     {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Providers\RevisionProvider');
+        $this->assertIsInjectable('GrahamCampbell\Credentials\Repositories\RevisionRepository');
     }
 
-    public function testUserProviderIsInjectable()
+    public function testUserRepositoryIsInjectable()
     {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Providers\UserProvider');
+        $this->assertIsInjectable('GrahamCampbell\Credentials\Repositories\UserRepository');
     }
 
-    public function testGroupProviderIsInjectable()
+    public function testGroupRepositoryIsInjectable()
     {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Providers\GroupProvider');
+        $this->assertIsInjectable('GrahamCampbell\Credentials\Repositories\GroupRepository');
     }
 
     public function testCredentialsIsInjectable()

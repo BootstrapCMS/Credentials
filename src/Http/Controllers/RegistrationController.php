@@ -19,7 +19,7 @@ namespace GrahamCampbell\Credentials\Http\Controllers;
 use Cartalyst\Sentry\Users\UserExistsException;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Credentials\Facades\Credentials;
-use GrahamCampbell\Credentials\Facades\UserProvider;
+use GrahamCampbell\Credentials\Facades\UserRepository;
 use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
@@ -82,7 +82,7 @@ class RegistrationController extends AbstractController
 
         $input = Binput::only(array('first_name', 'last_name', 'email', 'password', 'password_confirmation'));
 
-        $val = UserProvider::validate($input, array_keys($input));
+        $val = UserRepository::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('account.register')->withInput()->withErrors($val->errors());
         }

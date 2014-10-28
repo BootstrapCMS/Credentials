@@ -18,7 +18,7 @@ namespace GrahamCampbell\Credentials\Models;
 
 use Cartalyst\Sentry\Throttling\Eloquent\Throttle as SentryThrottle;
 use DateTime;
-use GrahamCampbell\Credentials\Facades\RevisionProvider;
+use GrahamCampbell\Credentials\Facades\RevisionRepository;
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
 use Illuminate\Support\Facades\Config;
@@ -55,7 +55,7 @@ class Throttle extends SentryThrottle implements BaseModelInterface
      */
     public function addLoginAttempt()
     {
-        RevisionProvider::create(array(
+        RevisionRepository::create(array(
             'revisionable_type' => Config::get('cartalyst/sentry::users.model'),
             'revisionable_id'   => $this['user_id'],
             'key'               => 'last_attempt_at',
@@ -74,7 +74,7 @@ class Throttle extends SentryThrottle implements BaseModelInterface
      */
     public function suspend()
     {
-        RevisionProvider::create(array(
+        RevisionRepository::create(array(
             'revisionable_type' => Config::get('cartalyst/sentry::users.model'),
             'revisionable_id'   => $this['user_id'],
             'key'               => 'suspended_at',
