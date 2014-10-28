@@ -58,9 +58,17 @@ abstract class AbstractController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(User::class, ['only' => $this->users]);
-        $this->middleware(Mod::class, ['only' => $this->mods]);
-        $this->middleware(Admin::class, ['only' => $this->admins]);
+        if ($this->users) {
+            $this->middleware(User::class, ['only' => $this->users]);
+        }
+
+        if ($this->mods) {
+            $this->middleware(Mod::class, ['only' => $this->mods]);
+        }
+
+        if ($this->admins) {
+            $this->middleware(Admin::class, ['only' => $this->admins]);
+        }
     }
 
     /**
