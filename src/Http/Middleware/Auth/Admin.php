@@ -25,5 +25,5 @@ namespace GrahamCampbell\Credentials\Http\Middleware\Auth;
  */
 class Admin extends AbstractAuth
 {
-    //
+    // clever stuff happens
 }

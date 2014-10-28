@@ -25,5 +25,5 @@ namespace GrahamCampbell\Credentials\Http\Middleware\Auth;
  */
 class Mod extends AbstractAuth
 {
-    //
+    // clever stuff happens
 }
