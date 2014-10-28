@@ -47,7 +47,7 @@ You can register the three facades in the `aliases` key of your `app/config/app.
 
 #### Looking for a laravel 5 compatable version?
 
-Checkout the [0.4 branch](https://github.com/GrahamCampbell/Laravel-Credentials/tree/master), installable by requiring `"graham-campbell/credentials": "0.4.*"`.
+Checkout the [master branch](https://github.com/GrahamCampbell/Laravel-Credentials/tree/master), installable by requiring `"graham-campbell/credentials": "0.4.*"`.
 
 
 ## Configuration
