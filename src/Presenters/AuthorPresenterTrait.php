@@ -32,9 +32,7 @@ trait AuthorPresenterTrait
      */
     public function author()
     {
-        $user = $this->getWrappedObject()->user()->withTrashed()
-            ->cacheDriver('array')->rememberForever()
-            ->first(array('first_name', 'last_name'));
+        $user = $this->getWrappedObject()->user()->withTrashed()->first(array('first_name', 'last_name'));
 
         if ($user) {
             return $user->first_name.' '.$user->last_name;
