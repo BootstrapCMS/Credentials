@@ -2,12 +2,12 @@
 
 @section('title')
 <?php $__navtype = 'admin'; ?>
-{{{ $user->name }}}
+{{ $user->name }}
 @stop
 
 @section('top')
 <div class="page-header">
-<h1>{{{ $user->name }}}</h1>
+<h1>{{ $user->name }}</h1>
 </div>
 @stop
 
@@ -18,14 +18,14 @@
             @if($user->id == Credentials::getUser()->id)
                 Currently showing your profile:
             @else
-                Currently showing {{ $user->name }}'s profile:
+                Currently showing {!! $user->name !!}'s profile:
             @endif
         </p>
     </div>
     <div class="col-lg-6">
         <div class="pull-right visible-lg">
             @auth('admin')
-                &nbsp;<a class="btn btn-info" href="{{ URL::route('users.edit', array('users' => $user->id)) }}"><i class="fa fa-pencil-square-o"></i> Edit User</a>
+                &nbsp;<a class="btn btn-info" href="{!! URL::route('users.edit', array('users' => $user->id)) !!}"><i class="fa fa-pencil-square-o"></i> Edit User</a>
             @endauth
             &nbsp;<a class="btn btn-warning" href="#suspend_user" data-toggle="modal" data-target="#suspend_user"><i class="fa fa-ban"></i> Suspend User</a>
             @auth('admin')
@@ -36,7 +36,7 @@
     </div>
     <div class="col-lg-6 hidden-lg">
         @auth('admin')
-            &nbsp;<a class="btn btn-info" href="{{ URL::route('users.edit', array('users' => $user->id)) }}"><i class="fa fa-pencil-square-o"></i> Edit User</a>
+            &nbsp;<a class="btn btn-info" href="{!! URL::route('users.edit', array('users' => $user->id)) !!}"><i class="fa fa-pencil-square-o"></i> Edit User</a>
         @endauth
         &nbsp;<a class="btn btn-warning" href="#suspend_user" data-toggle="modal" data-target="#suspend_user"><i class="fa fa-ban"></i> Suspend User</a>
         @auth('admin')
@@ -51,37 +51,37 @@
     <div class="hidden-xs">
         <div class="col-xs-6">
             @if ($user->first_name)
-                <p><strong>First Name:</strong> {{ $user->first_name }} </p>
+                <p><strong>First Name:</strong> {!! $user->first_name !!} </p>
             @endif
             @if ($user->last_name)
-                <p><strong>Last Name:</strong> {{ $user->last_name }} </p>
+                <p><strong>Last Name:</strong> {!! $user->last_name !!} </p>
             @endif
-            <p><strong>Email:</strong> {{ $user->email }}</p>
-            <p><strong>Groups:</strong> {{ $groups }}</strong>
+            <p><strong>Email:</strong> {!! $user->email !!}</p>
+            <p><strong>Groups:</strong> {!! $groups !!}</strong>
         </div>
         <div class="col-xs-6">
             <div class="pull-right">
-                <p><em>Account Created: {{ HTML::ago($user->created_at) }}</em></p>
-                <p><em>Account Updated: {{ HTML::ago($user->updated_at) }}</em></p>
-                <p><em>Account Activated: {{ $activated }}</em></p>
-                <p><em>Account Suspended: {{ $suspended }}</em></p>
+                <p><em>Account Created: {!! HTML::ago($user->created_at) !!}</em></p>
+                <p><em>Account Updated: {!! HTML::ago($user->updated_at) !!}</em></p>
+                <p><em>Account Activated: {!! $activated !!}</em></p>
+                <p><em>Account Suspended: {!! $suspended !!}</em></p>
             </div>
         </div>
     </div>
     <div class="visible-xs">
         <div class="col-xs-12">
             @if ($user->first_name)
-                <p><strong>First Name:</strong> {{ $user->first_name }} </p>
+                <p><strong>First Name:</strong> {!! $user->first_name !!} </p>
             @endif
             @if ($user->last_name)
-                <p><strong>Last Name:</strong> {{ $user->last_name }} </p>
+                <p><strong>Last Name:</strong> {!! $user->last_name !!} </p>
             @endif
-            <p><strong>Email:</strong> {{ $user->email }}</p>
-            <p><strong>Groups:</strong> {{ $groups }}</p>
-            <p><strong>Account Created:</strong> {{ HTML::ago($user->created_at) }}</p>
-            <p><strong>Account Updated:</strong> {{ HTML::ago($user->updated_at) }}</p>
-            <p><strong>Account Activated:</strong> {{ $activated }}</p>
-            <p><strong>Account Suspended:</strong> {{ $suspended }}</p>
+            <p><strong>Email:</strong> {!! $user->email !!}</p>
+            <p><strong>Groups:</strong> {!! $groups !!}</p>
+            <p><strong>Account Created:</strong> {!! HTML::ago($user->created_at) !!}</p>
+            <p><strong>Account Updated:</strong> {!! HTML::ago($user->updated_at) !!}</p>
+            <p><strong>Account Activated:</strong> {!! $activated !!}</p>
+            <p><strong>Account Suspended:</strong> {!! $suspended !!}</p>
         </div>
     </div>
 </div>

@@ -13,13 +13,13 @@ Reset Password
 @section('content')
 <p class="lead">Please enter your details:</p>
 <div class="well">
-    {{ Form::open(array('url' => URL::route('account.reset.post'), 'method' => 'POST', 'class' => 'form-horizontal')) }}
+    {!! Form::open(array('url' => URL::route('account.reset.post'), 'method' => 'POST', 'class' => 'form-horizontal')) !!}
 
-        <div class="form-group{{ ($errors->has('email')) ? ' has-error' : '' }}">
+        <div class="form-group{!! ($errors->has('email')) ? ' has-error' : '' !!}">
             <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="email">Email Address</label>
             <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-                <input name="email" id="email" value="{{ Request::old('email') }}" type="text" class="form-control" placeholder="Email Address">
-                {{ ($errors->has('email') ? $errors->first('email') : '') }}
+                <input name="email" id="email" value="{!! Request::old('email') !!}" type="text" class="form-control" placeholder="Email Address">
+                {!! ($errors->has('email') ? $errors->first('email') : '') !!}
             </div>
         </div>
 
@@ -29,14 +29,14 @@ Reset Password
             </div>
         </div>
 
-    {{ Form::close() }}
+    {!! Form::close() !!}
 </div>
 @stop
 
 @section('css')
-{{ HTML::style('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/css/bootstrap3/bootstrap-switch.css') }}
+{!! HTML::style('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/css/bootstrap3/bootstrap-switch.css') !!}
 @stop
 
 @section('js')
-{{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/js/bootstrap-switch.js') }}
+{!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/js/bootstrap-switch.js') !!}
 @stop

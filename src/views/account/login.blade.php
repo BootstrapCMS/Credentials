@@ -13,21 +13,21 @@ Login
 @section('content')
 <p class="lead">Please enter your details:</p>
 <div class="well">
-    {{ Form::open(array('url' => URL::route('account.login.post'), 'method' => 'POST', 'class' => 'form-horizontal')) }}
+    {!! Form::open(array('url' => URL::route('account.login.post'), 'method' => 'POST', 'class' => 'form-horizontal')) !!}
 
-        <div class="form-group{{ ($errors->has('email')) ? ' has-error' : '' }}">
+        <div class="form-group{!! ($errors->has('email')) ? ' has-error' : '' !!}">
             <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="email">Email</label>
             <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-                <input name="email" id="email" value="{{ Request::old('email') }}" type="text" class="form-control" placeholder="Email">
-                {{ ($errors->has('email') ? $errors->first('email') : '') }}
+                <input name="email" id="email" value="{!! Request::old('email') !!}" type="text" class="form-control" placeholder="Email">
+                {!! ($errors->has('email') ? $errors->first('email') : '') !!}
             </div>
         </div>
 
-       <div class="form-group{{ ($errors->has('password')) ? ' has-error' : '' }}">
+       <div class="form-group{!! ($errors->has('password')) ? ' has-error' : '' !!}">
             <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="password">Password</label>
             <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
                 <input name="password" id="password" value="" type="password" class="form-control" placeholder="Password">
-                {{ ($errors->has('password') ? $errors->first('password') : '') }}
+                {!! ($errors->has('password') ? $errors->first('password') : '') !!}
             </div>
         </div>
 
@@ -43,21 +43,21 @@ Login
             <div class="col-md-offset-2 col-sm-offset-3 col-sm-10 col-xs-12">
                 <button class="btn btn-primary" type="submit"><i class="fa fa-rocket"></i> Log In</button>
                 @if (Config::get('graham-campbell/credentials::activation'))
-                    <label><a href="{{ URL::route('account.reset') }}" class="btn btn-link">Forgot Password?</a>/<a href="{{ URL::route('account.resend') }}" class="btn btn-link">Not Activated?</a></label>
+                    <label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">Forgot Password?</a>/<a href="{!! URL::route('account.resend') !!}" class="btn btn-link">Not Activated?</a></label>
                 @else
-                    <label><a href="{{ URL::route('account.reset') }}" class="btn btn-link">Forgot Password?</a>
+                    <label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">Forgot Password?</a>
                 @endif
             </div>
         </div>
 
-  {{ Form::close() }}
+  {!! Form::close() !!}
 </div>
 @stop
 
 @section('css')
-{{ HTML::style('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/css/bootstrap3/bootstrap-switch.css') }}
+{!! HTML::style('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/css/bootstrap3/bootstrap-switch.css') !!}
 @stop
 
 @section('js')
-{{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/js/bootstrap-switch.js') }}
+{!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/js/bootstrap-switch.js') !!}
 @stop

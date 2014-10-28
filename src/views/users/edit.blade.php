@@ -2,12 +2,12 @@
 
 @section('title')
 <?php $__navtype = 'admin'; ?>
-Edit {{{ $user->name }}}
+Edit {{ $user->name }}
 @stop
 
 @section('top')
 <div class="page-header">
-<h1>Edit {{{ $user->name }}}</h1>
+<h1>Edit {{ $user->name }}</h1>
 </div>
 @stop
 
@@ -18,13 +18,13 @@ Edit {{{ $user->name }}}
             @if($user->id == Credentials::getUser()->id)
                 Currently editing your profile:
             @else
-                Currently editing {{ $user->name }}'s profile:
+                Currently editing {!! $user->name !!}'s profile:
             @endif
         </p>
     </div>
     <div class="col-xs-6">
         <div class="pull-right">
-            &nbsp;<a class="btn btn-success" href="{{ URL::route('users.show', array('users' => $user->id)) }}"><i class="fa fa-file-text"></i> Show User</a>
+            &nbsp;<a class="btn btn-success" href="{!! URL::route('users.show', array('users' => $user->id)) !!}"><i class="fa fa-file-text"></i> Show User</a>
             &nbsp;<a class="btn btn-warning" href="#suspend_user" data-toggle="modal" data-target="#suspend_user"><i class="fa fa-ban"></i> Suspend User</a>
             @auth('admin')
                 &nbsp;<a class="btn btn-inverse" href="#reset_user" data-toggle="modal" data-target="#reset_user"><i class="fa fa-lock"></i> Reset Password</a>
@@ -61,9 +61,9 @@ Edit {{{ $user->name }}}
 @stop
 
 @section('css')
-{{ HTML::style('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/css/bootstrap3/bootstrap-switch.css') }}
+{!! HTML::style('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/css/bootstrap3/bootstrap-switch.css') !!}
 @stop
 
 @section('js')
-{{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/js/bootstrap-switch.js') }}
+{!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/js/bootstrap-switch.js') !!}
 @stop
