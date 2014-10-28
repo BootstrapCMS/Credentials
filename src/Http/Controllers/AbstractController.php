@@ -55,8 +55,6 @@ abstract class AbstractController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('csrf', ['on' => 'post']);
-
         $this->beforeFilter('credentials:user', ['only' => $this->users]);
         $this->beforeFilter('credentials:mod', ['only' => $this->mods]);
         $this->beforeFilter('credentials:admin', ['only' => $this->admins]);
