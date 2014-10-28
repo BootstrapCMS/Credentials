@@ -202,8 +202,8 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerAccountController()
     {
-        $this->app->bind('GrahamCampbell\Credentials\Controllers\AccountController', function ($app) {
-            return new Controllers\AccountController();
+        $this->app->bind('GrahamCampbell\Credentials\Http\Controllers\AccountController', function ($app) {
+            return new Http\Controllers\AccountController();
         });
     }
 
@@ -214,10 +214,10 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerLoginController()
     {
-        $this->app->bind('GrahamCampbell\Credentials\Controllers\LoginController', function ($app) {
+        $this->app->bind('GrahamCampbell\Credentials\Http\Controllers\LoginController', function ($app) {
             $throttler = $app['throttle']->get($app['request'], 10, 10);
 
-            return new Controllers\LoginController($throttler);
+            return new Http\Controllers\LoginController($throttler);
         });
     }
 
@@ -228,10 +228,10 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerRegistrationController()
     {
-        $this->app->bind('GrahamCampbell\Credentials\Controllers\RegistrationController', function ($app) {
+        $this->app->bind('GrahamCampbell\Credentials\Http\Controllers\RegistrationController', function ($app) {
             $throttler = $app['throttle']->get($app['request'], 5, 30);
 
-            return new Controllers\RegistrationController($throttler);
+            return new Http\Controllers\RegistrationController($throttler);
         });
     }
 
@@ -242,10 +242,10 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerResetController()
     {
-        $this->app->bind('GrahamCampbell\Credentials\Controllers\ResetController', function ($app) {
+        $this->app->bind('GrahamCampbell\Credentials\Http\Controllers\ResetController', function ($app) {
             $throttler = $app['throttle']->get($app['request'], 5, 30);
 
-            return new Controllers\ResetController($throttler);
+            return new Http\Controllers\ResetController($throttler);
         });
     }
 
@@ -256,10 +256,10 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerActivationController()
     {
-        $this->app->bind('GrahamCampbell\Credentials\Controllers\ActivationController', function ($app) {
+        $this->app->bind('GrahamCampbell\Credentials\Http\Controllers\ActivationController', function ($app) {
             $throttler = $app['throttle']->get($app['request'], 5, 30);
 
-            return new Controllers\ActivationController($throttler);
+            return new Http\Controllers\ActivationController($throttler);
         });
     }
 
@@ -270,8 +270,8 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerUserController()
     {
-        $this->app->bind('GrahamCampbell\Credentials\Controllers\UserController', function ($app) {
-            return new Controllers\UserController();
+        $this->app->bind('GrahamCampbell\Credentials\Http\Controllers\UserController', function ($app) {
+            return new Http\Controllers\UserController();
         });
     }
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Controllers;
+namespace GrahamCampbell\Credentials\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 

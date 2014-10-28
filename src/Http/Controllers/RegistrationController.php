@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Controllers;
+namespace GrahamCampbell\Credentials\Http\Controllers;
 
 use Cartalyst\Sentry\Users\UserExistsException;
 use GrahamCampbell\Binput\Facades\Binput;
