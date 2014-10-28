@@ -14,33 +14,6 @@
  * limitations under the License.
  */
 
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
-
-// check if the user is logged in and their access level
-Route::filter('credentials', function ($route, $request, $value) {
-    if (!Credentials::check()) {
-        Log::info('User tried to access a page without being logged in', ['path' => $request->path()]);
-        if (Request::ajax()) {
-            throw new UnauthorizedHttpException('Action Requires Login');
-        }
-        return Redirect::guest(URL::route('account.login'))
-            ->with('error', 'You must be logged in to perform that action.');
-    }
-
-    if (!Credentials::hasAccess($value)) {
-        Log::warning(
-            'User tried to access a page without permission',
-            ['path' => $request->path(), 'permission' => $value]
-        );
-        throw new AccessDeniedHttpException(ucwords($value).' Permissions Are Required');
-    }
-});
-
-Route::filter('throttle.sentry', function ($route, $request) {
-    Credentials::getThrottleProvider()->enable();
-});
-
 Route::filter('throttle.login', function ($route, $request) {
     // check if we've reached the rate limit, but don't hit the throttle yet
     // we can hit the throttle later on in the if validation passes

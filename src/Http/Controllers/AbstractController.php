@@ -16,6 +16,9 @@
 
 namespace GrahamCampbell\Credentials\Http\Controllers;
 
+use GrahamCampbell\Credentials\Http\Middleware\Auth\Admin;
+use GrahamCampbell\Credentials\Http\Middleware\Auth\Mod;
+use GrahamCampbell\Credentials\Http\Middleware\Auth\User;
 use Illuminate\Routing\Controller;
 
 /**
@@ -55,9 +58,9 @@ abstract class AbstractController extends Controller
      */
     public function __construct()
     {
-        $this->beforeFilter('credentials:user', ['only' => $this->users]);
-        $this->beforeFilter('credentials:mod', ['only' => $this->mods]);
-        $this->beforeFilter('credentials:admin', ['only' => $this->admins]);
+        $this->middleware(User::class, ['only' => $this->users]);
+        $this->middleware(Mod::class, ['only' => $this->mods]);
+        $this->middleware(Admin::class, ['only' => $this->admins]);
     }
 
     /**

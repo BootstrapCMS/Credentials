@@ -24,6 +24,7 @@ use Cartalyst\Sentry\Users\WrongPasswordException;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Facades\UserRepository;
+use GrahamCampbell\Credentials\Http\Middleware\SentryThrottle;
 use GrahamCampbell\Throttle\Throttlers\ThrottlerInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
@@ -61,7 +62,7 @@ class LoginController extends AbstractController
         ]);
 
         $this->beforeFilter('throttle.login', ['only' => ['postLogin']]);
-        $this->beforeFilter('throttle.sentry', ['only' => ['postLogin']]);
+        $this->middleware(SentryThrottle::class, ['only' => ['postLogin']]);
 
         parent::__construct();
     }
