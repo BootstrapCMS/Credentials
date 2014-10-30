@@ -102,7 +102,7 @@ abstract class AbstractAuth implements Middleware
      * We're using reflection here to grab the short class name of the
      * extending class, and then returning the lowercase value.
      *
-     * @return mixed
+     * @return string
      */
     protected function level()
     {
