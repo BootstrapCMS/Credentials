@@ -28,9 +28,7 @@
         <div class="form-group">
             <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="email">{!! $group->name !!}</label>
             <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-                <div data-on-label="<i class='fa fa-check fa-inverse'></i>" data-off-label="<i class='fa fa-times'>">
-                    <input class="make-switch" name="group_{!! $group->id !!}" id="group_{!! $group->id !!}" type="checkbox"{!! (Request::old('group_'.$group->id, $form['defaults']['group_'.$group->id]) == true) ? ' checked' : '' !!}>
-                </div>
+                <input class="make-switch" data-on-text="<i class='fa fa-check fa-inverse'></i>" data-off-text="<i class='fa fa-times'>" name="group_{!! $group->id !!}" id="group_{!! $group->id !!}" type="checkbox"{!! (Request::old('group_'.$group->id, $form['defaults']['group_'.$group->id]) == true) ? ' checked' : '' !!}>
             </div>
         </div>
     @endforeach
