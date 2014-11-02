@@ -65,11 +65,3 @@ Register
     {!! Form::close() !!}
 </div>
 @stop
-
-@section('css')
-{!! HTML::style('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/css/bootstrap3/bootstrap-switch.css') !!}
-@stop
-
-@section('js')
-{!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.9/js/bootstrap-switch.js') !!}
-@stop
