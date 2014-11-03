@@ -40,6 +40,9 @@ Create User
 
 @section('js')
 {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.1.0/js/bootstrap-switch.min.js') !!}
-<script>$(".make-switch").bootstrapSwitch();</script>
-
+<script type="text/javascript">
+$(document).ready(function () {
+    $(".make-switch").bootstrapSwitch();
+});
+</script>
 @stop
