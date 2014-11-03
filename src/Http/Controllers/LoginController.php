@@ -116,10 +116,12 @@ class LoginController extends AbstractController
             } else {
                 $throttle->user->attemptActivation($throttle->user->getActivationCode());
                 $throttle->user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
+
                 return $this->postLogin();
             }
         } catch (UserSuspendedException $e) {
             $time = $throttle->getSuspensionTime();
+
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', "Your account has been suspended for $time minutes.");
         } catch (UserBannedException $e) {

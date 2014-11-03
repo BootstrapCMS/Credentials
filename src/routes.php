@@ -18,6 +18,7 @@
 Route::get('account', ['as' => 'account', function () {
     Session::flash('', ''); // work around laravel bug if there is no session yet
     Session::reflash();
+
     return Redirect::route('account.profile');
 }, ]);
 

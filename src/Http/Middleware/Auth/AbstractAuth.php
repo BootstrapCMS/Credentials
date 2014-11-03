@@ -81,6 +81,7 @@ abstract class AbstractAuth implements Middleware
             if ($request->ajax()) {
                 throw new UnauthorizedHttpException('Action Requires Login');
             }
+
             return Redirect::guest(URL::route('account.login'))
                 ->with('error', 'You must be logged in to perform that action.');
         }

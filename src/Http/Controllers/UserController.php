@@ -307,6 +307,7 @@ class UserController extends AbstractController
             throw new NotFoundHttpException('User Not Found', $e);
         } catch (UserSuspendedException $e) {
             $time = $throttle->getSuspensionTime();
+
             return Redirect::route('users.suspend', ['users' => $id])->withInput()
                 ->with('error', "This user is already suspended for $time minutes.");
         } catch (UserBannedException $e) {
