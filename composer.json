@@ -13,6 +13,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/GrahamCampbell/sentry"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/GrahamCampbell/testbench"
         }
     ],
     "require": {
@@ -37,6 +41,7 @@
         "psr/log": "~1.0"
     },
     "require-dev": {
+        "orchestra/testbench": "dev-fix-logging as 3.0.x-dev",
         "graham-campbell/testbench": "~2.0",
         "doctrine/dbal": "~2.4"
     },
