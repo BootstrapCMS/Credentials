@@ -16,7 +16,7 @@
 
 namespace GrahamCampbell\Tests\Credentials;
 
-use GrahamCampbell\TestBench\AbstractLaravelTestCase as TestCase;
+use GrahamCampbell\TestBench\AbstractPackageTestCase;
 
 /**
  * This is the abstract test case class.
@@ -25,14 +25,16 @@ use GrahamCampbell\TestBench\AbstractLaravelTestCase as TestCase;
  * @copyright 2013-2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-abstract class AbstractTestCase extends TestCase
+abstract class AbstractTestCase extends AbstractPackageTestCase
 {
     /**
      * Get the required service providers.
      *
+     * @param \Illuminate\Contracts\Foundation\Application $app
+     *
      * @return string[]
      */
-    protected function getRequiredServiceProviders()
+    protected function getRequiredServiceProviders($app)
     {
         return [
             'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
@@ -47,9 +49,11 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Get the service provider class.
      *
+     * @param \Illuminate\Contracts\Foundation\Application $app
+     *
      * @return string
      */
-    protected function getServiceProviderClass()
+    protected function getServiceProviderClass($app)
     {
         return 'GrahamCampbell\Credentials\CredentialsServiceProvider';
     }

@@ -35,7 +35,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    protected function additionalSetup(Application $app)
+    protected function additionalSetup($app)
     {
         if (!class_exists('DatabaseSeeder')) {
             eval('class DatabaseSeeder extends Illuminate\Database\Seeder { public function run() {} }');
