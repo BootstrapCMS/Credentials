@@ -21,7 +21,7 @@ use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Contracts\Routing\Middleware;
 
 /**
- * This is the admin middleware class.
+ * This is the sentry thottle middleware class.
  *
  * @author    Graham Campbell <graham@mineuk.com>
  * @copyright 2013-2014 Graham Campbell
