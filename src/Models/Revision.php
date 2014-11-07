@@ -19,7 +19,7 @@ namespace GrahamCampbell\Credentials\Models;
 use GrahamCampbell\Credentials\Models\Relations\Common\BelongsToUserTrait;
 use GrahamCampbell\Credentials\Models\Relations\Interfaces\BelongsToUserInterface;
 use GrahamCampbell\Database\Models\AbstractModel;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
 /**
@@ -31,7 +31,7 @@ use McCool\LaravelAutoPresenter\HasPresenter;
  */
 class Revision extends AbstractModel implements BelongsToUserInterface, HasPresenter
 {
-    use BelongsToUserTrait, SoftDeletingTrait;
+    use BelongsToUserTrait, SoftDeletes;
 
     /**
      * The table the groups are stored in.

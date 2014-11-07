@@ -25,7 +25,7 @@ use GrahamCampbell\Credentials\Models\Relations\Common\RevisionableTrait;
 use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface;
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
 /**
@@ -37,7 +37,7 @@ use McCool\LaravelAutoPresenter\HasPresenter;
  */
 class User extends SentryUser implements BaseModelInterface, RevisionableInterface, HasPresenter
 {
-    use BaseModelTrait, RevisionableTrait, SoftDeletingTrait;
+    use BaseModelTrait, RevisionableTrait, SoftDeletes;
 
     /**
      * The table the users are stored in.

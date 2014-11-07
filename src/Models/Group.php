@@ -19,7 +19,7 @@ namespace GrahamCampbell\Credentials\Models;
 use Cartalyst\Sentry\Groups\Eloquent\Group as SentryGroup;
 use GrahamCampbell\Database\Models\Common\BaseModelTrait;
 use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * This is the group model class.
@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\SoftDeletingTrait;
  */
 class Group extends SentryGroup implements BaseModelInterface
 {
-    use BaseModelTrait, SoftDeletingTrait;
+    use BaseModelTrait, SoftDeletes;
 
     /**
      * The table the groups are stored in.
