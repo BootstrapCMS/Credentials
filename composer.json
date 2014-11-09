@@ -41,7 +41,6 @@
         "doctrine/dbal": "~2.4"
     },
     "suggest": {
-        "graham-campbell/queuing": "Improved mailer performance.",
         "graham-campbell/navigation": "Easily add a navigation bar."
     },
     "autoload": {
