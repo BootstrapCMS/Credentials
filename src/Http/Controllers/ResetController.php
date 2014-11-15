@@ -93,8 +93,8 @@ class ResetController extends AbstractController
             $code = $user->getResetPasswordCode();
 
             $mail = [
-                'link' => URL::route('account.password', ['id' => $user->id, 'code' => $code]),
-                'email' => $user->getLogin(),
+                'link'    => URL::route('account.password', ['id'    => $user->id, 'code'    => $code]),
+                'email'   => $user->getLogin(),
                 'subject' => Config::get('platform.name').' - Password Reset Confirmation',
             ];
 
@@ -138,8 +138,8 @@ class ResetController extends AbstractController
 
             $mail = [
                 'password' => $password,
-                'email' => $user->getLogin(),
-                'subject' => Config::get('platform.name').' - New Password Information',
+                'email'    => $user->getLogin(),
+                'subject'  => Config::get('platform.name').' - New Password Information',
             ];
 
             Mail::queue('graham-campbell/credentials::emails.password', $mail, function ($message) use ($mail) {

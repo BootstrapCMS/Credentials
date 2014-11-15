@@ -350,8 +350,8 @@ class UserController extends AbstractController
 
         $mail = [
             'password' => $password,
-            'email' => $user->getLogin(),
-            'subject' => Config::get('platform.name').' - New Password Information',
+            'email'    => $user->getLogin(),
+            'subject'  => Config::get('platform.name').' - New Password Information',
         ];
 
         Mail::queue('graham-campbell/credentials::emails.password', $mail, function ($message) use ($mail) {
