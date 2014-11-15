@@ -16,6 +16,9 @@
 
 namespace GrahamCampbell\Credentials;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory as View;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use SebastianBergmann\Diff\Differ;
 
@@ -44,21 +47,39 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $this->package('graham-campbell/credentials', 'graham-campbell/credentials', __DIR__);
 
-        $this->setupBlade();
+        if ($this->app->config['graham-campbell/core::commands']) {
+            $this->setupCommandSubscriber($this->app);
+        }
 
-        include __DIR__.'/routes.php';
-        include __DIR__.'/filters.php';
-        include __DIR__.'/listeners.php';
+        $this->setupBlade($this->app['view']);
+
+        $this->setupRoutes($this->app['router']);
+    }
+
+    /**
+     * Setup the command subscriber.
+     *
+     * @param \Illuminate\Contracts\Foundation\Application $app
+     *
+     * @return void
+     */
+    protected function setupCommandSubscriber(Application $app)
+    {
+        $subscriber = $app->make(Subscribers\CommandSubscriber::class);
+
+        $app['events']->subscribe($subscriber);
     }
 
     /**
      * Setup the blade compiler class.
      *
+     * @param \Illuminate\Contracts\View\Factory $view
+     *
      * @return void
      */
-    protected function setupBlade()
+    protected function setupBlade(View $view)
     {
-        $blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
+        $blade = $view->getEngineResolver()->resolve('blade')->getCompiler();
 
         $blade->extend(function ($value, $compiler) {
             $pattern = $compiler->createMatcher('auth');
@@ -72,6 +93,22 @@ class CredentialsServiceProvider extends ServiceProvider
             $replace = '$1<?php endif; ?>$2';
 
             return preg_replace($pattern, $replace, $value);
+        });
+    }
+
+    /**
+     * Setup the routes.
+     *
+     * @param \Illuminate\Routing\Router $router
+     *
+     * @return void
+     */
+    public function setupRoutes(Router $router)
+    {
+        require __DIR__.'/Http/filters.php';
+
+        $router->group(['namespace' => 'GrahamCampbell\Credentials\Http\Controllers'], function (Router $router) {
+            require __DIR__.'/Http/routes.php';
         });
     }
 

@@ -15,8 +15,9 @@
  */
 
 use GrahamCampbell\Throttle\Facades\Throttle;
+use Illunimate\Support\Facades\Redirect;
 
-Route::filter('throttle.login', function ($route, $request) {
+$router->filter('throttle.login', function ($route, $request) {
     // check if we've reached the rate limit, but don't hit the throttle yet
     // we can hit the throttle later on in the if validation passes
     if (!Throttle::check($request, 10, 10)) {
@@ -25,7 +26,7 @@ Route::filter('throttle.login', function ($route, $request) {
     }
 });
 
-Route::filter('throttle.activate', function ($route, $request) {
+$router->filter('throttle.activate', function ($route, $request) {
     // check if we've reached the rate limit, and hit the throttle
     // no validation is required, we should always hit the throttle
     if (!Throttle::attempt($request, 10, 10)) {
@@ -34,7 +35,7 @@ Route::filter('throttle.activate', function ($route, $request) {
     }
 });
 
-Route::filter('throttle.resend', function ($route, $request) {
+$router->filter('throttle.resend', function ($route, $request) {
     // check if we've reached the rate limit, but don't hit the throttle yet
     // we can hit the throttle later on in the if validation passes
     if (!Throttle::check($request, 5, 30)) {
@@ -43,7 +44,7 @@ Route::filter('throttle.resend', function ($route, $request) {
     }
 });
 
-Route::filter('throttle.reset', function ($route, $request) {
+$router->filter('throttle.reset', function ($route, $request) {
     // check if we've reached the rate limit, but don't hit the throttle yet
     // we can hit the throttle later on in the if validation passes
     if (!Throttle::check($request, 5, 30)) {
@@ -52,7 +53,7 @@ Route::filter('throttle.reset', function ($route, $request) {
     }
 });
 
-Route::filter('throttle.register', function ($route, $request) {
+$router->filter('throttle.register', function ($route, $request) {
     // check if we've reached the rate limit, but don't hit the throttle yet
     // we can hit the throttle later on in the if validation passes
     if (!Throttle::check($request, 5, 30)) {
