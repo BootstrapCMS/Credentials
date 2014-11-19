@@ -1,6 +1,6 @@
-@extends(Config::get('views.email', 'layouts.email'))
+@extends(Config::get('graham-campbell/core::views.email'))
 
 @section('content')
-<p>An admin from <a href="{!! $url !!}">{!! Config::get('platform.name') !!}</a> has changed your group memberships.</p>
+<p>An admin from <a href="{!! $url !!}">{!! Config::get('graham-campbell/core::platform.name') !!}</a> has changed your group memberships.</p>
 <p>Login to see your updated permissions.</p>
 @stop

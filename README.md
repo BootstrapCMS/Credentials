@@ -76,7 +76,7 @@ This option (`'revision'`) defines the revision model to be used. The default va
 
 ##### Additional Configuration
 
-You may want to check out the config for `cartalyst/sentry` too. For Laravel Credentials to function correctly, you must set the models to the following, or to a class which extends the following:
+You may want to check out the config for both `cartalyst/sentry` and `graham-campbell/core` too. For Laravel Credentials to function correctly, you must set the models to the following, or to a class which extends the following:
 
 * `'GrahamCampbell\Credentials\Models\Group'`
 * `'GrahamCampbell\Credentials\Models\User'`

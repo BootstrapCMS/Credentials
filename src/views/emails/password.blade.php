@@ -1,4 +1,4 @@
-@extends(Config::get('views.email', 'layouts.email'))
+@extends(Config::get('graham-campbell/core::views.email'))
 
 @section('content')
 <p>Here is your temporary password:</p>
