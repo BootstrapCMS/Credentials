@@ -1,7 +1,7 @@
-@extends(Config::get('graham-campbell/core::views.email'))
+@extends(Config::get('graham-campbell/core::email'))
 
 @section('content')
-<p>Thank you for creating an account on <a href="{!! $url !!}">{!! Config::get('graham-campbell/core::platform.name') !!}</a>.</p>
+<p>Thank you for creating an account on <a href="{!! $url !!}">{!! Config::get('graham-campbell/core::name') !!}</a>.</p>
 @if (isset($link))
     <p>To activate your account, <a href="{!! $link !!}">click here</a>.</p>
 @else

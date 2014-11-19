@@ -103,7 +103,7 @@ class AccountController extends AbstractController
         $mail = [
             'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
             'email'   => $email,
-            'subject' => Config::get('graham-campbell/core::platform.name').' - Account Deleted Notification',
+            'subject' => Config::get('graham-campbell/core::name').' - Account Deleted Notification',
         ];
 
         Mail::queue('graham-campbell/credentials::emails.userdeleted', $mail, function ($message) use ($mail) {
@@ -140,7 +140,7 @@ class AccountController extends AbstractController
                 'old'     => $email,
                 'new'     => $input['email'],
                 'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
-                'subject' => Config::get('graham-campbell/core::platform.name').' - New Email Information',
+                'subject' => Config::get('graham-campbell/core::name').' - New Email Information',
             ];
 
             Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
@@ -178,7 +178,7 @@ class AccountController extends AbstractController
         $mail = [
             'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
             'email'   => $user->getLogin(),
-            'subject' => Config::get('graham-campbell/core::platform.name').' - New Password Notification',
+            'subject' => Config::get('graham-campbell/core::name').' - New Password Notification',
         ];
 
         Mail::queue('graham-campbell/credentials::emails.newpass', $mail, function ($message) use ($mail) {
