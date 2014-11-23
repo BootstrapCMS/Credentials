@@ -9,6 +9,11 @@ CHANGE LOG
 * Cleaned up assets
 
 
+## V0.3.4 Alpha (Upcoming)
+
+* Removed the cs fixers
+
+
 ## V0.3.3 Alpha (24/10/2014)
 
 * Asset updates
