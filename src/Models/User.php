@@ -197,7 +197,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
      */
     public function hasAccess($permissions, $all = true)
     {
-        $key = md5(json_encode($permissions).json_encode($all));
+        $key = sha1(json_encode($permissions).json_encode($all));
 
         if (!array_key_exists($key, $this->access)) {
             $this->access[$key] = parent::hasAccess($permissions, $all);
