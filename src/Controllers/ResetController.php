@@ -56,7 +56,7 @@ class ResetController extends AbstractController
     {
         $this->throttler = $throttler;
 
-        $this->beforeFilter('throttle.reset', array('only' => array('postReset')));
+        $this->beforeFilter('throttle.reset', ['only' => ['postReset']]);
 
         parent::__construct();
     }
@@ -92,11 +92,11 @@ class ResetController extends AbstractController
 
             $code = $user->getResetPasswordCode();
 
-            $mail = array(
-                'link' => URL::route('account.password', array('id' => $user->id, 'code' => $code)),
-                'email' => $user->getLogin(),
+            $mail = [
+                'link'    => URL::route('account.password', ['id' => $user->id, 'code' => $code]),
+                'email'   => $user->getLogin(),
                 'subject' => Config::get('platform.name').' - Password Reset Confirmation',
-            );
+            ];
 
             Mail::queue('graham-campbell/credentials::emails.reset', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
@@ -136,11 +136,11 @@ class ResetController extends AbstractController
                     ->with('error', 'There was a problem resetting your password. Please contact support.');
             }
 
-            $mail = array(
+            $mail = [
                 'password' => $password,
-                'email' => $user->getLogin(),
-                'subject' => Config::get('platform.name').' - New Password Information',
-            );
+                'email'    => $user->getLogin(),
+                'subject'  => Config::get('platform.name').' - New Password Information',
+            ];
 
             Mail::queue('graham-campbell/credentials::emails.password', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);

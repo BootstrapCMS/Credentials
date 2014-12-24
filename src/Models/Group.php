@@ -51,14 +51,14 @@ class Group extends SentryGroup implements BaseModelInterface
      *
      * @var array
      */
-    protected $dates = array('deleted_at');
+    protected $dates = ['deleted_at'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index = array('id', 'name');
+    public static $index = ['id', 'name'];
 
     /**
      * The max groups per page when displaying a paginated index.

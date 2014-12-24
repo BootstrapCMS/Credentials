@@ -34,7 +34,7 @@ trait AuthorPresenterTrait
     {
         $user = $this->resource->user()->withTrashed()
             ->cacheDriver('array')->rememberForever()
-            ->first(array('first_name', 'last_name'));
+            ->first(['first_name', 'last_name']);
 
         if ($user) {
             return $user->first_name.' '.$user->last_name;

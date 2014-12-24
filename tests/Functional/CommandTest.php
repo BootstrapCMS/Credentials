@@ -48,7 +48,7 @@ class CommandTest extends AbstractTestCase
 
     public function testReset()
     {
-        $this->assertSame(0, $this->app['artisan']->call('migrate', array('--force' => true)));
+        $this->assertSame(0, $this->app['artisan']->call('migrate', ['--force' => true]));
         $this->assertSame(0, $this->app['artisan']->call('app:reset'));
     }
 

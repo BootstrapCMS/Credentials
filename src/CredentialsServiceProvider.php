@@ -63,12 +63,14 @@ class CredentialsServiceProvider extends ServiceProvider
         $blade->extend(function ($value, $compiler) {
             $pattern = $compiler->createMatcher('auth');
             $replace = '$1<?php if (\GrahamCampbell\Credentials\Facades\Credentials::check() && \GrahamCampbell\Credentials\Facades\Credentials::hasAccess$2): ?>';
+
             return preg_replace($pattern, $replace, $value);
         });
 
         $blade->extend(function ($value, $compiler) {
             $pattern = $compiler->createPlainMatcher('endauth');
             $replace = '$1<?php endif; ?>$2';
+
             return preg_replace($pattern, $replace, $value);
         });
     }
@@ -284,12 +286,12 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array(
+        return [
             'differ',
             'userprovider',
             'groupprovider',
             'credentials',
             'revisionprovider',
-        );
+        ];
     }
 }

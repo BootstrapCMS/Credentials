@@ -42,13 +42,13 @@ class AccountController extends AbstractController
      */
     public function __construct()
     {
-        $this->setPermissions(array(
+        $this->setPermissions([
             'getHistory'    => 'user',
             'getProfile'    => 'user',
             'deleteProfile' => 'user',
             'patchDetails'  => 'user',
             'patchPassword' => 'user',
-        ));
+        ]);
 
         parent::__construct();
     }
@@ -62,7 +62,7 @@ class AccountController extends AbstractController
     {
         return View::make(
             'graham-campbell/credentials::account.history',
-            array('user' => Credentials::getUser())
+            ['user' => Credentials::getUser()]
         );
     }
 
@@ -75,7 +75,7 @@ class AccountController extends AbstractController
     {
         return View::make(
             'graham-campbell/credentials::account.profile',
-            array('user' => Credentials::getUser())
+            ['user' => Credentials::getUser()]
         );
     }
 
@@ -100,11 +100,11 @@ class AccountController extends AbstractController
                 ->with('error', 'There was a problem deleting your account.');
         }
 
-        $mail = array(
+        $mail = [
             'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
             'email'   => $email,
             'subject' => Config::get('platform.name').' - Account Deleted Notification',
-        );
+        ];
 
         Mail::queue('graham-campbell/credentials::emails.userdeleted', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
@@ -121,7 +121,7 @@ class AccountController extends AbstractController
      */
     public function patchDetails()
     {
-        $input = Binput::only(array('first_name', 'last_name', 'email'));
+        $input = Binput::only(['first_name', 'last_name', 'email']);
 
         $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
@@ -136,12 +136,12 @@ class AccountController extends AbstractController
         $user->update($input);
 
         if ($email !== $input['email']) {
-            $mail = array(
+            $mail = [
                 'old'     => $email,
                 'new'     => $input['email'],
                 'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
                 'subject' => Config::get('platform.name').' - New Email Information',
-            );
+            ];
 
             Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
                 $message->to($mail['old'])->subject($mail['subject']);
@@ -163,7 +163,7 @@ class AccountController extends AbstractController
      */
     public function patchPassword()
     {
-        $input = Binput::only(array('password', 'password_confirmation'));
+        $input = Binput::only(['password', 'password_confirmation']);
 
         $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
@@ -175,11 +175,11 @@ class AccountController extends AbstractController
         $user = Credentials::getUser();
         $this->checkUser($user);
 
-        $mail = array(
+        $mail = [
             'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
             'email'   => $user->getLogin(),
             'subject' => Config::get('platform.name').' - New Password Notification',
-        );
+        ];
 
         Mail::queue('graham-campbell/credentials::emails.newpass', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);

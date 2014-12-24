@@ -110,7 +110,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
 
         $user = $this->resource->revisionable()->withTrashed()
         ->cacheDriver('array')->rememberForever()
-        ->first(array('first_name', 'last_name'));
+        ->first(['first_name', 'last_name']);
 
         return ' '.$user->first_name.' '.$user->last_name.'\'s ';
     }

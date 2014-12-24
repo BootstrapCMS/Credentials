@@ -50,7 +50,7 @@ class UserController extends AbstractController
      */
     public function __construct()
     {
-        $this->setPermissions(array(
+        $this->setPermissions([
             'index'   => 'mod',
             'create'  => 'admin',
             'store'   => 'admin',
@@ -61,7 +61,7 @@ class UserController extends AbstractController
             'reset'   => 'admin',
             'resend'  => 'admin',
             'destroy' => 'admin',
-        ));
+        ]);
 
         parent::__construct();
     }
@@ -78,7 +78,7 @@ class UserController extends AbstractController
 
         return View::make(
             'graham-campbell/credentials::users.index',
-            array('users' => $users, 'links' => $links)
+            ['users' => $users, 'links' => $links]
         );
     }
 
@@ -93,7 +93,7 @@ class UserController extends AbstractController
 
         return View::make(
             'graham-campbell/credentials::users.create',
-            array('groups' => $groups)
+            ['groups' => $groups]
         );
     }
 
@@ -106,11 +106,11 @@ class UserController extends AbstractController
     {
         $password = Str::random();
 
-        $input = array_merge(Binput::only(array('first_name', 'last_name', 'email')), array(
+        $input = array_merge(Binput::only(['first_name', 'last_name', 'email']), [
             'password'     => $password,
             'activated'    => true,
             'activated_at' => new DateTime(),
-        ));
+        ]);
 
         $rules = UserProvider::rules(array_keys($input));
         $rules['password'] = 'required|min:6';
@@ -130,18 +130,18 @@ class UserController extends AbstractController
                 }
             }
 
-            $mail = array(
+            $mail = [
                 'url'      => URL::to(Config::get('graham-campbell/core::home', '/')),
                 'password' => $password,
                 'email'    => $user->getLogin(),
                 'subject'  => Config::get('platform.name').' - New Account Information',
-            );
+            ];
 
             Mail::queue('graham-campbell/credentials::emails.newuser', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 
-            return Redirect::route('users.show', array('users' => $user->id))
+            return Redirect::route('users.show', ['users' => $user->id])
                 ->with('success', 'The user has been created successfully. Their password has been emailed to them.');
         } catch (UserExistsException $e) {
             return Redirect::route('users.create')->withInput()->withErrors($val->errors())
@@ -179,7 +179,7 @@ class UserController extends AbstractController
 
         $groups = $user->getGroups();
         if (count($groups) >= 1) {
-            $data = array();
+            $data = [];
             foreach ($groups as $group) {
                 $data[] = $group->name;
             }
@@ -190,7 +190,7 @@ class UserController extends AbstractController
 
         return View::make(
             'graham-campbell/credentials::users.show',
-            array('user' => $user, 'groups' => $groups, 'activated' => $activated, 'suspended' => $suspended)
+            ['user' => $user, 'groups' => $groups, 'activated' => $activated, 'suspended' => $suspended]
         );
     }
 
@@ -210,7 +210,7 @@ class UserController extends AbstractController
 
         return View::make(
             'graham-campbell/credentials::users.edit',
-            array('user' => $user, 'groups' => $groups)
+            ['user' => $user, 'groups' => $groups]
         );
     }
 
@@ -223,11 +223,11 @@ class UserController extends AbstractController
      */
     public function update($id)
     {
-        $input = Binput::only(array('first_name', 'last_name', 'email'));
+        $input = Binput::only(['first_name', 'last_name', 'email']);
 
         $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
-            return Redirect::route('users.edit', array('users' => $id))
+            return Redirect::route('users.edit', ['users' => $id])
                 ->withInput()->withErrors($val->errors());
         }
 
@@ -257,12 +257,12 @@ class UserController extends AbstractController
         }
 
         if ($email !== $input['email']) {
-            $mail = array(
+            $mail = [
                 'old'     => $email,
                 'new'     => $input['email'],
                 'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
                 'subject' => Config::get('platform.name').' - New Email Information',
-            );
+            ];
 
             Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
                 $message->to($mail['old'])->subject($mail['subject']);
@@ -274,18 +274,18 @@ class UserController extends AbstractController
         }
 
         if ($changed) {
-            $mail = array(
+            $mail = [
                 'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
                 'email'   => $input['email'],
                 'subject' => Config::get('platform.name').' - Group Membership Changes',
-            );
+            ];
 
             Mail::queue('graham-campbell/credentials::emails.groups', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
         }
 
-        return Redirect::route('users.show', array('users' => $user->id))
+        return Redirect::route('users.show', ['users' => $user->id])
             ->with('success', 'The user has been updated successfully.');
     }
 
@@ -307,14 +307,15 @@ class UserController extends AbstractController
             throw new NotFoundHttpException('User Not Found', $e);
         } catch (UserSuspendedException $e) {
             $time = $throttle->getSuspensionTime();
-            return Redirect::route('users.suspend', array('users' => $id))->withInput()
+
+            return Redirect::route('users.suspend', ['users' => $id])->withInput()
                 ->with('error', "This user is already suspended for $time minutes.");
         } catch (UserBannedException $e) {
-            return Redirect::route('users.suspend', array('users' => $id))->withInput()
+            return Redirect::route('users.suspend', ['users' => $id])->withInput()
                 ->with('error', 'This user has already been banned.');
         }
 
-        return Redirect::route('users.show', array('users' => $id))
+        return Redirect::route('users.show', ['users' => $id])
             ->with('success', 'The user has been suspended successfully.');
     }
 
@@ -329,17 +330,17 @@ class UserController extends AbstractController
     {
         $password = Str::random();
 
-        $input = array(
+        $input = [
             'password' => $password,
-        );
+        ];
 
-        $rules = array(
+        $rules = [
             'password' => 'required|min:6',
-        );
+        ];
 
         $val = UserProvider::validate($input, $rules, true);
         if ($val->fails()) {
-            return Redirect::route('users.show', array('users' => $id))->withErrors($val->errors());
+            return Redirect::route('users.show', ['users' => $id])->withErrors($val->errors());
         }
 
         $user = UserProvider::find($id);
@@ -347,17 +348,17 @@ class UserController extends AbstractController
 
         $user->update($input);
 
-        $mail = array(
+        $mail = [
             'password' => $password,
-            'email' => $user->getLogin(),
-            'subject' => Config::get('platform.name').' - New Password Information',
-        );
+            'email'    => $user->getLogin(),
+            'subject'  => Config::get('platform.name').' - New Password Information',
+        ];
 
         Mail::queue('graham-campbell/credentials::emails.password', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
         });
 
-        return Redirect::route('users.show', array('users' => $id))
+        return Redirect::route('users.show', ['users' => $id])
             ->with('success', 'The user\'s password has been reset successfully, and has been emailed to them.');
     }
 
@@ -380,18 +381,18 @@ class UserController extends AbstractController
 
         $code = $user->getActivationCode();
 
-        $mail = array(
+        $mail = [
             'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
-            'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $code)),
+            'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
             'email'   => $user->getLogin(),
             'subject' => Config::get('platform.name').' - Activation',
-        );
+        ];
 
         Mail::queue('graham-campbell/credentials::emails.resend', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
         });
 
-        return Redirect::route('users.show', array('users' => $id))
+        return Redirect::route('users.show', ['users' => $id])
             ->with('success', 'The user\'s activation email has been sent successfully.');
     }
 
@@ -412,15 +413,15 @@ class UserController extends AbstractController
         try {
             $user->delete();
         } catch (\Exception $e) {
-            return Redirect::route('users.show', array('users' => $id))
+            return Redirect::route('users.show', ['users' => $id])
                 ->with('error', 'We were unable to delete the account.');
         }
 
-        $mail = array(
+        $mail = [
             'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
             'email'   => $email,
             'subject' => Config::get('platform.name').' - Account Deleted Notification',
-        );
+        ];
 
         Mail::queue('graham-campbell/credentials::emails.admindeleted', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);

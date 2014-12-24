@@ -99,6 +99,6 @@ class Credentials
      */
     public function __call($method, $parameters)
     {
-        return call_user_func_array(array($this->sentry, $method), $parameters);
+        return call_user_func_array([$this->sentry, $method], $parameters);
     }
 }

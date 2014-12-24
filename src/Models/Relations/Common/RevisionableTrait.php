@@ -60,21 +60,21 @@ trait RevisionableTrait
      *
      * @var array
      */
-    protected $doKeep = array();
+    protected $doKeep = [];
 
     /**
      * Keeps track of columns not to keep.
      *
      * @var array
      */
-    protected $dontKeep = array('id', 'created_at', 'updated_at', 'deleted_at');
+    protected $dontKeep = ['id', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * Keeps the list of values that have been updated.
      *
      * @var array
      */
-    protected $dirtyData = array();
+    protected $dirtyData = [];
 
     /**
      * Create the event listeners for the saving and saved events.
@@ -159,24 +159,24 @@ trait RevisionableTrait
     {
         if ($this->updating) {
             foreach ($this->changedRevisionableFields() as $key => $change) {
-                RevisionProvider::create(array(
+                RevisionProvider::create([
                     'revisionable_type' => get_class($this),
                     'revisionable_id'   => $this->getKey(),
                     'key'               => $key,
                     'old_value'         => $this->getDataValue('original', $key),
                     'new_value'         => $this->getDataValue('updated', $key),
                     'user_id'           => $this->getUserId(),
-                ));
+                ]);
             }
         } else {
-            RevisionProvider::create(array(
+            RevisionProvider::create([
                 'revisionable_type' => get_class($this),
                 'revisionable_id'   => $this->getKey(),
                 'key'               => 'created_at',
                 'old_value'         => null,
                 'new_value'         => new DateTime(),
                 'user_id'           => $this->getUserId(),
-            ));
+            ]);
         }
     }
 
@@ -206,14 +206,14 @@ trait RevisionableTrait
      */
     public function postDelete()
     {
-        RevisionProvider::create(array(
+        RevisionProvider::create([
             'revisionable_type' => get_class($this),
             'revisionable_id'   => $this->getKey(),
             'key'               => 'deleted_at',
             'old_value'         => null,
             'new_value'         => new DateTime(),
             'user_id'           => $this->getUserId(),
-        ));
+        ]);
     }
 
     /**
@@ -237,7 +237,7 @@ trait RevisionableTrait
      */
     protected function changedRevisionableFields()
     {
-        $changes = array();
+        $changes = [];
         foreach ($this->dirtyData as $key => $value) {
             // check that the field is revisionable, and the data is dirty enough
             if ($this->isRevisionable($key) && !is_array($value)) {

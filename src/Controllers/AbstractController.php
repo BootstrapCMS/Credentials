@@ -32,21 +32,21 @@ abstract class AbstractController extends Controller
      *
      * @var string[]
      */
-    protected $users = array();
+    protected $users = [];
 
     /**
      * A list of methods protected by mod permissions.
      *
      * @var string[]
      */
-    protected $mods = array();
+    protected $mods = [];
 
     /**
      * A list of methods protected by admin permissions.
      *
      * @var string[]
      */
-    protected $admins = array();
+    protected $admins = [];
 
     /**
      * Create a new instance.
@@ -55,11 +55,11 @@ abstract class AbstractController extends Controller
      */
     public function __construct()
     {
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        $this->beforeFilter('csrf', ['on' => 'post']);
 
-        $this->beforeFilter('credentials:user', array('only' => $this->users));
-        $this->beforeFilter('credentials:mod', array('only' => $this->mods));
-        $this->beforeFilter('credentials:admin', array('only' => $this->admins));
+        $this->beforeFilter('credentials:user', ['only' => $this->users]);
+        $this->beforeFilter('credentials:mod', ['only' => $this->mods]);
+        $this->beforeFilter('credentials:admin', ['only' => $this->admins]);
     }
 
     /**

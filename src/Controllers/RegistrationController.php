@@ -54,7 +54,7 @@ class RegistrationController extends AbstractController
     {
         $this->throttler = $throttler;
 
-        $this->beforeFilter('throttle.register', array('only' => array('postRegister')));
+        $this->beforeFilter('throttle.register', ['only' => ['postRegister']]);
 
         parent::__construct();
     }
@@ -80,7 +80,7 @@ class RegistrationController extends AbstractController
             return Redirect::route('account.register');
         }
 
-        $input = Binput::only(array('first_name', 'last_name', 'email', 'password', 'password_confirmation'));
+        $input = Binput::only(['first_name', 'last_name', 'email', 'password', 'password_confirmation']);
 
         $val = UserProvider::validate($input, array_keys($input));
         if ($val->fails()) {
@@ -95,11 +95,11 @@ class RegistrationController extends AbstractController
             $user = Credentials::register($input);
 
             if (!Config::get('graham-campbell/credentials::activation')) {
-                $mail = array(
+                $mail = [
                     'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
                     'email'   => $user->getLogin(),
                     'subject' => Config::get('platform.name').' - Welcome',
-                );
+                ];
 
                 Mail::queue('graham-campbell/credentials::emails.welcome', $mail, function ($message) use ($mail) {
                     $message->to($mail['email'])->subject($mail['subject']);
@@ -114,12 +114,12 @@ class RegistrationController extends AbstractController
 
             $code = $user->getActivationCode();
 
-            $mail = array(
+            $mail = [
                 'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
-                'link'    => URL::route('account.activate', array('id' => $user->id, 'code' => $code)),
+                'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
                 'email'   => $user->getLogin(),
                 'subject' => Config::get('platform.name').' - Welcome',
-            );
+            ];
 
             Mail::queue('graham-campbell/credentials::emails.welcome', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);

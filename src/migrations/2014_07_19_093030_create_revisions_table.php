@@ -45,7 +45,7 @@ class CreateRevisionsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(array('revisionable_id', 'revisionable_type'));
+            $table->index(['revisionable_id', 'revisionable_type']);
         });
     }
 

@@ -52,14 +52,14 @@ class Revision extends AbstractModel implements BelongsToUserInterface, Presente
      *
      * @var array
      */
-    protected $dates = array('deleted_at');
+    protected $dates = ['deleted_at'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index = array('*');
+    public static $index = ['*'];
 
     /**
      * The max groups per page when displaying a paginated index.
