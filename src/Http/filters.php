@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of Laravel Credentials by Graham Campbell.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,7 @@ use GrahamCampbell\Throttle\Facades\Throttle;
 use Illunimate\Support\Facades\Redirect;
 
 $router->filter('throttle.login', function ($route, $request) {
+
     // check if we've reached the rate limit, but don't hit the throttle yet
     // we can hit the throttle later on in the if validation passes
     if (!Throttle::check($request, 10, 10)) {
