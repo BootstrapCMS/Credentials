@@ -12,11 +12,11 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/GrahamCampbell/sentry"
+            "url": "https://github.com/GrahamCampbell/framework"
         },
         {
             "type": "vcs",
-            "url": "https://github.com/GrahamCampbell/framework"
+            "url": "https://github.com/GrahamCampbell/sentry"
         },
         {
             "type": "vcs",
