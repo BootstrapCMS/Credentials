@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of Laravel Credentials by Graham Campbell.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@ $router->get('account', ['as' => 'account', function () {
     Session::reflash();
 
     return Redirect::route('account.profile');
-}, ]);
+});
 
 // account routes
 $router->get('account/history', ['as' => 'account.history', 'uses' => 'AccountController@getHistory']);
