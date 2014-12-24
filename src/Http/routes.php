@@ -24,7 +24,7 @@ $router->get('account', ['as' => 'account', function () {
     Session::reflash();
 
     return Redirect::route('account.profile');
-});
+}]);
 
 // account routes
 $router->get('account/history', ['as' => 'account.history', 'uses' => 'AccountController@getHistory']);
