@@ -160,7 +160,7 @@ trait RevisionableTrait
         if ($this->updating) {
             foreach ($this->changedRevisionableFields() as $key => $change) {
                 RevisionRepository::create([
-                    'revisionable_type' => get_class($this),
+                    'revisionable_type' => $this::class,
                     'revisionable_id'   => $this->getKey(),
                     'key'               => $key,
                     'old_value'         => $this->getDataValue('original', $key),
@@ -170,7 +170,7 @@ trait RevisionableTrait
             }
         } else {
             RevisionRepository::create([
-                'revisionable_type' => get_class($this),
+                'revisionable_type' => $this::class,
                 'revisionable_id'   => $this->getKey(),
                 'key'               => 'created_at',
                 'old_value'         => null,
@@ -207,7 +207,7 @@ trait RevisionableTrait
     public function postDelete()
     {
         RevisionRepository::create([
-            'revisionable_type' => get_class($this),
+            'revisionable_type' => $this::class,
             'revisionable_id'   => $this->getKey(),
             'key'               => 'deleted_at',
             'old_value'         => null,
