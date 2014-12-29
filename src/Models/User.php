@@ -136,11 +136,11 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     {
         return $this->revisions()
             ->where(function ($q) {
-                $q->where('revisionable_type', '<>', $this::class)
+                $q->where('revisionable_type', '<>', get_class($this))
                     ->where('user_id', '=', $this->id);
             })
             ->orWhere(function ($q) {
-                $q->where('revisionable_type', '=', $this::class)
+                $q->where('revisionable_type', '=', get_class($this))
                     ->where('revisionable_id', '<>', $this->id)
                     ->where('user_id', '=', $this->id);
             })
@@ -217,7 +217,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     {
         if (Credentials::check()) {
             RevisionRepository::create([
-                'revisionable_type' => $this::class,
+                'revisionable_type' => get_class($this),
                 'revisionable_id'   => $this->getKey(),
                 'key'               => 'added_group',
                 'old_value'         => null,
@@ -239,7 +239,7 @@ class User extends SentryUser implements BaseModelInterface, RevisionableInterfa
     public function removeGroup(GroupInterface $group)
     {
         RevisionRepository::create([
-            'revisionable_type' => $this::class,
+            'revisionable_type' => get_class($this),
             'revisionable_id'   => $this->getKey(),
             'key'               => 'removed_group',
             'old_value'         => null,
