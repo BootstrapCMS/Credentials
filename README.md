@@ -1,16 +1,16 @@
 Laravel Credentials
 ===================
 
-Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell), and is a cool way to authenticate in [Laravel 5](http://laravel.com). It utilises many of my packages and Cartalyst's [Sentry](https://github.com/cartalyst/sentry) package. Feel free to check out the [change log](CHANGELOG.md), [releases](https://github.com/GrahamCampbell/Laravel-Credentials/releases), [license](LICENSE.md), [api docs](http://docs.grahamjcampbell.co.uk), and [contribution guidelines](CONTRIBUTING.md).
+Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell), and is a cool way to authenticate in [Laravel 5](http://laravel.com). It utilises many of my packages and Cartalyst's [Sentry](https://github.com/cartalyst/sentry) package. Feel free to check out the [change log](CHANGELOG.md), [releases](https://github.com/BootstrapCMS/Credentials/releases), [license](LICENSE.md), [api docs](http://docs.grahamjcampbell.co.uk), and [contribution guidelines](CONTRIBUTING.md).
 
 ![Laravel Credentials](https://cloud.githubusercontent.com/assets/2829600/4432313/c1664f5c-468c-11e4-8469-c6874c21aede.PNG)
 
 <p align="center">
-<a href="https://travis-ci.org/GrahamCampbell/Laravel-Credentials"><img src="https://img.shields.io/travis/GrahamCampbell/Laravel-Credentials/master.svg?style=flat-square" alt="Build Status"></img></a>
-<a href="https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials/code-structure"><img src="https://img.shields.io/scrutinizer/coverage/g/GrahamCampbell/Laravel-Credentials.svg?style=flat-square" alt="Coverage Status"></img></a>
-<a href="https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials"><img src="https://img.shields.io/scrutinizer/g/GrahamCampbell/Laravel-Credentials.svg?style=flat-square" alt="Quality Score"></img></a>
-<a href="LICENSE.md"><img src="https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg?style=flat-square" alt="Software License"></img></a>
-<a href="https://github.com/GrahamCampbell/Laravel-Credentials/releases"><img src="https://img.shields.io/github/release/GrahamCampbell/Laravel-Credentials.svg?style=flat-square" alt="Latest Version"></img></a>
+<a href="https://travis-ci.org/BootstrapCMS/Credentials"><img src="https://img.shields.io/travis/BootstrapCMS/Credentials/master.svg?style=flat-square" alt="Build Status"></img></a>
+<a href="https://scrutinizer-ci.com/g/BootstrapCMS/Credentials/code-structure"><img src="https://img.shields.io/scrutinizer/coverage/g/BootstrapCMS/Credentials.svg?style=flat-square" alt="Coverage Status"></img></a>
+<a href="https://scrutinizer-ci.com/g/BootstrapCMS/Credentials"><img src="https://img.shields.io/scrutinizer/g/BootstrapCMS/Credentials.svg?style=flat-square" alt="Quality Score"></img></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License"></img></a>
+<a href="https://github.com/BootstrapCMS/Credentials/releases"><img src="https://img.shields.io/github/release/BootstrapCMS/Credentials.svg?style=flat-square" alt="Latest Version"></img></a>
 </p>
 
 
@@ -47,7 +47,7 @@ You can register the three facades in the `aliases` key of your `config/app.php`
 
 #### Looking for a laravel 4 compatable version?
 
-Checkout the [0.3 branch](https://github.com/GrahamCampbell/Laravel-Credentials/tree/0.3), installable by requiring `"graham-campbell/credentials": "0.3.*"`.
+Checkout the [0.3 branch](https://github.com/BootstrapCMS/Credentials/tree/0.3), installable by requiring `"graham-campbell/credentials": "0.3.*"`.
 
 
 ## Configuration
@@ -87,23 +87,7 @@ You may want to check out the config for both `cartalyst/sentry` and `graham-cam
 
 There is currently no usage documentation besides the [API Documentation](http://docs.grahamjcampbell.co.uk) for Laravel Credentials.
 
-You may see an example of implementation in [Bootstrap CMS](https://github.com/GrahamCampbell/Bootstrap-CMS).
-
 
 ## License
 
-Apache License
-
-Copyright 2013-2014 Graham Campbell
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Laravel Credentials is licensed under [The MIT License (MIT)](LICENSE).

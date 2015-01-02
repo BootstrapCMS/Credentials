@@ -12,6 +12,8 @@ CHANGE LOG
 ## V0.3.4 Alpha (Upcoming)
 
 * Removed the cs fixers
+* CS fixes
+* Moved to the MIT license
 
 
 ## V0.3.3 Alpha (24/10/2014)

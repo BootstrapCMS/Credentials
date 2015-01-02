@@ -2,7 +2,7 @@
     "name": "graham-campbell/credentials",
     "description": "Credentials Is A Cool Way To Authenticate In Laravel 5",
     "keywords": ["laravel", "framework", "credentials", "login", "users", "permissions", "sentry", "Credentials", "Laravel Credentials", "Laravel-Credentials", "Graham Campbell", "GrahamCampbell"],
-    "license": "Apache-2.0",
+    "license": "MIT",
     "authors": [
         {
             "name": "Graham Campbell",
