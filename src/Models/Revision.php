@@ -18,7 +18,6 @@ namespace GrahamCampbell\Credentials\Models;
 
 use GrahamCampbell\Credentials\Models\Relations\Common\BelongsToUserTrait;
 use GrahamCampbell\Credentials\Models\Relations\Interfaces\BelongsToUserInterface;
-use GrahamCampbell\Database\Models\AbstractModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 

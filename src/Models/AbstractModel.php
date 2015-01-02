@@ -14,19 +14,27 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Repositories;
+namespace GrahamCampbell\Credentials\Models;
 
-use GrahamCampbell\Credentials\Repositories\Common\PaginateRepositoryTrait;
-use GrahamCampbell\Credentials\Repositories\Interfaces\PaginateRepositoryInterface;
+use GrahamCampbell\Credentials\Models\Common\BaseModelTrait;
+use GrahamCampbell\Credentials\Models\Interfaces\BaseModelInterface;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
- * This is the user repository class.
+ * This is the abstract model class.
  *
  * @author    Graham Campbell <graham@mineuk.com>
- * @copyright 2013-2014 Graham Campbell
+ * @copyright 2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class UserRepository extends AbstractRepository implements PaginateRepositoryInterface
+abstract class AbstractModel extends Eloquent implements BaseModelInterface
 {
-    use PaginateRepositoryTrait;
+    use BaseModelTrait;
+
+    /**
+     * A list of methods protected from mass assignment.
+     *
+     * @var array
+     */
+    protected $guarded = ['_token', '_method', 'id'];
 }

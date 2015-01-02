@@ -14,19 +14,30 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Repositories;
-
-use GrahamCampbell\Credentials\Repositories\Common\PaginateRepositoryTrait;
-use GrahamCampbell\Credentials\Repositories\Interfaces\PaginateRepositoryInterface;
+namespace GrahamCampbell\Credentials\Repositories\Interfaces;
 
 /**
- * This is the user repository class.
+ * This is the paginate repository interface.
  *
  * @author    Graham Campbell <graham@mineuk.com>
- * @copyright 2013-2014 Graham Campbell
+ * @copyright 2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class UserRepository extends AbstractRepository implements PaginateRepositoryInterface
+interface PaginateRepositoryInterface
 {
-    use PaginateRepositoryTrait;
+    /**
+     * Get a paginated list of the models.
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function paginate();
+
+    /**
+     * Get the paginated links.
+     *
+     * @return string
+     */
+    public function links();
 }

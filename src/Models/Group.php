@@ -17,8 +17,8 @@
 namespace GrahamCampbell\Credentials\Models;
 
 use Cartalyst\Sentry\Groups\Eloquent\Group as SentryGroup;
-use GrahamCampbell\Database\Models\Common\BaseModelTrait;
-use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
+use GrahamCampbell\Credentials\Models\Common\BaseModelTrait;
+use GrahamCampbell\Credentials\Models\Interfaces\BaseModelInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**

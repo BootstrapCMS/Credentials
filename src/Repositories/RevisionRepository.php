@@ -16,9 +16,8 @@
 
 namespace GrahamCampbell\Credentials\Repositories;
 
-use GrahamCampbell\Database\Repositories\AbstractRepository;
-use GrahamCampbell\Database\Repositories\Common\PaginateRepositoryTrait;
-use GrahamCampbell\Database\Repositories\Interfaces\PaginateRepositoryInterface;
+use GrahamCampbell\Credentials\Repositories\Common\PaginateRepositoryTrait;
+use GrahamCampbell\Credentials\Repositories\Interfaces\PaginateRepositoryInterface;
 
 /**
  * This is the revision repository class.

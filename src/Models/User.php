@@ -23,8 +23,8 @@ use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Facades\RevisionRepository;
 use GrahamCampbell\Credentials\Models\Relations\Common\RevisionableTrait;
 use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface;
-use GrahamCampbell\Database\Models\Common\BaseModelTrait;
-use GrahamCampbell\Database\Models\Interfaces\BaseModelInterface;
+use GrahamCampbell\Credentials\Models\Common\BaseModelTrait;
+use GrahamCampbell\Credentials\Models\Interfaces\BaseModelInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 

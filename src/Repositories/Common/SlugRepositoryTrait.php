@@ -14,19 +14,29 @@
  * limitations under the License.
  */
 
-namespace GrahamCampbell\Credentials\Repositories;
-
-use GrahamCampbell\Credentials\Repositories\Common\PaginateRepositoryTrait;
-use GrahamCampbell\Credentials\Repositories\Interfaces\PaginateRepositoryInterface;
+namespace GrahamCampbell\Credentials\Repositories\Common;
 
 /**
- * This is the user repository class.
+ * This is the slug repository trait.
  *
  * @author    Graham Campbell <graham@mineuk.com>
- * @copyright 2013-2014 Graham Campbell
+ * @copyright 2014 Graham Campbell
  * @license   <https://github.com/GrahamCampbell/Laravel-Credentials/blob/master/LICENSE.md> Apache 2.0
  */
-class UserRepository extends AbstractRepository implements PaginateRepositoryInterface
+trait SlugRepositoryTrait
 {
-    use PaginateRepositoryTrait;
+    /**
+     * Find an existing model by slug.
+     *
+     * @param string   $slug
+     * @param string[] $columns
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function find($slug, array $columns = ['*'])
+    {
+        $model = $this->model;
+
+        return $model::where('slug', '=', $slug)->first($columns);
+    }
 }

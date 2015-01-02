@@ -16,8 +16,6 @@
 
 namespace GrahamCampbell\Credentials\Repositories;
 
-use GrahamCampbell\Database\Repositories\AbstractRepository;
-
 /**
  * This is the group repository class.
  *
