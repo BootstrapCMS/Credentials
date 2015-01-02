@@ -1,16 +1,16 @@
 Laravel Credentials
 ===================
 
-Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell), and is a cool way to authenticate in [Laravel 4.2](http://laravel.com). It utilises many of my packages and Cartalyst's [Sentry](https://github.com/cartalyst/sentry) package. Feel free to check out the [change log](CHANGELOG.md), [releases](https://github.com/GrahamCampbell/Laravel-Credentials/releases), [license](LICENSE), [api docs](http://docs.grahamjcampbell.co.uk), and [contribution guidelines](CONTRIBUTING.md).
+Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell), and is a cool way to authenticate in [Laravel 4.2](http://laravel.com). It utilises many of my packages and Cartalyst's [Sentry](https://github.com/cartalyst/sentry) package. Feel free to check out the [change log](CHANGELOG.md), [releases](https://github.com/BootstrapCMS/Credentials/releases), [license](LICENSE), [api docs](http://docs.grahamjcampbell.co.uk), and [contribution guidelines](CONTRIBUTING.md).
 
 ![Laravel Credentials](https://cloud.githubusercontent.com/assets/2829600/4432311/c15fa92c-468c-11e4-93fe-79fb532da1e9.PNG)
 
 <p align="center">
-<a href="https://travis-ci.org/GrahamCampbell/Laravel-Credentials"><img src="https://img.shields.io/travis/GrahamCampbell/Laravel-Credentials/master.svg?style=flat-square" alt="Build Status"></img></a>
-<a href="https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials/code-structure"><img src="https://img.shields.io/scrutinizer/coverage/g/GrahamCampbell/Laravel-Credentials.svg?style=flat-square" alt="Coverage Status"></img></a>
-<a href="https://scrutinizer-ci.com/g/GrahamCampbell/Laravel-Credentials"><img src="https://img.shields.io/scrutinizer/g/GrahamCampbell/Laravel-Credentials.svg?style=flat-square" alt="Quality Score"></img></a>
+<a href="https://travis-ci.org/BootstrapCMS/Credentials"><img src="https://img.shields.io/travis/BootstrapCMS/Credentials/master.svg?style=flat-square" alt="Build Status"></img></a>
+<a href="https://scrutinizer-ci.com/g/BootstrapCMS/Credentials/code-structure"><img src="https://img.shields.io/scrutinizer/coverage/g/BootstrapCMS/Credentials.svg?style=flat-square" alt="Coverage Status"></img></a>
+<a href="https://scrutinizer-ci.com/g/BootstrapCMS/Credentials"><img src="https://img.shields.io/scrutinizer/g/BootstrapCMS/Credentials.svg?style=flat-square" alt="Quality Score"></img></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License"></img></a>
-<a href="https://github.com/GrahamCampbell/Laravel-Credentials/releases"><img src="https://img.shields.io/github/release/GrahamCampbell/Laravel-Credentials.svg?style=flat-square" alt="Latest Version"></img></a>
+<a href="https://github.com/BootstrapCMS/Credentials/releases"><img src="https://img.shields.io/github/release/BootstrapCMS/Credentials.svg?style=flat-square" alt="Latest Version"></img></a>
 </p>
 
 
@@ -47,7 +47,7 @@ You can register the three facades in the `aliases` key of your `app/config/app.
 
 #### Looking for a laravel 5 compatable version?
 
-Checkout the [master branch](https://github.com/GrahamCampbell/Laravel-Credentials/tree/master), installable by requiring `"graham-campbell/credentials": "0.4.*"`.
+Checkout the [master branch](https://github.com/BootstrapCMS/Credentials/tree/master), installable by requiring `"graham-campbell/credentials": "0.4.*"`.
 
 
 ## Configuration
