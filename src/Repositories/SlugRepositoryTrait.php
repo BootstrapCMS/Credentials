@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace GrahamCampbell\Credentials\Repositories\Common;
+namespace GrahamCampbell\Credentials\Repositories;
 
 /**
  * This is the slug repository trait.

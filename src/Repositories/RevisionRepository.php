@@ -11,15 +11,14 @@
 
 namespace GrahamCampbell\Credentials\Repositories;
 
-use GrahamCampbell\Credentials\Repositories\Common\PaginateRepositoryTrait;
-use GrahamCampbell\Credentials\Repositories\Interfaces\PaginateRepositoryInterface;
+use GrahamCampbell\Credentials\Repositories\PaginateRepositoryTrait;
 
 /**
  * This is the revision repository class.
  *
  * @author Graham Campbell <graham@mineuk.com>
  */
-class RevisionRepository extends AbstractRepository implements PaginateRepositoryInterface
+class RevisionRepository extends AbstractRepository
 {
     use PaginateRepositoryTrait;
 }

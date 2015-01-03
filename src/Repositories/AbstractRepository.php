@@ -11,8 +11,7 @@
 
 namespace GrahamCampbell\Credentials\Repositories;
 
-use GrahamCampbell\Credentials\Repositories\Common\BaseRepositoryTrait;
-use GrahamCampbell\Credentials\Repositories\Interfaces\BaseRepositoryInterface;
+use GrahamCampbell\Credentials\Repositories\BaseRepositoryTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Factory;
 
@@ -21,7 +20,7 @@ use Illuminate\Validation\Factory;
  *
  * @author Graham Campbell <graham@mineuk.com>
  */
-abstract class AbstractRepository implements BaseRepositoryInterface
+abstract class AbstractRepository
 {
     use BaseRepositoryTrait;
 

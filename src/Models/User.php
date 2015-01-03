@@ -16,10 +16,8 @@ use Cartalyst\Sentry\Groups\GroupInterface;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Facades\RevisionRepository;
-use GrahamCampbell\Credentials\Models\Common\BaseModelTrait;
-use GrahamCampbell\Credentials\Models\Interfaces\BaseModelInterface;
-use GrahamCampbell\Credentials\Models\Relations\Common\RevisionableTrait;
-use GrahamCampbell\Credentials\Models\Relations\Interfaces\RevisionableInterface;
+use GrahamCampbell\Credentials\Models\BaseModelTrait;
+use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
@@ -28,7 +26,7 @@ use McCool\LaravelAutoPresenter\HasPresenter;
  *
  * @author Graham Campbell <graham@mineuk.com>
  */
-class User extends SentryUser implements BaseModelInterface, RevisionableInterface, HasPresenter
+class User extends SentryUser implements HasPresenter
 {
     use BaseModelTrait, RevisionableTrait, SoftDeletes;
 

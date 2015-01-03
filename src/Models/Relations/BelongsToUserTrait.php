@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace GrahamCampbell\Credentials\Models\Relations\Common;
+namespace GrahamCampbell\Credentials\Models\Relations;
 
 use Illuminate\Support\Facades\Config;
 

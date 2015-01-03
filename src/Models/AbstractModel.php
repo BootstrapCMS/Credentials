@@ -11,8 +11,7 @@
 
 namespace GrahamCampbell\Credentials\Models;
 
-use GrahamCampbell\Credentials\Models\Common\BaseModelTrait;
-use GrahamCampbell\Credentials\Models\Interfaces\BaseModelInterface;
+use GrahamCampbell\Credentials\Models\BaseModelTrait;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
@@ -20,7 +19,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @author Graham Campbell <graham@mineuk.com>
  */
-abstract class AbstractModel extends Eloquent implements BaseModelInterface
+abstract class AbstractModel extends Eloquent
 {
     use BaseModelTrait;
 

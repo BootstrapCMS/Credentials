@@ -14,8 +14,7 @@ namespace GrahamCampbell\Credentials\Models;
 use Cartalyst\Sentry\Throttling\Eloquent\Throttle as SentryThrottle;
 use DateTime;
 use GrahamCampbell\Credentials\Facades\RevisionRepository;
-use GrahamCampbell\Credentials\Models\Common\BaseModelTrait;
-use GrahamCampbell\Credentials\Models\Interfaces\BaseModelInterface;
+use GrahamCampbell\Credentials\Models\BaseModelTrait;
 use Illuminate\Support\Facades\Config;
 
 /**
@@ -23,7 +22,7 @@ use Illuminate\Support\Facades\Config;
  *
  * @author Graham Campbell <graham@mineuk.com>
  */
-class Throttle extends SentryThrottle implements BaseModelInterface
+class Throttle extends SentryThrottle
 {
     use BaseModelTrait;
 

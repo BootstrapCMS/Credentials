@@ -11,8 +11,7 @@
 
 namespace GrahamCampbell\Credentials\Models;
 
-use GrahamCampbell\Credentials\Models\Relations\Common\BelongsToUserTrait;
-use GrahamCampbell\Credentials\Models\Relations\Interfaces\BelongsToUserInterface;
+use GrahamCampbell\Credentials\Models\Relations\BelongsToUserTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
@@ -21,7 +20,7 @@ use McCool\LaravelAutoPresenter\HasPresenter;
  *
  * @author Graham Campbell <graham@mineuk.com>
  */
-class Revision extends AbstractModel implements BelongsToUserInterface, HasPresenter
+class Revision extends AbstractModel implements HasPresenter
 {
     use BelongsToUserTrait, SoftDeletes;
 
