@@ -11,7 +11,6 @@
 
 namespace GrahamCampbell\Credentials\Repositories;
 
-use GrahamCampbell\Credentials\Repositories\BaseRepositoryTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Factory;
 

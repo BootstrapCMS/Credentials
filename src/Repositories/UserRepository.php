@@ -11,8 +11,6 @@
 
 namespace GrahamCampbell\Credentials\Repositories;
 
-use GrahamCampbell\Credentials\Repositories\PaginateRepositoryTrait;
-
 /**
  * This is the user repository class.
  *

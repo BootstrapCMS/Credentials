@@ -11,7 +11,6 @@
 
 namespace GrahamCampbell\Credentials\Models;
 
-use GrahamCampbell\Credentials\Models\BaseModelTrait;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**

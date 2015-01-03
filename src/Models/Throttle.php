@@ -14,7 +14,6 @@ namespace GrahamCampbell\Credentials\Models;
 use Cartalyst\Sentry\Throttling\Eloquent\Throttle as SentryThrottle;
 use DateTime;
 use GrahamCampbell\Credentials\Facades\RevisionRepository;
-use GrahamCampbell\Credentials\Models\BaseModelTrait;
 use Illuminate\Support\Facades\Config;
 
 /**
