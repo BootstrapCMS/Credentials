@@ -6,6 +6,8 @@ CHANGE LOG
 
 * Upgraded to laravel 5
 * Renamed providers to repositories
+* Removed dependency on laravel database
+* Cleaned up models and providers
 * Cleaned up assets
 
 
