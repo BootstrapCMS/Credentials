@@ -25,42 +25,37 @@ use SebastianBergmann\Diff\Differ;
 class CredentialsServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
-
-    /**
-     * Bootstrap the application events.
+     * Boot the service provider.
      *
      * @return void
      */
     public function boot()
     {
-        $this->package('graham-campbell/credentials', 'graham-campbell/credentials', __DIR__);
+        $this->setupPackage();
 
-        if ($this->app->config['graham-campbell/core::commands']) {
-            $this->setupCommandSubscriber($this->app);
-        }
+        $this->setupBlade($this->app->view);
 
-        $this->setupBlade($this->app['view']);
-
-        $this->setupRoutes($this->app['router']);
+        $this->setupRoutes($this->app->router);
     }
 
     /**
-     * Setup the command subscriber.
-     *
-     * @param \Illuminate\Contracts\Foundation\Application $app
+     * Setup the package.
      *
      * @return void
      */
-    protected function setupCommandSubscriber(Application $app)
+    protected function setupPackage()
     {
-        $subscriber = $app->make(Subscribers\CommandSubscriber::class);
+        $configuration = realpath(__DIR__.'/../config/credentials.php');
+        $migrations = realpath(__DIR__.'/../migrations');
 
-        $app['events']->subscribe($subscriber);
+        $this->publishes([
+            $configuration => config_path('credentials.php'),
+            $migrations    => base_path('database/migrations'),
+        ]);
+
+        $this->mergeConfigFrom($configuration, 'credentials');
+
+        $this->loadViewsFrom(realpath(__DIR__.'/../views'), 'credentials');
     }
 
     /**
@@ -117,7 +112,6 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->registerUserRepository();
         $this->registerGroupRepository();
         $this->registerCredentials();
-        $this->registerCommandSubscriber();
 
         $this->registerAccountController();
         $this->registerLoginController();
@@ -149,7 +143,7 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function registerRevisionRepository()
     {
         $this->app->singleton('revisionrepository', function ($app) {
-            $model = $app['config']['graham-campbell/credentials::revision'];
+            $model = $app['config']['credentials.revision'];
             $revision = new $model();
 
             $validator = $app['validator'];
@@ -168,7 +162,7 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function registerUserRepository()
     {
         $this->app->singleton('userrepository', function ($app) {
-            $model = $app['config']['cartalyst/sentry::users.model'];
+            $model = $app['config']['sentry.users.model'];
             $user = new $model();
 
             $validator = $app['validator'];
@@ -187,7 +181,7 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function registerGroupRepository()
     {
         $this->app->singleton('grouprepository', function ($app) {
-            $model = $app['config']['cartalyst/sentry::groups.model'];
+            $model = $app['config']['sentry.groups.model'];
             $group = new $model();
 
             $validator = $app['validator'];
@@ -213,18 +207,6 @@ class CredentialsServiceProvider extends ServiceProvider
         });
 
         $this->app->alias('credentials', 'GrahamCampbell\Credentials\Credentials');
-    }
-
-    /**
-     * Register the command subscriber class.
-     *
-     * @return void
-     */
-    protected function registerCommandSubscriber()
-    {
-        $this->app->singleton('GrahamCampbell\Credentials\Subscribers\CommandSubscriber', function ($app) {
-            return new Subscribers\CommandSubscriber();
-        });
     }
 
     /**

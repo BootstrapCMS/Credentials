@@ -27,6 +27,6 @@ trait BelongsToUserTrait
      */
     public function user()
     {
-        return $this->belongsTo(Config::get('cartalyst/sentry::users.model'));
+        return $this->belongsTo(Config::get('sentry.users.model'));
     }
 }

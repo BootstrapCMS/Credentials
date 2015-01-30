@@ -75,7 +75,7 @@ class ActivationController extends AbstractController
             $user = Credentials::getUserProvider()->findById($id);
 
             if (!$user->attemptActivation($code)) {
-                return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+                return Redirect::to(Config::get('core.home', '/'))
                     ->with('error', 'There was a problem activating this account. Please contact support.');
             }
 
@@ -84,7 +84,7 @@ class ActivationController extends AbstractController
             return Redirect::route('account.login')
                 ->with('success', 'Your account has been activated successfully. You may now login.');
         } catch (UserNotFoundException $e) {
-            return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+            return Redirect::to(Config::get('core.home', '/'))
                 ->with('error', 'There was a problem activating this account. Please contact support.');
         } catch (UserAlreadyActivatedException $e) {
             return Redirect::route('account.login')
@@ -99,7 +99,7 @@ class ActivationController extends AbstractController
      */
     public function getResend()
     {
-        return View::make('graham-campbell/credentials::account.resend');
+        return View::make('credentials::account.resend');
     }
 
     /**
@@ -129,13 +129,13 @@ class ActivationController extends AbstractController
             $code = $user->getActivationCode();
 
             $mail = [
-                'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+                'url'     => URL::to(Config::get('core.home', '/')),
                 'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
                 'email'   => $user->getLogin(),
-                'subject' => Config::get('graham-campbell/core::name').' - Activation',
+                'subject' => Config::get('core.name').' - Activation',
             ];
 
-            Mail::queue('graham-campbell/credentials::emails.resend', $mail, function ($message) use ($mail) {
+            Mail::queue('credentials::emails.resend', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 

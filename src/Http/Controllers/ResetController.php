@@ -61,7 +61,7 @@ class ResetController extends AbstractController
      */
     public function getReset()
     {
-        return View::make('graham-campbell/credentials::account.reset');
+        return View::make('credentials::account.reset');
     }
 
     /**
@@ -88,10 +88,10 @@ class ResetController extends AbstractController
             $mail = [
                 'link'    => URL::route('account.password', ['id'    => $user->id, 'code'    => $code]),
                 'email'   => $user->getLogin(),
-                'subject' => Config::get('graham-campbell/core::name').' - Password Reset Confirmation',
+                'subject' => Config::get('core.name').' - Password Reset Confirmation',
             ];
 
-            Mail::queue('graham-campbell/credentials::emails.reset', $mail, function ($message) use ($mail) {
+            Mail::queue('credentials::emails.reset', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 
@@ -125,24 +125,24 @@ class ResetController extends AbstractController
             $password = Str::random();
 
             if (!$user->attemptResetPassword($code, $password)) {
-                return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+                return Redirect::to(Config::get('core.home', '/'))
                     ->with('error', 'There was a problem resetting your password. Please contact support.');
             }
 
             $mail = [
                 'password' => $password,
                 'email'    => $user->getLogin(),
-                'subject'  => Config::get('graham-campbell/core::name').' - New Password Information',
+                'subject'  => Config::get('core.name').' - New Password Information',
             ];
 
-            Mail::queue('graham-campbell/credentials::emails.password', $mail, function ($message) use ($mail) {
+            Mail::queue('credentials::emails.password', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 
-            return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+            return Redirect::to(Config::get('core.home', '/'))
                 ->with('success', 'Your password has been changed. Check your email for the new password.');
         } catch (UserNotFoundException $e) {
-            return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+            return Redirect::to(Config::get('core.home', '/'))
                 ->with('error', 'There was a problem resetting your password. Please contact support.');
         }
     }

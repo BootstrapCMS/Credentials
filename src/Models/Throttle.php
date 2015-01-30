@@ -47,7 +47,7 @@ class Throttle extends SentryThrottle
     public function addLoginAttempt()
     {
         RevisionRepository::create([
-            'revisionable_type' => Config::get('cartalyst/sentry::users.model'),
+            'revisionable_type' => Config::get('sentry.users.model'),
             'revisionable_id'   => $this['user_id'],
             'key'               => 'last_attempt_at',
             'old_value'         => $this['last_attempt_at'],
@@ -66,7 +66,7 @@ class Throttle extends SentryThrottle
     public function suspend()
     {
         RevisionRepository::create([
-            'revisionable_type' => Config::get('cartalyst/sentry::users.model'),
+            'revisionable_type' => Config::get('sentry.users.model'),
             'revisionable_id'   => $this['user_id'],
             'key'               => 'suspended_at',
             'old_value'         => $this['suspended_at'],

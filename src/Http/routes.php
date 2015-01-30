@@ -29,13 +29,13 @@ $router->patch('account/details', ['as' => 'account.details.patch', 'uses' => 'A
 $router->patch('account/password', ['as' => 'account.password.patch', 'uses' => 'AccountController@patchPassword']);
 
 // registration routes
-if (Config::get('graham-campbell/credentials::regallowed')) {
+if (Config::get('credentials.regallowed')) {
     $router->get('account/register', ['as' => 'account.register', 'uses' => 'RegistrationController@getRegister']);
     $router->post('account/register', ['as' => 'account.register.post', 'uses' => 'RegistrationController@postRegister']);
 }
 
 // activation routes
-if (Config::get('graham-campbell/credentials::activation')) {
+if (Config::get('credentials.activation')) {
     $router->get('account/activate/{id}/{code}', ['as' => 'account.activate', 'uses' => 'ActivationController@getActivate']);
     $router->get('account/resend', ['as' => 'account.resend', 'uses' => 'ActivationController@getResend']);
     $router->post('account/resend', ['as' => 'account.resend.post', 'uses' => 'ActivationController@postResend']);
@@ -55,6 +55,6 @@ $router->get('account/logout', ['as' => 'account.logout', 'uses' => 'LoginContro
 $router->resource('users', 'UserController');
 $router->post('users/{users}/suspend', ['as' => 'users.suspend', 'uses' => 'UserController@suspend']);
 $router->post('users/{users}/reset', ['as' => 'users.reset', 'uses' => 'UserController@reset']);
-if (Config::get('graham-campbell/credentials::activation')) {
+if (Config::get('credentials.activation')) {
     $router->post('users/{users}/resend', ['as' => 'users.resend', 'uses' => 'UserController@resend']);
 }

@@ -1,4 +1,4 @@
-@extends(Config::get('graham-campbell/core::layout'))
+@extends(Config::get('core.layout'))
 
 @section('title')
 <?php $__navtype = 'admin'; ?>
@@ -48,15 +48,15 @@ Edit {{ $user->name }}
         $form['defaults']['group_'.$group->id] = ($user->inGroup($group));
     }
     ?>
-    @include('graham-campbell/credentials::users.form')
+    @include('credentials::users.form')
 </div>
 @stop
 
 @section('bottom')
-@include('graham-campbell/credentials::users.suspend')
+@include('credentials::users.suspend')
 @auth('admin')
-    @include('graham-campbell/credentials::users.reset')
-    @include('graham-campbell/credentials::users.delete')
+    @include('credentials::users.reset')
+    @include('credentials::users.delete')
 @endauth
 @stop
 

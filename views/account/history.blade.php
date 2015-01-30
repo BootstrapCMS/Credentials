@@ -1,4 +1,4 @@
-@extends(Config::get('graham-campbell/core::layout'))
+@extends(Config::get('core.layout'))
 
 @section('title')
 History
@@ -19,9 +19,9 @@ History
     </div>
 </div>
 <hr>
-@include('graham-campbell/credentials::users.history')
+@include('credentials::users.history')
 @stop
 
 @section('bottom')
-@include('graham-campbell/credentials::account.delete')
+@include('credentials::account.delete')
 @stop

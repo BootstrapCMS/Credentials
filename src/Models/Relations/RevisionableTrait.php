@@ -99,7 +99,7 @@ trait RevisionableTrait
      */
     public function revisionHistory()
     {
-        return $this->morphMany(Config::get('graham-campbell/credentials::revision'), 'revisionable');
+        return $this->morphMany(Config::get('credentials.revision'), 'revisionable');
     }
 
     /**

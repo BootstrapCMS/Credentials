@@ -1,4 +1,4 @@
-@extends(Config::get('graham-campbell/core::layout'))
+@extends(Config::get('core.layout'))
 
 @section('title')
 Profile
@@ -36,7 +36,7 @@ Profile
             'email' => $user->email,
     ], ];
     ?>
-    @include('graham-campbell/credentials::account.details')
+    @include('credentials::account.details')
 </div>
 <hr>
 <h3>Change Password</h3>
@@ -47,10 +47,10 @@ Profile
         'button' => 'Save Password',
     ];
     ?>
-    @include('graham-campbell/credentials::account.password')
+    @include('credentials::account.password')
 </div>
 @stop
 
 @section('bottom')
-@include('graham-campbell/credentials::account.delete')
+@include('credentials::account.delete')
 @stop

@@ -1,4 +1,4 @@
-@extends(Config::get('graham-campbell/core::email'))
+@extends(Config::get('core.email'))
 
 @section('content')
 <p>To reset your password, <a href="{!! $link !!}">click here.</a></p>

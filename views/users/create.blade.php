@@ -1,4 +1,4 @@
-@extends(Config::get('graham-campbell/core::layout'))
+@extends(Config::get('core.layout'))
 
 @section('title')
 <?php $__navtype = 'admin'; ?>
@@ -30,7 +30,7 @@ Create User
         }
     }
     ?>
-    @include('graham-campbell/credentials::users.form')
+    @include('credentials::users.form')
 </div>
 @stop
 

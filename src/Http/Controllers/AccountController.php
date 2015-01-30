@@ -53,10 +53,7 @@ class AccountController extends AbstractController
      */
     public function getHistory()
     {
-        return View::make(
-            'graham-campbell/credentials::account.history',
-            ['user' => Credentials::getUser()]
-        );
+        return View::make('credentials::account.history')->withUser(Credentials::getUser()));
     }
 
     /**
@@ -66,10 +63,7 @@ class AccountController extends AbstractController
      */
     public function getProfile()
     {
-        return View::make(
-            'graham-campbell/credentials::account.profile',
-            ['user' => Credentials::getUser()]
-        );
+        return View::make('credentials::account.profile')->withUser(Credentials::getUser()));
     }
 
     /**
@@ -89,21 +83,21 @@ class AccountController extends AbstractController
         try {
             $user->delete();
         } catch (\Exception $e) {
-            return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+            return Redirect::to(Config::get('core.home', '/'))
                 ->with('error', 'There was a problem deleting your account.');
         }
 
         $mail = [
-            'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+            'url'     => URL::to(Config::get('core.home', '/')),
             'email'   => $email,
-            'subject' => Config::get('graham-campbell/core::name').' - Account Deleted Notification',
+            'subject' => Config::get('core.name').' - Account Deleted Notification',
         ];
 
-        Mail::queue('graham-campbell/credentials::emails.userdeleted', $mail, function ($message) use ($mail) {
+        Mail::queue('credentials::emails.userdeleted', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
         });
 
-        return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+        return Redirect::to(Config::get('core.home', '/'))
             ->with('success', 'Your account has been deleted successfully.');
     }
 
@@ -132,15 +126,15 @@ class AccountController extends AbstractController
             $mail = [
                 'old'     => $email,
                 'new'     => $input['email'],
-                'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
-                'subject' => Config::get('graham-campbell/core::name').' - New Email Information',
+                'url'     => URL::to(Config::get('core.home', '/')),
+                'subject' => Config::get('core.name').' - New Email Information',
             ];
 
-            Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
+            Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
                 $message->to($mail['old'])->subject($mail['subject']);
             });
 
-            Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
+            Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
                 $message->to($mail['new'])->subject($mail['subject']);
             });
         }
@@ -169,12 +163,12 @@ class AccountController extends AbstractController
         $this->checkUser($user);
 
         $mail = [
-            'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+            'url'     => URL::to(Config::get('core.home', '/')),
             'email'   => $user->getLogin(),
-            'subject' => Config::get('graham-campbell/core::name').' - New Password Notification',
+            'subject' => Config::get('core.name').' - New Password Notification',
         ];
 
-        Mail::queue('graham-campbell/credentials::emails.newpass', $mail, function ($message) use ($mail) {
+        Mail::queue('credentials::emails.newpass', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
         });
 

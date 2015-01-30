@@ -1,4 +1,4 @@
-@extends(Config::get('graham-campbell/core::layout'))
+@extends(Config::get('core.layout'))
 
 @section('title')
 <?php $__navtype = 'admin'; ?>
@@ -86,16 +86,16 @@
     </div>
 </div>
 <hr>
-@include('graham-campbell/credentials::users.history')
+@include('credentials::users.history')
 @stop
 
 @section('bottom')
-@include('graham-campbell/credentials::users.suspend')
+@include('credentials::users.suspend')
 @auth('admin')
-    @if (Config::get('graham-campbell/credentials::activation'))
-        @include('graham-campbell/credentials::users.resend')
+    @if (Config::get('credentials.activation'))
+        @include('credentials::users.resend')
     @endif
-    @include('graham-campbell/credentials::users.reset')
-    @include('graham-campbell/credentials::users.delete')
+    @include('credentials::users.reset')
+    @include('credentials::users.delete')
 @endauth
 @stop

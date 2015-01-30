@@ -59,7 +59,7 @@ class RegistrationController extends AbstractController
      */
     public function getRegister()
     {
-        return View::make('graham-campbell/credentials::account.register');
+        return View::make('credentials::account.register');
     }
 
     /**
@@ -69,7 +69,7 @@ class RegistrationController extends AbstractController
      */
     public function postRegister()
     {
-        if (!Config::get('graham-campbell/credentials::regallowed')) {
+        if (!Config::get('credentials.regallowed')) {
             return Redirect::route('account.register');
         }
 
@@ -87,38 +87,38 @@ class RegistrationController extends AbstractController
 
             $user = Credentials::register($input);
 
-            if (!Config::get('graham-campbell/credentials::activation')) {
+            if (!Config::get('credentials.activation')) {
                 $mail = [
-                    'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+                    'url'     => URL::to(Config::get('core.home', '/')),
                     'email'   => $user->getLogin(),
-                    'subject' => Config::get('graham-campbell/core::name').' - Welcome',
+                    'subject' => Config::get('core.name').' - Welcome',
                 ];
 
-                Mail::queue('graham-campbell/credentials::emails.welcome', $mail, function ($message) use ($mail) {
+                Mail::queue('credentials::emails.welcome', $mail, function ($message) use ($mail) {
                     $message->to($mail['email'])->subject($mail['subject']);
                 });
 
                 $user->attemptActivation($user->getActivationCode());
                 $user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
 
-                return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+                return Redirect::to(Config::get('core.home', '/'))
                     ->with('success', 'Your account has been created successfully.');
             }
 
             $code = $user->getActivationCode();
 
             $mail = [
-                'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+                'url'     => URL::to(Config::get('core.home', '/')),
                 'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
                 'email'   => $user->getLogin(),
-                'subject' => Config::get('graham-campbell/core::name').' - Welcome',
+                'subject' => Config::get('core.name').' - Welcome',
             ];
 
-            Mail::queue('graham-campbell/credentials::emails.welcome', $mail, function ($message) use ($mail) {
+            Mail::queue('credentials::emails.welcome', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 
-            return Redirect::to(Config::get('graham-campbell/core::home', '/'))
+            return Redirect::to(Config::get('core.home', '/'))
                 ->with('success', 'Your account has been created. Check your email for the confirmation link.');
         } catch (UserExistsException $e) {
             return Redirect::route('account.register')->withInput()->withErrors($val->errors())

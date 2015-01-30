@@ -69,10 +69,7 @@ class UserController extends AbstractController
         $users = UserRepository::paginate();
         $links = UserRepository::links();
 
-        return View::make(
-            'graham-campbell/credentials::users.index',
-            ['users' => $users, 'links' => $links]
-        );
+        return View::make('credentials::users.index', compact('users', 'links'));
     }
 
     /**
@@ -84,10 +81,7 @@ class UserController extends AbstractController
     {
         $groups = GroupRepository::index();
 
-        return View::make(
-            'graham-campbell/credentials::users.create',
-            ['groups' => $groups]
-        );
+        return View::make('credentials::users.create', compact('groups'));
     }
 
     /**
@@ -124,13 +118,13 @@ class UserController extends AbstractController
             }
 
             $mail = [
-                'url'      => URL::to(Config::get('graham-campbell/core::home', '/')),
+                'url'      => URL::to(Config::get('core.home', '/')),
                 'password' => $password,
                 'email'    => $user->getLogin(),
-                'subject'  => Config::get('graham-campbell/core::name').' - New Account Information',
+                'subject'  => Config::get('core.name').' - New Account Information',
             ];
 
-            Mail::queue('graham-campbell/credentials::emails.newuser', $mail, function ($message) use ($mail) {
+            Mail::queue('credentials::emails.newuser', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 
@@ -157,7 +151,7 @@ class UserController extends AbstractController
         if ($user->activated_at) {
             $activated = HTML::ago($user->activated_at);
         } else {
-            if (Credentials::hasAccess('admin') && Config::get('graham-campbell/credentials::activation')) {
+            if (Credentials::hasAccess('admin') && Config::get('credentials.activation')) {
                 $activated = 'No - <a href="#resend_user" data-toggle="modal" data-target="#resend_user">Resend Email</a>';
             } else {
                 $activated = 'Not Activated';
@@ -181,10 +175,7 @@ class UserController extends AbstractController
             $groups = 'No Group Memberships';
         }
 
-        return View::make(
-            'graham-campbell/credentials::users.show',
-            ['user' => $user, 'groups' => $groups, 'activated' => $activated, 'suspended' => $suspended]
-        );
+        return View::make('credentials::users.show', compact('user', 'groups', 'activated', 'suspended'));
     }
 
     /**
@@ -201,10 +192,7 @@ class UserController extends AbstractController
 
         $groups = GroupRepository::index();
 
-        return View::make(
-            'graham-campbell/credentials::users.edit',
-            ['user' => $user, 'groups' => $groups]
-        );
+        return View::make('credentials::users.edit', compact('user', 'groups'));
     }
 
     /**
@@ -253,27 +241,27 @@ class UserController extends AbstractController
             $mail = [
                 'old'     => $email,
                 'new'     => $input['email'],
-                'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
-                'subject' => Config::get('graham-campbell/core::name').' - New Email Information',
+                'url'     => URL::to(Config::get('core.home', '/')),
+                'subject' => Config::get('core.name').' - New Email Information',
             ];
 
-            Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
+            Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
                 $message->to($mail['old'])->subject($mail['subject']);
             });
 
-            Mail::queue('graham-campbell/credentials::emails.newemail', $mail, function ($message) use ($mail) {
+            Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
                 $message->to($mail['new'])->subject($mail['subject']);
             });
         }
 
         if ($changed) {
             $mail = [
-                'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+                'url'     => URL::to(Config::get('core.home', '/')),
                 'email'   => $input['email'],
-                'subject' => Config::get('graham-campbell/core::name').' - Group Membership Changes',
+                'subject' => Config::get('core.name').' - Group Membership Changes',
             ];
 
-            Mail::queue('graham-campbell/credentials::emails.groups', $mail, function ($message) use ($mail) {
+            Mail::queue('credentials::emails.groups', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
         }
@@ -344,10 +332,10 @@ class UserController extends AbstractController
         $mail = [
             'password' => $password,
             'email'    => $user->getLogin(),
-            'subject'  => Config::get('graham-campbell/core::name').' - New Password Information',
+            'subject'  => Config::get('core.name').' - New Password Information',
         ];
 
-        Mail::queue('graham-campbell/credentials::emails.password', $mail, function ($message) use ($mail) {
+        Mail::queue('credentials::emails.password', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
         });
 
@@ -375,13 +363,13 @@ class UserController extends AbstractController
         $code = $user->getActivationCode();
 
         $mail = [
-            'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+            'url'     => URL::to(Config::get('core.home', '/')),
             'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
             'email'   => $user->getLogin(),
-            'subject' => Config::get('graham-campbell/core::name').' - Activation',
+            'subject' => Config::get('core.name').' - Activation',
         ];
 
-        Mail::queue('graham-campbell/credentials::emails.resend', $mail, function ($message) use ($mail) {
+        Mail::queue('credentials::emails.resend', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
         });
 
@@ -411,12 +399,12 @@ class UserController extends AbstractController
         }
 
         $mail = [
-            'url'     => URL::to(Config::get('graham-campbell/core::home', '/')),
+            'url'     => URL::to(Config::get('core.home', '/')),
             'email'   => $email,
-            'subject' => Config::get('graham-campbell/core::name').' - Account Deleted Notification',
+            'subject' => Config::get('core.name').' - Account Deleted Notification',
         ];
 
-        Mail::queue('graham-campbell/credentials::emails.admindeleted', $mail, function ($message) use ($mail) {
+        Mail::queue('credentials::emails.admindeleted', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
         });
 

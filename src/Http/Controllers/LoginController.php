@@ -67,7 +67,7 @@ class LoginController extends AbstractController
      */
     public function getLogin()
     {
-        return View::make('graham-campbell/credentials::account.login');
+        return View::make('credentials::account.login');
     }
 
     /**
@@ -103,7 +103,7 @@ class LoginController extends AbstractController
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'That user does not exist.');
         } catch (UserNotActivatedException $e) {
-            if (Config::get('graham-campbell/credentials::activation')) {
+            if (Config::get('credentials::activation')) {
                 return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'You have not yet activated this account.');
             } else {
@@ -122,7 +122,7 @@ class LoginController extends AbstractController
                 ->with('error', 'You have been banned. Please contact support.');
         }
 
-        return Redirect::intended(Config::get('graham-campbell/core::home', '/'));
+        return Redirect::intended(Config::get('core.home', '/'));
     }
 
     /**
@@ -134,6 +134,6 @@ class LoginController extends AbstractController
     {
         Credentials::logout();
 
-        return Redirect::to(Config::get('graham-campbell/core::home', '/'));
+        return Redirect::to(Config::get('core.home', '/'));
     }
 }
