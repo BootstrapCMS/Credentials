@@ -10,7 +10,7 @@
  */
 
 use GrahamCampbell\Throttle\Facades\Throttle;
-use Illunimate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Redirect;
 
 $router->filter('throttle.login', function ($route, $request) {
 
