@@ -11,7 +11,6 @@
 
 namespace GrahamCampbell\Credentials;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory as View;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
