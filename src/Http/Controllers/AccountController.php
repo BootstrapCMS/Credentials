@@ -53,7 +53,7 @@ class AccountController extends AbstractController
      */
     public function getHistory()
     {
-        return View::make('credentials::account.history')->withUser(Credentials::getUser()));
+        return View::make('credentials::account.history')->withUser(Credentials::getUser());
     }
 
     /**
@@ -63,7 +63,7 @@ class AccountController extends AbstractController
      */
     public function getProfile()
     {
-        return View::make('credentials::account.profile')->withUser(Credentials::getUser()));
+        return View::make('credentials::account.profile')->withUser(Credentials::getUser());
     }
 
     /**
