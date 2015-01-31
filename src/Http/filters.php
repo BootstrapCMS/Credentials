@@ -36,7 +36,7 @@ $router->filter('throttle.resend', function ($route, $request) {
     // we can hit the throttle later on in the if validation passes
     if (!Throttle::check($request, 5, 30)) {
         return Redirect::route('account.resend')->withInput()
-            ->with('error', 'Your have been suspended from resending activation emails. Please contact support.');
+            ->with('error', 'You have been suspended from resending activation emails. Please contact support.');
     }
 });
 
@@ -45,7 +45,7 @@ $router->filter('throttle.reset', function ($route, $request) {
     // we can hit the throttle later on in the if validation passes
     if (!Throttle::check($request, 5, 30)) {
         return Redirect::route('account.reset')->withInput()
-            ->with('error', 'Your have been suspended from resetting passwords. Please contact support.');
+            ->with('error', 'You have been suspended from resetting passwords. Please contact support.');
     }
 });
 
@@ -54,6 +54,6 @@ $router->filter('throttle.register', function ($route, $request) {
     // we can hit the throttle later on in the if validation passes
     if (!Throttle::check($request, 5, 30)) {
         return Redirect::route('account.register')->withInput()
-            ->with('error', 'Your have been suspended from registration. Please contact support.');
+            ->with('error', 'You have been suspended from registration. Please contact support.');
     }
 });
