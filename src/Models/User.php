@@ -12,6 +12,7 @@
 namespace GrahamCampbell\Credentials\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Config;
 use Cartalyst\Sentry\Groups\GroupInterface;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
 use GrahamCampbell\Credentials\Facades\Credentials;
@@ -114,7 +115,7 @@ class User extends SentryUser implements HasPresenter
      */
     public function revisions()
     {
-        return $this->hasMany(\Config::get('credentials.revision'));
+        return $this->hasMany(Config::get('credentials.revision'));
     }
 
     /**
