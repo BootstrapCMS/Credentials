@@ -114,7 +114,7 @@ class User extends SentryUser implements HasPresenter
      */
     public function revisions()
     {
-        return $this->hasMany('GrahamCampbell\Credentials\Models\Revision');
+        return $this->hasMany(\Config::get('credentials.revision'));
     }
 
     /**
