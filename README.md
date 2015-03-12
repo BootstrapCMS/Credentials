@@ -24,6 +24,19 @@ To get the latest version of Laravel Credentials, simply add the following line 
 "graham-campbell/credentials": "0.4.*"
 ```
 
+You'll also need to make sure our fork of Sentry is included in your repositories list:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/BootstrapCMS/Sentry"
+        }
+    ],
+}
+```
+
 You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
 
 You will need to register many service providers before you attempt to load the Laravel Credentials service provider. Open up `config/app.php` and add the following to the `providers` key.
