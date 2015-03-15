@@ -9,6 +9,8 @@ CHANGE LOG
 * Removed dependency on laravel database
 * Cleaned up models and providers
 * Cleaned up assets
+* Tweaked the buttons
+* Fixed customizing the revision model
 
 
 ## V0.3.4 Alpha (Upcoming)
