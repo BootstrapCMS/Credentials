@@ -110,7 +110,7 @@ trait RevisionableTrait
     public function preSave()
     {
         $this->originalData = $this->original;
-        $this->updatedData  = $this->attributes;
+        $this->updatedData = $this->attributes;
 
         // we can only safely compare basic items, so for now we drop any object based
         // items apart from DateTime objects where we compare them specially
