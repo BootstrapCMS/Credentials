@@ -3,7 +3,7 @@
 /*
  * This file is part of Laravel Credentials.
  *
- * (c) Graham Campbell <graham@mineuk.com>
+ * (c) Graham Campbell <graham@cachethq.io>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,7 +14,7 @@ namespace GrahamCampbell\Credentials\Presenters\RevisionDisplayers\User;
 /**
  * This is the activated displayer class.
  *
- * @author Graham Campbell <graham@mineuk.com>
+ * @author Graham Campbell <graham@cachethq.io>
  */
 class ActivatedDisplayer extends AbstractDisplayer
 {
