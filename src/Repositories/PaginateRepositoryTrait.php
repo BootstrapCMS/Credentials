@@ -75,7 +75,7 @@ trait PaginateRepositoryTrait
      *
      * @return bool
      */
-    protected function isFirstPage(Paginator $paginator)
+    protected function isFirstPage(LengthAwarePaginator $paginator)
     {
         return ($paginator->currentPage() === 1);
     }
