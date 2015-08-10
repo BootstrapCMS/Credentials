@@ -46,7 +46,10 @@
     "autoload": {
         "psr-4": {
             "GrahamCampbell\\Credentials\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
