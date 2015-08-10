@@ -71,7 +71,7 @@ $ php artisan vendor:publish
 
 This will create a `config/credentials.php` file in your app that you can modify to set your configuration. Also, make sure you check for changes to the original config file in this package between releases.
 
-There are two config options:
+There are a few config options:
 
 ##### Enable Public Registration
 
