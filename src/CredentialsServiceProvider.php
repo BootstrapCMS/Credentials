@@ -11,7 +11,6 @@
 
 namespace GrahamCampbell\Credentials;
 
-use GrahamCampbell\Credentials\Http\Controllers\AccountController;
 use GrahamCampbell\Credentials\Http\Controllers\ActivationController;
 use GrahamCampbell\Credentials\Http\Controllers\LoginController;
 use GrahamCampbell\Credentials\Http\Controllers\RegistrationController;
@@ -113,7 +112,6 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->registerGroupRepository();
         $this->registerCredentials();
 
-        $this->registerAccountController();
         $this->registerLoginController();
         $this->registerRegistrationController();
         $this->registerResetController();
@@ -192,18 +190,6 @@ class CredentialsServiceProvider extends ServiceProvider
         });
 
         $this->app->alias('credentials', Credentials::class);
-    }
-
-    /**
-     * Register the account controller class.
-     *
-     * @return void
-     */
-    protected function registerAccountController()
-    {
-        $this->app->bind(AccountController::class, function ($app) {
-            return new AccountController();
-        });
     }
 
     /**
