@@ -102,7 +102,7 @@ class RegistrationController extends AbstractController
                 $user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
 
                 return Redirect::to(Config::get('credentials.home', '/'))
-                    ->with('success', 'Your account has been created successfully.');
+                    ->with('success', 'Your account has been created successfully. You may now login.');
             }
 
             $code = $user->getActivationCode();
