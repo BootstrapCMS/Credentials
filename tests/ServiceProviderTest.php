@@ -11,7 +11,11 @@
 
 namespace GrahamCampbell\Tests\Credentials;
 
-use GrahamCampbell\TestBench\Traits\ServiceProviderTestCaseTrait;
+use GrahamCampbell\Credentials\Credentials;
+use GrahamCampbell\Credentials\Repositories\GroupRepository;
+use GrahamCampbell\Credentials\Repositories\RevisionRepository;
+use GrahamCampbell\Credentials\Repositories\UserRepository;
+use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
 
 /**
  * This is the service provider test class.
@@ -20,30 +24,25 @@ use GrahamCampbell\TestBench\Traits\ServiceProviderTestCaseTrait;
  */
 class ServiceProviderTest extends AbstractTestCase
 {
-    use ServiceProviderTestCaseTrait;
-
-    public function testDifferIsInjectable()
-    {
-        $this->assertIsInjectable('SebastianBergmann\Diff\Differ');
-    }
+    use ServiceProviderTrait;
 
     public function testRevisionRepositoryIsInjectable()
     {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Repositories\RevisionRepository');
+        $this->assertIsInjectable(RevisionRepository::class);
     }
 
     public function testUserRepositoryIsInjectable()
     {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Repositories\UserRepository');
+        $this->assertIsInjectable(UserRepository::class);
     }
 
     public function testGroupRepositoryIsInjectable()
     {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Repositories\GroupRepository');
+        $this->assertIsInjectable(GroupRepository::class);
     }
 
     public function testCredentialsIsInjectable()
     {
-        $this->assertIsInjectable('GrahamCampbell\Credentials\Credentials');
+        $this->assertIsInjectable(Credentials::class);
     }
 }

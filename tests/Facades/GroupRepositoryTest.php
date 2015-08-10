@@ -11,7 +11,9 @@
 
 namespace GrahamCampbell\Tests\Credentials\Facades;
 
-use GrahamCampbell\TestBench\Traits\FacadeTestCaseTrait;
+use GrahamCampbell\Credentials\Facades\GroupRepository as GroupRepositoryFacade;
+use GrahamCampbell\Credentials\Repositories\GroupRepository;
+use GrahamCampbell\TestBenchCore\FacadeTrait;
 use GrahamCampbell\Tests\Credentials\AbstractTestCase;
 
 /**
@@ -21,7 +23,7 @@ use GrahamCampbell\Tests\Credentials\AbstractTestCase;
  */
 class GroupRepositoryTest extends AbstractTestCase
 {
-    use FacadeTestCaseTrait;
+    use FacadeTrait;
 
     /**
      * Get the facade accessor.
@@ -40,7 +42,7 @@ class GroupRepositoryTest extends AbstractTestCase
      */
     protected function getFacadeClass()
     {
-        return 'GrahamCampbell\Credentials\Facades\GroupRepository';
+        return GroupRepositoryFacade::class;
     }
 
     /**
@@ -50,6 +52,6 @@ class GroupRepositoryTest extends AbstractTestCase
      */
     protected function getFacadeRoot()
     {
-        return 'GrahamCampbell\Credentials\Repositories\GroupRepository';
+        return GroupRepository::class;
     }
 }

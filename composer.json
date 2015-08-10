@@ -31,13 +31,12 @@
         "cartalyst/sentry": "~3.0",
         "graham-campbell/binput": "~3.0",
         "graham-campbell/throttle": "~4.0",
-        "sebastian/diff": "~1.2",
         "mccool/laravel-auto-presenter": "~3.0",
         "psr/log": "~1.0"
     },
     "require-dev": {
-        "graham-campbell/testbench": "~2.0",
-        "doctrine/dbal": "~2.4"
+        "graham-campbell/testbench": "~3.0",
+        "phpunit/phpunit": "^4.7.6"
     },
     "suggest": {
         "graham-campbell/navigation": "Easily add a navigation bar."

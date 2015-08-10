@@ -14,7 +14,6 @@ namespace GrahamCampbell\Credentials;
 use Illuminate\Contracts\View\Factory as View;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use SebastianBergmann\Diff\Differ;
 
 /**
  * This is the credentials service provider class.
@@ -100,7 +99,6 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerDiffer();
         $this->registerRevisionRepository();
         $this->registerUserRepository();
         $this->registerGroupRepository();
@@ -112,20 +110,6 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->registerResetController();
         $this->registerActivationController();
         $this->registerUserController();
-    }
-
-    /**
-     * Register the differ class.
-     *
-     * @return void
-     */
-    protected function registerDiffer()
-    {
-        $this->app->singleton('differ', function ($app) {
-            return new Differ();
-        });
-
-        $this->app->alias('differ', 'SebastianBergmann\Diff\Differ');
     }
 
     /**
@@ -290,7 +274,6 @@ class CredentialsServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'differ',
             'revisionrepository',
             'userrepository',
             'grouprepository',

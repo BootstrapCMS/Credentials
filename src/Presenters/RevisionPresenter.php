@@ -14,7 +14,6 @@ namespace GrahamCampbell\Credentials\Presenters;
 use Exception;
 use GrahamCampbell\Credentials\Credentials;
 use McCool\LaravelAutoPresenter\BasePresenter;
-use SebastianBergmann\Diff\Differ;
 
 /**
  * This is the revision presenter class.
@@ -33,25 +32,16 @@ class RevisionPresenter extends BasePresenter
     protected $credentials;
 
     /**
-     * The differ instance.
-     *
-     * @var \SebastianBergmann\Diff\Differ
-     */
-    protected $differ;
-
-    /**
      * Create a new instance.
      *
      * @param \GrahamCampbell\Credentials\Credentials     $credentials
-     * @param \SebastianBergmann\Diff\Differ              $differ
      * @param \GrahamCampbell\Credentials\Models\Revision $resource
      *
      * @return void
      */
-    public function __construct(Credentials $credentials, Differ $differ, $resource)
+    public function __construct(Credentials $credentials, $resource)
     {
         $this->credentials = $credentials;
-        $this->differ = $differ;
 
         parent::__construct($resource);
     }
@@ -131,16 +121,6 @@ class RevisionPresenter extends BasePresenter
     }
 
     /**
-     * Get diff.
-     *
-     * @return string
-     */
-    public function diff()
-    {
-        return $this->differ->diff($this->wrappedObject->old_value, $this->wrappedObject->new_value);
-    }
-
-    /**
      * Was the event invoked by the current user?
      *
      * @return bool
@@ -158,15 +138,5 @@ class RevisionPresenter extends BasePresenter
     public function getCredentials()
     {
         return $this->credentials;
-    }
-
-    /**
-     * Get the differ instance.
-     *
-     * @return \SebastianBergmann\Diff\Differ
-     */
-    public function getDiffer()
-    {
-        return $this->differ;
     }
 }

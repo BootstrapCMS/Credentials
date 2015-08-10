@@ -11,7 +11,9 @@
 
 namespace GrahamCampbell\Tests\Credentials\Facades;
 
-use GrahamCampbell\TestBench\Traits\FacadeTestCaseTrait;
+use GrahamCampbell\Credentials\Credentials;
+use GrahamCampbell\Credentials\Facades\Credentials as CredentialsFacade;
+use GrahamCampbell\TestBenchCore\FacadeTrait;
 use GrahamCampbell\Tests\Credentials\AbstractTestCase;
 
 /**
@@ -21,7 +23,7 @@ use GrahamCampbell\Tests\Credentials\AbstractTestCase;
  */
 class CredentialsTest extends AbstractTestCase
 {
-    use FacadeTestCaseTrait;
+    use FacadeTrait;
 
     /**
      * Get the facade accessor.
@@ -40,7 +42,7 @@ class CredentialsTest extends AbstractTestCase
      */
     protected function getFacadeClass()
     {
-        return 'GrahamCampbell\Credentials\Facades\Credentials';
+        return CredentialsFacade::class;
     }
 
     /**
@@ -50,6 +52,6 @@ class CredentialsTest extends AbstractTestCase
      */
     protected function getFacadeRoot()
     {
-        return 'GrahamCampbell\Credentials\Credentials';
+        return Credentials::class;
     }
 }
