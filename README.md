@@ -16,12 +16,12 @@ Laravel Credentials was created by, and is maintained by [Graham Campbell](https
 
 ## Installation
 
-[PHP](https://php.net) 5.5+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
+[PHP](https://php.net) 5.5+ or [HHVM](http://hhvm.com) 3.6+, and [Composer](https://getcomposer.org) are required.
 
 To get the latest version of Laravel Credentials, simply add the following line to the require block of your `composer.json` file:
 
 ```
-"graham-campbell/credentials": "0.4.*"
+"graham-campbell/credentials": "~1.0"
 ```
 
 You'll also need to make sure our fork of Sentry is included in your repositories list:
@@ -57,10 +57,6 @@ You can register the three facades in the `aliases` key of your `config/app.php`
 * `'UserProvider' => 'GrahamCampbell\Credentials\Facades\UserProvider'`
 * `'GroupProvider' => 'GrahamCampbell\Credentials\Facades\GroupProvider'`
 * `'Credentials' => 'GrahamCampbell\Credentials\Facades\Credentials'`
-
-#### Looking for a laravel 4 compatable version?
-
-Checkout the [0.3 branch](https://github.com/BootstrapCMS/Credentials/tree/0.3), installable by requiring `"graham-campbell/credentials": "0.3.*"`.
 
 
 ## Configuration
