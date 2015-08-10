@@ -68,11 +68,11 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $blade = $view->getEngineResolver()->resolve('blade')->getCompiler();
 
-        $blade->directive('auth' function ($expression) {
+        $blade->directive('auth', function ($expression) {
             return "<?php if (\GrahamCampbell\Credentials\Facades\Credentials::check() && \GrahamCampbell\Credentials\Facades\Credentials::hasAccess{$expression}): ?>";
         });
 
-        $blade->directive('endauth' function () {
+        $blade->directive('endauth', function () {
             return '<?php endif; ?>';
         });
     }
