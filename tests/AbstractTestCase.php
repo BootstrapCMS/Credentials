@@ -32,7 +32,6 @@ abstract class AbstractTestCase extends AbstractPackageTestCase
         return [
             'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
             'Cartalyst\Sentry\SentryServiceProvider',
-            'GrahamCampbell\Core\CoreServiceProvider',
             'GrahamCampbell\Security\SecurityServiceProvider',
             'GrahamCampbell\Binput\BinputServiceProvider',
             'GrahamCampbell\Throttle\ThrottleServiceProvider',

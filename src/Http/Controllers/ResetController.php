@@ -88,7 +88,7 @@ class ResetController extends AbstractController
             $mail = [
                 'link'    => URL::route('account.password', ['id'    => $user->id, 'code'    => $code]),
                 'email'   => $user->getLogin(),
-                'subject' => Config::get('core.name').' - Password Reset Confirmation',
+                'subject' => Config::get('app.name').' - Password Reset Confirmation',
             ];
 
             Mail::queue('credentials::emails.reset', $mail, function ($message) use ($mail) {
@@ -125,24 +125,24 @@ class ResetController extends AbstractController
             $password = Str::random();
 
             if (!$user->attemptResetPassword($code, $password)) {
-                return Redirect::to(Config::get('core.home', '/'))
+                return Redirect::to(Config::get('credentials.home', '/'))
                     ->with('error', 'There was a problem resetting your password. Please contact support.');
             }
 
             $mail = [
                 'password' => $password,
                 'email'    => $user->getLogin(),
-                'subject'  => Config::get('core.name').' - New Password Information',
+                'subject'  => Config::get('app.name').' - New Password Information',
             ];
 
             Mail::queue('credentials::emails.password', $mail, function ($message) use ($mail) {
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 
-            return Redirect::to(Config::get('core.home', '/'))
+            return Redirect::to(Config::get('credentials.home', '/'))
                 ->with('success', 'Your password has been changed. Check your email for the new password.');
         } catch (UserNotFoundException $e) {
-            return Redirect::to(Config::get('core.home', '/'))
+            return Redirect::to(Config::get('credentials.home', '/'))
                 ->with('error', 'There was a problem resetting your password. Please contact support.');
         }
     }

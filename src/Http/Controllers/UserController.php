@@ -117,10 +117,10 @@ class UserController extends AbstractController
             }
 
             $mail = [
-                'url'      => URL::to(Config::get('core.home', '/')),
+                'url'      => URL::to(Config::get('credentials.home', '/')),
                 'password' => $password,
                 'email'    => $user->getLogin(),
-                'subject'  => Config::get('core.name').' - New Account Information',
+                'subject'  => Config::get('app.name').' - New Account Information',
             ];
 
             Mail::queue('credentials::emails.newuser', $mail, function ($message) use ($mail) {
@@ -240,8 +240,8 @@ class UserController extends AbstractController
             $mail = [
                 'old'     => $email,
                 'new'     => $input['email'],
-                'url'     => URL::to(Config::get('core.home', '/')),
-                'subject' => Config::get('core.name').' - New Email Information',
+                'url'     => URL::to(Config::get('credentials.home', '/')),
+                'subject' => Config::get('app.name').' - New Email Information',
             ];
 
             Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
@@ -255,9 +255,9 @@ class UserController extends AbstractController
 
         if ($changed) {
             $mail = [
-                'url'     => URL::to(Config::get('core.home', '/')),
+                'url'     => URL::to(Config::get('credentials.home', '/')),
                 'email'   => $input['email'],
-                'subject' => Config::get('core.name').' - Group Membership Changes',
+                'subject' => Config::get('app.name').' - Group Membership Changes',
             ];
 
             Mail::queue('credentials::emails.groups', $mail, function ($message) use ($mail) {
@@ -331,7 +331,7 @@ class UserController extends AbstractController
         $mail = [
             'password' => $password,
             'email'    => $user->getLogin(),
-            'subject'  => Config::get('core.name').' - New Password Information',
+            'subject'  => Config::get('app.name').' - New Password Information',
         ];
 
         Mail::queue('credentials::emails.password', $mail, function ($message) use ($mail) {
@@ -362,10 +362,10 @@ class UserController extends AbstractController
         $code = $user->getActivationCode();
 
         $mail = [
-            'url'     => URL::to(Config::get('core.home', '/')),
+            'url'     => URL::to(Config::get('credentials.home', '/')),
             'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
             'email'   => $user->getLogin(),
-            'subject' => Config::get('core.name').' - Activation',
+            'subject' => Config::get('app.name').' - Activation',
         ];
 
         Mail::queue('credentials::emails.resend', $mail, function ($message) use ($mail) {
@@ -398,9 +398,9 @@ class UserController extends AbstractController
         }
 
         $mail = [
-            'url'     => URL::to(Config::get('core.home', '/')),
+            'url'     => URL::to(Config::get('credentials.home', '/')),
             'email'   => $email,
-            'subject' => Config::get('core.name').' - Account Deleted Notification',
+            'subject' => Config::get('app.name').' - Account Deleted Notification',
         ];
 
         Mail::queue('credentials::emails.admindeleted', $mail, function ($message) use ($mail) {

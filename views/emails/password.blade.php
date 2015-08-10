@@ -1,4 +1,4 @@
-@extends(Config::get('core.email'))
+@extends(Config::get('credentials.email'))
 
 @section('content')
 <p>Here is your temporary password:</p>

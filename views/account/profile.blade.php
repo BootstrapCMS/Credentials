@@ -1,4 +1,4 @@
-@extends(Config::get('core.default'))
+@extends(Config::get('credentials.layout'))
 
 @section('title')
 Profile

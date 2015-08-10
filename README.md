@@ -43,7 +43,6 @@ You will need to register many service providers before you attempt to load the 
 
 * `'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider'`
 * `'Cartalyst\Sentry\SentryServiceProvider'`
-* `'GrahamCampbell\Core\CoreServiceProvider'`
 * `'GrahamCampbell\Security\SecurityServiceProvider'`
 * `'GrahamCampbell\Binput\BinputServiceProvider'`
 * `'GrahamCampbell\Throttle\ThrottleServiceProvider'`
@@ -85,9 +84,23 @@ This option (`'activation'`) defines if public registration requires email activ
 
 This option (`'revision'`) defines the revision model to be used. The default value for this setting is `'GrahamCampbell\Credentials\Models\Revision'`.
 
+##### Home
+
+This option (`'home'`) defines the location of the homepage. The default value for this setting is `'/'`.
+
+##### Layout
+
+This option (`'layout'`) defines the layout to extend when building views. The default value for this setting is `'layouts.default'`.
+
+##### Email Layout
+
+This option (`'layout'`) defines the layout to extend when building email views. The default value for this setting is `'layouts.email'`.
+
 ##### Additional Configuration
 
-You may want to check out the config for both `cartalyst/sentry` and `graham-campbell/core` too. For Laravel Credentials to function correctly, you must set the models to the following, or to a class which extends the following:
+You will need to add a `'name'` key to your app config to set the application name.
+
+You may want to check out the config for `cartalyst/sentry` too. For Laravel Credentials to function correctly, you must set the models to the following, or to a class which extends the following:
 
 * `'GrahamCampbell\Credentials\Models\Group'`
 * `'GrahamCampbell\Credentials\Models\User'`

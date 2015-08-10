@@ -122,7 +122,7 @@ class LoginController extends AbstractController
                 ->with('error', 'You have been banned. Please contact support.');
         }
 
-        return Redirect::intended(Config::get('core.home', '/'));
+        return Redirect::intended(Config::get('credentials.home', '/'));
     }
 
     /**
@@ -134,6 +134,6 @@ class LoginController extends AbstractController
     {
         Credentials::logout();
 
-        return Redirect::to(Config::get('core.home', '/'));
+        return Redirect::to(Config::get('credentials.home', '/'));
     }
 }

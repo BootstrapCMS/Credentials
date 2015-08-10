@@ -75,7 +75,7 @@ class ActivationController extends AbstractController
             $user = Credentials::getUserProvider()->findById($id);
 
             if (!$user->attemptActivation($code)) {
-                return Redirect::to(Config::get('core.home', '/'))
+                return Redirect::to(Config::get('credentials.home', '/'))
                     ->with('error', 'There was a problem activating this account. Please contact support.');
             }
 
@@ -84,7 +84,7 @@ class ActivationController extends AbstractController
             return Redirect::route('account.login')
                 ->with('success', 'Your account has been activated successfully. You may now login.');
         } catch (UserNotFoundException $e) {
-            return Redirect::to(Config::get('core.home', '/'))
+            return Redirect::to(Config::get('credentials.home', '/'))
                 ->with('error', 'There was a problem activating this account. Please contact support.');
         } catch (UserAlreadyActivatedException $e) {
             return Redirect::route('account.login')
@@ -129,10 +129,10 @@ class ActivationController extends AbstractController
             $code = $user->getActivationCode();
 
             $mail = [
-                'url'     => URL::to(Config::get('core.home', '/')),
+                'url'     => URL::to(Config::get('credentials.home', '/')),
                 'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
                 'email'   => $user->getLogin(),
-                'subject' => Config::get('core.name').' - Activation',
+                'subject' => Config::get('app.name').' - Activation',
             ];
 
             Mail::queue('credentials::emails.resend', $mail, function ($message) use ($mail) {

@@ -83,21 +83,21 @@ class AccountController extends AbstractController
         try {
             $user->delete();
         } catch (\Exception $e) {
-            return Redirect::to(Config::get('core.home', '/'))
+            return Redirect::to(Config::get('credentials.home', '/'))
                 ->with('error', 'There was a problem deleting your account.');
         }
 
         $mail = [
-            'url'     => URL::to(Config::get('core.home', '/')),
+            'url'     => URL::to(Config::get('credentials.home', '/')),
             'email'   => $email,
-            'subject' => Config::get('core.name').' - Account Deleted Notification',
+            'subject' => Config::get('app.name').' - Account Deleted Notification',
         ];
 
         Mail::queue('credentials::emails.userdeleted', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
         });
 
-        return Redirect::to(Config::get('core.home', '/'))
+        return Redirect::to(Config::get('credentials.home', '/'))
             ->with('success', 'Your account has been deleted successfully.');
     }
 
@@ -126,8 +126,8 @@ class AccountController extends AbstractController
             $mail = [
                 'old'     => $email,
                 'new'     => $input['email'],
-                'url'     => URL::to(Config::get('core.home', '/')),
-                'subject' => Config::get('core.name').' - New Email Information',
+                'url'     => URL::to(Config::get('credentials.home', '/')),
+                'subject' => Config::get('app.name').' - New Email Information',
             ];
 
             Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
@@ -163,9 +163,9 @@ class AccountController extends AbstractController
         $this->checkUser($user);
 
         $mail = [
-            'url'     => URL::to(Config::get('core.home', '/')),
+            'url'     => URL::to(Config::get('credentials.home', '/')),
             'email'   => $user->getLogin(),
-            'subject' => Config::get('core.name').' - New Password Notification',
+            'subject' => Config::get('app.name').' - New Password Notification',
         ];
 
         Mail::queue('credentials::emails.newpass', $mail, function ($message) use ($mail) {
