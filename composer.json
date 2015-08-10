@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.5.9",
         "illuminate/console": "5.0.*",
         "illuminate/contracts": "5.0.*",
         "illuminate/database": "5.0.*",
@@ -29,7 +29,7 @@
         "illuminate/validation": "5.0.*",
         "illuminate/view": "5.0.*",
         "cartalyst/sentry": "~3.0",
-        "graham-campbell/core": "~2.0",
+        "graham-campbell/core": "~3.0",
         "graham-campbell/binput": "~3.0",
         "graham-campbell/throttle": "~3.0",
         "sebastian/diff": "~1.2",
