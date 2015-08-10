@@ -14,10 +14,10 @@ use Carbon\Carbon;
 if (!function_exists('html_ago')) {
     function html_ago(Carbon $carbon, $id = null)
     {
-		if ($id) {
-			return '<abbr id="'.$id.'" class="timeago" title="'.$carbon->toISO8601String().'">'.$carbon->toDateTimeString().'</abbr>';
-		}
+        if ($id) {
+            return '<abbr id="'.$id.'" class="timeago" title="'.$carbon->toISO8601String().'">'.$carbon->toDateTimeString().'</abbr>';
+        }
 
-		return '<abbr class="timeago" title="'.$carbon->toISO8601String().'">'.$carbon->toDateTimeString().'</abbr>';
-	}
+        return '<abbr class="timeago" title="'.$carbon->toISO8601String().'">'.$carbon->toDateTimeString().'</abbr>';
+    }
 }
