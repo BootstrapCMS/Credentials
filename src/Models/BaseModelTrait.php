@@ -31,7 +31,7 @@ trait BaseModelTrait
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public static function create(array $input)
+    public static function create(array $input = [])
     {
         DB::beginTransaction();
 

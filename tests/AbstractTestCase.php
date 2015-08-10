@@ -21,6 +21,14 @@ use GrahamCampbell\TestBench\AbstractPackageTestCase;
 abstract class AbstractTestCase extends AbstractPackageTestCase
 {
     /**
+     * @before
+     */
+    public function setUpAppKey()
+    {
+        $this->app->config->set('app.key', str_repeat('A', 32));
+    }
+
+    /**
      * Get the required service providers.
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
