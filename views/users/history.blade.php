@@ -3,7 +3,7 @@
     <hr>
     @forelse($user->securityHistory->toArray() as $event)
         <div class="well clearfix">
-            <p><strong>{{ $event->title }}</strong> - {!! HTML::ago($event->updated_at) !!}</p>
+            <p><strong>{{ $event->title }}</strong> - {!! html_ago($event->updated_at) !!}</p>
             <p>{{ $event->description }}</p>
         </div>
     @empty
@@ -16,7 +16,7 @@
     <hr>
     @forelse($user->actionHistory->toArray() as $event)
         <div class="well clearfix">
-            <p><strong>{{ $event->title }}</strong> - {!! HTML::ago($event->updated_at) !!}</p>
+            <p><strong>{{ $event->title }}</strong> - {!! html_ago($event->updated_at) !!}</p>
             <p>{{ $event->description }}</p>
         </div>
     @empty

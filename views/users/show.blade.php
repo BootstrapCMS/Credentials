@@ -61,8 +61,8 @@
         </div>
         <div class="col-xs-6">
             <div class="pull-right">
-                <p><em>Account Created: {!! HTML::ago($user->created_at) !!}</em></p>
-                <p><em>Account Updated: {!! HTML::ago($user->updated_at) !!}</em></p>
+                <p><em>Account Created: {!! html_ago($user->created_at) !!}</em></p>
+                <p><em>Account Updated: {!! html_ago($user->updated_at) !!}</em></p>
                 <p><em>Account Activated: {!! $activated !!}</em></p>
                 <p><em>Account Suspended: {!! $suspended !!}</em></p>
             </div>
@@ -78,8 +78,8 @@
             @endif
             <p><strong>Email:</strong> {!! $user->email !!}</p>
             <p><strong>Groups:</strong> {!! $groups !!}</p>
-            <p><strong>Account Created:</strong> {!! HTML::ago($user->created_at) !!}</p>
-            <p><strong>Account Updated:</strong> {!! HTML::ago($user->updated_at) !!}</p>
+            <p><strong>Account Created:</strong> {!! html_ago($user->created_at) !!}</p>
+            <p><strong>Account Updated:</strong> {!! html_ago($user->updated_at) !!}</p>
             <p><strong>Account Activated:</strong> {!! $activated !!}</p>
             <p><strong>Account Suspended:</strong> {!! $suspended !!}</p>
         </div>

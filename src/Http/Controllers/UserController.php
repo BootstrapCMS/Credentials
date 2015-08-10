@@ -20,7 +20,6 @@ use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Facades\GroupRepository;
 use GrahamCampbell\Credentials\Facades\UserRepository;
-use Illuminate\Html\HtmlFacade as HTML;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
@@ -149,7 +148,7 @@ class UserController extends AbstractController
         $this->checkUser($user);
 
         if ($user->activated_at) {
-            $activated = HTML::ago($user->activated_at);
+            $activated = html_ago($user->activated_at);
         } else {
             if (Credentials::hasAccess('admin') && Config::get('credentials.activation')) {
                 $activated = 'No - <a href="#resend_user" data-toggle="modal" data-target="#resend_user">Resend Email</a>';

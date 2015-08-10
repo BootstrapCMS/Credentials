@@ -22,7 +22,6 @@
         "illuminate/database": "5.0.*",
         "illuminate/events": "5.0.*",
         "illuminate/http": "5.0.*",
-        "illuminate/html": "5.0.*",
         "illuminate/mail": "5.0.*",
         "illuminate/pagination": "5.0.*",
         "illuminate/routing": "5.0.*",
