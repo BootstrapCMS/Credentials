@@ -71,7 +71,7 @@ trait PaginateRepositoryTrait
     /**
      * Is the current page the first page?
      *
-     * @param \Illuminate\Pagination\Paginator $paginator
+     * @param \Illuminate\Pagination\LengthAwarePaginator $paginator
      *
      * @return bool
      */
