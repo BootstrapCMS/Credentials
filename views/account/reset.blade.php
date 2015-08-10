@@ -13,7 +13,9 @@ Reset Password
 @section('content')
 <p class="lead">Please enter your details:</p>
 <div class="well">
-    {!! Form::open(array('url' => URL::route('account.reset.post'), 'method' => 'POST', 'class' => 'form-horizontal')) !!}
+    <form class="form-horizontal" action="{{ URL::route('account.reset.post') }}" method="POST">
+
+        {{ csrf_field() }}
 
         <div class="form-group{!! ($errors->has('email')) ? ' has-error' : '' !!}">
             <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="email">Email Address</label>
@@ -29,6 +31,6 @@ Reset Password
             </div>
         </div>
 
-    {!! Form::close() !!}
+    </form>
 </div>
 @stop
