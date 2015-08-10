@@ -11,9 +11,18 @@
 
 namespace GrahamCampbell\Credentials;
 
+use GrahamCampbell\Credentials\Http\Controllers\AccountController;
+use GrahamCampbell\Credentials\Http\Controllers\ActivationController;
+use GrahamCampbell\Credentials\Http\Controllers\LoginController;
+use GrahamCampbell\Credentials\Http\Controllers\RegistrationController;
+use GrahamCampbell\Credentials\Http\Controllers\ResetController;
+use GrahamCampbell\Credentials\Repositories\GroupRepository;
+use GrahamCampbell\Credentials\Repositories\RevisionRepository;
+use GrahamCampbell\Credentials\Repositories\UserRepository;
 use Illuminate\Contracts\View\Factory as View;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use McCool\LaravelAutoPresenter\PresenterDecorator;
 
 /**
  * This is the credentials service provider class.
@@ -109,7 +118,6 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->registerRegistrationController();
         $this->registerResetController();
         $this->registerActivationController();
-        $this->registerUserController();
     }
 
     /**
@@ -125,10 +133,10 @@ class CredentialsServiceProvider extends ServiceProvider
 
             $validator = $app['validator'];
 
-            return new Repositories\RevisionRepository($revision, $validator);
+            return new RevisionRepository($revision, $validator);
         });
 
-        $this->app->alias('revisionrepository', 'GrahamCampbell\Credentials\Repositories\RevisionRepository');
+        $this->app->alias('revisionrepository', RevisionRepository::class);
     }
 
     /**
@@ -144,10 +152,10 @@ class CredentialsServiceProvider extends ServiceProvider
 
             $validator = $app['validator'];
 
-            return new Repositories\UserRepository($user, $validator);
+            return new UserRepository($user, $validator);
         });
 
-        $this->app->alias('userrepository', 'GrahamCampbell\Credentials\Repositories\UserRepository');
+        $this->app->alias('userrepository', UserRepository::class);
     }
 
     /**
@@ -163,10 +171,10 @@ class CredentialsServiceProvider extends ServiceProvider
 
             $validator = $app['validator'];
 
-            return new Repositories\GroupRepository($group, $validator);
+            return new GroupRepository($group, $validator);
         });
 
-        $this->app->alias('grouprepository', 'GrahamCampbell\Credentials\Repositories\GroupRepository');
+        $this->app->alias('grouprepository', GroupRepository::class);
     }
 
     /**
@@ -178,12 +186,12 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $this->app->singleton('credentials', function ($app) {
             $sentry = $app['sentry'];
-            $decorator = $app->make('McCool\LaravelAutoPresenter\PresenterDecorator');
+            $decorator = $app->make(PresenterDecorator::class);
 
             return new Credentials($sentry, $decorator);
         });
 
-        $this->app->alias('credentials', 'GrahamCampbell\Credentials\Credentials');
+        $this->app->alias('credentials', Credentials::class);
     }
 
     /**
@@ -193,8 +201,8 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerAccountController()
     {
-        $this->app->bind('GrahamCampbell\Credentials\Http\Controllers\AccountController', function ($app) {
-            return new Http\Controllers\AccountController();
+        $this->app->bind(AccountController::class, function ($app) {
+            return new AccountController();
         });
     }
 
@@ -205,10 +213,10 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerLoginController()
     {
-        $this->app->bind('GrahamCampbell\Credentials\Http\Controllers\LoginController', function ($app) {
+        $this->app->bind(LoginController::class, function ($app) {
             $throttler = $app['throttle']->get($app['request'], 10, 10);
 
-            return new Http\Controllers\LoginController($throttler);
+            return new LoginController($throttler);
         });
     }
 
@@ -219,10 +227,10 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerRegistrationController()
     {
-        $this->app->bind('GrahamCampbell\Credentials\Http\Controllers\RegistrationController', function ($app) {
+        $this->app->bind(RegistrationController::class, function ($app) {
             $throttler = $app['throttle']->get($app['request'], 5, 30);
 
-            return new Http\Controllers\RegistrationController($throttler);
+            return new RegistrationController($throttler);
         });
     }
 
@@ -233,10 +241,10 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerResetController()
     {
-        $this->app->bind('GrahamCampbell\Credentials\Http\Controllers\ResetController', function ($app) {
+        $this->app->bind(ResetController::class, function ($app) {
             $throttler = $app['throttle']->get($app['request'], 5, 30);
 
-            return new Http\Controllers\ResetController($throttler);
+            return new ResetController($throttler);
         });
     }
 
@@ -247,22 +255,10 @@ class CredentialsServiceProvider extends ServiceProvider
      */
     protected function registerActivationController()
     {
-        $this->app->bind('GrahamCampbell\Credentials\Http\Controllers\ActivationController', function ($app) {
+        $this->app->bind(ActivationController::class, function ($app) {
             $throttler = $app['throttle']->get($app['request'], 5, 30);
 
-            return new Http\Controllers\ActivationController($throttler);
-        });
-    }
-
-    /**
-     * Register the user controller class.
-     *
-     * @return void
-     */
-    protected function registerUserController()
-    {
-        $this->app->bind('GrahamCampbell\Credentials\Http\Controllers\UserController', function ($app) {
-            return new Http\Controllers\UserController();
+            return new ActivationController($throttler);
         });
     }
 
