@@ -1,7 +1,7 @@
 Laravel Credentials
 ===================
 
-Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell), and is a cool way to authenticate in [Laravel 5](http://laravel.com). It utilises many of my packages and Cartalyst's [Sentry](https://github.com/BootstrapCMS/Sentry) package. Feel free to check out the [change log](CHANGELOG.md), [releases](https://github.com/BootstrapCMS/Credentials/releases), [license](LICENSE), and [contribution guidelines](CONTRIBUTING.md).
+Laravel Credentials was created by, and is maintained by [Graham Campbell](https://github.com/GrahamCampbell), and is a cool way to authenticate in [Laravel 5](http://laravel.com). It utilises many of my packages and Cartalyst's [Sentry](https://github.com/BootstrapCMS/Sentry) package. Feel free to check out the [releases](https://github.com/BootstrapCMS/Credentials/releases), [license](LICENSE), and [contribution guidelines](CONTRIBUTING.md).
 
 ![Laravel Credentials](https://cloud.githubusercontent.com/assets/2829600/4432313/c1664f5c-468c-11e4-8469-c6874c21aede.PNG)
 
