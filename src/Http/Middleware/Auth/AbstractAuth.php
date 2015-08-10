@@ -13,7 +13,6 @@ namespace GrahamCampbell\Credentials\Http\Middleware\Auth;
 
 use Closure;
 use GrahamCampbell\Credentials\Credentials;
-use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
@@ -27,7 +26,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
  *
  * @author Graham Campbell <graham@alt-three.com>
  */
-abstract class AbstractAuth implements Middleware
+abstract class AbstractAuth
 {
     /**
      * The credentials instance.

@@ -13,14 +13,13 @@ namespace GrahamCampbell\Credentials\Http\Middleware;
 
 use Closure;
 use GrahamCampbell\Credentials\Credentials;
-use Illuminate\Contracts\Routing\Middleware;
 
 /**
  * This is the sentry thottle middleware class.
  *
  * @author Graham Campbell <graham@alt-three.com>
  */
-class SentryThrottle implements Middleware
+class SentryThrottle
 {
     /**
      * The credentials instance.
