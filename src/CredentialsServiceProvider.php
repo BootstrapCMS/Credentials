@@ -68,18 +68,12 @@ class CredentialsServiceProvider extends ServiceProvider
     {
         $blade = $view->getEngineResolver()->resolve('blade')->getCompiler();
 
-        $blade->extend(function ($value, $compiler) {
-            $pattern = $compiler->createMatcher('auth');
-            $replace = '$1<?php if (\GrahamCampbell\Credentials\Facades\Credentials::check() && \GrahamCampbell\Credentials\Facades\Credentials::hasAccess$2): ?>';
-
-            return preg_replace($pattern, $replace, $value);
+        $blade->directive('auth' function ($expression) {
+            return "<?php if (\GrahamCampbell\Credentials\Facades\Credentials::check() && \GrahamCampbell\Credentials\Facades\Credentials::hasAccess{$expression}): ?>";
         });
 
-        $blade->extend(function ($value, $compiler) {
-            $pattern = $compiler->createPlainMatcher('endauth');
-            $replace = '$1<?php endif; ?>$2';
-
-            return preg_replace($pattern, $replace, $value);
+        $blade->directive('endauth' function () {
+            return '<?php endif; ?>';
         });
     }
 
