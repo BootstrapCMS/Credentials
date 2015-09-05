@@ -28,7 +28,8 @@ Profile
 <div class="well">
     <?php
     $form = ['url' => URL::route('account.details.patch'),
-        'method' => 'PATCH',
+        '_method' => 'PATCH',
+        'method' => 'POST',
         'button' => 'Save Details',
         'defaults' => [
             'first_name' => $user->first_name,
@@ -43,7 +44,8 @@ Profile
 <div class="well">
     <?php
     $form = ['url' => URL::route('account.password.patch'),
-        'method' => 'PATCH',
+        '_method' => 'PATCH',
+        'method' => 'POST',
         'button' => 'Save Password',
     ];
     ?>
