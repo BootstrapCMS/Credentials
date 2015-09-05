@@ -37,7 +37,8 @@ Edit {{ $user->name }}
 <div class="well">
     <?php
     $form = ['url' => URL::route('users.update', ['users' => $user->id]),
-        'method' => 'PATCH',
+        '_method' => 'PATCH',
+        'method' => 'POST',
         'button' => 'Save User',
         'defaults' => [
             'first_name' => $user->first_name,
