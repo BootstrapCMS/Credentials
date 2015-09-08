@@ -62,6 +62,7 @@ class CredentialsServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($configuration, 'credentials');
 
         $this->loadViewsFrom(realpath(__DIR__.'/../views'), 'credentials');
+        $this->loadTranslationsFrom(realpath(__DIR__.'/../lang'), 'credentials');
     }
 
     /**

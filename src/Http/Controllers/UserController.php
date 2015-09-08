@@ -120,7 +120,7 @@ class UserController extends AbstractController
                 'url'      => URL::to(Config::get('credentials.home', '/')),
                 'password' => $password,
                 'email'    => $user->getLogin(),
-                'subject'  => Config::get('app.name').' - New Account Information',
+                'subject'  => Config::get('app.name').' - '.trans('credentials::credentials.new_account_information'),
             ];
 
             Mail::queue('credentials::emails.newuser', $mail, function ($message) use ($mail) {
@@ -128,10 +128,10 @@ class UserController extends AbstractController
             });
 
             return Redirect::route('users.show', ['users' => $user->id])
-                ->with('success', 'The user has been created successfully. Their password has been emailed to them.');
+                ->with('success', trans('credentials::credentials.the_user_has_been_created_successfully'));
         } catch (UserExistsException $e) {
             return Redirect::route('users.create')->withInput()->withErrors($val->errors())
-                ->with('error', 'That email address is taken.');
+                ->with('error', trans('credentials::credentials.that_email_address_is_taken'));
         }
     }
 
@@ -151,16 +151,16 @@ class UserController extends AbstractController
             $activated = html_ago($user->activated_at);
         } else {
             if (Credentials::hasAccess('admin') && Config::get('credentials.activation')) {
-                $activated = 'No - <a href="#resend_user" data-toggle="modal" data-target="#resend_user">Resend Email</a>';
+                $activated = trans('credentials::credentials.no').' - <a href="#resend_user" data-toggle="modal" data-target="#resend_user">'.trans('credentials::credentials.resend_email').'</a>';
             } else {
-                $activated = 'Not Activated';
+                $activated = trans('credentials::credentials.not_activated');
             }
         }
 
         if (Credentials::getThrottleProvider()->findByUserId($id)->isSuspended()) {
-            $suspended = 'Currently Suspended';
+            $suspended = trans('credentials::credentials.currently_suspended');
         } else {
-            $suspended = 'Not Suspended';
+            $suspended = trans('credentials::credentials.not_suspended');
         }
 
         $groups = $user->getGroups();
@@ -171,7 +171,7 @@ class UserController extends AbstractController
             }
             $groups = implode(', ', $data);
         } else {
-            $groups = 'No Group Memberships';
+            $groups = trans('credentials::credentials.no_group_memberships');
         }
 
         return View::make('credentials::users.show', compact('user', 'groups', 'activated', 'suspended'));
@@ -241,7 +241,7 @@ class UserController extends AbstractController
                 'old'     => $email,
                 'new'     => $input['email'],
                 'url'     => URL::to(Config::get('credentials.home', '/')),
-                'subject' => Config::get('app.name').' - New Email Information',
+                'subject' => Config::get('app.name').' - '.trans('credentials::credentials.new_email_information'),
             ];
 
             Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
@@ -257,7 +257,7 @@ class UserController extends AbstractController
             $mail = [
                 'url'     => URL::to(Config::get('credentials.home', '/')),
                 'email'   => $input['email'],
-                'subject' => Config::get('app.name').' - Group Membership Changes',
+                'subject' => Config::get('app.name').' - '.trans('credentials::credentials.group_membership_changes'),
             ];
 
             Mail::queue('credentials::emails.groups', $mail, function ($message) use ($mail) {
@@ -266,7 +266,7 @@ class UserController extends AbstractController
         }
 
         return Redirect::route('users.show', ['users' => $user->id])
-            ->with('success', 'The user has been updated successfully.');
+            ->with('success', trans('credentials::credentials.the_user_has_been_updated_successfully'));
     }
 
     /**
@@ -284,19 +284,19 @@ class UserController extends AbstractController
             $throttle = Credentials::getThrottleProvider()->findByUserId($id);
             $throttle->suspend();
         } catch (UserNotFoundException $e) {
-            throw new NotFoundHttpException('User Not Found', $e);
+            throw new NotFoundHttpException(trans('credentials::credentials.user_not_found'), $e);
         } catch (UserSuspendedException $e) {
             $time = $throttle->getSuspensionTime();
 
             return Redirect::route('users.suspend', ['users' => $id])->withInput()
-                ->with('error', "This user is already suspended for $time minutes.");
+                ->with('error', trans('credentials::credentials.this_user_is_already_suspended_for_n_minutes', ['time' => $time]));
         } catch (UserBannedException $e) {
             return Redirect::route('users.suspend', ['users' => $id])->withInput()
-                ->with('error', 'This user has already been banned.');
+                ->with('error', trans('credentials::credentials.this_user_has_already_been_banned'));
         }
 
         return Redirect::route('users.show', ['users' => $id])
-            ->with('success', 'The user has been suspended successfully.');
+            ->with('success', trans('credentials::credentials.the_user_has_been_suspended_successfully'));
     }
 
     /**
@@ -331,7 +331,7 @@ class UserController extends AbstractController
         $mail = [
             'password' => $password,
             'email'    => $user->getLogin(),
-            'subject'  => Config::get('app.name').' - New Password Information',
+            'subject'  => Config::get('app.name').' - '.trans('credentials::credentials.new_password_information'),
         ];
 
         Mail::queue('credentials::emails.password', $mail, function ($message) use ($mail) {
@@ -339,7 +339,7 @@ class UserController extends AbstractController
         });
 
         return Redirect::route('users.show', ['users' => $id])
-            ->with('success', 'The user\'s password has been reset successfully, and has been emailed to them.');
+            ->with('success', trans('credentials::credentials.the_users_password_has_been_reset_successfully'));
     }
 
     /**
@@ -356,7 +356,7 @@ class UserController extends AbstractController
 
         if ($user->activated) {
             return Redirect::route('account.resend')->withInput()
-                ->with('error', 'That user is already activated.');
+                ->with('error', trans('credentials::credentials.that_user_is_already_activated'));
         }
 
         $code = $user->getActivationCode();
@@ -365,7 +365,7 @@ class UserController extends AbstractController
             'url'     => URL::to(Config::get('credentials.home', '/')),
             'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
             'email'   => $user->getLogin(),
-            'subject' => Config::get('app.name').' - Activation',
+            'subject' => Config::get('app.name').' - '.trans('credentials::credentials.activation'),
         ];
 
         Mail::queue('credentials::emails.resend', $mail, function ($message) use ($mail) {
@@ -373,7 +373,7 @@ class UserController extends AbstractController
         });
 
         return Redirect::route('users.show', ['users' => $id])
-            ->with('success', 'The user\'s activation email has been sent successfully.');
+            ->with('success', trans('credentials::credentials.the_users_activation_email_has_been_sent_successfully'));
     }
 
     /**
@@ -394,13 +394,13 @@ class UserController extends AbstractController
             $user->delete();
         } catch (\Exception $e) {
             return Redirect::route('users.show', ['users' => $id])
-                ->with('error', 'We were unable to delete the account.');
+                ->with('error', trans('credentials::credentials.your_password_has_been_changed'));
         }
 
         $mail = [
             'url'     => URL::to(Config::get('credentials.home', '/')),
             'email'   => $email,
-            'subject' => Config::get('app.name').' - Account Deleted Notification',
+            'subject' => Config::get('app.name').' - '.trans('credentials::credentials.account_deleted_notification'),
         ];
 
         Mail::queue('credentials::emails.admindeleted', $mail, function ($message) use ($mail) {
@@ -408,7 +408,7 @@ class UserController extends AbstractController
         });
 
         return Redirect::route('users.index')
-            ->with('success', 'The user has been deleted successfully.');
+            ->with('success', trans('credentials::credentials.the_user_has_been_deleted_successfully'));
     }
 
     /**
@@ -423,7 +423,7 @@ class UserController extends AbstractController
     protected function checkUser($user)
     {
         if (!$user) {
-            throw new NotFoundHttpException('User Not Found');
+            throw new NotFoundHttpException(trans('credentials::credentials.user_not_found'));
         }
     }
 }

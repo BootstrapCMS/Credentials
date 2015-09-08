@@ -84,13 +84,13 @@ class AccountController extends AbstractController
             $user->delete();
         } catch (\Exception $e) {
             return Redirect::to(Config::get('credentials.home', '/'))
-                ->with('error', 'There was a problem deleting your account.');
+                ->with('error', trans('credentials::credentials.there_was_a_problem_deleting_your_account'));
         }
 
         $mail = [
             'url'     => URL::to(Config::get('credentials.home', '/')),
             'email'   => $email,
-            'subject' => Config::get('app.name').' - Account Deleted Notification',
+            'subject' => Config::get('app.name').' - '.trans('credentials::credentials.account_deleted_notification'),
         ];
 
         Mail::queue('credentials::emails.userdeleted', $mail, function ($message) use ($mail) {
@@ -98,7 +98,7 @@ class AccountController extends AbstractController
         });
 
         return Redirect::to(Config::get('credentials.home', '/'))
-            ->with('success', 'Your account has been deleted successfully.');
+            ->with('success', trans('credentials::credentials.your_account_has_been_deleted_successfully'));
     }
 
     /**
@@ -127,7 +127,7 @@ class AccountController extends AbstractController
                 'old'     => $email,
                 'new'     => $input['email'],
                 'url'     => URL::to(Config::get('credentials.home', '/')),
-                'subject' => Config::get('app.name').' - New Email Information',
+                'subject' => Config::get('app.name').' - '.trans('credentials::credentials.new_email_information'),
             ];
 
             Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
@@ -140,7 +140,7 @@ class AccountController extends AbstractController
         }
 
         return Redirect::route('account.profile')
-            ->with('success', 'Your details have been updated successfully.');
+            ->with('success', trans('credentials::credentials.your_details_have_been_updated_successfully'));
     }
 
     /**
@@ -165,7 +165,7 @@ class AccountController extends AbstractController
         $mail = [
             'url'     => URL::to(Config::get('credentials.home', '/')),
             'email'   => $user->getLogin(),
-            'subject' => Config::get('app.name').' - New Password Notification',
+            'subject' => Config::get('app.name').' - '.trans('credentials::credentials.new_password_notification'),
         ];
 
         Mail::queue('credentials::emails.newpass', $mail, function ($message) use ($mail) {
@@ -175,7 +175,7 @@ class AccountController extends AbstractController
         $user->update($input);
 
         return Redirect::route('account.profile')
-            ->with('success', 'Your password has been updated successfully.');
+            ->with('success', trans('credentials::credentials.your_password_has_been_updated_successfully'));
     }
 
     /**
@@ -190,7 +190,7 @@ class AccountController extends AbstractController
     protected function checkUser($user)
     {
         if (!$user) {
-            throw new NotFoundHttpException('User Not Found');
+            throw new NotFoundHttpException(trans('credentials::credentials.user_not_found'));
         }
     }
 }

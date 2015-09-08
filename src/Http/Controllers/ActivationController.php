@@ -76,19 +76,19 @@ class ActivationController extends AbstractController
 
             if (!$user->attemptActivation($code)) {
                 return Redirect::to(Config::get('credentials.home', '/'))
-                    ->with('error', 'There was a problem activating this account. Please contact support.');
+                    ->with('error', trans('credentials::credentials.there_was_a_problem_activating_this_account'));
             }
 
             $user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
 
             return Redirect::route('account.login')
-                ->with('success', 'Your account has been activated successfully. You may now login.');
+                ->with('success', trans('credentials::credentials.your_account_has_been_activated_successfully'));
         } catch (UserNotFoundException $e) {
             return Redirect::to(Config::get('credentials.home', '/'))
-                ->with('error', 'There was a problem activating this account. Please contact support.');
+                ->with('error', trans('credentials::credentials.there_was_a_problem_activating_this_account'));
         } catch (UserAlreadyActivatedException $e) {
             return Redirect::route('account.login')
-                ->with('warning', 'You have already activated this account. You may want to login.');
+                ->with('warning', trans('credentials::credentials.you_have_already_activated_this_account'));
         }
     }
 
@@ -123,7 +123,7 @@ class ActivationController extends AbstractController
 
             if ($user->activated) {
                 return Redirect::route('account.resend')->withInput()
-                    ->with('error', 'That user is already activated.');
+                    ->with('error', trans('credentials::credentials.that_user_is_already_activated'));
             }
 
             $code = $user->getActivationCode();
@@ -132,7 +132,7 @@ class ActivationController extends AbstractController
                 'url'     => URL::to(Config::get('credentials.home', '/')),
                 'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
                 'email'   => $user->getLogin(),
-                'subject' => Config::get('app.name').' - Activation',
+                'subject' => Config::get('app.name').' - '.trans('credentials::credentials.activation'),
             ];
 
             Mail::queue('credentials::emails.resend', $mail, function ($message) use ($mail) {
@@ -140,10 +140,10 @@ class ActivationController extends AbstractController
             });
 
             return Redirect::route('account.resend')
-                ->with('success', 'Check your email for your new activation email.');
+                ->with('success', trans('credentials::credentials.check_your_email_for_your_new_activation_email'));
         } catch (UserNotFoundException $e) {
             return Redirect::route('account.resend')
-                ->with('error', 'That user does not exist.');
+                ->with('error', trans('credentials::credentials.that_user_does_not_exist'));
         }
     }
 }
