@@ -116,7 +116,7 @@ class LoginController extends AbstractController
             $time = $throttle->getSuspensionTime();
 
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
-                ->with('error', trans('credentials::credentials.your_account_has_been_suspended_for_minutes',['time' => $time]));
+                ->with('error', trans('credentials::credentials.your_account_has_been_suspended_for_minutes', ['time' => $time]));
         } catch (UserBannedException $e) {
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', trans('credentials::credentials.you_have_been_banned'));

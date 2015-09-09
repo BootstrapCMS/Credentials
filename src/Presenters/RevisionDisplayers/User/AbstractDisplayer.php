@@ -102,6 +102,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
 
         $user = $this->wrappedObject->revisionable()->withTrashed()->first(['first_name', 'last_name']);
         $full_name = $user->first_name.' '.$user->last_name;
+
         return ' '.trans('credentials::credentials.possesive_name', ['full_name' => $full_name]);
     }
 }
