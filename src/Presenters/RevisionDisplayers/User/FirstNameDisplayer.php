@@ -25,7 +25,7 @@ class FirstNameDisplayer extends AbstractDisplayer
      */
     public function title()
     {
-        return 'Updated Name';
+        return trans('credentials::credentials.updated_name');
     }
 
     /**
@@ -36,7 +36,7 @@ class FirstNameDisplayer extends AbstractDisplayer
      */
     protected function current()
     {
-        return $this->author().'changed your first name'.$this->details();
+        return $this->author().trans('credentials::credentials.changed_your_first_name').$this->details();
     }
 
     /**
@@ -48,9 +48,9 @@ class FirstNameDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'This user changed their first name'.$this->details();
+            return trans('credentials::credentials.this_user_changed_their_first_name').$this->details();
         }
 
-        return $this->author().'changed'.$this->user().'first name'.$this->details();
+        return trans('credentials::credentials.email_changed', ['user1' => $this->author(), 'user2' => $this->user()]).$this->details();
     }
 }

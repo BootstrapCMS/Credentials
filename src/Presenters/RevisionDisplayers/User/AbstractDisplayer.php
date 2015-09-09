@@ -79,11 +79,11 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
     protected function author()
     {
         if ($this->presenter->wasByCurrentUser() || !$this->wrappedObject->user_id) {
-            return 'You ';
+            return trans('credentials::credentials.you').' ';
         }
 
         if (!$this->wrappedObject->security) {
-            return 'This user ';
+            return trans('credentials::credentials.this_user').' ';
         }
 
         return $this->presenter->author().' ';
@@ -97,11 +97,11 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
     protected function user()
     {
         if ($this->wrappedObject->security) {
-            return ' this user\'s ';
+            return ' '.trans('credentials::credentials.this_users').' ';
         }
 
         $user = $this->wrappedObject->revisionable()->withTrashed()->first(['first_name', 'last_name']);
-
-        return ' '.$user->first_name.' '.$user->last_name.'\'s ';
+        $full_name = $user->first_name.' '.$user->last_name;
+        return ' '.trans('credentials::credentials.possesive_name', ['full_name' => $full_name]);
     }
 }

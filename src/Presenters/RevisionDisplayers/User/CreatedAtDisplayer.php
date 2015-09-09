@@ -25,7 +25,7 @@ class CreatedAtDisplayer extends AbstractDisplayer
      */
     public function title()
     {
-        return 'Account Created';
+        return trans('credentials::credentials.account_created');
     }
 
     /**
@@ -37,10 +37,10 @@ class CreatedAtDisplayer extends AbstractDisplayer
     protected function current()
     {
         if ($this->author() === ' ') {
-            'You created your account.';
+            return trans('credentials::credentials.you_created_your_account');
         }
 
-        return $this->author().'created your account.';
+        return $this->author().trans('credentials::credentials.created_your_account');
     }
 
     /**
@@ -52,9 +52,9 @@ class CreatedAtDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'This user created their account.';
+            return trans('credentials::credentials.this_user_created_their_account');
         }
 
-        return $this->author().'created'.$this->user().'account.';
+        return trans('credentials::credentials.user_created_user_account', ['user1' => $this->author(), 'user2' => $this->user()]);
     }
 }

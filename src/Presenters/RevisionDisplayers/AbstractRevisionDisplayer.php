@@ -62,6 +62,6 @@ abstract class AbstractRevisionDisplayer
      */
     protected function details()
     {
-        return ' from "'.$this->wrappedObject->old_value.'" to "'.$this->wrappedObject->new_value.'".';
+        return trans('credentials::credentials.from_to', ['from' => $this->wrappedObject->old_value, 'to' => $this->wrappedObject->new_value]);
     }
 }
