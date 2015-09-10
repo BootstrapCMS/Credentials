@@ -55,12 +55,16 @@ class CredentialsServiceProvider extends ServiceProvider
 
         $migrations = realpath(__DIR__.'/../migrations');
 
-        $language = realpath(__DIR__.'/../lang/credentials.php');
+        $language = realpath(__DIR__.'/../lang/'.\Lang::getLocale().'/credentials.php');
+
+        $language_folder = $language ? \Lang::getLocale() : 'en';
+
+        $language = $language ? $language : realpath(__DIR__.'/../lang/en/credentials.php');
 
         $this->publishes([
             $configuration => config_path('credentials.php'),
             $migrations    => base_path('database/migrations'),
-            $language      => base_path('resources/lang/'.\Lang::getLocale().'/credentials.php'),
+            $language      => base_path('resources/lang/'.$language_folder.'/credentials.php'),
         ]);
 
         $this->mergeConfigFrom($configuration, 'credentials');
