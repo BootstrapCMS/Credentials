@@ -11,7 +11,7 @@
             </div>
             <div class="modal-footer">
                 <a class="btn btn-success" href="{!! URL::route('users.resend', array('users' => $user->id)) !!}" data-token="{!! Session::getToken() !!}" data-method="POST">{{ trans('credentials.yes') }}</a>
-                <button class="btn btn-danger" data-dismiss="modal">{{ trans('credentials.no') }}</a>
+                <button class="btn btn-danger" data-dismiss="modal">{{ trans('credentials.no') }}</button>
             </div>
         </div>
     </div>
