@@ -104,6 +104,5 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
         $full_name = $user->first_name.' '.$user->last_name;
 
         return ' '.trans('credentials.possesive_name', ['full_name' => $full_name]);
-
     }
 }
