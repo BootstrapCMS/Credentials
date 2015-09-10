@@ -69,21 +69,21 @@ abstract class AbstractAuth
     public function handle($request, Closure $next)
     {
         if (!$this->credentials->check()) {
-            $this->logger->info(trans('credentials::credentials.user_tried_to_access_without_login'), ['path' => $request->path()]);
+            $this->logger->info(trans('credentials.user_tried_to_access_without_login'), ['path' => $request->path()]);
             if ($request->ajax()) {
-                throw new UnauthorizedHttpException(trans('credentials::credentials.action_requires_login'));
+                throw new UnauthorizedHttpException(trans('credentials.action_requires_login'));
             }
 
             return Redirect::guest(URL::route('account.login'))
-                ->with('error', trans('credentials::credentials.you_must_be_logged_in'));
+                ->with('error', trans('credentials.you_must_be_logged_in'));
         }
 
         if (!$this->credentials->hasAccess($level = $this->level())) {
             $this->logger->warning(
-                trans('credentials::credentials.user_tried_to_access_without_permission'),
+                trans('credentials.user_tried_to_access_without_permission'),
                 ['path' => $request->path(), 'permission' => $level]
             );
-            throw new AccessDeniedHttpException(ucfirst($level).' '.trans('credentials::credentials.permissions_are_required'));
+            throw new AccessDeniedHttpException(ucfirst($level).' '.trans('credentials.permissions_are_required'));
         }
 
         return $next($request);

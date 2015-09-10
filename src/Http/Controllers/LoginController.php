@@ -98,14 +98,14 @@ class LoginController extends AbstractController
             Credentials::authenticate($input, $remember);
         } catch (WrongPasswordException $e) {
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
-                ->with('error', trans('credentials::credentials.your_password_was_incorrect'));
+                ->with('error', trans('credentials.your_password_was_incorrect'));
         } catch (UserNotFoundException $e) {
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
-                ->with('error', trans('credentials::credentials.that_user_does_not_exist'));
+                ->with('error', trans('credentials.that_user_does_not_exist'));
         } catch (UserNotActivatedException $e) {
             if (Config::get('credentials::activation')) {
                 return Redirect::route('account.login')->withInput()->withErrors($val->errors())
-                ->with('error', trans('credentials::credentials.you_have_not_yet_activated_this_account'));
+                ->with('error', trans('credentials.you_have_not_yet_activated_this_account'));
             } else {
                 $throttle->user->attemptActivation($throttle->user->getActivationCode());
                 $throttle->user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
@@ -116,10 +116,11 @@ class LoginController extends AbstractController
             $time = $throttle->getSuspensionTime();
 
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
-                ->with('error', trans('credentials::credentials.your_account_has_been_suspended_for_minutes', ['time' => $time]));
+                 ->with('error', trans('credentials.your_account_has_been_suspended_for_minutes',['time' => $time]));
+
         } catch (UserBannedException $e) {
             return Redirect::route('account.login')->withInput()->withErrors($val->errors())
-                ->with('error', trans('credentials::credentials.you_have_been_banned'));
+                ->with('error', trans('credentials.you_have_been_banned'));
         }
 
         return Redirect::intended(Config::get('credentials.home', '/'));

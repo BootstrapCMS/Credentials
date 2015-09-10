@@ -25,7 +25,7 @@ class RemovedGroupDisplayer extends AbstractDisplayer
      */
     public function title()
     {
-        return trans('credentials::credentials.group_membership_changed');
+        return trans('credentials.group_membership_changed');
     }
 
     /**
@@ -37,10 +37,10 @@ class RemovedGroupDisplayer extends AbstractDisplayer
     protected function current()
     {
         if ($this->author() === 'You ') {
-            return trans('credentials::credentials.you_removed_yourself_from_group', ['group' => $this->wrappedObject->new_value]);
+            return trans('credentials.you_removed_yourself_from_group', ['group' => $this->wrappedObject->new_value]);
         }
 
-        return trans('credentials::credentials.someone_removed_yourself_from_group', ['user' => $this->author(), 'group' => $this->wrappedObject->new_value]);
+        return trans('credentials.someone_removed_yourself_from_group', ['user' => $this->author(), 'group' => $this->wrappedObject->new_value]);
     }
 
     /**
@@ -52,9 +52,9 @@ class RemovedGroupDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return trans('credentials::credentials.this_user_removed_themselves_from_group', ['group' => $this->wrappedObject->new_value]);
+            return trans('credentials.this_user_removed_themselves_from_group', ['group' => $this->wrappedObject->new_value]);
         }
 
-        return trans('credentials::credentials.user_removed_user_from_group', ['user1' => $this->author(), 'user2' => substr($this->user(), 0, -3), 'group' => $this->wrappedObject->new_value]);
+        return trans('credentials.user_removed_user_from_group', ['user1' => $this->author(), 'user2' => substr($this->user(), 0, -3), 'group' => $this->wrappedObject->new_value]);
     }
 }

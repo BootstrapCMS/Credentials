@@ -25,7 +25,7 @@ class EmailDisplayer extends AbstractDisplayer
      */
     public function title()
     {
-        return trans('credentials::credentials.email_changed');
+        return trans('credentials.email_changed');
     }
 
     /**
@@ -36,7 +36,7 @@ class EmailDisplayer extends AbstractDisplayer
      */
     protected function current()
     {
-        return trans('credentials::credentials.user_changed_your_email_address', ['user' => $this->author(), 'email' => $this->details()]);
+        return trans('credentials.user_changed_your_email_address', ['user' => $this->author(), 'email' => $this->details()]);
     }
 
     /**
@@ -48,9 +48,9 @@ class EmailDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return trans('credentials::credentials.this_user_changed_their_email_address').$this->details();
+            return trans('credentials.this_user_changed_their_email_address').$this->details();
         }
 
-        return trans('credentials::credentials.user_changed_user_email_address', ['user1' => $this->author(), 'user2' => $this->user(), 'email' => $this->details()]);
+        return trans('credentials.user_changed_user_email_address', ['user1' => $this->author(), 'user2' => $this->user(), 'email' => $this->details()]);
     }
 }

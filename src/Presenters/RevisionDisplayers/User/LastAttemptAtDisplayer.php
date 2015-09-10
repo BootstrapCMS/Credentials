@@ -25,7 +25,7 @@ class LastAttemptAtDisplayer extends AbstractDisplayer
      */
     public function title()
     {
-        return trans('credentials::credentials.failed_login_event');
+        return trans('credentials.failed_login_event');
     }
 
     /**
@@ -36,7 +36,7 @@ class LastAttemptAtDisplayer extends AbstractDisplayer
      */
     protected function current()
     {
-        return trans('credentials::credentials.somebody_tried_to_login_to_your_account');
+        return trans('credentials.somebody_tried_to_login_to_your_account');
     }
 
     /**
@@ -47,6 +47,6 @@ class LastAttemptAtDisplayer extends AbstractDisplayer
      */
     protected function external()
     {
-        return trans('credentials::credentials.somebody_tried_to_login_to_this_users_account');
+        return trans('credentials.somebody_tried_to_login_to_this_users_account');
     }
 }

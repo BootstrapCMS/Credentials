@@ -91,7 +91,7 @@ class RegistrationController extends AbstractController
                 $mail = [
                     'url'     => URL::to(Config::get('credentials.home', '/')),
                     'email'   => $user->getLogin(),
-                    'subject' => Config::get('app.name').' - '.trans('credentials::credentials.welcome'),
+                    'subject' => Config::get('app.name').' - '.trans('credentials.welcome'),
                 ];
 
                 Mail::queue('credentials::emails.welcome', $mail, function ($message) use ($mail) {
@@ -102,7 +102,7 @@ class RegistrationController extends AbstractController
                 $user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
 
                 return Redirect::to(Config::get('credentials.home', '/'))
-                    ->with('success', trans('credentials::credentials.your_account_has_been_created_successfully'));
+                    ->with('success', trans('credentials.your_account_has_been_created_successfully'));
             }
 
             $code = $user->getActivationCode();
@@ -111,7 +111,7 @@ class RegistrationController extends AbstractController
                 'url'     => URL::to(Config::get('credentials.home', '/')),
                 'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
                 'email'   => $user->getLogin(),
-                'subject' => Config::get('app.name').' - '.trans('credentials::credentials.welcome'),
+                'subject' => Config::get('app.name').' - '.trans('credentials.welcome'),
             ];
 
             Mail::queue('credentials::emails.welcome', $mail, function ($message) use ($mail) {
@@ -119,10 +119,10 @@ class RegistrationController extends AbstractController
             });
 
             return Redirect::to(Config::get('credentials.home', '/'))
-                ->with('success', trans('credentials::credentials.your_account_has_been_created'));
+                ->with('success', trans('credentials.your_account_has_been_created'));
         } catch (UserExistsException $e) {
             return Redirect::route('account.register')->withInput()->withErrors($val->errors())
-                ->with('error', trans('credentials::credentials.that_email_address_is_taken'));
+                ->with('error', trans('credentials.that_email_address_is_taken'));
         }
     }
 }

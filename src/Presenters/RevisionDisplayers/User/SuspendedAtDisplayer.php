@@ -25,7 +25,7 @@ class SuspendedAtDisplayer extends AbstractDisplayer
      */
     public function title()
     {
-        return trans('credentials::credentials.suspension_event');
+        return trans('credentials.suspension_event');
     }
 
     /**
@@ -36,7 +36,7 @@ class SuspendedAtDisplayer extends AbstractDisplayer
      */
     protected function current()
     {
-        return trans('credentials::credentials.your_account_was_suspended_for_15_minutes');
+        return trans('credentials.your_account_was_suspended_for_15_minutes');
     }
 
     /**
@@ -47,6 +47,6 @@ class SuspendedAtDisplayer extends AbstractDisplayer
      */
     protected function external()
     {
-        return trans('credentials::credentials.this_users_account_was_suspended_for_15_minutes');
+        return trans('credentials.this_users_account_was_suspended_for_15_minutes');
     }
 }

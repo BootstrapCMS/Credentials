@@ -25,7 +25,7 @@ class ActivatedDisplayer extends AbstractDisplayer
      */
     public function title()
     {
-        return trans('credentials::credentials.account_activated');
+        return trans('credentials.account_activated');
     }
 
     /**
@@ -36,7 +36,7 @@ class ActivatedDisplayer extends AbstractDisplayer
      */
     protected function current()
     {
-        return trans('credentials::credentials.your_account_was_activated');
+        return trans('credentials.your_account_was_activated');
     }
 
     /**
@@ -47,6 +47,6 @@ class ActivatedDisplayer extends AbstractDisplayer
      */
     protected function external()
     {
-        return trans('credentials::credentials.this_users_account_was_activated');
+        return trans('credentials.this_users_account_was_activated');
     }
 }

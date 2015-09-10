@@ -37,10 +37,10 @@ class PasswordDisplayer extends AbstractDisplayer
     protected function current()
     {
         if ($this->author() === ' ') {
-            return trans('credentials::credentials.you_reset_your_password');
+            return trans('credentials.you_reset_your_password');
         }
 
-        return $this->author().trans('credentials::credentials.changed_your_password');
+        return $this->author().trans('credentials.changed_your_password');
     }
 
     /**
@@ -52,9 +52,9 @@ class PasswordDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return trans('credentials::credentials.this_user_changed_their_password');
+            return trans('credentials.this_user_changed_their_password');
         }
 
-        return trans('credentials::credentials.user_changed_user_password', ['user1' => $this->author(), 'user2' => $this->user()]);
+        return trans('credentials.user_changed_user_password', ['user1' => $this->author(), 'user2' => $this->user()]);
     }
 }

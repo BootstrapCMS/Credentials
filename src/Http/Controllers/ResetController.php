@@ -88,7 +88,7 @@ class ResetController extends AbstractController
             $mail = [
                 'link'    => URL::route('account.password', ['id'    => $user->id, 'code'    => $code]),
                 'email'   => $user->getLogin(),
-                'subject' => Config::get('app.name').' - '.trans('credentials::credentials.password_reset_confirmation'),
+                'subject' => Config::get('app.name').' - '.trans('credentials.password_reset_confirmation'),
             ];
 
             Mail::queue('credentials::emails.reset', $mail, function ($message) use ($mail) {
@@ -96,10 +96,10 @@ class ResetController extends AbstractController
             });
 
             return Redirect::route('account.reset')
-                ->with('success', trans('credentials::credentials.check_your_email_for_password_reset'));
+                ->with('success', trans('credentials.check_your_email_for_password_reset'));
         } catch (UserNotFoundException $e) {
             return Redirect::route('account.reset')
-                ->with('error', trans('credentials::credentials.that_user_does_not_exist'));
+                ->with('error', trans('credentials.that_user_does_not_exist'));
         }
     }
 
@@ -126,13 +126,13 @@ class ResetController extends AbstractController
 
             if (!$user->attemptResetPassword($code, $password)) {
                 return Redirect::to(Config::get('credentials.home', '/'))
-                    ->with('error', trans('credentials::credentials.there_was_a_problem_resetting_your_password'));
+                    ->with('error', trans('credentials.there_was_a_problem_resetting_your_password'));
             }
 
             $mail = [
                 'password' => $password,
                 'email'    => $user->getLogin(),
-                'subject'  => Config::get('app.name').' - '.trans('credentials::credentials.new_password_information'),
+                'subject'  => Config::get('app.name').' - '.trans('credentials.new_password_information'),
             ];
 
             Mail::queue('credentials::emails.password', $mail, function ($message) use ($mail) {
@@ -140,10 +140,10 @@ class ResetController extends AbstractController
             });
 
             return Redirect::to(Config::get('credentials.home', '/'))
-                ->with('success', trans('credentials::credentials.your_password_has_been_changed'));
+                ->with('success', trans('credentials.your_password_has_been_changed'));
         } catch (UserNotFoundException $e) {
             return Redirect::to(Config::get('credentials.home', '/'))
-                ->with('error', trans('credentials::credentials.there_was_a_problem_resetting_your_password'));
+                ->with('error', trans('credentials.there_was_a_problem_resetting_your_password'));
         }
     }
 }

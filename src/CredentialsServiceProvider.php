@@ -52,17 +52,21 @@ class CredentialsServiceProvider extends ServiceProvider
     protected function setupPackage()
     {
         $configuration = realpath(__DIR__.'/../config/credentials.php');
+        
         $migrations = realpath(__DIR__.'/../migrations');
+        
+        $language = realpath(__DIR__.'/../lang/credentials.php');
 
         $this->publishes([
             $configuration => config_path('credentials.php'),
             $migrations    => base_path('database/migrations'),
+            $language      => base_path('resources/lang/'.\Lang::getLocale().'/credentials.php'),
         ]);
 
         $this->mergeConfigFrom($configuration, 'credentials');
 
         $this->loadViewsFrom(realpath(__DIR__.'/../views'), 'credentials');
-        $this->loadTranslationsFrom(realpath(__DIR__.'/../lang'), 'credentials');
+        
     }
 
     /**

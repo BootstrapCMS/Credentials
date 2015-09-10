@@ -25,7 +25,7 @@ class DeletedAtDisplayer extends AbstractDisplayer
      */
     public function title()
     {
-        return trans('credentials::credentials.account_deleted');
+        return trans('credentials.account_deleted');
     }
 
     /**
@@ -37,10 +37,10 @@ class DeletedAtDisplayer extends AbstractDisplayer
     protected function current()
     {
         if ($this->author() === ' ') {
-            return  trans('credentials::credentials.you_deleted_your_account');
+            return  trans('credentials.you_deleted_your_account');
         }
 
-        return trans('credentials::credentials.user_deleted_your_account', ['user' => $this->author()]);
+        return trans('credentials.user_deleted_your_account', ['user' => $this->author()]);
     }
 
     /**
@@ -52,9 +52,9 @@ class DeletedAtDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return trans('credentials::credentials.this_user_deleted_their_account');
+            return trans('credentials.this_user_deleted_their_account');
         }
 
-        return trans('credentials::credentials.user_deleted_user_account', ['user1' => $this->author(), 'user2' => $this->user()]);
+        return trans('credentials.user_deleted_user_account', ['user1' => $this->author(), 'user2' => $this->user()]);
     }
 }
