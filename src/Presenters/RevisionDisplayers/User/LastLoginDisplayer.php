@@ -25,7 +25,7 @@ class LastLoginDisplayer extends AbstractDisplayer
      */
     public function title()
     {
-        return 'Login Event';
+        return trans('credentials.login_event');
     }
 
     /**
@@ -36,7 +36,7 @@ class LastLoginDisplayer extends AbstractDisplayer
      */
     protected function current()
     {
-        return 'You logged into your account.';
+        return trans('credentials.you_logged_into_your_account');
     }
 
     /**
@@ -47,6 +47,6 @@ class LastLoginDisplayer extends AbstractDisplayer
      */
     protected function external()
     {
-        return 'This user logged into their account.';
+        return trans('credentials.this_user_logged_into_their_account');
     }
 }

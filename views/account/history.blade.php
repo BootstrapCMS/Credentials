@@ -1,12 +1,12 @@
 @extends(Config::get('credentials.layout'))
 
 @section('title')
-History
+{{ trans('credentials.history') }}
 @stop
 
 @section('top')
 <div class="page-header">
-<h1>History</h1>
+<h1>{{ trans('credentials.history') }}</h1>
 </div>
 @stop
 
@@ -14,7 +14,7 @@ History
 <div class="row">
     <div class="col-xs-12">
         <p class="lead">
-            Here is your most recent history:
+            {{ trans('credentials.here_is_your_most_recent_history') }}:
         </p>
     </div>
 </div>

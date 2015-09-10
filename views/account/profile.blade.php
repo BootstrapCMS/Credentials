@@ -1,12 +1,12 @@
 @extends(Config::get('credentials.layout'))
 
 @section('title')
-Profile
+{{ trans('credentials.profile') }}
 @stop
 
 @section('top')
 <div class="page-header">
-<h1>Profile</h1>
+<h1>{{ trans('credentials.profile') }}</h1>
 </div>
 @stop
 
@@ -19,7 +19,7 @@ Profile
     </div>
     <div class="col-xs-4">
         <div class="pull-right">
-            <a class="btn btn-danger" href="#delete_account" data-toggle="modal" data-target="#delete_account"><i class="fa fa-times"></i> Delete Account</a>
+            <a class="btn btn-danger" href="#delete_account" data-toggle="modal" data-target="#delete_account"><i class="fa fa-times"></i> {{ trans('credentials.delete_account') }}</a>
         </div>
     </div>
 </div>
@@ -30,7 +30,7 @@ Profile
     $form = ['url' => URL::route('account.details.patch'),
         '_method' => 'PATCH',
         'method' => 'POST',
-        'button' => 'Save Details',
+        'button' => trans('credentials.save_details'),
         'defaults' => [
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
@@ -40,13 +40,13 @@ Profile
     @include('credentials::account.details')
 </div>
 <hr>
-<h3>Change Password</h3>
+<h3>{{ trans('credentials.change_password') }}</h3>
 <div class="well">
     <?php
     $form = ['url' => URL::route('account.password.patch'),
         '_method' => 'PATCH',
         'method' => 'POST',
-        'button' => 'Save Password',
+        'button' => trans('credentials.save_password'),
     ];
     ?>
     @include('credentials::account.password')

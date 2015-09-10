@@ -25,7 +25,7 @@ class AddedGroupDisplayer extends AbstractDisplayer
      */
     public function title()
     {
-        return 'Group Membership Changed';
+        return trans('credentials.group_membership_changed');
     }
 
     /**
@@ -36,11 +36,11 @@ class AddedGroupDisplayer extends AbstractDisplayer
      */
     protected function current()
     {
-        if ($this->author() === 'You ') {
-            return 'You added yourself to the "'.$this->wrappedObject->new_value.'" group.';
+        if (trim($this->author()) === trans('credentials.you')) {
+            return trans('credentials.you_added_yourself_to_the_group', ['group_name' => $this->wrappedObject->new_value]);
         }
 
-        return $this->author().'added you to the "'.$this->wrappedObject->new_value.'" group.';
+        return trans('credentials.someone_added_your_to_the_group', ['name' => $this->author(), 'group_name' => $this->wrappedObject->new_value]);
     }
 
     /**
@@ -52,9 +52,9 @@ class AddedGroupDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'This user added themselves to the "'.$this->wrappedObject->new_value.'" group.';
+            return trans('credentials.this_user_added_themselves_to_the_group', ['group_name' => $this->wrappedObject->new_value]);
         }
 
-        return $this->author().'added'.substr($this->user(), 0, -3).' to the "'.$this->wrappedObject->new_value.'" group.';
+        return trans('credentials.user_added_user_to_the_group', ['user1' => $this->author(), 'user1' => substr($this->user(), 0, -3), 'group_name' => $this->wrappedObject->new_value]);
     }
 }

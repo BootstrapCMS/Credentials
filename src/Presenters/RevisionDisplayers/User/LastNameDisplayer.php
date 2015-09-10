@@ -25,7 +25,7 @@ class LastNameDisplayer extends AbstractDisplayer
      */
     public function title()
     {
-        return 'Updated Name';
+        return trans('credentials.updated_last_name');
     }
 
     /**
@@ -36,7 +36,7 @@ class LastNameDisplayer extends AbstractDisplayer
      */
     protected function current()
     {
-        return $this->author().'changed your last name'.$this->details();
+        return $this->author().trans('credentials.changed_your_last_name').$this->details();
     }
 
     /**
@@ -48,9 +48,9 @@ class LastNameDisplayer extends AbstractDisplayer
     protected function external()
     {
         if ($this->wasActualUser()) {
-            return 'This user changed their last name'.$this->details();
+            return trans('credentials.this_user_changed_their_last_name').$this->details();
         }
 
-        return $this->author().'changed'.$this->user().'last name'.$this->details();
+        return trans('credentials.user_changed_user_last_name', ['user1' => $this->author(), 'user2' => $this->user()]).$this->details();
     }
 }
