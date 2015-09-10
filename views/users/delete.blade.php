@@ -3,15 +3,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Are you sure?</h4>
+                <h4 class="modal-title">{{ trans('credentials.are_you_sure') }}</h4>
             </div>
             <div class="modal-body">
-                <p>You are about to delete this user and all their content! This process cannot be undone.</p>
-                <p>Are you sure you wish to continue?</p>
+                <p>{{ trans('credentials.you_are_about_to_delete_this_user') }}</p>
+                <p>{{ trans('credentials.are_you_sure_you_wish_to_continue') }}</p>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-success" href="{!! URL::route('users.destroy', array('users' => $user->id)) !!}" data-token="{!! Session::getToken() !!}" data-method="DELETE">Yes</a>
-                <button class="btn btn-danger" data-dismiss="modal">No</button>
+                <a class="btn btn-success" href="{!! URL::route('users.destroy', array('users' => $user->id)) !!}" data-token="{!! Session::getToken() !!}" data-method="DELETE">{{ trans('credentials.yes') }}</a>
+                <button class="btn btn-danger" data-dismiss="modal">{{ trans('credentials.no') }}</button>
             </div>
         </div>
     </div>

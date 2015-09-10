@@ -2,12 +2,12 @@
 
 @section('title')
 <?php $__navtype = 'admin'; ?>
-Edit {{ $user->name }}
+{{ trans('credentials.edit') }} {{ $user->name }}
 @stop
 
 @section('top')
 <div class="page-header">
-<h1>Edit {{ $user->name }}</h1>
+<h1>{{ trans('credentials.edit') }} {{ $user->name }}</h1>
 </div>
 @stop
 
@@ -16,19 +16,19 @@ Edit {{ $user->name }}
     <div class="col-xs-6">
         <p class="lead">
             @if($user->id == Credentials::getUser()->id)
-                Currently editing your profile:
+                {{ trans('credentials.currently_editing_your_profile') }}:
             @else
-                Currently editing {!! $user->name !!}'s profile:
+                {{ trans('credentials.currently_editing_user_profile', ['user' => $user->name]) }}:
             @endif
         </p>
     </div>
     <div class="col-xs-6">
         <div class="pull-right">
-            &nbsp;<a class="btn btn-success" href="{!! URL::route('users.show', array('users' => $user->id)) !!}"><i class="fa fa-file-text"></i> Show User</a>
-            &nbsp;<a class="btn btn-warning" href="#suspend_user" data-toggle="modal" data-target="#suspend_user"><i class="fa fa-ban"></i> Suspend User</a>
+            &nbsp;<a class="btn btn-success" href="{!! URL::route('users.show', array('users' => $user->id)) !!}"><i class="fa fa-file-text"></i> {{ trans('credentials.show_user') }}</a>
+            &nbsp;<a class="btn btn-warning" href="#suspend_user" data-toggle="modal" data-target="#suspend_user"><i class="fa fa-ban"></i> {{ trans('credentials.suspend_user') }}</a>
             @auth('admin')
-                &nbsp;<a class="btn btn-default" href="#reset_user" data-toggle="modal" data-target="#reset_user"><i class="fa fa-lock"></i> Reset Password</a>
-                &nbsp;<a class="btn btn-danger" href="#delete_user" data-toggle="modal" data-target="#delete_user"><i class="fa fa-times"></i> Delete</a>
+                &nbsp;<a class="btn btn-default" href="#reset_user" data-toggle="modal" data-target="#reset_user"><i class="fa fa-lock"></i> {{ trans('credentials.reset_password') }}</a>
+                &nbsp;<a class="btn btn-danger" href="#delete_user" data-toggle="modal" data-target="#delete_user"><i class="fa fa-times"></i> {{ trans('credentials.delete') }}</a>
             @endauth
         </div>
     </div>
@@ -39,7 +39,7 @@ Edit {{ $user->name }}
     $form = ['url' => URL::route('users.update', ['users' => $user->id]),
         '_method' => 'PATCH',
         'method' => 'POST',
-        'button' => 'Save User',
+        'button' => trans('credentials.save_user'),
         'defaults' => [
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,

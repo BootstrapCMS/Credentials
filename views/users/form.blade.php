@@ -1,28 +1,28 @@
 <form class="form-horizontal" action="{{ $form['url'] }}" method="{{ $form['method'] }}">
 
     {{ csrf_field() }}
-    <input type="hidden" name="_method" value="{{ $form['_method'] }}">
+    <input type="hidden" name="_method" value=""{{ isset($form['_method'])? $form['_method'] : $form['method'] }}">
 
     <div class="form-group{!! ($errors->has('first_name')) ? ' has-error' : '' !!}">
-        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">First Name</label>
+        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">{{ trans('credentials.first_name') }}</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-            <input name="first_name" id="first_name" value="{!! Request::old('first_name', $form['defaults']['first_name']) !!}" type="text" class="form-control" placeholder="First Name">
+            <input name="first_name" id="first_name" value="{!! Request::old('first_name', $form['defaults']['first_name']) !!}" type="text" class="form-control" placeholder="{{ trans('credentials.first_name') }}">
             {!! ($errors->has('first_name') ? $errors->first('first_name') : '') !!}
         </div>
     </div>
 
     <div class="form-group{!! ($errors->has('last_name')) ? ' has-error' : '' !!}">
-        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="last_name">Last Name</label>
+        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="last_name">{{ trans('credentials.last_name') }}</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-            <input name="last_name" id="last_name" value="{!! Request::old('last_name', $form['defaults']['last_name']) !!}" type="text" class="form-control" placeholder="Last Name">
+            <input name="last_name" id="last_name" value="{!! Request::old('last_name', $form['defaults']['last_name']) !!}" type="text" class="form-control" placeholder="{{ trans('credentials.last_name') }}">
             {!! ($errors->has('last_name') ? $errors->first('last_name') : '') !!}
         </div>
     </div>
 
     <div class="form-group{!! ($errors->has('email')) ? ' has-error' : '' !!}">
-        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="email">Email</label>
+        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="email">{{ trans('credentials.email') }}</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-            <input name="email" id="email" value="{!! Request::old('email', $form['defaults']['email']) !!}" type="text" class="form-control" placeholder="Email">
+            <input name="email" id="email" value="{!! Request::old('email', $form['defaults']['email']) !!}" type="text" class="form-control" placeholder="{{ trans('credentials.email') }}">
             {!! ($errors->has('email') ? $errors->first('email') : '') !!}
         </div>
     </div>

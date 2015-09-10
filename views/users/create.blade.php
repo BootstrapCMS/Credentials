@@ -2,12 +2,12 @@
 
 @section('title')
 <?php $__navtype = 'admin'; ?>
-Create User
+{{ trans('credentials.create_user') }}
 @stop
 
 @section('top')
 <div class="page-header">
-<h1>Create User</h1>
+<h1>{{ trans('credentials.create_user') }}</h1>
 </div>
 @stop
 
@@ -16,7 +16,7 @@ Create User
     <?php
     $form = ['url' => URL::route('users.store'),
         'method' => 'POST',
-        'button' => 'Create New User',
+        'button' => trans('credentials.create_new_user'),
         'defaults' => [
             'first_name' => '',
             'last_name' => '',
