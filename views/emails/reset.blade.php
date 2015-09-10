@@ -1,6 +1,6 @@
 @extends(Config::get('credentials.email'))
 
 @section('content')
-<p>To reset your password, <a href="{!! $link !!}">click here.</a></p>
-<p>After confirming this request, you will receive an email with your temporary password.</p>
+<p>{{ trans('credentials.to_reset_your_password') }} <a href="{!! $link !!}">{{ trans('credentials.click_here') }}.</a></p>
+<p>{{ trans('credentials.you_will_receive_your_temporary_password') }}</p>
 @stop

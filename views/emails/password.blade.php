@@ -1,7 +1,7 @@
 @extends(Config::get('credentials.email'))
 
 @section('content')
-<p>Here is your temporary password:</p>
+<p>{{ trans('credentials.here_is_your_temporary_password') }}:</p>
 <blockquote>{!! $password !!}</blockquote>
-<p>You should change it to something more memorable on the account page after you login.</p>
+<p>{{ trans('credentials.you_should_change_it_to_something_more_memorable') }}</p>
 @stop

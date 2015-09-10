@@ -1,8 +1,8 @@
 @extends(Config::get('credentials.email'))
 
 @section('content')
-<p>An admin from <a href="{!! $url !!}">{!! Config::get('app.name') !!}</a> has created you an account.</p>
-<p>Here is your temporary password:</p>
+<p>{{ trans('credentials.an_admin_from') }} <a href="{!! $url !!}">{!! Config::get('app.name') !!}</a> {{ trans('credentials.has_created_you_an_account') }}</p>
+<p>{{ trans('credentials.here_is_your_temporary_password') }}:</p>
 <blockquote>{!! $password !!}</blockquote>
-<p>You should change it to something more memorable on the account page after you login.</p>
+<p>{{ trans('credentials.you_should_change_it_to_something_more_memorable') }}</p>
 @stop
