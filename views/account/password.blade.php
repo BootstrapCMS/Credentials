@@ -1,6 +1,7 @@
-<form class="form-horizontal" action="{{ $form['url'] }}" method="{{ $form['method'] }}">
+<form class="form-horizontal" action="{{ $form['url'] }}" method="POST">
 
     {{ csrf_field() }}
+    {!! method_field($form['method']) !!}
     <input type="hidden" name="_method" value="{{ $form['_method'] }}">
 
     <div class="form-group{!! $errors->has('password') ? ' has-error' : '' !!}">
