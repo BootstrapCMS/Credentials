@@ -1,7 +1,7 @@
-<form class="form-horizontal" action="{{ $form['url'] }}" method="{{ $form['method'] }}">
+<form class="form-horizontal" action="{{ $form['url'] }}" method="POST">
 
     {{ csrf_field() }}
-    <input type="hidden" name="_method" value="{{ isset($form['_method'])? $form['_method'] : $form['method'] }}">
+    {{ method_field($form['method']) }}
 
     <div class="form-group{!! ($errors->has('first_name')) ? ' has-error' : '' !!}">
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">First Name</label>
