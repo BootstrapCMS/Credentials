@@ -65,7 +65,7 @@ trait PaginateRepositoryTrait
      */
     protected function isPageInRange(LengthAwarePaginator $paginator)
     {
-        return ($paginator->currentPage() <= ceil($paginator->lastItem() / $paginator->perPage()));
+        return $paginator->currentPage() <= ceil($paginator->lastItem() / $paginator->perPage());
     }
 
     /**
@@ -77,7 +77,7 @@ trait PaginateRepositoryTrait
      */
     protected function isFirstPage(LengthAwarePaginator $paginator)
     {
-        return ($paginator->currentPage() === 1);
+        return $paginator->currentPage() === 1;
     }
 
     /**
