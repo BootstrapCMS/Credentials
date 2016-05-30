@@ -58,7 +58,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
      */
     protected function wasActualUser()
     {
-        return ($this->wrappedObject->user_id == $this->wrappedObject->revisionable_id || !$this->wrappedObject->user_id);
+        return $this->wrappedObject->user_id == $this->wrappedObject->revisionable_id || !$this->wrappedObject->user_id;
     }
 
     /**
@@ -68,7 +68,7 @@ abstract class AbstractDisplayer extends AbstractRevisionDisplayer implements Re
      */
     protected function isCurrentUser()
     {
-        return ($this->credentials->check() && $this->credentials->getUser()->id == $this->wrappedObject->revisionable_id);
+        return $this->credentials->check() && $this->credentials->getUser()->id == $this->wrappedObject->revisionable_id;
     }
 
     /**

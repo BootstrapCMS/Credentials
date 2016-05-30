@@ -127,7 +127,7 @@ class RevisionPresenter extends BasePresenter
      */
     public function wasByCurrentUser()
     {
-        return ($this->credentials->check() && $this->credentials->getUser()->id == $this->wrappedObject->user_id);
+        return $this->credentials->check() && $this->credentials->getUser()->id == $this->wrappedObject->user_id;
     }
 
     /**
